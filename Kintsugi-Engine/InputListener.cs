@@ -9,7 +9,7 @@
 
 namespace Shard
 {
-    interface InputListener
+    public interface InputListener
     {
 
 

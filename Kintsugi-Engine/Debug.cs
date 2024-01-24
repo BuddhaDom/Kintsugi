@@ -10,7 +10,7 @@ using System;
 
 namespace Shard
 {
-    class Debug
+    public class Debug
     {
         public static int DEBUG_LEVEL_NONE = 0;
         public static int DEBUG_LEVEL_ERROR = 1;

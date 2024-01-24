@@ -13,7 +13,7 @@ using System.Collections.Generic;
 
 namespace Shard
 {
-    class GameObject
+    public class GameObject
     {
         private Transform3D transform;
         private bool transient;
@@ -70,12 +70,12 @@ namespace Shard
             return true;
         }
 
-        internal Transform3D Transform
+        public Transform3D Transform
         {
             get => transform;
         }
 
-        internal Transform Transform2D
+        public Transform Transform2D
         {
             get => (Transform)transform;
         }
@@ -88,7 +88,7 @@ namespace Shard
         }
         public bool Transient { get => transient; set => transient = value; }
         public bool ToBeDestroyed { get => toBeDestroyed; set => toBeDestroyed = value; }
-        internal PhysicsBody MyBody { get => myBody; set => myBody = value; }
+        public PhysicsBody MyBody { get => myBody; set => myBody = value; }
 
         public virtual void initialize()
         {

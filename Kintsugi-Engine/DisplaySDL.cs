@@ -19,7 +19,7 @@ using System.Threading;
 namespace Shard
 {
 
-    class Line
+    public class Line
     {
         private int sx, sy;
         private int ex, ey;
@@ -35,7 +35,7 @@ namespace Shard
         public int A { get => a; set => a = value; }
     }
 
-    class Circle
+    public class Circle
     {
         int x, y, rad;
         private int r, g, b, a;
@@ -50,7 +50,7 @@ namespace Shard
     }
 
 
-    class DisplaySDL : DisplayText
+    public class DisplaySDL : DisplayText
     {
         private List<Transform> _toDraw;
         private List<Line> _linesToDraw;

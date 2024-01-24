@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Shard
 {
-    class AssetManager : AssetManagerBase
+    public class AssetManager : AssetManagerBase
     {
 
         Dictionary<string,string> assets;

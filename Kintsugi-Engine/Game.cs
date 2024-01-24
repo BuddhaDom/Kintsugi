@@ -11,8 +11,15 @@ using System;
 
 namespace Shard
 {
-    abstract class Game
+    public abstract class Game
     {
+        public void Run()
+        {
+            Console.WriteLine("Starting game...");
+            Bootstrap.RunStuff(this);
+        }
+
+
         public AssetManagerBase assets;
 
         public AssetManagerBase getAssetManager() {

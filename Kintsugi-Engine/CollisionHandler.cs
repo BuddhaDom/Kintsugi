@@ -8,7 +8,7 @@
 
 namespace Shard
 {
-    interface CollisionHandler
+    public interface CollisionHandler
     {
         public abstract void onCollisionEnter(PhysicsBody x);
         public abstract void onCollisionExit(PhysicsBody x);

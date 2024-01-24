@@ -16,7 +16,7 @@ namespace Shard
 {
 
     // We'll be using SDL2 here to provide our underlying graphics system.
-    class TextDetails
+    public class TextDetails
     {
         string text;
         double x, y;
@@ -64,7 +64,7 @@ namespace Shard
         public IntPtr LblText { get => lblText; set => lblText = value; }
     }
 
-    class DisplayText : Display
+    public class DisplayText : Display
     {
         protected IntPtr _window, _rend;
         uint _format;

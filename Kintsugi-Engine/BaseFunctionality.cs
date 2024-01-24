@@ -12,7 +12,7 @@ using System.IO;
 
 namespace Shard
 {
-    class BaseFunctionality
+    public class BaseFunctionality
     {
         private static BaseFunctionality me;
 

@@ -18,7 +18,7 @@ using System.Numerics;
 namespace Shard
 {
 
-    class Transform
+    public class Transform
     {
         private GameObject owner;
         private float x, y;

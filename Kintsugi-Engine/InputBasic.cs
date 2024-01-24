@@ -11,7 +11,7 @@ using System;
 
 namespace Shard
 {
-    class InputBasic : InputSystem
+    public class InputBasic : InputSystem
     {
         public override void getInput()
         {

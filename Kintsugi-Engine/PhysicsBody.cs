@@ -34,7 +34,7 @@ using System.Numerics;
 
 namespace Shard
 {
-    class PhysicsBody
+    public class PhysicsBody
     {
         List<Collider> myColliders;
         List<Collider> collisionCandidates;
@@ -71,8 +71,8 @@ namespace Shard
 
         public float AngularDrag { get => angularDrag; set => angularDrag = value; }
         public float Drag { get => drag; set => drag = value; }
-        internal GameObject Parent { get => parent; set => parent = value; }
-        internal Transform Trans { get => trans; set => trans = value; }
+        public GameObject Parent { get => parent; set => parent = value; }
+        public Transform Trans { get => trans; set => trans = value; }
         public float Mass { get => mass; set => mass = value; }
         public float[] MinAndMaxX { get => minAndMaxX; set => minAndMaxX = value; }
         public float[] MinAndMaxY { get => minAndMaxY; set => minAndMaxY = value; }

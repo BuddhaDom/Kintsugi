@@ -10,7 +10,7 @@
 
 namespace Shard
 {
-    class Transform3D : Transform
+    public class Transform3D : Transform
     {
         private double z;
         private double rotx, roty;

@@ -13,7 +13,7 @@ using System.Collections.Generic;
 namespace Shard
 {
 
-    abstract class InputSystem
+    public abstract class InputSystem
     {
         private List<InputListener> myListeners;
 

@@ -34,7 +34,7 @@ namespace Shard
      * An internal class used to hold a combination of two potentially colliding objects. 
      */
 
-    class CollidingObject
+    public class CollidingObject
     {
         PhysicsBody a, b;
 
@@ -71,7 +71,7 @@ namespace Shard
      * linked list used elsewhere in this code.
      */
 
-    class SAPEntry
+    public class SAPEntry
     {
         PhysicsBody owner;
         float start, end;
@@ -85,7 +85,7 @@ namespace Shard
     }
 
 
-    class PhysicsManager
+    public class PhysicsManager
     {
         private static PhysicsManager me;
         private List<CollidingObject> collisionsToCheck;
