@@ -233,7 +233,7 @@ namespace Shard
             return frames;
         }
 
-        static void Main(string[] args)
+        static void RunStuff(string[] args)
         {
             long timeInMillisecondsStart, lastTick, timeInMillisecondsEnd;
             long interval;

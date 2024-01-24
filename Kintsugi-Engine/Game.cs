@@ -13,6 +13,12 @@ namespace Shard
 {
     public abstract class Game
     {
+        public void Run()
+        {
+            Console.WriteLine("Starting game...");
+        }
+
+
         public AssetManagerBase assets;
 
         public AssetManagerBase getAssetManager() {
