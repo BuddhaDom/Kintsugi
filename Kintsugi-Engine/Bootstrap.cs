@@ -233,8 +233,12 @@ namespace Shard
             return frames;
         }
 
-        internal static void RunStuff()
+        internal static void RunStuff(Game game)
         {
+
+            runningGame = game;
+            targetFrameRate = runningGame.getTargetFrameRate();
+            millisPerFrame = 1000 / targetFrameRate;
 
 
             // Setup the engine.
