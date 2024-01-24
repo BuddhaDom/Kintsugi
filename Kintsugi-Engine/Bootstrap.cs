@@ -144,11 +144,6 @@ namespace Shard
                         asset = (AssetManagerBase)ob;
                         asset.registerAssets();
                         break;
-                    case "game":
-                        runningGame = (Game)ob;
-                        targetFrameRate = runningGame.getTargetFrameRate();
-                        millisPerFrame = 1000 / targetFrameRate;
-                        break;
                     case "input":
                         input = (InputSystem)ob;
                         input.initialize();
