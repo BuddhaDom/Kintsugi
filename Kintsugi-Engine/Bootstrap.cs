@@ -58,7 +58,7 @@ namespace Shard
         public static void setup()
         {
             string workDir = Environment.CurrentDirectory;
-            baseDir = Directory.GetParent(workDir).Parent.Parent.Parent.Parent.FullName;;
+            baseDir = Directory.GetParent(workDir).Parent.Parent.FullName;;
 
             setupEnvironmentalVariables(baseDir + "\\" + "envar.cfg");
             setup(baseDir + "\\" + DEFAULT_CONFIG);
@@ -233,15 +233,8 @@ namespace Shard
             return frames;
         }
 
-        static void RunStuff(string[] args)
+        internal static void RunStuff()
         {
-            long timeInMillisecondsStart, lastTick, timeInMillisecondsEnd;
-            long interval;
-            int sleep;
-            int tfro = 1;
-            bool physUpdate = false;
-            bool physDebug = false;
-
 
 
             // Setup the engine.
@@ -254,23 +247,40 @@ namespace Shard
             // Start the game running.
             runningGame.initialize();
 
-            timeInMillisecondsStart = startTime;
-            lastTick = startTime;
 
             phys.GravityModifier = 0.1f;
             // This is our game loop.
+            MainLoop();
 
+            
+
+
+        }
+
+        static void MainLoop()
+        {
+            long timeInMillisecondsStart, lastTick, timeInMillisecondsEnd;
+            long interval;
+            int sleep;
+            int tfro = 1;
+            bool physUpdate = false;
+            bool physDebug = false;
+
+            timeInMillisecondsStart = startTime;
+            lastTick = startTime;
+            
             if (getEnvironmentalVariable("physics_debug") == "1")
             {
                 physDebug = true;
             }
+
 
             while (true)
             {
                 frames += 1;
 
                 timeInMillisecondsStart = getCurrentMillis();
-                
+
                 // Clear the screen.
                 Bootstrap.getDisplay().clearDisplay();
 
@@ -307,7 +317,8 @@ namespace Shard
                         GameObjectManager.getInstance().physicsUpdate();
                     }
 
-                    if (physDebug) {
+                    if (physDebug)
+                    {
                         phys.drawDebugColliders();
                     }
 
@@ -318,7 +329,7 @@ namespace Shard
 
                 timeInMillisecondsEnd = getCurrentMillis();
 
-                frameTimes.Add (timeInMillisecondsEnd);
+                frameTimes.Add(timeInMillisecondsEnd);
 
                 interval = timeInMillisecondsEnd - timeInMillisecondsStart;
 
@@ -344,9 +355,7 @@ namespace Shard
 
                 lastTick = timeInMillisecondsStart;
 
-            } 
-
-
+            }
         }
     }
 }

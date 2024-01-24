@@ -16,6 +16,7 @@ namespace Shard
         public void Run()
         {
             Console.WriteLine("Starting game...");
+            Bootstrap.RunStuff();
         }
 
 
