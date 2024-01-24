@@ -14,7 +14,7 @@ namespace Shard
 {
 
     // We'll be using SDL2 here to provide our underlying input system.
-    class InputFramework : InputSystem
+    public class InputFramework : InputSystem
     {
 
         double tick, timeInterval;

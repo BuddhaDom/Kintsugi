@@ -12,7 +12,7 @@ using System.Collections.Generic;
 
 namespace Shard
 {
-    class GameObjectManager
+    public class GameObjectManager
     {
         private static GameObjectManager me;
         List<GameObject> myObjects;

@@ -13,7 +13,7 @@ using System.Threading;
 
 namespace Shard
 {
-    class Bootstrap
+    public class Bootstrap
     {
         public static string DEFAULT_CONFIG = "config.cfg";
 

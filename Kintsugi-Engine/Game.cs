@@ -11,7 +11,7 @@ using System;
 
 namespace Shard
 {
-    abstract class Game
+    public abstract class Game
     {
         public AssetManagerBase assets;
 

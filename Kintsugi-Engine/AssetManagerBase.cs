@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Shard
     {
-        abstract class AssetManagerBase
+        public abstract class AssetManagerBase
         {
             private String assetPath;
 

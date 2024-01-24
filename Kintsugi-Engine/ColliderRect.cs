@@ -12,7 +12,7 @@ using System.Numerics;
 
 namespace Shard
 {
-    class ColliderRect : Collider
+    public class ColliderRect : Collider
     {
         private Transform myRect;
         private float baseWid, baseHt;

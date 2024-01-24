@@ -12,7 +12,7 @@ using System.Numerics;
 
 namespace Shard
 {
-    abstract class Collider
+    public abstract class Collider
     {
         private CollisionHandler gameObject;
         private float[] minAndMaxX;
