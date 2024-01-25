@@ -6,12 +6,13 @@
 *   
 */
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Threading;
+using Kintsugi.Assets;
+using Kintsugi.Audio;
+using Kintsugi.Input;
+using Kintsugi.Physics;
+using Kintsugi.Rendering;
 
-namespace Shard
+namespace Kintsugi.Core
 {
     public class Bootstrap
     {
@@ -33,15 +34,18 @@ namespace Shard
         private static List<long> frameTimes;
         private static long startTime;
         private static string baseDir;
-        private static Dictionary<string,string> enVars;
+        private static Dictionary<string, string> enVars;
 
-        public static bool checkEnvironmentalVariable (string id) {
-            return enVars.ContainsKey (id);
+        public static bool checkEnvironmentalVariable(string id)
+        {
+            return enVars.ContainsKey(id);
         }
 
-        
-        public static string getEnvironmentalVariable (string id) {
-            if (checkEnvironmentalVariable (id)) {
+
+        public static string getEnvironmentalVariable(string id)
+        {
+            if (checkEnvironmentalVariable(id))
+            {
                 return enVars[id];
             }
 
@@ -51,31 +55,33 @@ namespace Shard
 
         public static double TimeElapsed { get => timeElapsed; set => timeElapsed = value; }
 
-        public static string getBaseDir() {
+        public static string getBaseDir()
+        {
             return baseDir;
         }
 
         public static void setup()
         {
             string workDir = Environment.CurrentDirectory;
-            baseDir = Directory.GetParent(workDir).Parent.Parent.FullName;;
+            baseDir = Directory.GetParent(workDir).Parent.Parent.FullName; ;
 
             setupEnvironmentalVariables(baseDir + "\\" + "envar.cfg");
             setup(baseDir + "\\" + DEFAULT_CONFIG);
 
         }
 
-        public static void setupEnvironmentalVariables (String path) {
-                Console.WriteLine("Path is " + path);
+        public static void setupEnvironmentalVariables(string path)
+        {
+            Console.WriteLine("Path is " + path);
 
-                Dictionary<string, string> config = BaseFunctionality.getInstance().readConfigFile(path);
+            Dictionary<string, string> config = BaseFunctionality.getInstance().readConfigFile(path);
 
-                enVars = new Dictionary<string,string>();
+            enVars = new Dictionary<string, string>();
 
-                foreach (KeyValuePair<string, string> kvp in config)
-                {
-                    enVars[kvp.Key] = kvp.Value;
-                }
+            foreach (KeyValuePair<string, string> kvp in config)
+            {
+                enVars[kvp.Key] = kvp.Value;
+            }
         }
         public static double getDeltaTime()
         {
@@ -98,7 +104,8 @@ namespace Shard
             return input;
         }
 
-        public static AssetManagerBase getAssetManager() {
+        public static AssetManagerBase getAssetManager()
+        {
             return asset;
         }
 
@@ -109,7 +116,7 @@ namespace Shard
 
         public static void setup(string path)
         {
-            Console.WriteLine ("Path is " + path);
+            Console.WriteLine("Path is " + path);
 
             Dictionary<string, string> config = BaseFunctionality.getInstance().readConfigFile(path);
             Type t;
@@ -138,7 +145,7 @@ namespace Shard
                         displayEngine.initialize();
                         break;
                     case "sound":
-                        soundEngine = (Sound)ob;
+                        soundEngine = (Audio)ob;
                         break;
                     case "asset":
                         asset = (AssetManagerBase)ob;
@@ -203,21 +210,24 @@ namespace Shard
 
 
 
-            Debug.Log ("Frametimes is " + frameTimes.Count);
+            Debug.Log("Frametimes is " + frameTimes.Count);
 
-            if (frameTimes.Count == 0) {
+            if (frameTimes.Count == 0)
+            {
                 return -1;
             }
 
             lastEntry = frameTimes.Count - 1;
 
-            while (frameTimes[lastEntry] > (now - 1000) && lastEntry > 0) {
+            while (frameTimes[lastEntry] > now - 1000 && lastEntry > 0)
+            {
                 lastEntry -= 1;
                 count += 1;
             }
 
-            if (lastEntry > 0) {
-                frameTimes.RemoveRange (0, lastEntry);
+            if (lastEntry > 0)
+            {
+                frameTimes.RemoveRange(0, lastEntry);
             }
 
             return count;
@@ -251,7 +261,7 @@ namespace Shard
             // This is our game loop.
             MainLoop();
 
-            
+
 
 
         }
@@ -267,7 +277,7 @@ namespace Shard
 
             timeInMillisecondsStart = startTime;
             lastTick = startTime;
-            
+
             if (getEnvironmentalVariable("physics_debug") == "1")
             {
                 physDebug = true;
@@ -281,7 +291,7 @@ namespace Shard
                 timeInMillisecondsStart = getCurrentMillis();
 
                 // Clear the screen.
-                Bootstrap.getDisplay().clearDisplay();
+                getDisplay().clearDisplay();
 
                 // Update 
                 runningGame.update();
@@ -324,7 +334,7 @@ namespace Shard
                 }
 
                 // Render the screen.
-                Bootstrap.getDisplay().display();
+                getDisplay().display();
 
                 timeInMillisecondsEnd = getCurrentMillis();
 

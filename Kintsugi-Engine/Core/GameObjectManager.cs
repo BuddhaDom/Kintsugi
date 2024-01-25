@@ -8,9 +8,7 @@
 *   
 */
 
-using System.Collections.Generic;
-
-namespace Shard
+namespace Kintsugi.Core
 {
     public class GameObjectManager
     {

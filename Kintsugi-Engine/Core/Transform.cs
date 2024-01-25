@@ -12,10 +12,9 @@
 */
 
 
-using System;
 using System.Numerics;
 
-namespace Shard
+namespace Kintsugi.Core
 {
 
     public class Transform
@@ -33,8 +32,8 @@ namespace Shard
         public Vector2 getLastDirection()
         {
             float dx, dy;
-            dx = (X - Lx);
-            dy = (Y - Ly);
+            dx = X - Lx;
+            dy = Y - Ly;
 
             return new Vector2(-dx, -dy);
         }
@@ -62,14 +61,14 @@ namespace Shard
         public void recalculateCentre()
         {
 
-            centre.X = (float)(x + ((this.Wid * scalex) / 2));
-            centre.Y = (float)(y + ((this.Ht * scaley) / 2));
+            centre.X = x + Wid * scalex / 2;
+            centre.Y = y + Ht * scaley / 2;
 
         }
 
         public void translate(double nx, double ny)
         {
-            translate ((float)nx, (float)ny);
+            translate((float)nx, (float)ny);
         }
 
 
@@ -79,8 +78,8 @@ namespace Shard
             Lx = X;
             Ly = Y;
 
-            x += (float)nx;
-            y += (float)ny;
+            x += nx;
+            y += ny;
 
 
             recalculateCentre();
@@ -95,7 +94,7 @@ namespace Shard
 
         public void rotate(float dir)
         {
-            rotz += (float)dir;
+            rotz += dir;
 
             rotz %= 360;
 

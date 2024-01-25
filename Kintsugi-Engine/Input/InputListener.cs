@@ -7,7 +7,7 @@
 *   
 */
 
-namespace Shard
+namespace Kintsugi.Input
 {
     public interface InputListener
     {

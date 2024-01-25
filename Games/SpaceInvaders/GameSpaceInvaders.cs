@@ -1,6 +1,6 @@
-﻿using SpaceInvaders;
-using System;
-using System.Collections.Generic;
+﻿using Kintsugi.Core;
+using Kintsugi.Input;
+using SpaceInvaders;
 using System.Drawing;
 
 namespace Shard

@@ -7,10 +7,11 @@
 *   
 */
 
+using Kintsugi.Core;
 using System.Drawing;
 using System.Numerics;
 
-namespace Shard
+namespace Kintsugi.Physics.Colliders
 {
     public abstract class Collider
     {

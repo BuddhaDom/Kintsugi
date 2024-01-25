@@ -8,9 +8,7 @@
 *   
 */
 
-using System.Collections.Generic;
-
-namespace Shard
+namespace Kintsugi.Input
 {
 
     public abstract class InputSystem

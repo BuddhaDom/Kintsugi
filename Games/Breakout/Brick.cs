@@ -1,5 +1,7 @@
 ﻿
-using Shard;
+using Kintsugi.Core;
+using Kintsugi.Input;
+using Kintsugi.Physics;
 
 namespace GameBreakout
 {

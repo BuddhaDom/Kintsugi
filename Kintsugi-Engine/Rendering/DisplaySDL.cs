@@ -11,12 +11,10 @@
 *   
 */
 
+using Kintsugi.Core;
 using SDL2;
-using System;
-using System.Collections.Generic;
-using System.Threading;
 
-namespace Shard
+namespace Kintsugi.Rendering
 {
 
     public class Line
@@ -55,10 +53,10 @@ namespace Shard
         private List<Transform> _toDraw;
         private List<Line> _linesToDraw;
         private List<Circle> _circlesToDraw;
-        private Dictionary<string, IntPtr> spriteBuffer;
+        private Dictionary<string, nint> spriteBuffer;
         public override void initialize()
         {
-            spriteBuffer = new Dictionary<string, IntPtr>();
+            spriteBuffer = new Dictionary<string, nint>();
 
             base.initialize();
 
@@ -69,9 +67,9 @@ namespace Shard
 
         }
 
-        public IntPtr loadTexture(Transform trans)
+        public nint loadTexture(Transform trans)
         {
-            IntPtr ret;
+            nint ret;
             uint format;
             int access;
             int w;
@@ -89,9 +87,9 @@ namespace Shard
         }
 
 
-        public IntPtr loadTexture(string path)
+        public nint loadTexture(string path)
         {
-            IntPtr img;
+            nint img;
 
             if (spriteBuffer.ContainsKey(path))
             {
@@ -131,13 +129,13 @@ namespace Shard
 
         void renderCircle(int centreX, int centreY, int rad)
         {
-            int dia = (rad * 2);
+            int dia = rad * 2;
             byte r, g, b, a;
-            int x = (rad - 1);
+            int x = rad - 1;
             int y = 0;
             int tx = 1;
             int ty = 1;
-            int error = (tx - dia);
+            int error = tx - dia;
 
             SDL.SDL_GetRenderDrawColor(_rend, out r, out g, out b, out a);
 
@@ -167,7 +165,7 @@ namespace Shard
                 {
                     x -= 1;
                     tx += 2;
-                    error += (tx - dia);
+                    error += tx - dia;
                 }
 
             }
@@ -232,7 +230,7 @@ namespace Shard
                 tRect.w = sRect.w;
                 tRect.h = sRect.h;
 
-                SDL.SDL_RenderCopyEx(_rend, sprite, ref sRect, ref tRect, (int)trans.Rotz, IntPtr.Zero, SDL.SDL_RendererFlip.SDL_FLIP_NONE);
+                SDL.SDL_RenderCopyEx(_rend, sprite, ref sRect, ref tRect, (int)trans.Rotz, nint.Zero, SDL.SDL_RendererFlip.SDL_FLIP_NONE);
             }
 
             foreach (Circle c in _circlesToDraw)

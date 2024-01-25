@@ -6,9 +6,7 @@
 *   
 */
 
-using System;
-
-namespace Shard
+namespace Kintsugi.Core
 {
     public class Debug
     {

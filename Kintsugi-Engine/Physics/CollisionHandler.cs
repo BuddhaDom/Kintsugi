@@ -6,7 +6,7 @@
 *   
 */
 
-namespace Shard
+namespace Kintsugi.Physics
 {
     public interface CollisionHandler
     {

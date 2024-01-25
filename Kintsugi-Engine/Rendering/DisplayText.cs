@@ -8,11 +8,10 @@
 *   
 */
 
+using Kintsugi.Core;
 using SDL2;
-using System;
-using System.Collections.Generic;
 
-namespace Shard
+namespace Kintsugi.Rendering
 {
 
     // We'll be using SDL2 here to provide our underlying graphics system.
@@ -22,8 +21,8 @@ namespace Shard
         double x, y;
         SDL.SDL_Color col;
         int size;
-        IntPtr font;
-        IntPtr lblText;
+        nint font;
+        nint lblText;
 
 
         public TextDetails(string text, double x, double y, SDL.SDL_Color col, int spacing)
@@ -32,7 +31,7 @@ namespace Shard
             this.x = x;
             this.y = y;
             this.col = col;
-            this.size = spacing;
+            size = spacing;
         }
 
         public string Text
@@ -60,17 +59,17 @@ namespace Shard
             get => size;
             set => size = value;
         }
-        public IntPtr Font { get => font; set => font = value; }
-        public IntPtr LblText { get => lblText; set => lblText = value; }
+        public nint Font { get => font; set => font = value; }
+        public nint LblText { get => lblText; set => lblText = value; }
     }
 
     public class DisplayText : Display
     {
-        protected IntPtr _window, _rend;
+        protected nint _window, _rend;
         uint _format;
         int _access;
         private List<TextDetails> myTexts;
-        private Dictionary<string, IntPtr> fontLibrary;
+        private Dictionary<string, nint> fontLibrary;
         public override void clearDisplay()
         {
             foreach (TextDetails td in myTexts)
@@ -84,7 +83,7 @@ namespace Shard
 
         }
 
-        public IntPtr loadFont(string path, int size)
+        public nint loadFont(string path, int size)
         {
             string key = path + "," + size;
 
@@ -118,7 +117,7 @@ namespace Shard
 
 
                 SDL_ttf.TTF_SizeText(td.Font, td.Text, out sRect.w, out sRect.h);
-                SDL.SDL_RenderCopy(_rend, td.LblText, IntPtr.Zero, ref sRect);
+                SDL.SDL_RenderCopy(_rend, td.LblText, nint.Zero, ref sRect);
 
             }
 
@@ -141,7 +140,7 @@ namespace Shard
 
         public override void initialize()
         {
-            fontLibrary = new Dictionary<string, IntPtr>();
+            fontLibrary = new Dictionary<string, nint>();
 
             setSize(1280, 864);
 
@@ -174,15 +173,15 @@ namespace Shard
         {
             int nx, ny, w = 0, h = 0;
 
-            IntPtr font = loadFont("Fonts/calibri.ttf", size);
+            nint font = loadFont("Fonts/calibri.ttf", size);
             SDL.SDL_Color col = new SDL.SDL_Color();
 
             col.r = (byte)r;
             col.g = (byte)g;
             col.b = (byte)b;
-            col.a = (byte)255;
+            col.a = 255;
 
-            if (font == IntPtr.Zero)
+            if (font == nint.Zero)
             {
                 Debug.getInstance().log("TTF_OpenFont: " + SDL.SDL_GetError());
             }
@@ -191,8 +190,8 @@ namespace Shard
 
             td.Font = font;
 
-            IntPtr surf = SDL_ttf.TTF_RenderText_Blended(td.Font, td.Text, td.Col);
-            IntPtr lblText = SDL.SDL_CreateTextureFromSurface(_rend, surf);
+            nint surf = SDL_ttf.TTF_RenderText_Blended(td.Font, td.Text, td.Col);
+            nint lblText = SDL.SDL_CreateTextureFromSurface(_rend, surf);
             SDL.SDL_FreeSurface(surf);
 
             SDL.SDL_Rect sRect;
@@ -224,7 +223,7 @@ namespace Shard
                 }
 
 
-                showText(str, x, y + (row * size), size, r, g, b);
+                showText(str, x, y + row * size, size, r, g, b);
                 row += 1;
 
             }

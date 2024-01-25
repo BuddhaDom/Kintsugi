@@ -6,11 +6,12 @@
 *   
 */
 
-using System;
+using Kintsugi.Core;
+using Kintsugi.Rendering;
 using System.Drawing;
 using System.Numerics;
 
-namespace Shard
+namespace Kintsugi.Physics.Colliders
 {
     public class ColliderCircle : Collider
     {
@@ -21,7 +22,7 @@ namespace Shard
         public ColliderCircle(CollisionHandler gob, Transform t) : base(gob)
         {
 
-            this.MyRect = t;
+            MyRect = t;
             fromTrans = true;
             RotateAtOffset = false;
             calculateBoundingBox();
@@ -37,7 +38,7 @@ namespace Shard
             Rad = rad;
             RotateAtOffset = true;
 
-            this.MyRect = t;
+            MyRect = t;
 
             fromTrans = false;
 
@@ -68,7 +69,8 @@ namespace Shard
                 Y = (float)MyRect.Y + Yoff;
             }
 
-            if (RotateAtOffset == true) {
+            if (RotateAtOffset == true)
+            {
                 // Now we work out the X and Y based on the rotation of the body to 
                 // which this belongs,.
                 x1 = X - MyRect.Centre.X;
@@ -77,8 +79,8 @@ namespace Shard
                 x2 = (float)(x1 * Math.Cos(angle) - y1 * Math.Sin(angle));
                 y2 = (float)(x1 * Math.Sin(angle) + y1 * Math.Cos(angle));
 
-                X = x2 + (float)MyRect.Centre.X;
-                Y = y2 + (float)MyRect.Centre.Y;
+                X = x2 + MyRect.Centre.X;
+                Y = y2 + MyRect.Centre.Y;
             }
 
 
@@ -194,15 +196,15 @@ namespace Shard
             double xpen, ypen;
             Vector2 dir;
 
-            xpen = Math.Pow(c.X - this.X, 2);
-            ypen = Math.Pow(c.Y - this.Y, 2);
+            xpen = Math.Pow(c.X - X, 2);
+            ypen = Math.Pow(c.Y - Y, 2);
 
-            radsq = Math.Pow(c.Rad + this.Rad, 2);
+            radsq = Math.Pow(c.Rad + Rad, 2);
 
             dist = xpen + ypen;
 
 
-            depth = (c.Rad + Rad) - Math.Sqrt(dist);
+            depth = c.Rad + Rad - Math.Sqrt(dist);
 
 
             if (dist <= radsq)

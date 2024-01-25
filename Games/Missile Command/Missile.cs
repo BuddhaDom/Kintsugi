@@ -1,6 +1,6 @@
-﻿using Shard;
-using System;
-using System.Collections.Generic;
+﻿using Kintsugi.Core;
+using Kintsugi.Physics;
+using Kintsugi.Physics.Colliders;
 using System.Drawing;
 using System.Numerics;
 
@@ -73,7 +73,7 @@ namespace MissileCommand
             yDist = (float)(Targety - Transform.Y);
 
             v = new(xDist, yDist);
-            v = Vector2.Normalize (v);
+            v = Vector2.Normalize(v);
 
             v.X = (float)(v.X * Bootstrap.getDeltaTime() * Speed);
             v.Y = (float)(v.Y * Bootstrap.getDeltaTime() * Speed);

@@ -8,9 +8,10 @@
 *   
 */
 
+using Kintsugi.Core;
 using SDL2;
 
-namespace Shard
+namespace Kintsugi.Input
 {
 
     // We'll be using SDL2 here to provide our underlying input system.
@@ -63,7 +64,7 @@ namespace Shard
 
                     butt = ev.button;
 
-                    ie.Button = (int)butt.button;
+                    ie.Button = butt.button;
                     ie.X = butt.x;
                     ie.Y = butt.y;
 
@@ -76,7 +77,7 @@ namespace Shard
 
                     butt = ev.button;
 
-                    ie.Button = (int)butt.button;
+                    ie.Button = butt.button;
                     ie.X = butt.x;
                     ie.Y = butt.y;
 

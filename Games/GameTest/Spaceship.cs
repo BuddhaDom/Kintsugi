@@ -1,5 +1,7 @@
-﻿using SDL2;
-using Shard;
+﻿using Kintsugi.Core;
+using Kintsugi.Input;
+using Kintsugi.Physics;
+using SDL2;
 using System.Drawing;
 
 namespace GameTest
@@ -55,7 +57,7 @@ namespace GameTest
 
             b.Transform.rotate(this.Transform.Rotz);
 
-            Bootstrap.getSound().playSound ("fire.wav");
+            Bootstrap.getSound().playSound("fire.wav");
         }
 
         public void handleInput(InputEvent inp, string eventType)

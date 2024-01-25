@@ -8,10 +8,9 @@
 *   
 */
 
-using System;
-using System.Collections.Generic;
+using Kintsugi.Physics;
 
-namespace Shard
+namespace Kintsugi.Core
 {
     public class GameObject
     {
@@ -42,7 +41,7 @@ namespace Shard
             return tags.Contains(tag);
         }
 
-        public String getTags()
+        public string getTags()
         {
             string str = "";
 
@@ -77,7 +76,7 @@ namespace Shard
 
         public Transform Transform2D
         {
-            get => (Transform)transform;
+            get => transform;
         }
 
 
@@ -117,7 +116,7 @@ namespace Shard
             ToBeDestroyed = false;
             tags = new List<string>();
 
-            this.initialize();
+            initialize();
 
         }
 

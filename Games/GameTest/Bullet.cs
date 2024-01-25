@@ -1,5 +1,5 @@
-﻿using Shard;
-using System;
+﻿using Kintsugi.Core;
+using Kintsugi.Physics;
 using System.Drawing;
 
 namespace GameTest

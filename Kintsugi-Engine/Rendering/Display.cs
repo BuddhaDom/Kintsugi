@@ -6,9 +6,10 @@
 *   
 */
 
+using Kintsugi.Core;
 using System.Drawing;
 
-namespace Shard
+namespace Kintsugi.Rendering
 {
     public abstract class Display
     {

@@ -6,11 +6,12 @@
 *   
 */
 
-using System;
+using Kintsugi.Core;
+using Kintsugi.Rendering;
 using System.Drawing;
 using System.Numerics;
 
-namespace Shard
+namespace Kintsugi.Physics.Colliders
 {
     public class ColliderRect : Collider
     {
@@ -24,7 +25,7 @@ namespace Shard
         public ColliderRect(CollisionHandler gob, Transform t) : base(gob)
         {
 
-            this.MyRect = t;
+            MyRect = t;
             fromTrans = true;
             RotateAtOffset = false;
             calculateBoundingBox();
@@ -38,7 +39,7 @@ namespace Shard
             BaseHt = ht;
             RotateAtOffset = true;
 
-            this.MyRect = t;
+            MyRect = t;
 
             fromTrans = false;
 
@@ -74,13 +75,14 @@ namespace Shard
             nwid = (float)(Math.Abs(Wid * cos) + Math.Abs(Ht * sin));
             nht = (float)(Math.Abs(Wid * sin) + Math.Abs(Ht * cos));
 
-            X = (float)MyRect.X + (Wid / 2);
-            Y = (float)MyRect.Y + (Ht / 2);
+            X = (float)MyRect.X + Wid / 2;
+            Y = (float)MyRect.Y + Ht / 2;
 
             Wid = nwid;
             Ht = nht;
 
-            if (RotateAtOffset) {
+            if (RotateAtOffset)
+            {
                 // Now we work out the X and Y based on the rotation of the body to 
                 // which this belongs,.
                 x1 = X - MyRect.Centre.X;
@@ -89,8 +91,8 @@ namespace Shard
                 x2 = (float)(x1 * Math.Cos(angle) - y1 * Math.Sin(angle));
                 y2 = (float)(x1 * Math.Sin(angle) + y1 * Math.Cos(angle));
 
-                X = x2 + (float)MyRect.Centre.X;
-                Y = y2 + (float)MyRect.Centre.Y;
+                X = x2 + MyRect.Centre.X;
+                Y = y2 + MyRect.Centre.Y;
             }
 
             MinAndMaxX[0] = X - Wid / 2;

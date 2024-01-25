@@ -26,13 +26,12 @@
 *   
 */
 
-using System;
-using System.Collections.Generic;
+using Kintsugi.Core;
+using Kintsugi.Physics.Colliders;
 using System.Drawing;
-using System.Linq;
 using System.Numerics;
 
-namespace Shard
+namespace Kintsugi.Physics
 {
     public class PhysicsBody
     {
@@ -83,7 +82,7 @@ namespace Shard
         public bool UsesGravity { get => usesGravity; set => usesGravity = value; }
         public bool StopOnCollision { get => stopOnCollision; set => stopOnCollision = value; }
         public bool ReflectOnCollision { get => reflectOnCollision; set => reflectOnCollision = value; }
-        public bool ImpartForce { get => this.impartForce; set => this.impartForce = value; }
+        public bool ImpartForce { get => impartForce; set => impartForce = value; }
 
         public void drawMe()
         {
@@ -95,7 +94,7 @@ namespace Shard
 
         public float[] getMinAndMax(bool x)
         {
-            float min = Int32.MaxValue;
+            float min = int.MaxValue;
             float max = -1 * min;
             float[] tmp;
 
@@ -206,7 +205,7 @@ namespace Shard
         {
             Vector2 reflect = new Vector2(0, 0);
 
-            Debug.Log ("Reflecting " + impulse);
+            Debug.Log("Reflecting " + impulse);
 
             // We're being pushed to the right, so we must have collided with the right.
             if (impulse.X > 0)
@@ -241,11 +240,13 @@ namespace Shard
 
         }
 
-        public void reduceForces(float prop) {
+        public void reduceForces(float prop)
+        {
             force *= prop;
         }
 
-        public void addForce(Vector2 dir, float force) {
+        public void addForce(Vector2 dir, float force)
+        {
             addForce(dir * force);
         }
 
@@ -310,7 +311,7 @@ namespace Shard
 
             force = this.force.Length();
 
-			trans.translate(this.force);
+            trans.translate(this.force);
 
             if (force < Drag)
             {
@@ -318,7 +319,7 @@ namespace Shard
             }
             else if (force > 0)
             {
-                this.force = (this.force / force) * (force - Drag);
+                this.force = this.force / force * (force - Drag);
             }
 
 
@@ -397,7 +398,7 @@ namespace Shard
         {
             Vector2? d;
 
-//            Debug.Log("Checking collision with " + other);
+            //            Debug.Log("Checking collision with " + other);
             foreach (Collider c in myColliders)
             {
                 d = c.checkCollision(other);

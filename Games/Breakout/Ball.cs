@@ -1,4 +1,5 @@
-﻿using Shard;
+﻿using Kintsugi.Core;
+using Kintsugi.Physics;
 using System.Numerics;
 
 namespace GameBreakout
@@ -50,24 +51,24 @@ namespace GameBreakout
 
         public void onCollisionEnter(PhysicsBody other)
         {
-            
-                        if (other.Parent.checkTag("Paddle"))
-                        {
-//                            Debug.Log ("Hit the Paddle");
-                            Dir = new Vector2(Transform.Centre.X - other.Trans.Centre.X, LastDir.Y * -1);
-                        }
 
-                        if (other.Parent.checkTag("Brick"))
-                        {
-//                            Debug.Log("Hit the Brick");
+            if (other.Parent.checkTag("Paddle"))
+            {
+                //                            Debug.Log ("Hit the Paddle");
+                Dir = new Vector2(Transform.Centre.X - other.Trans.Centre.X, LastDir.Y * -1);
+            }
 
-//                            Dir = new Shard.Vector();
-//                            Dir.X = (float)(Transform.Centre.X - other.Trans.Centre.X);
-//                            Dir.Y = (float)(Transform.Centre.Y - other.Trans.Centre.Y);
+            if (other.Parent.checkTag("Brick"))
+            {
+                //                            Debug.Log("Hit the Brick");
 
-                        }
+                //                            Dir = new Shard.Vector();
+                //                            Dir.X = (float)(Transform.Centre.X - other.Trans.Centre.X);
+                //                            Dir.Y = (float)(Transform.Centre.Y - other.Trans.Centre.Y);
 
-              
+            }
+
+
 
         }
 
@@ -138,7 +139,7 @@ namespace GameBreakout
             if (Dir != Vector2.Zero)
             {
 
-                Dir = Vector2.Normalize (Dir);
+                Dir = Vector2.Normalize(Dir);
 
                 if (Dir.Y > -0.2f && Dir.Y < 0)
                 {

@@ -6,10 +6,10 @@
 *   
 */
 
+using Kintsugi.Core;
 using SDL2;
-using System;
 
-namespace Shard
+namespace Kintsugi.Audio
 {
     public class SoundSDL : Sound
     {
@@ -17,12 +17,12 @@ namespace Shard
         {
             SDL.SDL_AudioSpec have, want;
             uint length, dev;
-            IntPtr buffer;
+            nint buffer;
 
             file = Bootstrap.getAssetManager().getAssetPath(file);
 
             SDL.SDL_LoadWAV(file, out have, out buffer, out length);
-            dev = SDL.SDL_OpenAudioDevice(IntPtr.Zero, 0, ref have, out want, 0);
+            dev = SDL.SDL_OpenAudioDevice(nint.Zero, 0, ref have, out want, 0);
 
             int success = SDL.SDL_QueueAudio(dev, buffer, length);
             SDL.SDL_PauseAudioDevice(dev, 0);

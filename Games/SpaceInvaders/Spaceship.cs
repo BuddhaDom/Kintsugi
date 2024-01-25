@@ -1,5 +1,7 @@
-﻿using SDL2;
-using Shard;
+﻿using Kintsugi.Core;
+using Kintsugi.Input;
+using Kintsugi.Physics;
+using SDL2;
 using System.Drawing;
 
 namespace SpaceInvaders

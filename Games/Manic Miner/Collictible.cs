@@ -1,5 +1,5 @@
-﻿using Shard;
-using System;
+﻿using Kintsugi.Core;
+using Kintsugi.Physics;
 using System.Drawing;
 
 namespace ManicMiner
@@ -10,8 +10,8 @@ namespace ManicMiner
         public override void initialize()
         {
             setPhysicsEnabled();
-            
-            addTag ("Collectible");
+
+            addTag("Collectible");
             MyBody.addRectCollider((int)Transform.X, (int)Transform.Y, 10, 10);
             MyBody.PassThrough = true;
 
@@ -43,7 +43,8 @@ namespace ManicMiner
 
         public void onCollisionEnter(PhysicsBody x)
         {
-            if (x.Parent.checkTag ("MinerWilly")) {
+            if (x.Parent.checkTag("MinerWilly"))
+            {
                 this.ToBeDestroyed = true;
             }
 

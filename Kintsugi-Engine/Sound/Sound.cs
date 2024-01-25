@@ -6,7 +6,7 @@
 *   
 */
 
-namespace Shard
+namespace Kintsugi.Audio
 {
     abstract public class Sound
     {

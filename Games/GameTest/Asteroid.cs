@@ -1,4 +1,6 @@
-﻿using Shard;
+﻿using Kintsugi.Core;
+using Kintsugi.Input;
+using Kintsugi.Physics;
 using System.Numerics;
 
 namespace GameTest
@@ -57,7 +59,7 @@ namespace GameTest
             {
                 torqueCounter -= 1;
             }
-            
+
 
 
         }

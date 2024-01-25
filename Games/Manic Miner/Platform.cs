@@ -1,5 +1,5 @@
-﻿using Shard;
-using System;
+﻿using Kintsugi.Core;
+using Kintsugi.Physics;
 
 namespace ManicMiner
 {
@@ -23,15 +23,13 @@ namespace ManicMiner
             MyBody.addRectCollider();
             MyBody.Mass = 10;
             MyBody.Kinematic = true;
-            
+
 
             this.Transform.SpritePath = Bootstrap.getAssetManager().getAssetPath("platform.png");
-
-
-
         }
 
-        public void setPosition(int x, int y, int dist, int speed) {
+        public void setPosition(int x, int y, int dist, int speed)
+        {
             origX = x;
             origY = y;
 
@@ -45,7 +43,7 @@ namespace ManicMiner
 
             MoveSpeed = speed;
 
-            Transform.translate (x, y);
+            Transform.translate(x, y);
         }
 
         public void onCollisionEnter(PhysicsBody x)
@@ -67,11 +65,13 @@ namespace ManicMiner
             {
                 Transform.translate(0, moveSpeed * moveDirY * Bootstrap.getDeltaTime());
 
-                if (Transform.Y > maxY) {
+                if (Transform.Y > maxY)
+                {
                     MoveDirY = -1;
                 }
-            
-                if (Transform.Y < minY) {
+
+                if (Transform.Y < minY)
+                {
                     MoveDirY = 1;
 
                 }
@@ -93,8 +93,6 @@ namespace ManicMiner
 
                 }
             }
-
-
 
             Bootstrap.getDisplay().addToDraw(this);
         }

@@ -8,7 +8,7 @@
 *   
 */
 
-namespace Shard
+namespace Kintsugi.Core
 {
     public class Transform3D : Transform
     {

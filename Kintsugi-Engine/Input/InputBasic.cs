@@ -7,9 +7,9 @@
 *   
 */
 
-using System;
+using Kintsugi.Core;
 
-namespace Shard
+namespace Kintsugi.Input
 {
     public class InputBasic : InputSystem
     {
@@ -26,7 +26,7 @@ namespace Shard
 
             ie = new InputEvent();
 
-            ie.Key = (int)cki.KeyChar;
+            ie.Key = cki.KeyChar;
 
             informListeners(ie, "KeyDown");
             informListeners(ie, "KeyUp");
