@@ -11,8 +11,11 @@
 *   
 */
 
+using DearImguiSharp;
 using Kintsugi.Core;
 using SDL2;
+using System.Runtime.InteropServices;
+using System.Security;
 
 namespace Kintsugi.Rendering
 {
@@ -56,6 +59,7 @@ namespace Kintsugi.Rendering
         private Dictionary<string, nint> spriteBuffer;
         public override void Initialize()
         {
+
             spriteBuffer = new Dictionary<string, nint>();
 
             base.Initialize();
@@ -64,8 +68,42 @@ namespace Kintsugi.Rendering
             _linesToDraw = new List<Line>();
             _circlesToDraw = new List<Circle>();
 
-
+            InitializeImgui();
         }
+
+        [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl, EntryPoint = "ImGui_ImplSDLRenderer2_Init")]
+        [SuppressUnmanagedCodeSecurity]
+        public static extern bool ImGuiImplSDLRenderer2Init(IntPtr renderer);
+        [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl, EntryPoint = "ImGui_ImplSDLRenderer2_NewFrame")]
+        [SuppressUnmanagedCodeSecurity]
+        public static extern bool ImGuiImplSDLRenderer2NewFrame(IntPtr renderer);
+
+        [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl, EntryPoint = "ImGui_ImplSDLRenderer2_RenderDrawData")]
+        [SuppressUnmanagedCodeSecurity]
+        public static extern bool ImGuiImplSDLRenderer2RenderDrawData(IntPtr drawData);
+
+        void InitializeImgui()
+        {
+            // CHECK VERSION
+            ImGui.CreateContext(null);
+            var IO = ImGui.GetIO();
+            IO.ConfigFlags |= (int)ImGuiConfigFlags.NavEnableKeyboard;     // Enable Keyboard Controls
+            IO.ConfigFlags |= (int)ImGuiConfigFlags.NavEnableKeyboard;     // Enable Gamepad Controls
+
+            ImGui.StyleColorsDark(null);
+
+            unsafe // dw about it
+            {
+                ImGui.ImGuiImplSDL2InitForVulkan(new SDL_Window((void*)_window));
+                /*
+                ImGui.ImGuiImplSDL2InitForSDLRenderer(
+                    new SDL_Window((void*)_window),
+                    new SDL_Renderer((void*)_rend));*/
+            }
+
+            ImGuiImplSDLRenderer2Init(_rend);
+        }
+
 
         public nint LoadTexture(Transform trans)
         {
@@ -248,11 +286,23 @@ namespace Kintsugi.Rendering
                 SDL.SDL_RenderDrawLine(_rend, l.Sx, l.Sy, l.Ex, l.Ey);
             }
 
+            ImGuiImplSDLRenderer2NewFrame(_rend);
+            ImGui.ImGuiImplSDL2NewFrame();
+            ImGui.NewFrame();
+
+
+            ImGui.ShowDemoWindow(ref open);
+
+            ImGui.Render();
+
+            ImGuiImplSDLRenderer2RenderDrawData(ImGui.GetDrawData().__Instance);
+
             // Show it off.
             base.Display();
 
 
         }
+        bool open = true;
 
         public override void ClearDisplay()
         {
