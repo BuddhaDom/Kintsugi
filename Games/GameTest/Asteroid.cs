@@ -1,17 +1,19 @@
-﻿using Shard;
+﻿using Kintsugi.Core;
+using Kintsugi.Input;
+using Kintsugi.Physics;
 using System.Numerics;
 
 namespace GameTest
 {
-    class Asteroid : GameObject, CollisionHandler, InputListener
+    class Asteroid : GameObject, ICollisionHandler, IInputListener
     {
         int torqueCounter = 0;
-        public void handleInput(InputEvent inp, string eventType)
+        public void HandleInput(InputEvent inp, string eventType)
         {
 
             if (eventType == "MouseDown" && inp.Button == 2)
             {
-                if (MyBody.checkCollisions(new Vector2(inp.X, inp.Y)) != null)
+                if (MyBody.CheckCollisions(new Vector2(inp.X, inp.Y)) != null)
                 {
                     torqueCounter += 10;
                 }
@@ -20,11 +22,11 @@ namespace GameTest
 
         }
 
-        public override void initialize()
+        public override void Initialize()
         {
-            this.Transform.SpritePath = Bootstrap.getAssetManager().getAssetPath("asteroid.png");
+            this.Transform.SpritePath = Bootstrap.GetAssetManager().GetAssetPath("asteroid.png");
 
-            setPhysicsEnabled();
+            SetPhysicsEnabled();
 
             MyBody.MaxTorque = 100;
             MyBody.Mass = 1;
@@ -36,55 +38,55 @@ namespace GameTest
             //            MyBody.Kinematic = true;
 
 
-            MyBody.addForce(this.Transform.Right, 20.5f);
-            //            MyBody.addCircleCollider(32, 32, 30);
-            MyBody.addRectCollider();
-            Bootstrap.getInput().addListener(this);
+            MyBody.AddForce(this.Transform.Right, 20.5f);
+            //            MyBody.AddCircleCollider(32, 32, 30);
+            MyBody.AddRectCollider();
+            Bootstrap.GetInput().AddListener(this);
 
-            addTag("Asteroid");
+            AddTag("Asteroid");
 
         }
 
 
-        public override void physicsUpdate()
+        public override void PhysicsUpdate()
         {
             for (int i = 0; i < torqueCounter; i++)
             {
-                MyBody.addTorque(0.1f);
+                MyBody.AddTorque(0.1f);
             }
 
             if (torqueCounter > 0)
             {
                 torqueCounter -= 1;
             }
-            
+
 
 
         }
 
-        public override void update()
+        public override void Update()
         {
-            Bootstrap.getDisplay().addToDraw(this);
+            Bootstrap.GetDisplay().AddToDraw(this);
         }
 
-        public void onCollisionEnter(PhysicsBody x)
+        public void OnCollisionEnter(PhysicsBody x)
         {
-            if (x.Parent.checkTag("Bullet") == true)
+            if (x.Parent.CheckTag("Bullet") == true)
             {
                 ToBeDestroyed = true;
-                Debug.getInstance().log("Boom");
+                Debug.Log("Boom");
             }
 
-            Debug.getInstance().log("Bang");
+            Debug.Log("Bang");
 
         }
 
-        public void onCollisionExit(PhysicsBody x)
+        public void OnCollisionExit(PhysicsBody x)
         {
-            Debug.getInstance().log("Anti Bang");
+            Debug.Log("Anti Bang");
         }
 
-        public void onCollisionStay(PhysicsBody x)
+        public void OnCollisionStay(PhysicsBody x)
         {
         }
 

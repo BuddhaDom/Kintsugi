@@ -26,20 +26,19 @@
 *   
 */
 
-using System;
-using System.Collections.Generic;
+using Kintsugi.Core;
+using Kintsugi.Physics.Colliders;
 using System.Drawing;
-using System.Linq;
 using System.Numerics;
 
-namespace Shard
+namespace Kintsugi.Physics
 {
     public class PhysicsBody
     {
         List<Collider> myColliders;
         List<Collider> collisionCandidates;
         GameObject parent;
-        CollisionHandler colh;
+        ICollisionHandler colh;
         Transform trans;
         private float angularDrag;
         private float drag;
@@ -60,12 +59,12 @@ namespace Shard
         private float[] minAndMaxX;
         private float[] minAndMaxY;
 
-        public void applyGravity(float modifier, Vector2 dir)
+        internal void ApplyGravity(float modifier, Vector2 dir)
         {
 
             Vector2 gf = dir * modifier;
 
-            addForce(gf);
+            AddForce(gf);
 
         }
 
@@ -83,19 +82,19 @@ namespace Shard
         public bool UsesGravity { get => usesGravity; set => usesGravity = value; }
         public bool StopOnCollision { get => stopOnCollision; set => stopOnCollision = value; }
         public bool ReflectOnCollision { get => reflectOnCollision; set => reflectOnCollision = value; }
-        public bool ImpartForce { get => this.impartForce; set => this.impartForce = value; }
+        public bool ImpartForce { get => impartForce; set => impartForce = value; }
 
-        public void drawMe()
+        public void DrawMe()
         {
             foreach (Collider col in myColliders)
             {
-                col.drawMe(DebugColor);
+                col.DrawMe(DebugColor);
             }
         }
 
-        public float[] getMinAndMax(bool x)
+        public float[] GetMinAndMax(bool x)
         {
-            float min = Int32.MaxValue;
+            float min = int.MaxValue;
             float max = -1 * min;
             float[] tmp;
 
@@ -136,7 +135,7 @@ namespace Shard
 
             Parent = p;
             Trans = p.Transform;
-            colh = (CollisionHandler)p;
+            colh = (ICollisionHandler)p;
 
             AngularDrag = 0.01f;
             Drag = 0.01f;
@@ -151,13 +150,13 @@ namespace Shard
             MinAndMaxX = new float[2];
             MinAndMaxY = new float[2];
 
-            timeInterval = PhysicsManager.getInstance().TimeInterval;
-            //            Debug.getInstance().log ("Setting physics enabled");
+            timeInterval = PhysicsManager.GetInstance().TimeInterval;
+            //            Debug.GetInstance().Log ("Setting physics enabled");
 
-            PhysicsManager.getInstance().addPhysicsObject(this);
+            PhysicsManager.GetInstance().AddPhysicsObject(this);
         }
 
-        public void addTorque(float dir)
+        public void AddTorque(float dir)
         {
             if (Kinematic)
             {
@@ -179,7 +178,7 @@ namespace Shard
 
         }
 
-        public void reverseForces(float prop)
+        public void ReverseForces(float prop)
         {
             if (Kinematic)
             {
@@ -189,24 +188,24 @@ namespace Shard
             force *= -prop;
         }
 
-        public void impartForces(PhysicsBody other, float massProp)
+        public void ImpartForces(PhysicsBody other, float massProp)
         {
-            other.addForce(force * massProp);
+            other.AddForce(force * massProp);
 
-            recalculateColliders();
+            RecalculateColliders();
 
         }
 
-        public void stopForces()
+        public void StopForces()
         {
             force = Vector2.Zero;
         }
 
-        public void reflectForces(Vector2 impulse)
+        public void ReflectForces(Vector2 impulse)
         {
             Vector2 reflect = new Vector2(0, 0);
 
-            Debug.Log ("Reflecting " + impulse);
+            Debug.Log("Reflecting " + impulse);
 
             // We're being pushed to the right, so we must have collided with the right.
             if (impulse.X > 0)
@@ -241,15 +240,17 @@ namespace Shard
 
         }
 
-        public void reduceForces(float prop) {
+        public void ReduceForces(float prop)
+        {
             force *= prop;
         }
 
-        public void addForce(Vector2 dir, float force) {
-            addForce(dir * force);
+        public void AddForce(Vector2 dir, float force)
+        {
+            AddForce(dir * force);
         }
 
-        public void addForce(Vector2 dir)
+        public void AddForce(Vector2 dir)
         {
             if (Kinematic)
             {
@@ -273,18 +274,18 @@ namespace Shard
             }
         }
 
-        public void recalculateColliders()
+        public void RecalculateColliders()
         {
-            foreach (Collider col in getColliders())
+            foreach (Collider col in GetColliders())
             {
-                col.recalculate();
+                col.Recalculate();
             }
 
-            MinAndMaxX = getMinAndMax(true);
-            MinAndMaxY = getMinAndMax(false);
+            MinAndMaxX = GetMinAndMax(true);
+            MinAndMaxY = GetMinAndMax(false);
         }
 
-        public void physicsTick()
+        public void PhysicsTick()
         {
             List<Vector2> toRemove;
             float force;
@@ -306,19 +307,19 @@ namespace Shard
 
 
 
-            trans.rotate(rot);
+            trans.Rotate(rot);
 
             force = this.force.Length();
 
-			trans.translate(this.force);
+            trans.Translate(this.force);
 
             if (force < Drag)
             {
-                stopForces();
+                StopForces();
             }
             else if (force > 0)
             {
-                this.force = (this.force / force) * (force - Drag);
+                this.force = this.force / force * (force - Drag);
             }
 
 
@@ -326,62 +327,62 @@ namespace Shard
         }
 
 
-        public ColliderRect addRectCollider()
+        public ColliderRect AddRectCollider()
         {
-            ColliderRect cr = new ColliderRect((CollisionHandler)parent, parent.Transform);
+            ColliderRect cr = new ColliderRect((ICollisionHandler)parent, parent.Transform);
 
-            addCollider(cr);
+            AddCollider(cr);
 
             return cr;
         }
 
-        public ColliderCircle addCircleCollider()
+        public ColliderCircle AddCircleCollider()
         {
-            ColliderCircle cr = new ColliderCircle((CollisionHandler)parent, parent.Transform);
+            ColliderCircle cr = new ColliderCircle((ICollisionHandler)parent, parent.Transform);
 
-            addCollider(cr);
+            AddCollider(cr);
 
             return cr;
         }
 
-        public ColliderCircle addCircleCollider(int x, int y, int rad)
+        public ColliderCircle AddCircleCollider(int x, int y, int rad)
         {
-            ColliderCircle cr = new ColliderCircle((CollisionHandler)parent, parent.Transform, x, y, rad);
+            ColliderCircle cr = new ColliderCircle((ICollisionHandler)parent, parent.Transform, x, y, rad);
 
-            addCollider(cr);
-
-            return cr;
-        }
-
-
-        public ColliderRect addRectCollider(int x, int y, int wid, int ht)
-        {
-            ColliderRect cr = new ColliderRect((CollisionHandler)parent, parent.Transform, x, y, wid, ht);
-
-            addCollider(cr);
+            AddCollider(cr);
 
             return cr;
         }
 
 
-        public void addCollider(Collider col)
+        public ColliderRect AddRectCollider(int x, int y, int wid, int ht)
+        {
+            ColliderRect cr = new ColliderRect((ICollisionHandler)parent, parent.Transform, x, y, wid, ht);
+
+            AddCollider(cr);
+
+            return cr;
+        }
+
+
+        public void AddCollider(Collider col)
         {
             myColliders.Add(col);
         }
 
-        public List<Collider> getColliders()
+        public List<Collider> GetColliders()
         {
             return myColliders;
         }
 
-        public Vector2? checkCollisions(Vector2 other)
+        public Vector2? CheckCollisions(Vector2 other)
         {
             Vector2? d;
 
 
             foreach (Collider c in myColliders)
             {
-                d = c.checkCollision(other);
+                d = c.CheckCollision(other);
 
                 if (d != null)
                 {
@@ -393,14 +394,14 @@ namespace Shard
         }
 
 
-        public Vector2? checkCollisions(Collider other)
+        public Vector2? CheckCollisions(Collider other)
         {
             Vector2? d;
 
-//            Debug.Log("Checking collision with " + other);
+            //            Debug.Log("Checking collision with " + other);
             foreach (Collider c in myColliders)
             {
-                d = c.checkCollision(other);
+                d = c.CheckCollision(other);
 
                 if (d != null)
                 {

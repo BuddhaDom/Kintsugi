@@ -12,10 +12,9 @@
 */
 
 
-using System;
 using System.Numerics;
 
-namespace Shard
+namespace Kintsugi.Core
 {
 
     public class Transform
@@ -30,11 +29,11 @@ namespace Shard
         private Vector2 forward;
         private Vector2 right, centre;
 
-        public Vector2 getLastDirection()
+        public Vector2 GetLastDirection()
         {
             float dx, dy;
-            dx = (X - Lx);
-            dy = (Y - Ly);
+            dx = X - Lx;
+            dy = Y - Ly;
 
             return new Vector2(-dx, -dy);
         }
@@ -55,47 +54,47 @@ namespace Shard
             lx = 0;
             ly = 0;
 
-            rotate(0);
+            Rotate(0);
         }
 
 
-        public void recalculateCentre()
+        public void RecalculateCentre()
         {
 
-            centre.X = (float)(x + ((this.Wid * scalex) / 2));
-            centre.Y = (float)(y + ((this.Ht * scaley) / 2));
+            centre.X = x + Wid * scalex / 2;
+            centre.Y = y + Ht * scaley / 2;
 
         }
 
-        public void translate(double nx, double ny)
+        public void Translate(double nx, double ny)
         {
-            translate ((float)nx, (float)ny);
+            Translate((float)nx, (float)ny);
         }
 
 
 
-        public void translate(float nx, float ny)
+        public void Translate(float nx, float ny)
         {
             Lx = X;
             Ly = Y;
 
-            x += (float)nx;
-            y += (float)ny;
+            x += nx;
+            y += ny;
 
 
-            recalculateCentre();
+            RecalculateCentre();
         }
 
-        public void translate(Vector2 vect)
+        public void Translate(Vector2 vect)
         {
-            translate(vect.X, vect.Y);
+            Translate(vect.X, vect.Y);
         }
 
 
 
-        public void rotate(float dir)
+        public void Rotate(float dir)
         {
-            rotz += (float)dir;
+            rotz += dir;
 
             rotz %= 360;
 

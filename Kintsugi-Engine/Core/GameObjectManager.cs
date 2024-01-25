@@ -1,6 +1,6 @@
 ﻿/*
 *
-*   This manager class makes sure update gets called when it should on all the game objects, 
+*   This manager class makes sure Update gets called when it should on all the game objects, 
 *       and also handles the pre-physics and post-physics ticks.  It also deals with 
 *       transient objects (like bullets) and removing destroyed game objects from the system.
 *   @author Michael Heron
@@ -8,9 +8,7 @@
 *   
 */
 
-using System.Collections.Generic;
-
-namespace Shard
+namespace Kintsugi.Core
 {
     public class GameObjectManager
     {
@@ -22,7 +20,7 @@ namespace Shard
             myObjects = new List<GameObject>();
         }
 
-        public static GameObjectManager getInstance()
+        public static GameObjectManager GetInstance()
         {
             if (me == null)
             {
@@ -32,40 +30,40 @@ namespace Shard
             return me;
         }
 
-        public void addGameObject(GameObject gob)
+        public void AddGameObject(GameObject gob)
         {
             myObjects.Add(gob);
 
         }
 
-        public void removeGameObject(GameObject gob)
+        public void RemoveGameObject(GameObject gob)
         {
             myObjects.Remove(gob);
         }
 
 
-        public void physicsUpdate()
+        public void PhysicsUpdate()
         {
             GameObject gob;
             for (int i = 0; i < myObjects.Count; i++)
             {
                 gob = myObjects[i];
-                gob.physicsUpdate();
+                gob.PhysicsUpdate();
             }
         }
 
-        public void prePhysicsUpdate()
+        public void PrePhysicsUpdate()
         {
             GameObject gob;
             for (int i = 0; i < myObjects.Count; i++)
             {
                 gob = myObjects[i];
 
-                gob.prePhysicsUpdate();
+                gob.PrePhysicsUpdate();
             }
         }
 
-        public void update()
+        public void Update()
         {
             List<int> toDestroy = new List<int>();
             GameObject gob;
@@ -73,9 +71,9 @@ namespace Shard
             {
                 gob = myObjects[i];
 
-                gob.update();
+                gob.Update();
 
-                gob.checkDestroyMe();
+                gob.CheckDestroyMe();
 
                 if (gob.ToBeDestroyed == true)
                 {
@@ -88,7 +86,7 @@ namespace Shard
                 for (int i = toDestroy.Count - 1; i >= 0; i--)
                 {
                     gob = myObjects[toDestroy[i]];
-                    myObjects[toDestroy[i]].killMe();
+                    myObjects[toDestroy[i]].KillMe();
                     myObjects.RemoveAt(toDestroy[i]);
 
                 }

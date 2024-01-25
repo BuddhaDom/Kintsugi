@@ -11,12 +11,10 @@
 *   
 */
 
+using Kintsugi.Core;
 using SDL2;
-using System;
-using System.Collections.Generic;
-using System.Threading;
 
-namespace Shard
+namespace Kintsugi.Rendering
 {
 
     public class Line
@@ -55,12 +53,12 @@ namespace Shard
         private List<Transform> _toDraw;
         private List<Line> _linesToDraw;
         private List<Circle> _circlesToDraw;
-        private Dictionary<string, IntPtr> spriteBuffer;
-        public override void initialize()
+        private Dictionary<string, nint> spriteBuffer;
+        public override void Initialize()
         {
-            spriteBuffer = new Dictionary<string, IntPtr>();
+            spriteBuffer = new Dictionary<string, nint>();
 
-            base.initialize();
+            base.Initialize();
 
             _toDraw = new List<Transform>();
             _linesToDraw = new List<Line>();
@@ -69,38 +67,38 @@ namespace Shard
 
         }
 
-        public IntPtr loadTexture(Transform trans)
+        public nint LoadTexture(Transform trans)
         {
-            IntPtr ret;
+            nint ret;
             uint format;
             int access;
             int w;
             int h;
 
-            ret = loadTexture(trans.SpritePath);
+            ret = LoadTexture(trans.SpritePath);
 
             SDL.SDL_QueryTexture(ret, out format, out access, out w, out h);
             trans.Ht = h;
             trans.Wid = w;
-            trans.recalculateCentre();
+            trans.RecalculateCentre();
 
             return ret;
 
         }
 
 
-        public IntPtr loadTexture(string path)
+        public nint LoadTexture(string path)
         {
-            IntPtr img;
+            nint img;
 
-            if (spriteBuffer.ContainsKey(path))
+            if (spriteBuffer.TryGetValue(path, out nint value))
             {
-                return spriteBuffer[path];
+                return value;
             }
 
             img = SDL_image.IMG_Load(path);
 
-            Debug.getInstance().log("IMG_Load: " + SDL_image.IMG_GetError());
+            Debug.Log("IMG_Load: " + SDL_image.IMG_GetError());
 
             spriteBuffer[path] = SDL.SDL_CreateTextureFromSurface(_rend, img);
 
@@ -111,7 +109,7 @@ namespace Shard
         }
 
 
-        public override void addToDraw(GameObject gob)
+        public override void AddToDraw(GameObject gob)
         {
             _toDraw.Add(gob.Transform);
 
@@ -120,28 +118,28 @@ namespace Shard
                 return;
             }
 
-            loadTexture(gob.Transform.SpritePath);
+            LoadTexture(gob.Transform.SpritePath);
         }
 
-        public override void removeToDraw(GameObject gob)
+        public override void RemoveToDraw(GameObject gob)
         {
             _toDraw.Remove(gob.Transform);
         }
 
 
-        void renderCircle(int centreX, int centreY, int rad)
+        void RenderCircle(int centreX, int centreY, int rad)
         {
-            int dia = (rad * 2);
+            int dia = rad * 2;
             byte r, g, b, a;
-            int x = (rad - 1);
+            int x = rad - 1;
             int y = 0;
             int tx = 1;
             int ty = 1;
-            int error = (tx - dia);
+            int error = tx - dia;
 
             SDL.SDL_GetRenderDrawColor(_rend, out r, out g, out b, out a);
 
-            // We draw an octagon around the point, and then turn it a bit.  Do 
+            // We Draw an octagon around the point, and then turn it a bit.  Do 
             // that until we have an outline circle.  If you want a filled one, 
             // do the same thing with an ever decreasing radius.
             while (x >= y)
@@ -167,44 +165,47 @@ namespace Shard
                 {
                     x -= 1;
                     tx += 2;
-                    error += (tx - dia);
+                    error += tx - dia;
                 }
 
             }
         }
 
-        public override void drawCircle(int x, int y, int rad, int r, int g, int b, int a)
+        public override void DrawCircle(int x, int y, int rad, int r, int g, int b, int a)
         {
-            Circle c = new Circle();
+            Circle c = new()
+            {
+                X = x,
+                Y = y,
+                Radius = rad,
 
-            c.X = x;
-            c.Y = y;
-            c.Radius = rad;
-
-            c.R = r;
-            c.G = g;
-            c.B = b;
-            c.A = a;
+                R = r,
+                G = g,
+                B = b,
+                A = a
+            };
 
             _circlesToDraw.Add(c);
         }
-        public override void drawLine(int x, int y, int x2, int y2, int r, int g, int b, int a)
+        public override void DrawLine(int x, int y, int x2, int y2, int r, int g, int b, int a)
         {
-            Line l = new Line();
-            l.Sx = x;
-            l.Sy = y;
-            l.Ex = x2;
-            l.Ey = y2;
+            Line l = new()
+            {
+                Sx = x,
+                Sy = y,
+                Ex = x2,
+                Ey = y2,
 
-            l.R = r;
-            l.G = g;
-            l.B = b;
-            l.A = a;
+                R = r,
+                G = g,
+                B = b,
+                A = a
+            };
 
             _linesToDraw.Add(l);
         }
 
-        public override void display()
+        public override void Display()
         {
 
             SDL.SDL_Rect sRect;
@@ -220,7 +221,7 @@ namespace Shard
                     continue;
                 }
 
-                var sprite = loadTexture(trans);
+                var sprite = LoadTexture(trans);
 
                 sRect.x = 0;
                 sRect.y = 0;
@@ -232,13 +233,13 @@ namespace Shard
                 tRect.w = sRect.w;
                 tRect.h = sRect.h;
 
-                SDL.SDL_RenderCopyEx(_rend, sprite, ref sRect, ref tRect, (int)trans.Rotz, IntPtr.Zero, SDL.SDL_RendererFlip.SDL_FLIP_NONE);
+                SDL.SDL_RenderCopyEx(_rend, sprite, ref sRect, ref tRect, (int)trans.Rotz, nint.Zero, SDL.SDL_RendererFlip.SDL_FLIP_NONE);
             }
 
             foreach (Circle c in _circlesToDraw)
             {
                 SDL.SDL_SetRenderDrawColor(_rend, (byte)c.R, (byte)c.G, (byte)c.B, (byte)c.A);
-                renderCircle(c.X, c.Y, c.Radius);
+                RenderCircle(c.X, c.Y, c.Radius);
             }
 
             foreach (Line l in _linesToDraw)
@@ -248,19 +249,19 @@ namespace Shard
             }
 
             // Show it off.
-            base.display();
+            base.Display();
 
 
         }
 
-        public override void clearDisplay()
+        public override void ClearDisplay()
         {
 
             _toDraw.Clear();
             _circlesToDraw.Clear();
             _linesToDraw.Clear();
 
-            base.clearDisplay();
+            base.ClearDisplay();
         }
 
     }

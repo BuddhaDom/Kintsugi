@@ -6,16 +6,14 @@
 *   
 */
 
-using System;
-
-namespace Shard
+namespace Kintsugi.Core
 {
     public class Debug
     {
-        public static int DEBUG_LEVEL_NONE = 0;
-        public static int DEBUG_LEVEL_ERROR = 1;
-        public static int DEBUG_LEVEL_WARNING = 2;
-        public static int DEBUG_LEVEL_ALL = 3;
+        public static readonly int DEBUG_LEVEL_NONE = 0;
+        public static readonly int DEBUG_LEVEL_ERROR = 1;
+        public static readonly int DEBUG_LEVEL_WARNING = 2;
+        public static readonly int DEBUG_LEVEL_ALL = 3;
 
         private static Debug me;
         private int debugLevel;
@@ -25,7 +23,7 @@ namespace Shard
             debugLevel = DEBUG_LEVEL_ALL;
         }
 
-        public static Debug getInstance()
+        public static Debug GetInstance()
         {
             if (me == null)
             {
@@ -35,12 +33,12 @@ namespace Shard
             return me;
         }
 
-        public void setDebugLevel(int d)
+        public void SetDebugLevel(int d)
         {
             debugLevel = d;
         }
 
-        public void log(string message, int level)
+        public void Log(string message, int level)
         {
             if (debugLevel == DEBUG_LEVEL_NONE)
             {
@@ -53,15 +51,15 @@ namespace Shard
             }
         }
 
-        public void log(string message)
+        public void LogInst(string message)
         {
-            log(message, DEBUG_LEVEL_ALL);
+            Log(message, DEBUG_LEVEL_ALL);
         }
 
 
         public static void Log(string message)
         {
-            getInstance().log(message, DEBUG_LEVEL_ALL);
+            GetInstance().Log(message, DEBUG_LEVEL_ALL);
         }
 
     }

@@ -8,9 +8,10 @@
 *   
 */
 
+using Kintsugi.Core;
 using SDL2;
 
-namespace Shard
+namespace Kintsugi.Input
 {
 
     // We'll be using SDL2 here to provide our underlying input system.
@@ -18,14 +19,14 @@ namespace Shard
     {
 
         double tick, timeInterval;
-        public override void getInput()
+        public override void GetInput()
         {
 
             SDL.SDL_Event ev;
             int res;
             InputEvent ie;
 
-            tick += Bootstrap.getDeltaTime();
+            tick += Bootstrap.GetDeltaTime();
 
             if (tick < timeInterval)
             {
@@ -54,7 +55,7 @@ namespace Shard
                     ie.X = mot.x;
                     ie.Y = mot.y;
 
-                    informListeners(ie, "MouseMotion");
+                    InformListeners(ie, "MouseMotion");
                 }
 
                 if (ev.type == SDL.SDL_EventType.SDL_MOUSEBUTTONDOWN)
@@ -63,11 +64,11 @@ namespace Shard
 
                     butt = ev.button;
 
-                    ie.Button = (int)butt.button;
+                    ie.Button = butt.button;
                     ie.X = butt.x;
                     ie.Y = butt.y;
 
-                    informListeners(ie, "MouseDown");
+                    InformListeners(ie, "MouseDown");
                 }
 
                 if (ev.type == SDL.SDL_EventType.SDL_MOUSEBUTTONUP)
@@ -76,11 +77,11 @@ namespace Shard
 
                     butt = ev.button;
 
-                    ie.Button = (int)butt.button;
+                    ie.Button = butt.button;
                     ie.X = butt.x;
                     ie.Y = butt.y;
 
-                    informListeners(ie, "MouseUp");
+                    InformListeners(ie, "MouseUp");
                 }
 
                 if (ev.type == SDL.SDL_EventType.SDL_MOUSEWHEEL)
@@ -92,21 +93,21 @@ namespace Shard
                     ie.X = (int)wh.direction * wh.x;
                     ie.Y = (int)wh.direction * wh.y;
 
-                    informListeners(ie, "MouseWheel");
+                    InformListeners(ie, "MouseWheel");
                 }
 
 
                 if (ev.type == SDL.SDL_EventType.SDL_KEYDOWN)
                 {
                     ie.Key = (int)ev.key.keysym.scancode;
-                    Debug.getInstance().log("Keydown: " + ie.Key);
-                    informListeners(ie, "KeyDown");
+                    Debug.Log("Keydown: " + ie.Key);
+                    InformListeners(ie, "KeyDown");
                 }
 
                 if (ev.type == SDL.SDL_EventType.SDL_KEYUP)
                 {
                     ie.Key = (int)ev.key.keysym.scancode;
-                    informListeners(ie, "KeyUp");
+                    InformListeners(ie, "KeyUp");
                 }
 
                 tick -= timeInterval;
@@ -115,7 +116,7 @@ namespace Shard
 
         }
 
-        public override void initialize()
+        public override void Initialize()
         {
             tick = 0;
             timeInterval = 1.0 / 60.0;

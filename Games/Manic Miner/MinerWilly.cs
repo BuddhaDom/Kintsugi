@@ -1,10 +1,11 @@
-﻿using Shard;
-using System.Collections.Generic;
+﻿using Kintsugi.Core;
+using Kintsugi.Input;
+using Kintsugi.Physics;
 using SDL2;
 
 namespace ManicMiner
 {
-    class MinerWilly : GameObject, InputListener, CollisionHandler
+    class MinerWilly : GameObject, IInputListener, ICollisionHandler
     {
         private string sprite;
         private bool left, right, jumpUp, jumpDown, fall, canJump;
@@ -14,20 +15,20 @@ namespace ManicMiner
         private double speed = 100, jumpSpeed = 260;
         private double fallCounter;
 
-        public override void initialize()
+        public override void Initialize()
         {
             spriteName = "right";
             spriteCounter = 1;
-            setPhysicsEnabled();
-            MyBody.addRectCollider();
-            addTag("MinerWilly");
+            SetPhysicsEnabled();
+            MyBody.AddRectCollider();
+            AddTag("MinerWilly");
             spriteTimer = 0;
             jumpCount = 0;
             MyBody.Mass = 1;
-            Bootstrap.getInput().addListener(this);
+            Bootstrap.GetInput().AddListener(this);
 
 
-            Transform.translate (0, 800);
+            Transform.Translate(0, 800);
             MyBody.StopOnCollision = false;
             MyBody.Kinematic = false;
 
@@ -35,7 +36,7 @@ namespace ManicMiner
         }
 
 
-        public void handleInput(InputEvent inp, string eventType)
+        public void HandleInput(InputEvent inp, string eventType)
         {
             if (eventType == "KeyDown")
             {
@@ -56,55 +57,58 @@ namespace ManicMiner
                 if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_SPACE && canJump == true)
                 {
                     jumpUp = true;
-                    Debug.Log ("Jumping up");
+                    Debug.Log("Jumping up");
                 }
 
             }
 
             else if (eventType == "KeyUp")
+            {
+
+                if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_D)
                 {
+                    right = false;
 
-                    if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_D)
-                    {
-                        right = false;
+                }
 
-                    }
+                if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_A)
+                {
+                    left = false;
+                }
 
-                    if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_A)
-                    {
-                        left = false;
-                    }
 
-                   
 
             }
 
         }
 
-        public override void update()
+        public override void Update()
         {
 
 
             if (left)
             {
-                this.Transform.translate(-1 * speed * Bootstrap.getDeltaTime(), 0);
-                spriteTimer += Bootstrap.getDeltaTime();
+                this.Transform.Translate(-1 * speed * Bootstrap.GetDeltaTime(), 0);
+                spriteTimer += Bootstrap.GetDeltaTime();
             }
 
             if (right)
             {
-                this.Transform.translate(1 * speed * Bootstrap.getDeltaTime(), 0);
-                spriteTimer += Bootstrap.getDeltaTime();
+                this.Transform.Translate(1 * speed * Bootstrap.GetDeltaTime(), 0);
+                spriteTimer += Bootstrap.GetDeltaTime();
             }
 
-            if (jumpUp) {
+            if (jumpUp)
+            {
                 fall = false;
                 fallCounter = 0;
-                if (jumpCount < 0.3f) {
-                    this.Transform.translate(0, -1 * jumpSpeed * Bootstrap.getDeltaTime());
-                    jumpCount += Bootstrap.getDeltaTime();
+                if (jumpCount < 0.3f)
+                {
+                    this.Transform.Translate(0, -1 * jumpSpeed * Bootstrap.GetDeltaTime());
+                    jumpCount += Bootstrap.GetDeltaTime();
                 }
-                else {
+                else
+                {
                     jumpCount = 0;
                     jumpUp = false;
                     fall = true;
@@ -122,7 +126,7 @@ namespace ManicMiner
                 if (spriteCounter >= 4)
                 {
                     spriteCounterDir = -1;
-                    
+
                 }
 
                 if (spriteCounter <= 1)
@@ -134,31 +138,35 @@ namespace ManicMiner
 
             }
 
-            if (fall) {
-                Transform.translate(0, jumpSpeed * Bootstrap.getDeltaTime());
-                fallCounter += Bootstrap.getDeltaTime();
+            if (fall)
+            {
+                Transform.Translate(0, jumpSpeed * Bootstrap.GetDeltaTime());
+                fallCounter += Bootstrap.GetDeltaTime();
 
-                if (Transform.Y > 900) {
+                if (Transform.Y > 900)
+                {
                     ToBeDestroyed = true;
                 }
 
             }
 
-            this.Transform.SpritePath = Bootstrap.getAssetManager().getAssetPath(spriteName + spriteCounter + ".png");
+            this.Transform.SpritePath = Bootstrap.GetAssetManager().GetAssetPath(spriteName + spriteCounter + ".png");
 
 
-            Bootstrap.getDisplay().addToDraw(this);
+            Bootstrap.GetDisplay().AddToDraw(this);
         }
 
         public bool shouldReset(PhysicsBody x)
         {
-            float[] minAndMaxX = x.getMinAndMax(true);
-            float[] minAndMaxY = x.getMinAndMax(false);
+            float[] minAndMaxX = x.GetMinAndMax(true);
+            float[] minAndMaxY = x.GetMinAndMax(false);
 
-            if (Transform.X + Transform.Wid >= minAndMaxX[0] && Transform.X <= minAndMaxX[1]) {
+            if (Transform.X + Transform.Wid >= minAndMaxX[0] && Transform.X <= minAndMaxX[1])
+            {
                 // We're in the centre, so it's fine.
 
-                if (Transform.Y + Transform.Ht <= minAndMaxY[0]) {
+                if (Transform.Y + Transform.Ht <= minAndMaxY[0])
+                {
                     return true;
                 }
 
@@ -174,18 +182,20 @@ namespace ManicMiner
             return false;
         }
 
-        public void onCollisionEnter(PhysicsBody x)
+        public void OnCollisionEnter(PhysicsBody x)
         {
-            if (x.Parent.checkTag ("Collectible")) {
+            if (x.Parent.CheckTag("Collectible"))
+            {
                 return;
             }
 
-            if (fallCounter > 2) {
+            if (fallCounter > 2)
+            {
                 ToBeDestroyed = true;
             }
-            
+
             fallCounter = 0;
- 
+
             if (shouldReset(x))
             {
                 fall = true;
@@ -197,22 +207,22 @@ namespace ManicMiner
 
         }
 
-        public void onCollisionExit(PhysicsBody x)
+        public void OnCollisionExit(PhysicsBody x)
         {
-            if (x.Parent.checkTag("Collectible"))
+            if (x.Parent.CheckTag("Collectible"))
             {
                 return;
             }
 
-            Debug.Log ("Falling: " + fall);
+            Debug.Log("Falling: " + fall);
             canJump = false;
             fall = true;
 
         }
 
-        public void onCollisionStay(PhysicsBody x)
+        public void OnCollisionStay(PhysicsBody x)
         {
-            if (x.Parent.checkTag("Collectible"))
+            if (x.Parent.CheckTag("Collectible"))
             {
                 return;
             }

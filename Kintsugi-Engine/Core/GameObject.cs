@@ -8,10 +8,9 @@
 *   
 */
 
-using System;
-using System.Collections.Generic;
+using Kintsugi.Physics;
 
-namespace Shard
+namespace Kintsugi.Core
 {
     public class GameObject
     {
@@ -22,7 +21,7 @@ namespace Shard
         private PhysicsBody myBody;
         private List<string> tags;
 
-        public void addTag(string str)
+        public void AddTag(string str)
         {
             if (tags.Contains(str))
             {
@@ -32,17 +31,17 @@ namespace Shard
             tags.Add(str);
         }
 
-        public void removeTag(string str)
+        public void RemoveTag(string str)
         {
             tags.Remove(str);
         }
 
-        public bool checkTag(string tag)
+        public bool CheckTag(string tag)
         {
             return tags.Contains(tag);
         }
 
-        public String getTags()
+        public string GetTags()
         {
             string str = "";
 
@@ -55,13 +54,13 @@ namespace Shard
             return str;
         }
 
-        public void setPhysicsEnabled()
+        public void SetPhysicsEnabled()
         {
             MyBody = new PhysicsBody(this);
         }
 
 
-        public bool queryPhysicsEnabled()
+        public bool QueryPhysicsEnabled()
         {
             if (MyBody == null)
             {
@@ -77,7 +76,7 @@ namespace Shard
 
         public Transform Transform2D
         {
-            get => (Transform)transform;
+            get => transform;
         }
 
 
@@ -90,26 +89,26 @@ namespace Shard
         public bool ToBeDestroyed { get => toBeDestroyed; set => toBeDestroyed = value; }
         public PhysicsBody MyBody { get => myBody; set => myBody = value; }
 
-        public virtual void initialize()
+        public virtual void Initialize()
         {
         }
 
-        public virtual void update()
+        public virtual void Update()
         {
 
         }
 
-        public virtual void physicsUpdate()
+        public virtual void PhysicsUpdate()
         {
         }
 
-        public virtual void prePhysicsUpdate()
+        public virtual void PrePhysicsUpdate()
         {
         }
 
         public GameObject()
         {
-            GameObjectManager.getInstance().addGameObject(this);
+            GameObjectManager.GetInstance().AddGameObject(this);
 
             transform = new Transform3D(this);
             visible = false;
@@ -117,11 +116,11 @@ namespace Shard
             ToBeDestroyed = false;
             tags = new List<string>();
 
-            this.initialize();
+            Initialize();
 
         }
 
-        public void checkDestroyMe()
+        public void CheckDestroyMe()
         {
 
             if (!transient)
@@ -129,9 +128,9 @@ namespace Shard
                 return;
             }
 
-            if (Transform.X > 0 && Transform.X < Bootstrap.getDisplay().getWidth())
+            if (Transform.X > 0 && Transform.X < Bootstrap.GetDisplay().GetWidth())
             {
-                if (Transform.Y > 0 && Transform.Y < Bootstrap.getDisplay().getHeight())
+                if (Transform.Y > 0 && Transform.Y < Bootstrap.GetDisplay().GetHeight())
                 {
                     return;
                 }
@@ -142,9 +141,9 @@ namespace Shard
 
         }
 
-        public virtual void killMe()
+        public virtual void KillMe()
         {
-            PhysicsManager.getInstance().removePhysicsObject(myBody);
+            PhysicsManager.GetInstance().RemovePhysicsObject(myBody);
 
             myBody = null;
             transform = null;

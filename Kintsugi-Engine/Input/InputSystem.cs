@@ -8,25 +8,23 @@
 *   
 */
 
-using System.Collections.Generic;
-
-namespace Shard
+namespace Kintsugi.Input
 {
 
     public abstract class InputSystem
     {
-        private List<InputListener> myListeners;
+        private List<IInputListener> myListeners;
 
-        public virtual void initialize()
+        public virtual void Initialize()
         {
         }
 
         public InputSystem()
         {
-            myListeners = new List<InputListener>();
+            myListeners = new List<IInputListener>();
         }
 
-        public void addListener(InputListener il)
+        public void AddListener(IInputListener il)
         {
             if (myListeners.Contains(il) == false)
             {
@@ -34,14 +32,14 @@ namespace Shard
             }
         }
 
-        public void removeListener(InputListener il)
+        public void RemoveListener(IInputListener il)
         {
             myListeners.Remove(il);
         }
 
-        public void informListeners(InputEvent ie, string eventType)
+        public void InformListeners(InputEvent ie, string eventType)
         {
-            InputListener il;
+            IInputListener il;
             for (int i = 0; i < myListeners.Count; i++)
             {
                 il = myListeners[i];
@@ -51,9 +49,9 @@ namespace Shard
                     continue;
                 }
 
-                il.handleInput(ie, eventType);
+                il.HandleInput(ie, eventType);
             }
         }
-        public abstract void getInput();
+        public abstract void GetInput();
     }
 }

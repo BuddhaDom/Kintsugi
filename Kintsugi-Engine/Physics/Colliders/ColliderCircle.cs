@@ -6,11 +6,12 @@
 *   
 */
 
-using System;
+using Kintsugi.Core;
+using Kintsugi.Rendering;
 using System.Drawing;
 using System.Numerics;
 
-namespace Shard
+namespace Kintsugi.Physics.Colliders
 {
     public class ColliderCircle : Collider
     {
@@ -18,16 +19,16 @@ namespace Shard
         private float x, y, rad;
         private float xoff, yoff;
         private bool fromTrans;
-        public ColliderCircle(CollisionHandler gob, Transform t) : base(gob)
+        public ColliderCircle(ICollisionHandler gob, Transform t) : base(gob)
         {
 
-            this.MyRect = t;
+            MyRect = t;
             fromTrans = true;
             RotateAtOffset = false;
-            calculateBoundingBox();
+            CalculateBoundingBox();
         }
 
-        public ColliderCircle(CollisionHandler gob, Transform t, float x, float y, float rad) : base(gob)
+        public ColliderCircle(ICollisionHandler gob, Transform t, float x, float y, float rad) : base(gob)
         {
 
             Xoff = x;
@@ -37,19 +38,19 @@ namespace Shard
             Rad = rad;
             RotateAtOffset = true;
 
-            this.MyRect = t;
+            MyRect = t;
 
             fromTrans = false;
 
-            calculateBoundingBox();
+            CalculateBoundingBox();
 
         }
 
-        public ColliderCircle(CollisionHandler gob) : base(gob)
+        public ColliderCircle(ICollisionHandler gob) : base(gob)
         {
         }
 
-        public void calculateBoundingBox()
+        public void CalculateBoundingBox()
         {
             float x1, x2, y1, y2;
             float intWid;
@@ -68,7 +69,8 @@ namespace Shard
                 Y = (float)MyRect.Y + Yoff;
             }
 
-            if (RotateAtOffset == true) {
+            if (RotateAtOffset == true)
+            {
                 // Now we work out the X and Y based on the rotation of the body to 
                 // which this belongs,.
                 x1 = X - MyRect.Centre.X;
@@ -77,8 +79,8 @@ namespace Shard
                 x2 = (float)(x1 * Math.Cos(angle) - y1 * Math.Sin(angle));
                 y2 = (float)(x1 * Math.Sin(angle) + y1 * Math.Cos(angle));
 
-                X = x2 + (float)MyRect.Centre.X;
-                Y = y2 + (float)MyRect.Centre.Y;
+                X = x2 + MyRect.Centre.X;
+                Y = y2 + MyRect.Centre.Y;
             }
 
 
@@ -101,12 +103,12 @@ namespace Shard
         public float Xoff { get => xoff; set => xoff = value; }
         public float Yoff { get => yoff; set => yoff = value; }
 
-        public override void recalculate()
+        public override void Recalculate()
         {
-            calculateBoundingBox();
+            CalculateBoundingBox();
         }
 
-        public override Vector2? checkCollision(ColliderRect other)
+        public override Vector2? CheckCollision(ColliderRect other)
         {
 
             double tx = X;
@@ -158,7 +160,7 @@ namespace Shard
                     // it is hopefully fine for us to push it there.
 
 
-                    dir = MyRect.getLastDirection();
+                    dir = MyRect.GetLastDirection();
 
                     dir = Vector2.Normalize(dir);
 
@@ -180,29 +182,28 @@ namespace Shard
             return null;
         }
 
-        public override void drawMe(Color col)
+        public override void DrawMe(Color col)
         {
-            Display d = Bootstrap.getDisplay();
+            DisplayBase d = Bootstrap.GetDisplay();
 
-            d.drawCircle((int)X, (int)Y, (int)Rad, col);
-
+            d.DrawCircle((int)X, (int)Y, (int)Rad, col);
         }
 
-        public override Vector2? checkCollision(ColliderCircle c)
+        public override Vector2? CheckCollision(ColliderCircle c)
         {
             double dist, depth, radsq;
             double xpen, ypen;
             Vector2 dir;
 
-            xpen = Math.Pow(c.X - this.X, 2);
-            ypen = Math.Pow(c.Y - this.Y, 2);
+            xpen = Math.Pow(c.X - X, 2);
+            ypen = Math.Pow(c.Y - Y, 2);
 
-            radsq = Math.Pow(c.Rad + this.Rad, 2);
+            radsq = Math.Pow(c.Rad + Rad, 2);
 
             dist = xpen + ypen;
 
 
-            depth = (c.Rad + Rad) - Math.Sqrt(dist);
+            depth = c.Rad + Rad - Math.Sqrt(dist);
 
 
             if (dist <= radsq)
@@ -218,17 +219,17 @@ namespace Shard
             return null;
         }
 
-        public override float[] getMinAndMaxX()
+        public override float[] GetMinAndMaxX()
         {
             return MinAndMaxX;
         }
 
-        public override float[] getMinAndMaxY()
+        public override float[] GetMinAndMaxY()
         {
             return MinAndMaxY;
         }
 
-        public override Vector2? checkCollision(Vector2 c)
+        public override Vector2? CheckCollision(Vector2 c)
         {
 
             if (c.X >= Left &&

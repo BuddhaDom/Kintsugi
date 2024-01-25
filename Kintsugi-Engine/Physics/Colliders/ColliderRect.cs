@@ -6,11 +6,12 @@
 *   
 */
 
-using System;
+using Kintsugi.Core;
+using Kintsugi.Rendering;
 using System.Drawing;
 using System.Numerics;
 
-namespace Shard
+namespace Kintsugi.Physics.Colliders
 {
     public class ColliderRect : Collider
     {
@@ -21,16 +22,16 @@ namespace Shard
 
 
 
-        public ColliderRect(CollisionHandler gob, Transform t) : base(gob)
+        public ColliderRect(ICollisionHandler gob, Transform t) : base(gob)
         {
 
-            this.MyRect = t;
+            MyRect = t;
             fromTrans = true;
             RotateAtOffset = false;
-            calculateBoundingBox();
+            CalculateBoundingBox();
         }
 
-        public ColliderRect(CollisionHandler gob, Transform t, float x, float y, float wid, float ht) : base(gob)
+        public ColliderRect(ICollisionHandler gob, Transform t, float x, float y, float wid, float ht) : base(gob)
         {
             X = x;
             Y = y;
@@ -38,13 +39,13 @@ namespace Shard
             BaseHt = ht;
             RotateAtOffset = true;
 
-            this.MyRect = t;
+            MyRect = t;
 
             fromTrans = false;
 
         }
 
-        public void calculateBoundingBox()
+        public void CalculateBoundingBox()
         {
             float nwid, nht, angle, x1, x2, y1, y2;
             double cos, sin;
@@ -74,13 +75,14 @@ namespace Shard
             nwid = (float)(Math.Abs(Wid * cos) + Math.Abs(Ht * sin));
             nht = (float)(Math.Abs(Wid * sin) + Math.Abs(Ht * cos));
 
-            X = (float)MyRect.X + (Wid / 2);
-            Y = (float)MyRect.Y + (Ht / 2);
+            X = (float)MyRect.X + Wid / 2;
+            Y = (float)MyRect.Y + Ht / 2;
 
             Wid = nwid;
             Ht = nht;
 
-            if (RotateAtOffset) {
+            if (RotateAtOffset)
+            {
                 // Now we work out the X and Y based on the rotation of the body to 
                 // which this belongs,.
                 x1 = X - MyRect.Centre.X;
@@ -89,8 +91,8 @@ namespace Shard
                 x2 = (float)(x1 * Math.Cos(angle) - y1 * Math.Sin(angle));
                 y2 = (float)(x1 * Math.Sin(angle) + y1 * Math.Cos(angle));
 
-                X = x2 + (float)MyRect.Centre.X;
-                Y = y2 + (float)MyRect.Centre.Y;
+                X = x2 + MyRect.Centre.X;
+                Y = y2 + MyRect.Centre.Y;
             }
 
             MinAndMaxX[0] = X - Wid / 2;
@@ -113,12 +115,12 @@ namespace Shard
         public float BaseWid { get => baseWid; set => baseWid = value; }
         public float BaseHt { get => baseHt; set => baseHt = value; }
 
-        public override void recalculate()
+        public override void Recalculate()
         {
-            calculateBoundingBox();
+            CalculateBoundingBox();
         }
 
-        public ColliderRect calculateMinkowskiDifference(ColliderRect other)
+        public ColliderRect CalculateMinkowskiDifference(ColliderRect other)
         {
             float left, right, top, bottom, width, height;
             ColliderRect mink = new ColliderRect(null, null);
@@ -141,7 +143,7 @@ namespace Shard
             return mink;
         }
 
-        public Vector2? calculatePenetration(Vector2 checkPoint)
+        public Vector2? CalculatePenetration(Vector2 checkPoint)
         {
             Vector2? impulse;
             float coff = 0.2f;
@@ -177,15 +179,15 @@ namespace Shard
             return impulse;
         }
 
-        public override Vector2? checkCollision(ColliderRect other)
+        public override Vector2? CheckCollision(ColliderRect other)
         {
             ColliderRect cr;
 
-            cr = calculateMinkowskiDifference(other);
+            cr = CalculateMinkowskiDifference(other);
 
             if (cr.Left <= 0 && cr.Right >= 0 && cr.Top <= 0 && cr.Bottom >= 0)
             {
-                return cr.calculatePenetration(new Vector2(0, 0));
+                return cr.CalculatePenetration(new Vector2(0, 0));
             }
 
 
@@ -194,21 +196,21 @@ namespace Shard
 
         }
 
-        public override void drawMe(Color col)
+        public override void DrawMe(Color col)
         {
-            Display d = Bootstrap.getDisplay();
+            DisplayBase d = Bootstrap.GetDisplay();
 
-            d.drawLine((int)MinAndMaxX[0], (int)MinAndMaxY[0], (int)MinAndMaxX[1], (int)MinAndMaxY[0], col);
-            d.drawLine((int)MinAndMaxX[0], (int)MinAndMaxY[0], (int)MinAndMaxX[0], (int)MinAndMaxY[1], col);
-            d.drawLine((int)MinAndMaxX[1], (int)MinAndMaxY[0], (int)MinAndMaxX[1], (int)MinAndMaxY[1], col);
-            d.drawLine((int)MinAndMaxX[0], (int)MinAndMaxY[1], (int)MinAndMaxX[1], (int)MinAndMaxY[1], col);
+            d.DrawLine((int)MinAndMaxX[0], (int)MinAndMaxY[0], (int)MinAndMaxX[1], (int)MinAndMaxY[0], col);
+            d.DrawLine((int)MinAndMaxX[0], (int)MinAndMaxY[0], (int)MinAndMaxX[0], (int)MinAndMaxY[1], col);
+            d.DrawLine((int)MinAndMaxX[1], (int)MinAndMaxY[0], (int)MinAndMaxX[1], (int)MinAndMaxY[1], col);
+            d.DrawLine((int)MinAndMaxX[0], (int)MinAndMaxY[1], (int)MinAndMaxX[1], (int)MinAndMaxY[1], col);
 
-            d.drawCircle((int)X, (int)Y, 2, col);
+            d.DrawCircle((int)X, (int)Y, 2, col);
         }
 
-        public override Vector2? checkCollision(ColliderCircle c)
+        public override Vector2? CheckCollision(ColliderCircle c)
         {
-            Vector2? possibleV = c.checkCollision(this);
+            Vector2? possibleV = c.CheckCollision(this);
 
             if (possibleV is Vector2 v)
             {
@@ -220,17 +222,17 @@ namespace Shard
             return null;
         }
 
-        public override float[] getMinAndMaxX()
+        public override float[] GetMinAndMaxX()
         {
             return MinAndMaxX;
         }
 
-        public override float[] getMinAndMaxY()
+        public override float[] GetMinAndMaxY()
         {
             return MinAndMaxY;
         }
 
-        public override Vector2? checkCollision(Vector2 other)
+        public override Vector2? CheckCollision(Vector2 other)
         {
 
             if (other.X >= Left &&

@@ -6,20 +6,21 @@
 *   
 */
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Threading;
+using Kintsugi.Assets;
+using Kintsugi.Audio;
+using Kintsugi.Input;
+using Kintsugi.Physics;
+using Kintsugi.Rendering;
 
-namespace Shard
+namespace Kintsugi.Core
 {
     public class Bootstrap
     {
-        public static string DEFAULT_CONFIG = "config.cfg";
+        public static readonly string DEFAULT_CONFIG = "config.cfg";
 
 
         private static Game runningGame;
-        private static Display displayEngine;
+        private static DisplayBase displayEngine;
         private static Sound soundEngine;
         private static InputSystem input;
         private static PhysicsManager phys;
@@ -33,15 +34,18 @@ namespace Shard
         private static List<long> frameTimes;
         private static long startTime;
         private static string baseDir;
-        private static Dictionary<string,string> enVars;
+        private static Dictionary<string, string> enVars;
 
-        public static bool checkEnvironmentalVariable (string id) {
-            return enVars.ContainsKey (id);
+        public static bool CheckEnvironmentalVariable(string id)
+        {
+            return enVars.ContainsKey(id);
         }
 
-        
-        public static string getEnvironmentalVariable (string id) {
-            if (checkEnvironmentalVariable (id)) {
+
+        public static string GetEnvironmentalVariable(string id)
+        {
+            if (CheckEnvironmentalVariable(id))
+            {
                 return enVars[id];
             }
 
@@ -51,80 +55,83 @@ namespace Shard
 
         public static double TimeElapsed { get => timeElapsed; set => timeElapsed = value; }
 
-        public static string getBaseDir() {
+        public static string GetBaseDir()
+        {
             return baseDir;
         }
 
-        public static void setup()
+        public static void Setup()
         {
             string workDir = Environment.CurrentDirectory;
-            baseDir = Directory.GetParent(workDir).Parent.Parent.FullName;;
+            baseDir = Directory.GetParent(workDir).Parent.Parent.FullName; ;
 
-            setupEnvironmentalVariables(baseDir + "\\" + "envar.cfg");
-            setup(baseDir + "\\" + DEFAULT_CONFIG);
+            SetupEnvironmentalVariables(baseDir + "\\" + "envar.cfg");
+            Setup(baseDir + "\\" + DEFAULT_CONFIG);
 
         }
 
-        public static void setupEnvironmentalVariables (String path) {
-                Console.WriteLine("Path is " + path);
+        public static void SetupEnvironmentalVariables(string path)
+        {
+            Console.WriteLine("Path is " + path);
 
-                Dictionary<string, string> config = BaseFunctionality.getInstance().readConfigFile(path);
+            Dictionary<string, string> config = BaseFunctionality.ReadConfigFile(path);
 
-                enVars = new Dictionary<string,string>();
+            enVars = new Dictionary<string, string>();
 
-                foreach (KeyValuePair<string, string> kvp in config)
-                {
-                    enVars[kvp.Key] = kvp.Value;
-                }
+            foreach (KeyValuePair<string, string> kvp in config)
+            {
+                enVars[kvp.Key] = kvp.Value;
+            }
         }
-        public static double getDeltaTime()
+        public static double GetDeltaTime()
         {
 
             return deltaTime;
         }
 
-        public static Display getDisplay()
+        public static DisplayBase GetDisplay()
         {
             return displayEngine;
         }
 
-        public static Sound getSound()
+        public static Sound GetSound()
         {
             return soundEngine;
         }
 
-        public static InputSystem getInput()
+        public static InputSystem GetInput()
         {
             return input;
         }
 
-        public static AssetManagerBase getAssetManager() {
+        public static AssetManagerBase GetAssetManager()
+        {
             return asset;
         }
 
-        public static Game getRunningGame()
+        public static Game GetRunningGame()
         {
             return runningGame;
         }
 
-        public static void setup(string path)
+        public static void Setup(string path)
         {
-            Console.WriteLine ("Path is " + path);
+            Console.WriteLine("Path is " + path);
 
-            Dictionary<string, string> config = BaseFunctionality.getInstance().readConfigFile(path);
+            Dictionary<string, string> config = BaseFunctionality.ReadConfigFile(path);
             Type t;
             object ob;
             bool bailOut = false;
 
-            phys = PhysicsManager.getInstance();
+            phys = PhysicsManager.GetInstance();
 
             foreach (KeyValuePair<string, string> kvp in config)
             {
-                t = Type.GetType("Shard." + kvp.Value);
+                t = Type.GetType("Kintsugi." + kvp.Value);
 
                 if (t == null)
                 {
-                    Debug.getInstance().log("Missing Class Definition: " + kvp.Value + " in " + kvp.Key, Debug.DEBUG_LEVEL_ERROR);
+                    Debug.GetInstance().Log("Missing Class Definition: " + kvp.Value + " in " + kvp.Key, Debug.DEBUG_LEVEL_ERROR);
                     Environment.Exit(0);
                 }
 
@@ -134,41 +141,41 @@ namespace Shard
                 switch (kvp.Key)
                 {
                     case "display":
-                        displayEngine = (Display)ob;
-                        displayEngine.initialize();
+                        displayEngine = (DisplayBase)ob;
+                        displayEngine.Initialize();
                         break;
                     case "sound":
                         soundEngine = (Sound)ob;
                         break;
                     case "asset":
                         asset = (AssetManagerBase)ob;
-                        asset.registerAssets();
+                        asset.RegisterAssets();
                         break;
                     case "input":
                         input = (InputSystem)ob;
-                        input.initialize();
+                        input.Initialize();
                         break;
 
                 }
 
-                Debug.getInstance().log("Config file... setting " + kvp.Key + " to " + kvp.Value);
+                Debug.Log("Config file... setting " + kvp.Key + " to " + kvp.Value);
             }
 
             if (runningGame == null)
             {
-                Debug.getInstance().log("No game set", Debug.DEBUG_LEVEL_ERROR);
+                Debug.GetInstance().Log("No game set", Debug.DEBUG_LEVEL_ERROR);
                 bailOut = true;
             }
 
             if (displayEngine == null)
             {
-                Debug.getInstance().log("No display engine set", Debug.DEBUG_LEVEL_ERROR);
+                Debug.GetInstance().Log("No Display engine set", Debug.DEBUG_LEVEL_ERROR);
                 bailOut = true;
             }
 
             if (soundEngine == null)
             {
-                Debug.getInstance().log("No sound engine set", Debug.DEBUG_LEVEL_ERROR);
+                Debug.GetInstance().Log("No sound engine set", Debug.DEBUG_LEVEL_ERROR);
                 bailOut = true;
             }
 
@@ -178,52 +185,55 @@ namespace Shard
             }
         }
 
-        public static long getCurrentMillis()
+        public static long GetCurrentMillis()
         {
             return DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
         }
 
-        public static int getFPS()
+        public static int GetFPS()
         {
             int fps;
             double seconds;
 
-            seconds = (getCurrentMillis() - startTime) / 1000.0;
+            seconds = (GetCurrentMillis() - startTime) / 1000.0;
 
             fps = (int)(frames / seconds);
 
             return fps;
         }
 
-        public static int getSecondFPS()
+        public static int GetSecondFPS()
         {
             int count = 0;
-            long now = getCurrentMillis();
+            long now = GetCurrentMillis();
             int lastEntry;
 
 
 
-            Debug.Log ("Frametimes is " + frameTimes.Count);
+            Debug.Log("Frametimes is " + frameTimes.Count);
 
-            if (frameTimes.Count == 0) {
+            if (frameTimes.Count == 0)
+            {
                 return -1;
             }
 
             lastEntry = frameTimes.Count - 1;
 
-            while (frameTimes[lastEntry] > (now - 1000) && lastEntry > 0) {
+            while (frameTimes[lastEntry] > now - 1000 && lastEntry > 0)
+            {
                 lastEntry -= 1;
                 count += 1;
             }
 
-            if (lastEntry > 0) {
-                frameTimes.RemoveRange (0, lastEntry);
+            if (lastEntry > 0)
+            {
+                frameTimes.RemoveRange(0, lastEntry);
             }
 
             return count;
         }
 
-        public static int getCurrentFrame()
+        public static int GetCurrentFrame()
         {
             return frames;
         }
@@ -232,26 +242,26 @@ namespace Shard
         {
 
             runningGame = game;
-            targetFrameRate = runningGame.getTargetFrameRate();
+            targetFrameRate = runningGame.GetTargetFrameRate();
             millisPerFrame = 1000 / targetFrameRate;
 
 
             // Setup the engine.
-            setup();
+            Setup();
 
             // When we start the program running.
-            startTime = getCurrentMillis();
+            startTime = GetCurrentMillis();
             frames = 0;
             frameTimes = new List<long>();
             // Start the game running.
-            runningGame.initialize();
+            runningGame.Initialize();
 
 
             phys.GravityModifier = 0.1f;
             // This is our game loop.
             MainLoop();
 
-            
+
 
 
         }
@@ -261,14 +271,13 @@ namespace Shard
             long timeInMillisecondsStart, lastTick, timeInMillisecondsEnd;
             long interval;
             int sleep;
-            int tfro = 1;
             bool physUpdate = false;
             bool physDebug = false;
 
             timeInMillisecondsStart = startTime;
             lastTick = startTime;
-            
-            if (getEnvironmentalVariable("physics_debug") == "1")
+
+            if (GetEnvironmentalVariable("physics_debug") == "1")
             {
                 physDebug = true;
             }
@@ -278,55 +287,55 @@ namespace Shard
             {
                 frames += 1;
 
-                timeInMillisecondsStart = getCurrentMillis();
+                timeInMillisecondsStart = GetCurrentMillis();
 
                 // Clear the screen.
-                Bootstrap.getDisplay().clearDisplay();
+                GetDisplay().ClearDisplay();
 
                 // Update 
-                runningGame.update();
+                runningGame.Update();
                 // Input
 
-                if (runningGame.isRunning() == true)
+                if (runningGame.IsRunning() == true)
                 {
 
                     // Get input, which works at 50 FPS to make sure it doesn't interfere with the 
                     // variable frame rates.
-                    input.getInput();
+                    input.GetInput();
 
                     // Update runs as fast as the system lets it.  Any kind of movement or counter 
                     // increment should be based then on the deltaTime variable.
-                    GameObjectManager.getInstance().update();
+                    GameObjectManager.GetInstance().Update();
 
-                    // This will update every 20 milliseconds or thereabouts.  Our physics system aims 
+                    // This will Update every 20 milliseconds or thereabouts.  Our physics system aims 
                     // at a 50 FPS cycle.
-                    if (phys.willTick())
+                    if (phys.WillTick())
                     {
-                        GameObjectManager.getInstance().prePhysicsUpdate();
+                        GameObjectManager.GetInstance().PrePhysicsUpdate();
                     }
 
                     // Update the physics.  If it's too soon, it'll return false.   Otherwise 
                     // it'll return true.
-                    physUpdate = phys.update();
+                    physUpdate = phys.Update();
 
                     if (physUpdate)
                     {
-                        // If it did tick, give every object an update
+                        // If it did tick, give every object an Update
                         // that is pinned to the timing of the physics system.
-                        GameObjectManager.getInstance().physicsUpdate();
+                        GameObjectManager.GetInstance().PhysicsUpdate();
                     }
 
                     if (physDebug)
                     {
-                        phys.drawDebugColliders();
+                        phys.DrawDebugColliders();
                     }
 
                 }
 
                 // Render the screen.
-                Bootstrap.getDisplay().display();
+                GetDisplay().Display();
 
-                timeInMillisecondsEnd = getCurrentMillis();
+                timeInMillisecondsEnd = GetCurrentMillis();
 
                 frameTimes.Add(timeInMillisecondsEnd);
 
@@ -347,7 +356,7 @@ namespace Shard
                     Thread.Sleep(sleep);
                 }
 
-                timeInMillisecondsEnd = getCurrentMillis();
+                timeInMillisecondsEnd = GetCurrentMillis();
                 deltaTime = (timeInMillisecondsEnd - timeInMillisecondsStart) / 1000.0f;
 
                 millisPerFrame = 1000 / targetFrameRate;

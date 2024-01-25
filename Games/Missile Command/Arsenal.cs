@@ -1,5 +1,4 @@
-﻿using Shard;
-using System.Collections.Generic;
+﻿using Kintsugi.Core;
 
 namespace MissileCommand
 {
@@ -56,7 +55,7 @@ namespace MissileCommand
 
         }
 
-        public override void initialize()
+        public override void Initialize()
         {
             myMissiles = new List<ArsenalSprite>();
 
@@ -68,7 +67,7 @@ namespace MissileCommand
 
         }
 
-        public override void update()
+        public override void Update()
         {
 
         }

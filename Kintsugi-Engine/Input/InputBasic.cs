@@ -7,13 +7,13 @@
 *   
 */
 
-using System;
+using Kintsugi.Core;
 
-namespace Shard
+namespace Kintsugi.Input
 {
     public class InputBasic : InputSystem
     {
-        public override void getInput()
+        public override void GetInput()
         {
             InputEvent ie;
             ConsoleKeyInfo cki;
@@ -24,14 +24,15 @@ namespace Shard
 
             cki = Console.ReadKey(true);
 
-            ie = new InputEvent();
+            ie = new InputEvent
+            {
+                Key = cki.KeyChar
+            };
 
-            ie.Key = (int)cki.KeyChar;
+            InformListeners(ie, "KeyDown");
+            InformListeners(ie, "KeyUp");
 
-            informListeners(ie, "KeyDown");
-            informListeners(ie, "KeyUp");
-
-            Debug.getInstance().log("Key is " + ie.Key);
+            Debug.Log("Key is " + ie.Key);
         }
     }
 }

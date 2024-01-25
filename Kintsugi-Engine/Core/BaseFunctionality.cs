@@ -6,11 +6,7 @@
 *   
 */
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-
-namespace Shard
+namespace Kintsugi.Core
 {
     public class BaseFunctionality
     {
@@ -20,7 +16,7 @@ namespace Shard
         {
         }
 
-        public static BaseFunctionality getInstance()
+        public static BaseFunctionality GetInstance()
         {
             if (me == null)
             {
@@ -30,7 +26,7 @@ namespace Shard
             return me;
         }
 
-        public string readFileAsString(string file)
+        public static string ReadFileAsString(string file)
         {
             string text;
 
@@ -39,10 +35,10 @@ namespace Shard
             return text;
         }
 
-        public Dictionary<string, string> readConfigFile(string file)
+        public static Dictionary<string, string> ReadConfigFile(string file)
         {
             Dictionary<string, string> configEntries = new Dictionary<string, string>();
-            string text = readFileAsString(file);
+            string text = ReadFileAsString(file);
             string[] lines = text.Split("\n");
             string[] bits;
             string key, value;
@@ -50,12 +46,14 @@ namespace Shard
             foreach (string line in lines)
             {
                 // Don't read blank lines.
-                if (line.Length == 0) {
+                if (line.Length == 0)
+                {
                     continue;
                 }
 
                 // Don't read comments.
-                if (line[0] == '#') {
+                if (line[0] == '#')
+                {
                     continue;
                 }
 
@@ -64,7 +62,7 @@ namespace Shard
                 key = bits[0].Trim();
                 value = bits[1].Trim();
 
-                value = value.Replace ("%BASE_DIR%", Bootstrap.getBaseDir());
+                value = value.Replace("%BASE_DIR%", Bootstrap.GetBaseDir());
 
                 configEntries[key] = value;
 

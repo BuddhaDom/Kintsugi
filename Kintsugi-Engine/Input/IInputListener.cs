@@ -7,12 +7,12 @@
 *   
 */
 
-namespace Shard
+namespace Kintsugi.Input
 {
-    public interface InputListener
+    public interface IInputListener
     {
 
 
-        public void handleInput(InputEvent inp, string eventType);
+        public void HandleInput(InputEvent inp, string eventType);
     }
 }

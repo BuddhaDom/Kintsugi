@@ -1,28 +1,30 @@
-﻿using SDL2;
-using Shard;
+﻿using Kintsugi.Core;
+using Kintsugi.Input;
+using Kintsugi.Physics;
+using SDL2;
 using System.Drawing;
 
 namespace GameTest
 {
-    class Spaceship : GameObject, InputListener, CollisionHandler
+    class Spaceship : GameObject, IInputListener, ICollisionHandler
     {
         bool up, down, turnLeft, turnRight;
 
 
-        public override void initialize()
+        public override void Initialize()
         {
 
             this.Transform.X = 500.0f;
             this.Transform.Y = 500.0f;
-            this.Transform.SpritePath = Bootstrap.getAssetManager().getAssetPath("spaceship.png");
+            this.Transform.SpritePath = Bootstrap.GetAssetManager().GetAssetPath("spaceship.png");
 
 
-            Bootstrap.getInput().addListener(this);
+            Bootstrap.GetInput().AddListener(this);
 
             up = false;
             down = false;
 
-            setPhysicsEnabled();
+            SetPhysicsEnabled();
 
             MyBody.Mass = 1;
             MyBody.MaxForce = 10;
@@ -35,14 +37,14 @@ namespace GameTest
 
 
             //           MyBody.PassThrough = true;
-            //            MyBody.addCircleCollider(0, 0, 5);
-            //            MyBody.addCircleCollider(0, 34, 5);
-            //            MyBody.addCircleCollider(60, 18, 5);
-            //     MyBody.addCircleCollider();
+            //            MyBody.AddCircleCollider(0, 0, 5);
+            //            MyBody.AddCircleCollider(0, 34, 5);
+            //            MyBody.AddCircleCollider(60, 18, 5);
+            //     MyBody.AddCircleCollider();
 
-            MyBody.addRectCollider();
+            MyBody.AddRectCollider();
 
-            addTag("Spaceship");
+            AddTag("Spaceship");
 
 
         }
@@ -53,12 +55,12 @@ namespace GameTest
 
             b.setupBullet(this, this.Transform.Centre.X, this.Transform.Centre.Y);
 
-            b.Transform.rotate(this.Transform.Rotz);
+            b.Transform.Rotate(this.Transform.Rotz);
 
-            Bootstrap.getSound().playSound ("fire.wav");
+            Bootstrap.GetSound().PlaySound("fire.wav");
         }
 
-        public void handleInput(InputEvent inp, string eventType)
+        public void HandleInput(InputEvent inp, string eventType)
         {
 
 
@@ -122,54 +124,54 @@ namespace GameTest
             }
         }
 
-        public override void physicsUpdate()
+        public override void PhysicsUpdate()
         {
 
             if (turnLeft)
             {
-                MyBody.addTorque(-0.3f);
+                MyBody.AddTorque(-0.3f);
             }
 
             if (turnRight)
             {
-                MyBody.addTorque(0.3f);
+                MyBody.AddTorque(0.3f);
             }
 
             if (up)
             {
 
-                MyBody.addForce(this.Transform.Forward, 0.5f);
+                MyBody.AddForce(this.Transform.Forward, 0.5f);
 
             }
 
             if (down)
             {
-                MyBody.addForce(this.Transform.Forward, -0.2f);
+                MyBody.AddForce(this.Transform.Forward, -0.2f);
             }
 
 
         }
 
-        public override void update()
+        public override void Update()
         {
-            Bootstrap.getDisplay().addToDraw(this);
+            Bootstrap.GetDisplay().AddToDraw(this);
         }
 
-        public void onCollisionEnter(PhysicsBody x)
+        public void OnCollisionEnter(PhysicsBody x)
         {
-            if (x.Parent.checkTag("Bullet") == false)
+            if (x.Parent.CheckTag("Bullet") == false)
             {
                 MyBody.DebugColor = Color.Red;
             }
         }
 
-        public void onCollisionExit(PhysicsBody x)
+        public void OnCollisionExit(PhysicsBody x)
         {
 
             MyBody.DebugColor = Color.Green;
         }
 
-        public void onCollisionStay(PhysicsBody x)
+        public void OnCollisionStay(PhysicsBody x)
         {
             MyBody.DebugColor = Color.Blue;
         }
