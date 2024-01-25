@@ -5,7 +5,7 @@ using System.Drawing;
 
 namespace Shard
 {
-    class GameMissileCommand : Game, InputListener
+    class GameMissileCommand : Game, IInputListener
     {
         List<Missile> myMissiles;
         List<Arsenal> myArsenals;
@@ -15,11 +15,11 @@ namespace Shard
         double timeBetweenMissiles = 3;
         int missileChance = 1;
 
-        public override int getTargetFrameRate()
+        public override int GetTargetFrameRate()
         {
             return 1000;
         }
-        public override bool isRunning()
+        public override bool IsRunning()
         {
             foreach (City c in cities)
             {
@@ -33,18 +33,18 @@ namespace Shard
 
         }
 
-        public override void update()
+        public override void Update()
         {
             bool fired = false;
 
-            if (isRunning() == false)
+            if (IsRunning() == false)
             {
                 Color col = Color.FromArgb(rand.Next(0, 256), rand.Next(0, 256), rand.Next(0, 256));
-                Bootstrap.getDisplay().showText("GAME OVER!", 300, 300, 128, col);
+                Bootstrap.GetDisplay().ShowText("GAME OVER!", 300, 300, 128, col);
                 return;
             }
 
-            counter += Bootstrap.getDeltaTime();
+            counter += Bootstrap.GetDeltaTime();
 
             if (counter > 0.5f)
             {
@@ -60,11 +60,11 @@ namespace Shard
 
         }
 
-        public override void initialize()
+        public override void Initialize()
         {
 
             int imod = 0;
-            Bootstrap.getInput().addListener(this);
+            Bootstrap.GetInput().AddListener(this);
             counter = 0;
             cities = new List<City>();
 
@@ -79,7 +79,7 @@ namespace Shard
                     imod = 200;
                 }
 
-                c.Transform.translate(100 + imod + (i * 140), 750);
+                c.Transform.Translate(100 + imod + (i * 140), 750);
 
             }
 
@@ -88,7 +88,7 @@ namespace Shard
             for (int i = 0; i < 3; i++)
             {
                 Arsenal a = new Arsenal();
-                a.Transform.translate(25 + (i * 550), 700);
+                a.Transform.Translate(25 + (i * 550), 700);
                 a.resetMissiles();
 
                 myArsenals.Add(a);
@@ -126,7 +126,7 @@ namespace Shard
             // generate an incoming missile
 
             m = new Missile();
-            m.Transform.translate(rand.Next(0, Bootstrap.getDisplay().getWidth()), 0);
+            m.Transform.Translate(rand.Next(0, Bootstrap.GetDisplay().GetWidth()), 0);
 
             m.Originx = (float)m.Transform.X;
             m.Originy = (float)m.Transform.Y;
@@ -142,7 +142,7 @@ namespace Shard
                 m.Mirv = true;
             }
 
-            m.addTag("EnemyMissile");
+            m.AddTag("EnemyMissile");
             m.TargetTag = "City";
             m.Speed = 10;
             m.MyColor = Color.Red;
@@ -152,7 +152,7 @@ namespace Shard
         }
 
 
-        public void handleInput(InputEvent inp, string eventType)
+        public void HandleInput(InputEvent inp, string eventType)
         {
             Arsenal a;
             int which = -1;
@@ -198,7 +198,7 @@ namespace Shard
                 m.Originx = (float)a.Transform.Centre.X;
                 m.Originy = (float)a.Transform.Centre.Y;
 
-                m.Transform.translate(m.Originx, m.Originy);
+                m.Transform.Translate(m.Originx, m.Originy);
 
                 m.Transform.X = m.Originx;
                 m.Transform.Y = m.Originy;
@@ -206,7 +206,7 @@ namespace Shard
                 m.Targetx = inp.X;
                 m.Targety = inp.Y;
 
-                m.addTag("PlayerMissile");
+                m.AddTag("PlayerMissile");
                 m.TargetTag = "EnemyMissile";
 
                 m.Speed = 1000;

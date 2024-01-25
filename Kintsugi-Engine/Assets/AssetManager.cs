@@ -5,32 +5,32 @@ namespace Kintsugi.Assets
     public class AssetManager : AssetManagerBase
     {
 
-        Dictionary<string, string> assets;
+        private Dictionary<string, string> assets;
 
         public AssetManager()
         {
             assets = new Dictionary<string, string>();
-            AssetPath = Bootstrap.getEnvironmentalVariable("assetpath");
+            AssetPath = Bootstrap.GetEnvironmentalVariable("assetpath");
         }
 
-        public override void registerAssets()
+        public override void RegisterAssets()
         {
             assets.Clear();
-            walkDirectory(AssetPath);
+            WalkDirectory(AssetPath);
         }
 
-        public string getName(string path)
+        public string GetName(string path)
         {
             string[] bits = path.Split("\\");
 
             return bits[bits.Length - 1];
         }
 
-        public override string getAssetPath(string asset)
+        public override string GetAssetPath(string asset)
         {
-            if (assets.ContainsKey(asset))
+            if (assets.TryGetValue(asset, out string? value))
             {
-                return assets[asset];
+                return value;
             }
 
             Debug.Log("No entry for " + asset);
@@ -38,19 +38,19 @@ namespace Kintsugi.Assets
             return null;
         }
 
-        public void walkDirectory(string dir)
+        public void WalkDirectory(string dir)
         {
             string[] files = Directory.GetFiles(dir);
             string[] dirs = Directory.GetDirectories(dir);
 
             foreach (string d in dirs)
             {
-                walkDirectory(d);
+                WalkDirectory(d);
             }
 
             foreach (string f in files)
             {
-                string filename_raw = getName(f);
+                string filename_raw = GetName(f);
                 string filename = filename_raw;
                 int counter = 0;
 

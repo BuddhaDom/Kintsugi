@@ -9,11 +9,11 @@ namespace Shard
         GameObject top, left, right, bottom;
         Random rand;
         List<Brick> myBricks;
-        public override void update()
+        public override void Update()
         {
 
-            Bootstrap.getDisplay().showText("FPS: " + Bootstrap.getFPS(), 10, 10, 12, 255, 255, 255);
-            Bootstrap.getDisplay().showText("Delta: " + Bootstrap.getDeltaTime(), 10, 20, 12, 255, 255, 255);
+            Bootstrap.GetDisplay().ShowText("FPS: " + Bootstrap.GetFPS(), 10, 10, 12, 255, 255, 255);
+            Bootstrap.GetDisplay().ShowText("Delta: " + Bootstrap.GetDeltaTime(), 10, 20, 12, 255, 255, 255);
 
             foreach (Brick b in myBricks)
             {
@@ -51,7 +51,7 @@ namespace Shard
             }
         }
 
-        public override void initialize()
+        public override void Initialize()
         {
             rand = new Random();
 
@@ -68,7 +68,7 @@ namespace Shard
 
         }
 
-        public override int getTargetFrameRate()
+        public override int GetTargetFrameRate()
         {
 
             return 60;

@@ -13,13 +13,13 @@ namespace Kintsugi.Audio
 {
     public class SoundSDL : Sound
     {
-        public override void playSound(string file)
+        public override void PlaySound(string file)
         {
             SDL.SDL_AudioSpec have, want;
             uint length, dev;
             nint buffer;
 
-            file = Bootstrap.getAssetManager().getAssetPath(file);
+            file = Bootstrap.GetAssetManager().GetAssetPath(file);
 
             SDL.SDL_LoadWAV(file, out have, out buffer, out length);
             dev = SDL.SDL_OpenAudioDevice(nint.Zero, 0, ref have, out want, 0);

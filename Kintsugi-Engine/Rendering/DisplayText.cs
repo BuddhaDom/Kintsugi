@@ -63,14 +63,14 @@ namespace Kintsugi.Rendering
         public nint LblText { get => lblText; set => lblText = value; }
     }
 
-    public class DisplayText : Display
+    public class DisplayText : DisplayBase
     {
         protected nint _window, _rend;
         uint _format;
         int _access;
         private List<TextDetails> myTexts;
         private Dictionary<string, nint> fontLibrary;
-        public override void clearDisplay()
+        public override void ClearDisplay()
         {
             foreach (TextDetails td in myTexts)
             {
@@ -83,26 +83,26 @@ namespace Kintsugi.Rendering
 
         }
 
-        public nint loadFont(string path, int size)
+        public nint LoadFont(string path, int size)
         {
             string key = path + "," + size;
 
-            if (fontLibrary.ContainsKey(key))
+            if (fontLibrary.TryGetValue(key, out nint value))
             {
-                return fontLibrary[key];
+                return value;
             }
 
             fontLibrary[key] = SDL_ttf.TTF_OpenFont(path, size);
             return fontLibrary[key];
         }
 
-        private void update()
+        private void Update()
         {
 
 
         }
 
-        private void draw()
+        private void Draw()
         {
 
             foreach (TextDetails td in myTexts)
@@ -125,32 +125,32 @@ namespace Kintsugi.Rendering
 
         }
 
-        public override void display()
+        public override void Display()
         {
 
-            update();
-            draw();
+            Update();
+            Draw();
         }
 
-        public override void setFullscreen()
+        public override void SetFullscreen()
         {
             SDL.SDL_SetWindowFullscreen(_window,
                  (uint)SDL.SDL_WindowFlags.SDL_WINDOW_FULLSCREEN_DESKTOP);
         }
 
-        public override void initialize()
+        public override void Initialize()
         {
             fontLibrary = new Dictionary<string, nint>();
 
-            setSize(1280, 864);
+            SetSize(1280, 864);
 
             SDL.SDL_Init(SDL.SDL_INIT_EVERYTHING);
             SDL_ttf.TTF_Init();
             _window = SDL.SDL_CreateWindow("Shard Game Engine",
                 SDL.SDL_WINDOWPOS_CENTERED,
                 SDL.SDL_WINDOWPOS_CENTERED,
-                getWidth(),
-                getHeight(),
+                GetWidth(),
+                GetHeight(),
                 0);
 
 
@@ -169,26 +169,28 @@ namespace Kintsugi.Rendering
 
 
 
-        public override void showText(string text, double x, double y, int size, int r, int g, int b)
+        public override void ShowText(string text, double x, double y, int size, int r, int g, int b)
         {
             int nx, ny, w = 0, h = 0;
 
-            nint font = loadFont("Fonts/calibri.ttf", size);
-            SDL.SDL_Color col = new SDL.SDL_Color();
-
-            col.r = (byte)r;
-            col.g = (byte)g;
-            col.b = (byte)b;
-            col.a = 255;
+            nint font = LoadFont("Fonts/calibri.ttf", size);
+            SDL.SDL_Color col = new()
+            {
+                r = (byte)r,
+                g = (byte)g,
+                b = (byte)b,
+                a = 255
+            };
 
             if (font == nint.Zero)
             {
-                Debug.getInstance().log("TTF_OpenFont: " + SDL.SDL_GetError());
+                Debug.Log("TTF_OpenFont: " + SDL.SDL_GetError());
             }
 
-            TextDetails td = new TextDetails(text, x, y, col, 12);
-
-            td.Font = font;
+            TextDetails td = new(text, x, y, col, 12)
+            {
+                Font = font
+            };
 
             nint surf = SDL_ttf.TTF_RenderText_Blended(td.Font, td.Text, td.Col);
             nint lblText = SDL.SDL_CreateTextureFromSurface(_rend, surf);
@@ -209,7 +211,7 @@ namespace Kintsugi.Rendering
 
 
         }
-        public override void showText(char[,] text, double x, double y, int size, int r, int g, int b)
+        public override void ShowText(char[,] text, double x, double y, int size, int r, int g, int b)
         {
             string str = "";
             int row = 0;
@@ -223,7 +225,7 @@ namespace Kintsugi.Rendering
                 }
 
 
-                showText(str, x, y + row * size, size, r, g, b);
+                ShowText(str, x, y + row * size, size, r, g, b);
                 row += 1;
 
             }

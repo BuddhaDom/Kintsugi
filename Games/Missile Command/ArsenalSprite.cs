@@ -5,19 +5,19 @@ namespace MissileCommand
     class ArsenalSprite : GameObject
     {
 
-        public override void initialize()
+        public override void Initialize()
         {
 
 
             this.Transform.X = 200.0f;
             this.Transform.Y = 100.0f;
-            this.Transform.SpritePath = Bootstrap.getAssetManager().getAssetPath("missile.png");
+            this.Transform.SpritePath = Bootstrap.GetAssetManager().GetAssetPath("missile.png");
 
         }
 
-        public override void update()
+        public override void Update()
         {
-            Bootstrap.getDisplay().addToDraw(this);
+            Bootstrap.GetDisplay().AddToDraw(this);
         }
 
     }

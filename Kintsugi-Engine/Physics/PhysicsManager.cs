@@ -28,13 +28,11 @@ using System.Numerics;
 
 namespace Kintsugi.Physics
 {
-
-
     /*
      * An internal class used to hold a combination of two potentially colliding objects. 
      */
 
-    public class CollidingObject
+    internal class CollidingObject
     {
         PhysicsBody a, b;
 
@@ -111,7 +109,7 @@ namespace Kintsugi.Physics
             allPhysicsObjects = new List<PhysicsBody>();
             colliding = new HashSet<CollidingObject>();
 
-            lastUpdate = Bootstrap.getCurrentMillis();
+            lastUpdate = Bootstrap.GetCurrentMillis();
 
             collisionsToCheck = new List<CollidingObject>();
 
@@ -120,19 +118,19 @@ namespace Kintsugi.Physics
 
             TimeInterval = 20;
 
-            if (Bootstrap.checkEnvironmentalVariable("gravity_modifier"))
+            if (Bootstrap.CheckEnvironmentalVariable("gravity_modifier"))
             {
                 gravityModifier = float.Parse
-                    (Bootstrap.getEnvironmentalVariable("gravity_modifier"));
+                    (Bootstrap.GetEnvironmentalVariable("gravity_modifier"));
             }
             else
             {
                 gravityModifier = 0.1f;
             }
 
-            if (Bootstrap.checkEnvironmentalVariable("gravity_dir"))
+            if (Bootstrap.CheckEnvironmentalVariable("gravity_dir"))
             {
-                tmp = Bootstrap.getEnvironmentalVariable("gravity_dir");
+                tmp = Bootstrap.GetEnvironmentalVariable("gravity_dir");
 
                 tmpbits = tmp.Split(",");
 
@@ -146,7 +144,7 @@ namespace Kintsugi.Physics
 
         }
 
-        public static PhysicsManager getInstance()
+        public static PhysicsManager GetInstance()
         {
             if (me == null)
             {
@@ -162,7 +160,7 @@ namespace Kintsugi.Physics
         public long LastDebugDraw { get => lastDebugDraw; set => lastDebugDraw = value; }
         public float GravityModifier { get => gravityModifier; set => gravityModifier = value; }
 
-        public void addPhysicsObject(PhysicsBody body)
+        public void AddPhysicsObject(PhysicsBody body)
         {
             if (allPhysicsObjects.Contains(body))
             {
@@ -173,12 +171,12 @@ namespace Kintsugi.Physics
 
         }
 
-        public void removePhysicsObject(PhysicsBody body)
+        public void RemovePhysicsObject(PhysicsBody body)
         {
             allPhysicsObjects.Remove(body);
         }
 
-        public void clearList(SAPEntry node)
+        public void ClearList(SAPEntry node)
         {
             //Let's clear everything so the garbage collector can do its
             // work
@@ -199,7 +197,7 @@ namespace Kintsugi.Physics
 
         }
 
-        public SAPEntry addToList(SAPEntry node, SAPEntry entry)
+        public SAPEntry AddToList(SAPEntry node, SAPEntry entry)
         {
             SAPEntry current;
 
@@ -246,7 +244,7 @@ namespace Kintsugi.Physics
 
         }
 
-        public void outputList(SAPEntry node)
+        public void OutputList(SAPEntry node)
         {
             SAPEntry pointer = node;
             int counter = 0;
@@ -255,7 +253,7 @@ namespace Kintsugi.Physics
 
             if (pointer == null)
             {
-                Debug.getInstance().log("No List");
+                Debug.Log("No List");
                 return;
             }
 
@@ -266,13 +264,13 @@ namespace Kintsugi.Physics
                 counter += 1;
             }
 
-            Debug.getInstance().log("List:" + text);
+            Debug.Log("List:" + text);
 
         }
 
-        public bool willTick()
+        public bool WillTick()
         {
-            if (Bootstrap.getCurrentMillis() - lastUpdate > TimeInterval)
+            if (Bootstrap.GetCurrentMillis() - lastUpdate > TimeInterval)
             {
                 return true;
             }
@@ -280,19 +278,19 @@ namespace Kintsugi.Physics
             return false;
         }
 
-        public bool update()
+        public bool Update()
         {
-            CollisionHandler ch, ch2;
+            ICollisionHandler ch, ch2;
             List<CollidingObject> toRemove;
 
-            if (willTick() == false)
+            if (WillTick() == false)
             {
                 return false;
             }
 
             //            Debug.Log("Tick: " + Bootstrap.TimeElapsed);
 
-            lastUpdate = Bootstrap.getCurrentMillis();
+            lastUpdate = Bootstrap.GetCurrentMillis();
 
 
             toRemove = new List<CollidingObject>();
@@ -302,11 +300,11 @@ namespace Kintsugi.Physics
 
                 if (body.UsesGravity)
                 {
-                    body.applyGravity(gravityModifier, gravityDir);
+                    body.ApplyGravity(gravityModifier, gravityDir);
                 }
 
-                body.physicsTick();
-                body.recalculateColliders();
+                body.PhysicsTick();
+                body.RecalculateColliders();
 
 
             }
@@ -315,35 +313,35 @@ namespace Kintsugi.Physics
             // Check for old collisions that should be persisted
             foreach (CollidingObject col in colliding)
             {
-                ch = (CollisionHandler)col.A.Parent;
-                ch2 = (CollisionHandler)col.B.Parent;
+                ch = (ICollisionHandler)col.A.Parent;
+                ch2 = (ICollisionHandler)col.B.Parent;
                 Vector2? impulse;
 
                 // If the object has been destroyed in the interim, it should still 
                 // trigger a collision exit.
                 if (col.A.Parent.ToBeDestroyed)
                 {
-                    ch2.onCollisionExit(null);
+                    ch2.OnCollisionExit(null);
                     toRemove.Add(col);
                 }
 
                 if (col.B.Parent.ToBeDestroyed)
                 {
-                    ch.onCollisionExit(null);
+                    ch.OnCollisionExit(null);
                     toRemove.Add(col);
                 }
 
-                impulse = checkCollisionBetweenObjects(col.A, col.B);
+                impulse = CheckCollisionBetweenObjects(col.A, col.B);
 
                 if (impulse != null)
                 {
-                    ch.onCollisionStay(col.B);
-                    ch2.onCollisionStay(col.A);
+                    ch.OnCollisionStay(col.B);
+                    ch2.OnCollisionStay(col.A);
                 }
                 else
                 {
-                    ch.onCollisionExit(col.B);
-                    ch2.onCollisionExit(col.A);
+                    ch.OnCollisionExit(col.B);
+                    ch2.OnCollisionExit(col.A);
                     toRemove.Add(col);
                 }
 
@@ -356,34 +354,34 @@ namespace Kintsugi.Physics
 
             toRemove.Clear();
             // Check for new collisions
-            checkForCollisions();
+            CheckForCollisions();
 
 
 
-            //            Debug.Log("Time Interval is " + (Bootstrap.getCurrentMillis() - lastUpdate) + ", " + colliding.Count);
+            //            Debug.Log("Time Interval is " + (Bootstrap.GetCurrentMillis() - lastUpdate) + ", " + colliding.Count);
 
 
             return true;
         }
 
-        public void drawDebugColliders()
+        public void DrawDebugColliders()
         {
             foreach (PhysicsBody body in allPhysicsObjects)
             {
                 // Debug drawing - always happens.
-                body.drawMe();
+                body.DrawMe();
             }
         }
 
-        private Vector2? checkCollisionBetweenObjects(PhysicsBody a, PhysicsBody b)
+        private static Vector2? CheckCollisionBetweenObjects(PhysicsBody a, PhysicsBody b)
         {
             Vector2? impulse;
 
-            foreach (Collider col in a.getColliders())
+            foreach (Collider col in a.GetColliders())
             {
-                foreach (Collider col2 in b.getColliders())
+                foreach (Collider col2 in b.GetColliders())
                 {
-                    impulse = col.checkCollision(col2);
+                    impulse = col.CheckCollision(col2);
 
 
                     if (impulse != null)
@@ -398,7 +396,7 @@ namespace Kintsugi.Physics
         }
 
         // omg this won't scale omg
-        private void broadPassBruteForce()
+        private void BroadPassBruteForce()
         {
             CollidingObject tmp;
 
@@ -418,20 +416,21 @@ namespace Kintsugi.Physics
                         continue;
                     }
 
-                    if (findColliding(allPhysicsObjects[i], allPhysicsObjects[j]))
+                    if (FindColliding(allPhysicsObjects[i], allPhysicsObjects[j]))
                     {
                         continue;
                     }
 
-                    if (findColliding(allPhysicsObjects[j], allPhysicsObjects[i]))
+                    if (FindColliding(allPhysicsObjects[j], allPhysicsObjects[i]))
                     {
                         continue;
                     }
 
-                    tmp = new CollidingObject();
-
-                    tmp.A = allPhysicsObjects[i];
-                    tmp.B = allPhysicsObjects[j];
+                    tmp = new CollidingObject
+                    {
+                        A = allPhysicsObjects[i],
+                        B = allPhysicsObjects[j]
+                    };
 
                     collisionsToCheck.Add(tmp);
 
@@ -442,26 +441,26 @@ namespace Kintsugi.Physics
 
         }
 
-        public bool findColliding(PhysicsBody a, PhysicsBody b)
+        public bool FindColliding(PhysicsBody a, PhysicsBody b)
         {
             CollidingObject col = new CollidingObject(a, b);
 
             return colliding.Contains(col);
         }
 
-        private void narrowPass()
+        private void NarrowPass()
         {
             Vector2 impulse;
             Vector2? possibleImpulse;
             float massTotal, massa, massb;
             float massProp = 0.0f;
 
-            //            Debug.getInstance().log("Active objects " + collisionsToCheck.Count);
+            //            Debug.GetInstance().Log("Active objects " + collisionsToCheck.Count);
 
             foreach (CollidingObject ob in collisionsToCheck)
             {
 
-                possibleImpulse = checkCollisionBetweenObjects(ob.A, ob.B);
+                possibleImpulse = CheckCollisionBetweenObjects(ob.A, ob.B);
 
                 if (possibleImpulse.HasValue)
                 {
@@ -487,15 +486,15 @@ namespace Kintsugi.Physics
 
                         if (ob.A.ImpartForce)
                         {
-                            ob.A.impartForces(ob.B, massProp);
-                            ob.A.reduceForces(1.0f - massProp);
+                            ob.A.ImpartForces(ob.B, massProp);
+                            ob.A.ReduceForces(1.0f - massProp);
                         }
 
                         massb = massProp;
 
                         if (ob.B.Kinematic == false)
                         {
-                            ob.B.Parent.Transform.translate(-1 * (impulse.X * massProp), -1 * (impulse.Y * massProp));
+                            ob.B.Parent.Transform.Translate(-1 * (impulse.X * massProp), -1 * (impulse.Y * massProp));
                         }
 
 
@@ -514,37 +513,37 @@ namespace Kintsugi.Physics
                         if (ob.A.Kinematic == false)
                         {
 
-                            ob.A.Parent.Transform.translate(impulse.X * massProp, impulse.Y * massProp);
+                            ob.A.Parent.Transform.Translate(impulse.X * massProp, impulse.Y * massProp);
                         }
 
 
                         if (ob.A.StopOnCollision)
                         {
-                            ob.A.stopForces();
+                            ob.A.StopForces();
                         }
 
                         if (ob.B.StopOnCollision)
                         {
-                            ob.B.stopForces();
+                            ob.B.StopForces();
                         }
 
 
                     }
 
 
-                    ((CollisionHandler)ob.A.Parent).onCollisionEnter(ob.B);
-                    ((CollisionHandler)ob.B.Parent).onCollisionEnter(ob.A);
+                    ((ICollisionHandler)ob.A.Parent).OnCollisionEnter(ob.B);
+                    ((ICollisionHandler)ob.B.Parent).OnCollisionEnter(ob.A);
                     colliding.Add(ob);
 
 
 
                     if (ob.A.ReflectOnCollision)
                     {
-                        ob.A.reflectForces(impulse);
+                        ob.A.ReflectForces(impulse);
                     }
                     if (ob.B.ReflectOnCollision)
                     {
-                        ob.B.reflectForces(impulse);
+                        ob.B.ReflectForces(impulse);
                     }
 
 
@@ -554,7 +553,7 @@ namespace Kintsugi.Physics
             }
         }
 
-        public void reportCollisionsInAxis(SAPEntry start)
+        public void ReportCollisionsInAxis(SAPEntry start)
         {
             List<SAPEntry> activeObjects;
             List<int> toRemove;
@@ -598,11 +597,11 @@ namespace Kintsugi.Physics
                             col.A = activeObjects[i].Owner;
                         }
 
-                        if (!findColliding(col.A, col.B))
+                        if (!FindColliding(col.A, col.B))
                         {
                             collisionsToCheck.Add(col);
                         }
-                        // Debug.getInstance().log("Adding potential collision: " + col.ToString());
+                        // Debug.GetInstance().Log("Adding potential collision: " + col.ToString());
 
                     }
 
@@ -626,7 +625,7 @@ namespace Kintsugi.Physics
         }
 
 
-        public void broadPassSearchAndSweep()
+        public void BroadPassSearchAndSweep()
         {
             SAPEntry sx, sy;
             float[] x, y;
@@ -646,11 +645,11 @@ namespace Kintsugi.Physics
                 sx.End = x[1];
 
 
-                sapX = addToList(sapX, sx);
+                sapX = AddToList(sapX, sx);
 
             }
 
-            //            outputList (sapX);
+            //            OutputList (sapX);
             // What we have at this point is a sorted linked list of all
             // our objects in order.  So now we go over them all to see 
             // what are viable collision candidates.  If they don't overlap 
@@ -660,22 +659,22 @@ namespace Kintsugi.Physics
             // the Y axis from those that overlap in the X axis.
             // A two pass sweep and prune.
 
-            reportCollisionsInAxis(sapX);
-            clearList(sapX);
+            ReportCollisionsInAxis(sapX);
+            ClearList(sapX);
 
         }
-        public void broadPass()
+        public void BroadPass()
         {
-            broadPassSearchAndSweep();
-            //          broadPassBruteForce();
+            BroadPassSearchAndSweep();
+            //          BroadPassBruteForce();
         }
 
 
 
-        private void checkForCollisions()
+        private void CheckForCollisions()
         {
-            broadPass();
-            narrowPass();
+            BroadPass();
+            NarrowPass();
 
             collisionsToCheck.Clear();
 

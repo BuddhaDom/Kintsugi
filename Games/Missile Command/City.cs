@@ -3,41 +3,41 @@ using Kintsugi.Physics;
 
 namespace MissileCommand
 {
-    class City : GameObject, CollisionHandler
+    class City : GameObject, ICollisionHandler
     {
 
-        public override void initialize()
+        public override void Initialize()
         {
-            this.Transform.SpritePath = Bootstrap.getAssetManager().getAssetPath("city.png");
+            this.Transform.SpritePath = Bootstrap.GetAssetManager().GetAssetPath("city.png");
 
-            setPhysicsEnabled();
+            SetPhysicsEnabled();
 
-            MyBody.addCircleCollider(64, 64, 64);
+            MyBody.AddCircleCollider(64, 64, 64);
 
-            addTag("City");
+            AddTag("City");
 
             MyBody.Kinematic = true;
 
         }
 
 
-        public override void update()
+        public override void Update()
         {
 
-            Bootstrap.getDisplay().addToDraw(this);
+            Bootstrap.GetDisplay().AddToDraw(this);
 
         }
 
-        public void onCollisionEnter(PhysicsBody x)
+        public void OnCollisionEnter(PhysicsBody x)
         {
 
         }
 
-        public void onCollisionExit(PhysicsBody x)
+        public void OnCollisionExit(PhysicsBody x)
         {
         }
 
-        public void onCollisionStay(PhysicsBody x)
+        public void OnCollisionStay(PhysicsBody x)
         {
         }
 

@@ -6,30 +6,30 @@ using System.Drawing;
 
 namespace SpaceInvaders
 {
-    class Spaceship : GameObject, InputListener, CollisionHandler
+    class Spaceship : GameObject, IInputListener, ICollisionHandler
     {
         bool left, right;
         float fireCounter, fireDelay;
 
 
-        public override void initialize()
+        public override void Initialize()
         {
 
             this.Transform.X = 100.0f;
             this.Transform.Y = 800.0f;
-            this.Transform.SpritePath = Bootstrap.getAssetManager().getAssetPath("player.png");
+            this.Transform.SpritePath = Bootstrap.GetAssetManager().GetAssetPath("player.png");
 
 
             fireDelay = 2;
             fireCounter = fireDelay;
 
-            Bootstrap.getInput().addListener(this);
+            Bootstrap.GetInput().AddListener(this);
 
-            setPhysicsEnabled();
+            SetPhysicsEnabled();
 
-            MyBody.addRectCollider();
+            MyBody.AddRectCollider();
 
-            addTag("Player");
+            AddTag("Player");
 
 
         }
@@ -51,10 +51,10 @@ namespace SpaceInvaders
 
         }
 
-        public void handleInput(InputEvent inp, string eventType)
+        public void HandleInput(InputEvent inp, string eventType)
         {
 
-            if (Bootstrap.getRunningGame().isRunning() == false)
+            if (Bootstrap.GetRunningGame().IsRunning() == false)
             {
                 return;
             }
@@ -101,37 +101,37 @@ namespace SpaceInvaders
             }
         }
 
-        public override void update()
+        public override void Update()
         {
-            float amount = (float)(100 * Bootstrap.getDeltaTime());
+            float amount = (float)(100 * Bootstrap.GetDeltaTime());
 
-            fireCounter += (float)Bootstrap.getDeltaTime();
+            fireCounter += (float)Bootstrap.GetDeltaTime();
 
             if (left)
             {
-                this.Transform.translate(-1 * amount, 0);
+                this.Transform.Translate(-1 * amount, 0);
             }
 
             if (right)
             {
-                this.Transform.translate(1 * amount, 0);
+                this.Transform.Translate(1 * amount, 0);
             }
 
-            Bootstrap.getDisplay().addToDraw(this);
+            Bootstrap.GetDisplay().AddToDraw(this);
         }
 
-        public void onCollisionEnter(PhysicsBody x)
+        public void OnCollisionEnter(PhysicsBody x)
         {
 
         }
 
-        public void onCollisionExit(PhysicsBody x)
+        public void OnCollisionExit(PhysicsBody x)
         {
 
             MyBody.DebugColor = Color.Green;
         }
 
-        public void onCollisionStay(PhysicsBody x)
+        public void OnCollisionStay(PhysicsBody x)
         {
             MyBody.DebugColor = Color.Blue;
         }

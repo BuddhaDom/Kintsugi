@@ -15,13 +15,13 @@ namespace Kintsugi.Physics.Colliders
 {
     public abstract class Collider
     {
-        private CollisionHandler gameObject;
+        private ICollisionHandler gameObject;
         private float[] minAndMaxX;
         private float[] minAndMaxY;
         private bool rotateAtOffset;
 
-        public abstract void recalculate();
-        public Collider(CollisionHandler gob)
+        public abstract void Recalculate();
+        public Collider(ICollisionHandler gob)
         {
             gameObject = gob;
             MinAndMaxX = new float[2];
@@ -29,39 +29,39 @@ namespace Kintsugi.Physics.Colliders
 
         }
 
-        internal CollisionHandler GameObject { get => gameObject; set => gameObject = value; }
+        internal ICollisionHandler GameObject { get => gameObject; set => gameObject = value; }
         internal float[] MinAndMaxX { get => minAndMaxX; set => minAndMaxX = value; }
         internal float[] MinAndMaxY { get => minAndMaxY; set => minAndMaxY = value; }
         public bool RotateAtOffset { get => rotateAtOffset; set => rotateAtOffset = value; }
 
-        public abstract Vector2? checkCollision(ColliderRect c);
+        public abstract Vector2? CheckCollision(ColliderRect c);
 
-        public abstract Vector2? checkCollision(Vector2 c);
+        public abstract Vector2? CheckCollision(Vector2 c);
 
-        public abstract Vector2? checkCollision(ColliderCircle c);
+        public abstract Vector2? CheckCollision(ColliderCircle c);
 
-        public virtual Vector2? checkCollision(Collider c)
+        public virtual Vector2? CheckCollision(Collider c)
         {
 
-            if (c is ColliderRect)
+            if (c is ColliderRect rect)
             {
-                return checkCollision((ColliderRect)c);
+                return CheckCollision(rect);
             }
 
-            if (c is ColliderCircle)
+            if (c is ColliderCircle circle)
             {
-                return checkCollision((ColliderCircle)c);
+                return CheckCollision(circle);
             }
 
-            Debug.getInstance().log("Bug");
+            Debug.Log("Bug");
             // Not sure how we got here but c'est la vie
             return null;
         }
 
-        public abstract void drawMe(Color col);
+        public abstract void DrawMe(Color col);
 
-        public abstract float[] getMinAndMaxX();
-        public abstract float[] getMinAndMaxY();
+        public abstract float[] GetMinAndMaxX();
+        public abstract float[] GetMinAndMaxY();
 
     }
 }

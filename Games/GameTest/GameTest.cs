@@ -4,24 +4,24 @@ using Kintsugi.Input;
 
 namespace Shard
 {
-    class GameTest : Game, InputListener
+    class GameTest : Game, IInputListener
     {
         GameObject background;
         List<GameObject> asteroids;
-        public override void update()
+        public override void Update()
         {
 
-            Bootstrap.getDisplay().showText("FPS: " + Bootstrap.getSecondFPS() + " / " + Bootstrap.getFPS(), 10, 10, 12, 255, 255, 255);
+            Bootstrap.GetDisplay().ShowText("FPS: " + Bootstrap.GetSecondFPS() + " / " + Bootstrap.GetFPS(), 10, 10, 12, 255, 255, 255);
 
 
         }
 
-        public override int getTargetFrameRate()
+        public override int GetTargetFrameRate()
         {
             return 100;
 
         }
-        public void createShip()
+        public void CreateShip()
         {
             GameObject ship = new Spaceship();
             Random rand = new Random();
@@ -37,24 +37,24 @@ namespace Shard
 
 
             background = new GameObject();
-            background.Transform.SpritePath = getAssetManager().getAssetPath("background2.jpg");
+            background.Transform.SpritePath = GetAssetManager().GetAssetPath("background2.jpg");
             background.Transform.X = 0;
             background.Transform.Y = 0;
 
 
         }
 
-        public override void initialize()
+        public override void Initialize()
         {
-            Bootstrap.getInput().addListener(this);
-            createShip();
+            Bootstrap.GetInput().AddListener(this);
+            CreateShip();
 
             asteroids = new List<GameObject>();
 
 
         }
 
-        public void handleInput(InputEvent inp, string eventType)
+        public void HandleInput(InputEvent inp, string eventType)
         {
 
             if (eventType == "MouseDown")

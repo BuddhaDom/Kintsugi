@@ -22,20 +22,20 @@ namespace Kintsugi.Core
 
         public AssetManagerBase assets;
 
-        public AssetManagerBase getAssetManager()
+        public AssetManagerBase GetAssetManager()
         {
             if (assets == null)
             {
-                assets = Bootstrap.getAssetManager();
+                assets = Bootstrap.GetAssetManager();
             }
 
             return assets;
         }
 
-        public abstract void initialize();
-        public abstract void update();
+        public abstract void Initialize();
+        public abstract void Update();
 
-        public virtual bool isRunning()
+        public virtual bool IsRunning()
         {
             return true;
         }
@@ -43,7 +43,7 @@ namespace Kintsugi.Core
         // By default our games will run at the maximum speed possible, but 
         // note that we have millisecond timing precision.  Any frame rate that 
         // needs greater precision than that will start to go... weird.
-        public virtual int getTargetFrameRate()
+        public virtual int GetTargetFrameRate()
         {
             return int.MaxValue;
         }

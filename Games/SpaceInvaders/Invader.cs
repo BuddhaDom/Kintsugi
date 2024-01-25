@@ -4,7 +4,7 @@ using Shard;
 
 namespace SpaceInvaders
 {
-    class Invader : GameObject, CollisionHandler
+    class Invader : GameObject, ICollisionHandler
     {
 
         // https://github.com/sausheong/invaders
@@ -17,11 +17,11 @@ namespace SpaceInvaders
 
         public int Xdir { get => xdir; set => xdir = value; }
 
-        public override void initialize()
+        public override void Initialize()
         {
             sprites = new string[2];
 
-            game = (GameSpaceInvaders)Bootstrap.getRunningGame();
+            game = (GameSpaceInvaders)Bootstrap.GetRunningGame();
 
             sprites[0] = "invader1.png";
             sprites[1] = "invader2.png";
@@ -32,12 +32,12 @@ namespace SpaceInvaders
             this.Transform.Y = 100.0f;
             this.Transform.SpritePath = sprites[0];
 
-            setPhysicsEnabled();
-            MyBody.addRectCollider();
+            SetPhysicsEnabled();
+            MyBody.AddRectCollider();
 
             rand = new Random();
 
-            addTag("Invader");
+            AddTag("Invader");
 
             MyBody.PassThrough = true;
 
@@ -53,35 +53,35 @@ namespace SpaceInvaders
                 spriteToUse = 0;
             }
 
-            this.Transform.SpritePath = Bootstrap.getAssetManager().getAssetPath(sprites[spriteToUse]);
+            this.Transform.SpritePath = Bootstrap.GetAssetManager().GetAssetPath(sprites[spriteToUse]);
 
         }
 
-        public override void update()
+        public override void Update()
         {
 
 
-            Bootstrap.getDisplay().addToDraw(this);
+            Bootstrap.GetDisplay().AddToDraw(this);
         }
 
-        public void onCollisionEnter(PhysicsBody x)
+        public void OnCollisionEnter(PhysicsBody x)
         {
-            if (x.Parent.checkTag("Player"))
+            if (x.Parent.CheckTag("Player"))
             {
                 x.Parent.ToBeDestroyed = true;
             }
 
-            if (x.Parent.checkTag("BunkerBit"))
+            if (x.Parent.CheckTag("BunkerBit"))
             {
                 x.Parent.ToBeDestroyed = true;
             }
         }
 
-        public void onCollisionExit(PhysicsBody x)
+        public void OnCollisionExit(PhysicsBody x)
         {
         }
 
-        public void onCollisionStay(PhysicsBody x)
+        public void OnCollisionStay(PhysicsBody x)
         {
         }
 

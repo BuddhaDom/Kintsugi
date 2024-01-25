@@ -19,16 +19,16 @@ namespace Kintsugi.Physics.Colliders
         private float x, y, rad;
         private float xoff, yoff;
         private bool fromTrans;
-        public ColliderCircle(CollisionHandler gob, Transform t) : base(gob)
+        public ColliderCircle(ICollisionHandler gob, Transform t) : base(gob)
         {
 
             MyRect = t;
             fromTrans = true;
             RotateAtOffset = false;
-            calculateBoundingBox();
+            CalculateBoundingBox();
         }
 
-        public ColliderCircle(CollisionHandler gob, Transform t, float x, float y, float rad) : base(gob)
+        public ColliderCircle(ICollisionHandler gob, Transform t, float x, float y, float rad) : base(gob)
         {
 
             Xoff = x;
@@ -42,15 +42,15 @@ namespace Kintsugi.Physics.Colliders
 
             fromTrans = false;
 
-            calculateBoundingBox();
+            CalculateBoundingBox();
 
         }
 
-        public ColliderCircle(CollisionHandler gob) : base(gob)
+        public ColliderCircle(ICollisionHandler gob) : base(gob)
         {
         }
 
-        public void calculateBoundingBox()
+        public void CalculateBoundingBox()
         {
             float x1, x2, y1, y2;
             float intWid;
@@ -103,12 +103,12 @@ namespace Kintsugi.Physics.Colliders
         public float Xoff { get => xoff; set => xoff = value; }
         public float Yoff { get => yoff; set => yoff = value; }
 
-        public override void recalculate()
+        public override void Recalculate()
         {
-            calculateBoundingBox();
+            CalculateBoundingBox();
         }
 
-        public override Vector2? checkCollision(ColliderRect other)
+        public override Vector2? CheckCollision(ColliderRect other)
         {
 
             double tx = X;
@@ -160,7 +160,7 @@ namespace Kintsugi.Physics.Colliders
                     // it is hopefully fine for us to push it there.
 
 
-                    dir = MyRect.getLastDirection();
+                    dir = MyRect.GetLastDirection();
 
                     dir = Vector2.Normalize(dir);
 
@@ -182,15 +182,14 @@ namespace Kintsugi.Physics.Colliders
             return null;
         }
 
-        public override void drawMe(Color col)
+        public override void DrawMe(Color col)
         {
-            Display d = Bootstrap.getDisplay();
+            DisplayBase d = Bootstrap.GetDisplay();
 
-            d.drawCircle((int)X, (int)Y, (int)Rad, col);
-
+            d.DrawCircle((int)X, (int)Y, (int)Rad, col);
         }
 
-        public override Vector2? checkCollision(ColliderCircle c)
+        public override Vector2? CheckCollision(ColliderCircle c)
         {
             double dist, depth, radsq;
             double xpen, ypen;
@@ -220,17 +219,17 @@ namespace Kintsugi.Physics.Colliders
             return null;
         }
 
-        public override float[] getMinAndMaxX()
+        public override float[] GetMinAndMaxX()
         {
             return MinAndMaxX;
         }
 
-        public override float[] getMinAndMaxY()
+        public override float[] GetMinAndMaxY()
         {
             return MinAndMaxY;
         }
 
-        public override Vector2? checkCollision(Vector2 c)
+        public override Vector2? CheckCollision(Vector2 c)
         {
 
             if (c.X >= Left &&

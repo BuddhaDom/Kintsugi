@@ -5,7 +5,7 @@ using System.Drawing;
 
 namespace Shard
 {
-    class GameSpaceInvaders : Game, InputListener
+    class GameSpaceInvaders : Game, IInputListener
     {
         private Invader[,] myInvaders;
         private int xdir;
@@ -21,7 +21,7 @@ namespace Shard
         public int Xdir { get => xdir; set => xdir = value; }
         public bool Dead { get => dead; set => dead = value; }
 
-        public override bool isRunning()
+        public override bool IsRunning()
         {
             if (ship == null || ship.ToBeDestroyed == true)
             {
@@ -31,20 +31,20 @@ namespace Shard
             return true;
 
         }
-        public override void update()
+        public override void Update()
         {
-            Bootstrap.getDisplay().showText("FPS: " + Bootstrap.getFPS(), 10, 10, 12, 255, 255, 255);
+            Bootstrap.GetDisplay().ShowText("FPS: " + Bootstrap.GetFPS(), 10, 10, 12, 255, 255, 255);
 
             int ymod = 0;
             int deaths = 0;
 
-            if (isRunning() == false)
+            if (IsRunning() == false)
             {
                 Color col = Color.FromArgb(rand.Next(0, 256), rand.Next(0, 256), rand.Next(0, 256));
-                Bootstrap.getDisplay().showText("GAME OVER!", 300, 300, 128, col);
+                Bootstrap.GetDisplay().ShowText("GAME OVER!", 300, 300, 128, col);
                 return;
             }
-            animCounter += (float)Bootstrap.getDeltaTime();
+            animCounter += (float)Bootstrap.GetDeltaTime();
 
             //            Debug.Log("Move Counter is " + moveCounter + ", dir is " + moveDir);
 
@@ -82,11 +82,11 @@ namespace Shard
 
                         if (ymod != 0)
                         {
-                            myInvaders[i, j].Transform.translate(0, ymod);
+                            myInvaders[i, j].Transform.Translate(0, ymod);
                         }
                         else
                         {
-                            myInvaders[i, j].Transform.translate(xdir, 0);
+                            myInvaders[i, j].Transform.Translate(xdir, 0);
                         }
 
                         livingInvaders.Add(myInvaders[i, j]);
@@ -157,9 +157,9 @@ namespace Shard
 
         }
 
-        public override void initialize()
+        public override void Initialize()
         {
-            Bootstrap.getInput().addListener(this);
+            Bootstrap.GetInput().AddListener(this);
 
             rows = 6;
             columns = 11;
@@ -172,7 +172,7 @@ namespace Shard
 
         }
 
-        public void handleInput(InputEvent inp, string eventType)
+        public void HandleInput(InputEvent inp, string eventType)
         {
 
 

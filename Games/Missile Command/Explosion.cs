@@ -5,7 +5,7 @@ using System.Drawing;
 
 namespace MissileCommand
 {
-    class Explosion : GameObject, CollisionHandler
+    class Explosion : GameObject, ICollisionHandler
     {
         private int maxRadius;
         private float currentRadius;
@@ -15,28 +15,28 @@ namespace MissileCommand
         private string targetTag;
 
         public string TargetTag { get => targetTag; set => targetTag = value; }
-        public override void initialize()
+        public override void Initialize()
         {
             currentRadius = 0;
             radDir = 1f;
             maxRadius = 50;
             rand = new Random();
 
-            setPhysicsEnabled();
+            SetPhysicsEnabled();
 
-            c = MyBody.addCircleCollider(0, 0, (int)currentRadius);
+            c = MyBody.AddCircleCollider(0, 0, (int)currentRadius);
 
             MyBody.PassThrough = true;
 
         }
 
-        public override void prePhysicsUpdate()
+        public override void PrePhysicsUpdate()
         {
 
 
         }
 
-        public override void update()
+        public override void Update()
         {
             Color col = Color.FromArgb(rand.Next(0, 256), rand.Next(0, 256), rand.Next(0, 256));
             int explosionSpeed = maxRadius / 4;
@@ -46,12 +46,12 @@ namespace MissileCommand
                 radDir *= -1;
             }
 
-            currentRadius += (float)(radDir * Bootstrap.getDeltaTime() * explosionSpeed);
+            currentRadius += (float)(radDir * Bootstrap.GetDeltaTime() * explosionSpeed);
 
             c.X = (float)Transform.Centre.X;
             c.Y = (float)Transform.Centre.Y;
             c.Rad = currentRadius;
-            c.recalculate();
+            c.Recalculate();
 
 
             if (currentRadius <= -1)
@@ -60,25 +60,25 @@ namespace MissileCommand
             }
 
 
-            Bootstrap.getDisplay().drawFilledCircle((int)Transform.X, (int)Transform.Y, (int)currentRadius, col);
+            Bootstrap.GetDisplay().DrawFilledCircle((int)Transform.X, (int)Transform.Y, (int)currentRadius, col);
 
         }
 
-        public void onCollisionEnter(PhysicsBody x)
+        public void OnCollisionEnter(PhysicsBody x)
         {
 
-            if (x.Parent.checkTag(TargetTag))
+            if (x.Parent.CheckTag(TargetTag))
             {
                 Debug.Log("Collided!");
                 x.Parent.ToBeDestroyed = true;
             }
         }
 
-        public void onCollisionExit(PhysicsBody x)
+        public void OnCollisionExit(PhysicsBody x)
         {
         }
 
-        public void onCollisionStay(PhysicsBody x)
+        public void OnCollisionStay(PhysicsBody x)
         {
         }
 

@@ -29,7 +29,7 @@ namespace Kintsugi.Core
         private Vector2 forward;
         private Vector2 right, centre;
 
-        public Vector2 getLastDirection()
+        public Vector2 GetLastDirection()
         {
             float dx, dy;
             dx = X - Lx;
@@ -54,11 +54,11 @@ namespace Kintsugi.Core
             lx = 0;
             ly = 0;
 
-            rotate(0);
+            Rotate(0);
         }
 
 
-        public void recalculateCentre()
+        public void RecalculateCentre()
         {
 
             centre.X = x + Wid * scalex / 2;
@@ -66,14 +66,14 @@ namespace Kintsugi.Core
 
         }
 
-        public void translate(double nx, double ny)
+        public void Translate(double nx, double ny)
         {
-            translate((float)nx, (float)ny);
+            Translate((float)nx, (float)ny);
         }
 
 
 
-        public void translate(float nx, float ny)
+        public void Translate(float nx, float ny)
         {
             Lx = X;
             Ly = Y;
@@ -82,17 +82,17 @@ namespace Kintsugi.Core
             y += ny;
 
 
-            recalculateCentre();
+            RecalculateCentre();
         }
 
-        public void translate(Vector2 vect)
+        public void Translate(Vector2 vect)
         {
-            translate(vect.X, vect.Y);
+            Translate(vect.X, vect.Y);
         }
 
 
 
-        public void rotate(float dir)
+        public void Rotate(float dir)
         {
             rotz += dir;
 

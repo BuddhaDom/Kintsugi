@@ -6,8 +6,8 @@
 
         public string AssetPath { get; set; }
 
-        public abstract void registerAssets();
-        public abstract string getAssetPath(string asset);
+        public abstract void RegisterAssets();
+        public abstract string GetAssetPath(string asset);
     }
 
 }

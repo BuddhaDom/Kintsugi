@@ -10,7 +10,7 @@ namespace Kintsugi.Audio
 {
     abstract public class Sound
     {
-        abstract public void playSound(string file);
+        abstract public void PlaySound(string file);
 
     }
 }

@@ -4,33 +4,33 @@ using System.Drawing;
 
 namespace ManicMiner
 {
-    class Collectible : GameObject, CollisionHandler
+    class Collectible : GameObject, ICollisionHandler
     {
 
-        public override void initialize()
+        public override void Initialize()
         {
-            setPhysicsEnabled();
+            SetPhysicsEnabled();
 
-            addTag("Collectible");
-            MyBody.addRectCollider((int)Transform.X, (int)Transform.Y, 10, 10);
+            AddTag("Collectible");
+            MyBody.AddRectCollider((int)Transform.X, (int)Transform.Y, 10, 10);
             MyBody.PassThrough = true;
 
         }
 
 
-        public override void update()
+        public override void Update()
         {
             Random r = new Random();
             Color col = Color.FromArgb(r.Next(0, 256), r.Next(0, 256), 0);
 
-            Bootstrap.getDisplay().drawLine(
+            Bootstrap.GetDisplay().DrawLine(
                          (int)Transform.X,
                          (int)Transform.Y,
                          (int)Transform.X + 10,
                          (int)Transform.Y + 10,
                          col);
 
-            Bootstrap.getDisplay().drawLine(
+            Bootstrap.GetDisplay().DrawLine(
                 (int)Transform.X + 10,
                 (int)Transform.Y,
                 (int)Transform.X,
@@ -41,20 +41,20 @@ namespace ManicMiner
 
         }
 
-        public void onCollisionEnter(PhysicsBody x)
+        public void OnCollisionEnter(PhysicsBody x)
         {
-            if (x.Parent.checkTag("MinerWilly"))
+            if (x.Parent.CheckTag("MinerWilly"))
             {
                 this.ToBeDestroyed = true;
             }
 
         }
 
-        public void onCollisionExit(PhysicsBody x)
+        public void OnCollisionExit(PhysicsBody x)
         {
         }
 
-        public void onCollisionStay(PhysicsBody x)
+        public void OnCollisionStay(PhysicsBody x)
         {
         }
 

@@ -6,7 +6,7 @@ using System.Numerics;
 
 namespace MissileCommand
 {
-    class Missile : GameObject, CollisionHandler
+    class Missile : GameObject, ICollisionHandler
     {
         private float targetx, targety;
         private float originx, originy;
@@ -31,16 +31,16 @@ namespace MissileCommand
         public int Speed { get => speed; set => speed = value; }
         public Color MyColor { get => myColor; set => myColor = value; }
 
-        public override void initialize()
+        public override void Initialize()
         {
             rand = new Random();
 
-            setPhysicsEnabled();
+            SetPhysicsEnabled();
             mirvCount = 0;
 
             //            MyBody.Kinematic = true;
 
-            c = MyBody.addCircleCollider((int)Transform.X, (int)Transform.Y, 2);
+            c = MyBody.AddCircleCollider((int)Transform.X, (int)Transform.Y, 2);
 
             MyBody.PassThrough = true;
         }
@@ -60,7 +60,7 @@ namespace MissileCommand
 
         }
 
-        public override void update()
+        public override void Update()
         {
             float xDist, yDist;
             List<City> remainingCities;
@@ -75,10 +75,10 @@ namespace MissileCommand
             v = new(xDist, yDist);
             v = Vector2.Normalize(v);
 
-            v.X = (float)(v.X * Bootstrap.getDeltaTime() * Speed);
-            v.Y = (float)(v.Y * Bootstrap.getDeltaTime() * Speed);
+            v.X = (float)(v.X * Bootstrap.GetDeltaTime() * Speed);
+            v.Y = (float)(v.Y * Bootstrap.GetDeltaTime() * Speed);
 
-            Transform.translate(v);
+            Transform.Translate(v);
 
             xDist = Math.Abs(xDist);
             yDist = Math.Abs(yDist);
@@ -87,7 +87,7 @@ namespace MissileCommand
             c.X = (float)Transform.Centre.X;
             c.Y = (float)Transform.Centre.Y;
             c.Rad = 2;
-            //            c.recalculate();
+            //            c.Recalculate();
 
             if (mirv)
             {
@@ -115,12 +115,12 @@ namespace MissileCommand
                         m.Originx = (float)this.Transform.X;
                         m.Originy = (float)this.Transform.Y;
 
-                        m.Transform.translate(m.Originx, m.Originy);
+                        m.Transform.Translate(m.Originx, m.Originy);
 
                         m.Targetx = remainingCities[i].Transform.Centre.X;
                         m.Targety = remainingCities[i].Transform.Centre.Y;
 
-                        m.addTag("EnemyMissile");
+                        m.AddTag("EnemyMissile");
 
                         if (rand.Next(0, 100) < 10)
                         {
@@ -135,29 +135,29 @@ namespace MissileCommand
 
                 }
             }
-            else if (xDist + yDist < Speed * Bootstrap.getDeltaTime())
+            else if (xDist + yDist < Speed * Bootstrap.GetDeltaTime())
             {
                 boom();
             }
 
 
-            Bootstrap.getDisplay().drawLine((int)Originx, (int)Originy, (int)Transform.X, (int)Transform.Y, myColor);
-            Bootstrap.getDisplay().drawCircle((int)Transform.X, (int)Transform.Y, 2, col);
+            Bootstrap.GetDisplay().DrawLine((int)Originx, (int)Originy, (int)Transform.X, (int)Transform.Y, myColor);
+            Bootstrap.GetDisplay().DrawCircle((int)Transform.X, (int)Transform.Y, 2, col);
 
-            mirvCount += Bootstrap.getDeltaTime();
+            mirvCount += Bootstrap.GetDeltaTime();
         }
 
-        public void onCollisionEnter(PhysicsBody x)
+        public void OnCollisionEnter(PhysicsBody x)
         {
 
 
         }
 
-        public void onCollisionExit(PhysicsBody x)
+        public void OnCollisionExit(PhysicsBody x)
         {
         }
 
-        public void onCollisionStay(PhysicsBody x)
+        public void OnCollisionStay(PhysicsBody x)
         {
         }
 

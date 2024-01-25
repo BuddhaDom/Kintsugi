@@ -5,28 +5,28 @@ using Kintsugi.Physics;
 
 namespace GameBreakout
 {
-    class Brick : GameObject, InputListener, CollisionHandler
+    class Brick : GameObject, IInputListener, ICollisionHandler
     {
         private int health;
 
         public int Health { get => health; set => health = value; }
 
-        public override void initialize()
+        public override void Initialize()
         {
 
 
-            setPhysicsEnabled();
+            SetPhysicsEnabled();
 
             MyBody.Mass = 1;
             MyBody.Kinematic = true;
 
-            MyBody.addRectCollider();
+            MyBody.AddRectCollider();
 
-            addTag("Brick");
+            AddTag("Brick");
 
         }
 
-        public void handleInput(InputEvent inp, string eventType)
+        public void HandleInput(InputEvent inp, string eventType)
         {
 
 
@@ -35,15 +35,15 @@ namespace GameBreakout
         }
 
 
-        public override void update()
+        public override void Update()
         {
 
-            this.Transform.SpritePath = Bootstrap.getAssetManager().getAssetPath("brick" + Health + ".png");
+            this.Transform.SpritePath = Bootstrap.GetAssetManager().GetAssetPath("brick" + Health + ".png");
 
-            Bootstrap.getDisplay().addToDraw(this);
+            Bootstrap.GetDisplay().AddToDraw(this);
         }
 
-        public void onCollisionEnter(PhysicsBody x)
+        public void OnCollisionEnter(PhysicsBody x)
         {
             Health -= 1;
 
@@ -53,12 +53,12 @@ namespace GameBreakout
             }
         }
 
-        public void onCollisionExit(PhysicsBody x)
+        public void OnCollisionExit(PhysicsBody x)
         {
 
         }
 
-        public void onCollisionStay(PhysicsBody x)
+        public void OnCollisionStay(PhysicsBody x)
         {
         }
 

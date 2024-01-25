@@ -5,41 +5,41 @@ using SDL2;
 
 namespace GameBreakout
 {
-    class Paddle : GameObject, InputListener, CollisionHandler
+    class Paddle : GameObject, IInputListener, ICollisionHandler
     {
         bool left, right;
         int wid;
 
 
-        public override void initialize()
+        public override void Initialize()
         {
 
             this.Transform.X = 500.0f;
             this.Transform.Y = 800.0f;
-            this.Transform.SpritePath = Bootstrap.getAssetManager().getAssetPath("test.png");
+            this.Transform.SpritePath = Bootstrap.GetAssetManager().GetAssetPath("test.png");
             this.Transform.Scaley = 0.5f;
             this.Transform.Scalex = 1.5f;
 
 
-            Bootstrap.getInput().addListener(this);
+            Bootstrap.GetInput().AddListener(this);
 
             left = false;
             right = false;
 
-            setPhysicsEnabled();
+            SetPhysicsEnabled();
 
             MyBody.Mass = 1000;
             MyBody.MaxForce = 20;
             MyBody.Drag = 0.1f;
 
-            MyBody.addRectCollider();
+            MyBody.AddRectCollider();
 
-            addTag("Paddle");
+            AddTag("Paddle");
 
-            wid = Bootstrap.getDisplay().getWidth();
+            wid = Bootstrap.GetDisplay().GetWidth();
         }
 
-        public void handleInput(InputEvent inp, string eventType)
+        public void HandleInput(InputEvent inp, string eventType)
         {
 
 
@@ -76,31 +76,31 @@ namespace GameBreakout
 
         }
 
-        public override void update()
+        public override void Update()
         {
-            Bootstrap.getDisplay().addToDraw(this);
+            Bootstrap.GetDisplay().AddToDraw(this);
         }
 
-        public override void physicsUpdate()
+        public override void PhysicsUpdate()
         {
 
             double boundsx;
 
             if (left)
             {
-                MyBody.addForce(this.Transform.Forward, -1 * 2000f);
+                MyBody.AddForce(this.Transform.Forward, -1 * 2000f);
             }
 
 
             if (right)
             {
-                MyBody.addForce(this.Transform.Forward, 2000f);
+                MyBody.AddForce(this.Transform.Forward, 2000f);
             }
 
 
             if (this.Transform.X < 0)
             {
-                this.Transform.translate(-1 * Transform.X, 0);
+                this.Transform.Translate(-1 * Transform.X, 0);
             }
 
 
@@ -108,26 +108,26 @@ namespace GameBreakout
 
             if (boundsx < 0)
             {
-                this.Transform.translate(boundsx, 0);
+                this.Transform.Translate(boundsx, 0);
             }
 
 
 
 
 
-            Bootstrap.getDisplay().addToDraw(this);
+            Bootstrap.GetDisplay().AddToDraw(this);
         }
 
-        public void onCollisionEnter(PhysicsBody x)
+        public void OnCollisionEnter(PhysicsBody x)
         {
         }
 
-        public void onCollisionExit(PhysicsBody x)
+        public void OnCollisionExit(PhysicsBody x)
         {
 
         }
 
-        public void onCollisionStay(PhysicsBody x)
+        public void OnCollisionStay(PhysicsBody x)
         {
         }
 
