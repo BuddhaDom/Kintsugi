@@ -127,7 +127,7 @@ namespace Kintsugi.Core
 
             foreach (KeyValuePair<string, string> kvp in config)
             {
-                t = Type.GetType("Shard." + kvp.Value);
+                t = Type.GetType("Kintsugi." + kvp.Value);
 
                 if (t == null)
                 {
@@ -140,7 +140,7 @@ namespace Kintsugi.Core
 
                 switch (kvp.Key)
                 {
-                    case "DisplayBase":
+                    case "display":
                         displayEngine = (DisplayBase)ob;
                         displayEngine.Initialize();
                         break;
@@ -169,7 +169,7 @@ namespace Kintsugi.Core
 
             if (displayEngine == null)
             {
-                Debug.GetInstance().Log("No DisplayBase engine set", Debug.DEBUG_LEVEL_ERROR);
+                Debug.GetInstance().Log("No Display engine set", Debug.DEBUG_LEVEL_ERROR);
                 bailOut = true;
             }
 
