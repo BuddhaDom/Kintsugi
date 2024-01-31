@@ -6,6 +6,7 @@
 *   
 */
 
+using Engine.ActionSystem;
 using Kintsugi.Assets;
 using Kintsugi.Audio;
 using Kintsugi.Input;
@@ -302,6 +303,8 @@ namespace Kintsugi.Core
                     // Get input, which works at 50 FPS to make sure it doesn't interfere with the 
                     // variable frame rates.
                     input.GetInput();
+
+                    ActionManager.I.ProcessQueue();
 
                     // Update runs as fast as the system lets it.  Any kind of movement or counter 
                     // increment should be based then on the deltaTime variable.

@@ -12,7 +12,7 @@ namespace Engine.ActionSystem
         internal List<BaseAction> ActionQueue = new();
         private static ActionManager _instance = new();
 
-        public ActionManager I
+        public static ActionManager I
         {
             get => _instance;
         }
