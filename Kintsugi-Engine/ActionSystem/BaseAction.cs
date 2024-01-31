@@ -9,7 +9,5 @@ namespace Kintsugi.ActionSystem
     public abstract class BaseAction
     {
         public abstract void Execute();
-
-        public abstract bool IsFinished();
     }
 }
