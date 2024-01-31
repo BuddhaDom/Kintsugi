@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Kintsugi.ActionSystem
+namespace Kintsugi.EventSystem
 {
-    public abstract class BaseAction
+    public abstract class Event
     {
         public abstract void Execute();
     }
