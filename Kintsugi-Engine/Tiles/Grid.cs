@@ -26,7 +26,7 @@ public class Grid : GameObject
     {
         InitializeTiles(gridWidth, gridHeight);
         if (gridVisible)
-            for (int x = 0; x <= gridWidth; x++)
+            for (int i = 0; i <= gridWidth; i++)
                 // Logic
                 return;
     }
@@ -38,7 +38,7 @@ public class Grid : GameObject
         // Populate it.
         for (int y = 0; y < height; y++)
         for (int x = 0; x < width; x++)
-            Tiles[x, y] = new Tile((x,y), this);
+            Tiles[x, y] = new Tile(new Vec2Int(x,y), this);
     }
     
     /// <summary>
@@ -48,13 +48,10 @@ public class Grid : GameObject
     /// <param name="startTile">First tile.</param>
     /// <param name="endTile">Second tile.</param>
     /// <returns>Tuple representing the vector offset.</returns>
-    public (int xOffset, int yOffset) DistanceBetween(Tile startTile, Tile endTile)
+    public Vec2Int DistanceBetween(Tile startTile, Tile endTile)
     {
         if (startTile.Parent != this || endTile.Parent != this)
             Debug.Fail("One of the tiles selected is not part of this grid.");
-        return (
-            endTile.Position.X - startTile.Position.X, 
-            endTile.Position.Y - startTile.Position.Y
-            );
+        return Vec2Int.Distance(startTile.Position, endTile.Position);
     }
 }
