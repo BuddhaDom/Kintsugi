@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace Kintsugi.Objects
 {
-    internal class TileObject
+    public class TileObject
     {
-        GridPosition position;
-        Facing facing;
+        public GridPosition position { get; set; }
+        public Facing Facing { get; set; }
     }
 }

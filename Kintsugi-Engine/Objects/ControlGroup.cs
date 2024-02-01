@@ -72,7 +72,7 @@ namespace Kintsugi.Objects
                 throw new NullReferenceException("Null unit ended its turn, which is illegal.");
             }
 
-            var unit = sender as Unit;
+            var unit = sender as Actor;
             unit.OnUnitTurnEnd -= UnitTurnOver;
             awaitingUnits--;
 
@@ -82,7 +82,7 @@ namespace Kintsugi.Objects
             }
         }
 
-        private List<Unit> units = new();
+        private List<Actor> units = new();
 
     }
 

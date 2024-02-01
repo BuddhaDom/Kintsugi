@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Kintsugi_Engine.Core
 {
-    internal struct GridPosition
+    public struct GridPosition
     {
         public int X;
         public int Y;

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Kintsugi_Engine.Objects
 {
-    enum Facing
+    public enum Facing
     {
         East, South, West, North
     }
