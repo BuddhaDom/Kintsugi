@@ -1,8 +1,7 @@
 namespace Kintsugi_Engine.Tiles;
 
-public struct Tile(int xPosition, int yPosition, Grid parent)
+public struct Tile((int X, int Y) position, Grid parent)
 {
-    public int XPosition { get; } = xPosition;
-    public int YPosition { get; } = yPosition;
+    public (int X, int Y) Position { get; } = position;
     public Grid Parent { get; } = parent;
 }

@@ -1,15 +1,17 @@
 using System.ComponentModel;
+using System.Drawing;
 using Kintsugi.Core;
 using Debug = System.Diagnostics.Debug;
 
 namespace Kintsugi_Engine.Tiles;
 
-public class Grid
+public class Grid : GameObject
 {
     /// <summary>
     /// The tiles existing in this grid.
     /// </summary>
-    public Tile[,] Tiles { get; }
+    public required Tile[,] Tiles { get; set; }
+
     /// <summary>
     /// Length along the X axis.
     /// </summary>
@@ -18,18 +20,25 @@ public class Grid
     /// Length along the Y axis.
     /// </summary>
     public int Height => Tiles.GetLength(1);
-
-    /// <summary>
-    /// Standard constructor to populate the grid with empty tiles.
-    /// </summary>
-    /// <param name="width">Width of the grid (X axis)</param>
-    /// <param name="height">Height of the grid (Y axis)</param>
-    public Grid(int width, int height)
+    
+    public Grid(int gridWidth, int gridHeight,  float tileWidth = 1.0f, 
+        bool gridVisible = false, Color gridColor = default)
     {
-        this.Tiles = new Tile[height, width];
-        for (int i = 0; i < width; i++)
-            for (int j = 0; j < height; j++)
-                Tiles[i, j] = new Tile(i, j, this);
+        InitializeTiles(gridWidth, gridHeight);
+        if (gridVisible)
+            for (int x = 0; x <= gridWidth; x++)
+                // Logic
+                return;
+    }
+    
+    private void InitializeTiles(int width, int height)
+    {
+        // Initialize object.
+        Tiles = new Tile[height, width];
+        // Populate it.
+        for (int y = 0; y < height; y++)
+        for (int x = 0; x < width; x++)
+            Tiles[x, y] = new Tile((x,y), this);
     }
     
     /// <summary>
@@ -43,7 +52,9 @@ public class Grid
     {
         if (startTile.Parent != this || endTile.Parent != this)
             Debug.Fail("One of the tiles selected is not part of this grid.");
-        return (endTile.XPosition - startTile.XPosition, endTile.YPosition - startTile.YPosition);
+        return (
+            endTile.Position.X - startTile.Position.X, 
+            endTile.Position.Y - startTile.Position.Y
+            );
     }
-    
 }
