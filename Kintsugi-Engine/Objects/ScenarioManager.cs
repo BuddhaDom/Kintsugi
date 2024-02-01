@@ -11,10 +11,16 @@ namespace Kintsugi_Engine.Objects
     {
         public event EventHandler OnTurnOrderFinished;
 
+        private bool begun = false;
         public abstract void OnBeginScenario();
         public abstract void OnEndScenario();
         public void BeginScenario()
         {
+            if (begun)
+            {
+                throw new InvalidOperationException("Scenario has already begun!");
+            }
+            begun = true;
             OnBeginScenario();
             SetupAndBeginScenario();
         }
@@ -25,18 +31,20 @@ namespace Kintsugi_Engine.Objects
         }
         public void AddControlGroup(ControlGroup c)
         {
-            turnOrder.AddToTurnOrder(c);
+            roundManager.AddToTurnOrder(c);
         }
-        RoundManager turnOrder = new();
         internal void NextRound(object? sender, EventArgs e)
         {
-            turnOrder.Begin();
+            roundManager.Begin();
         }
 
         internal void SetupAndBeginScenario()
         {
-            turnOrder.OnRoundFinished += NextRound;
-            turnOrder.Begin();
+            roundManager.OnRoundFinished += NextRound;
+            roundManager.Begin();
         }
+
+        private RoundManager roundManager = new();
+
     }
 }
