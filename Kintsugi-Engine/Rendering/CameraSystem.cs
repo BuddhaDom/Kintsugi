@@ -4,10 +4,6 @@ namespace Kintsugi.Rendering
 {
     internal class CameraSystem
     {
-        public CameraSystem(DisplayBase display)
-        {
-            _display = display;
-        }
         /// <summary>
         /// Center position of the camera in world space
         /// </summary>
@@ -62,6 +58,11 @@ namespace Kintsugi.Rendering
         /// Aspect ratio of the camera. Bound to the aspect ratio of the window.
         /// </summary>
         public float AspectRatio { get => _display.GetWidth() / _display.GetHeight(); }
+
+        internal CameraSystem(DisplayBase display)
+        {
+            _display = display;
+        }
 
         private DisplayBase _display;
 
