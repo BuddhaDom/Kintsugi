@@ -1,0 +1,45 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "seasonal sample (autumn).tsx",
+    "expandedProjectPaths": [
+        "."
+    ],
+    "file.lastUsedOpenFilter": "All Files (*)",
+    "fileStates": {
+        "forestpath.tmx": {
+            "scale": 1.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 620.6666666666666,
+                "y": 444.33333333333337
+            }
+        },
+        "seasonal sample (autumn).tsx": {
+            "scaleInDock": 3,
+            "scaleInEditor": 5.5
+        }
+    },
+    "last.imagePath": "F:/Chalmers/Kintsugi/TiledTesting/mana seed seasonal forest sample (autumn)",
+    "map.height": 40,
+    "map.lastUsedFormat": "tmx",
+    "map.tileHeight": 16,
+    "map.tileWidth": 16,
+    "map.width": 60,
+    "openFiles": [
+        "seasonal sample (autumn).tsx",
+        "forestpath.tmx"
+    ],
+    "project": "testproject.tiled-project",
+    "recentFiles": [
+        "forestpath.tmx",
+        "seasonal sample (autumn).tsx"
+    ],
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 16,
+        "width": 16
+    }
+}
