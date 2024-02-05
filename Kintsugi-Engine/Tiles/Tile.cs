@@ -1,6 +1,6 @@
 using Kintsugi.Core;
 
-namespace Kintsugi_Engine.Tiles;
+namespace Kintsugi.Tiles;
 
 public struct Tile(Vec2Int position, Grid parent)
 {

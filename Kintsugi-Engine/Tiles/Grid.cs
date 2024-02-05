@@ -1,57 +1,55 @@
-using System.ComponentModel;
 using System.Drawing;
 using Kintsugi.Core;
 using Debug = System.Diagnostics.Debug;
 
-namespace Kintsugi_Engine.Tiles;
+namespace Kintsugi.Tiles;
 
-public class Grid : GameObject
+
+public class Grid(int gridWidth, int gridHeight,  float tileWidth = 10.0f, 
+    bool gridVisible = false, Color gridColor = default) : GameObject
 {
     /// <summary>
-    /// The tiles existing in this grid.
+    /// A 2D array containing the tiles existing in this grid.
     /// </summary>
-    public required Tile[,] Tiles { get; set; }
+    public Tile[,] Tiles { get; } = new Tile[gridWidth, gridHeight];
 
     /// <summary>
-    /// Length along the X axis.
+    /// Number of tiles along the X axis.
     /// </summary>
-    public int Width => Tiles.GetLength(0);
+    public int Width => gridWidth;
     /// <summary>
-    /// Length along the Y axis.
+    /// Number of tiles along the Y axis.
     /// </summary>
-    public int Height => Tiles.GetLength(1);
+    public int Height => gridWidth;
     
-    public Grid(int gridWidth, int gridHeight,  float tileWidth = 1.0f, 
-        bool gridVisible = false, Color gridColor = default)
+    public override void Initialize()
     {
-        InitializeTiles(gridWidth, gridHeight);
-        if (gridVisible)
-            for (int i = 0; i <= gridWidth; i++)
-                // Logic
-                return;
-    }
-    
-    private void InitializeTiles(int width, int height)
-    {
-        // Initialize object.
-        Tiles = new Tile[height, width];
-        // Populate it.
-        for (int y = 0; y < height; y++)
-        for (int x = 0; x < width; x++)
+        // Populate tiles object.
+        for (int y = 0; y < gridHeight; y++)
+        for (int x = 0; x < gridWidth; x++)
             Tiles[x, y] = new Tile(new Vec2Int(x,y), this);
     }
-    
-    /// <summary>
-    /// Measure the offset between two tiles. <br/>
-    /// Sends an error message to debug console if checking for tiles belonging to another grid.
-    /// </summary>
-    /// <param name="startTile">First tile.</param>
-    /// <param name="endTile">Second tile.</param>
-    /// <returns>Tuple representing the vector offset.</returns>
-    public Vec2Int DistanceBetween(Tile startTile, Tile endTile)
+
+    public override void Update()
     {
-        if (startTile.Parent != this || endTile.Parent != this)
-            Debug.Fail("One of the tiles selected is not part of this grid.");
-        return Vec2Int.Distance(startTile.Position, endTile.Position);
+        if (gridVisible)
+        {
+            for (int i = 0; i <= gridHeight; i++) // Horizontal lines
+                Bootstrap.GetDisplay().DrawLine(
+                    (int)Transform2D.X,
+                    (int)(Transform2D.Y + tileWidth * i),
+                    (int)(Transform2D.X + tileWidth * gridWidth),
+                    (int)(Transform2D.Y + tileWidth * i),
+                    gridColor
+                );
+            for (int i = 0; i <= gridWidth; i++) // Vertical lines
+                Bootstrap.GetDisplay().DrawLine(
+                    (int)(Transform2D.X + tileWidth * i),
+                    (int)Transform2D.Y,
+                    (int)(Transform2D.X + tileWidth * i),
+                    (int)(Transform2D.Y + tileWidth * gridHeight),
+                    gridColor
+                );
+        }    
     }
 }
