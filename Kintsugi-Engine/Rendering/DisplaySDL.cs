@@ -12,6 +12,7 @@
 */
 
 using Kintsugi.Core;
+using Kintsugi.Tiles;
 using SDL2;
 
 namespace Kintsugi.Rendering
@@ -53,6 +54,7 @@ namespace Kintsugi.Rendering
         private List<Transform> _toDraw;
         private List<Line> _linesToDraw;
         private List<Circle> _circlesToDraw;
+        private List<Grid> _gridsToDraw;
         private Dictionary<string, nint> spriteBuffer;
         public override void Initialize()
         {
@@ -248,6 +250,29 @@ namespace Kintsugi.Rendering
                 SDL.SDL_RenderDrawLine(_rend, l.Sx, l.Sy, l.Ex, l.Ey);
             }
 
+            foreach (var grid in _gridsToDraw)
+            {
+                foreach (var tile in grid.Tiles)
+                {
+                    var source = grid.TileSetSources[tile.TileSetId];
+                    var sprite = LoadTexture(source);
+                    var y = tile.Id % grid.Width;
+                    var x = tile.Id - y * grid.Width;
+
+                    sRect.x = x * grid.TileWidth;
+                    sRect.y = y * grid.TileWidth;
+                    sRect.w = grid.TileWidth;
+                    sRect.h = grid.TileWidth;
+
+                    tRect.x = (int)grid.Transform2D.X + tile.Position.x;
+                    tRect.y = (int)grid.Transform2D.Y + tile.Position.y;
+                    tRect.w = grid.TileWidth;
+                    tRect.h = grid.TileWidth;
+                    
+                    SDL.SDL_RenderCopyEx(_rend, sprite, ref sRect, ref tRect, 0, nint.Zero, SDL.SDL_RendererFlip.SDL_FLIP_NONE);
+                }
+            }
+
             // Show it off.
             base.Display();
 
@@ -264,6 +289,8 @@ namespace Kintsugi.Rendering
             base.ClearDisplay();
         }
 
+        public override void DrawGrid(Grid grid)
+            => _gridsToDraw.Add(grid);
     }
 
 
