@@ -67,7 +67,11 @@ public class Grid : GameObject
                     gid - tiledMap.Tilesets[tileSetIndex].firstgid, tileSetIndex);
                 
             }
-        TileSetSources = tiledMap.Tilesets.Select(o => o.source).ToArray();
+        TileSetSources = tiledMap.GetTiledTilesets(Path.GetDirectoryName(path)+"/")
+            .Select(o => Path.Combine(
+                Path.GetDirectoryName(path) ?? string.Empty,
+                o.Value.Image.source)
+            ).ToArray();
     }
 
     // public Grid(int gridWidth, int gridHeight, int tileWidth, bool gridVisible = false, Color gridColor = default)

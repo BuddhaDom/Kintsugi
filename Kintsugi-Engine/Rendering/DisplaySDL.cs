@@ -65,7 +65,7 @@ namespace Kintsugi.Rendering
             _toDraw = new List<Transform>();
             _linesToDraw = new List<Line>();
             _circlesToDraw = new List<Circle>();
-
+            _gridsToDraw = new List<Grid>();
 
         }
 
@@ -285,6 +285,7 @@ namespace Kintsugi.Rendering
             _toDraw.Clear();
             _circlesToDraw.Clear();
             _linesToDraw.Clear();
+            _gridsToDraw.Clear();
 
             base.ClearDisplay();
         }
