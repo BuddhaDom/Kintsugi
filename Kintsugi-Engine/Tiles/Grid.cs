@@ -1,6 +1,5 @@
 using System.Drawing;
 using Kintsugi.Core;
-using Debug = System.Diagnostics.Debug;
 
 namespace Kintsugi.Tiles;
 
