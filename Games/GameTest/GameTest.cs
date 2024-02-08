@@ -1,6 +1,8 @@
-﻿using GameTest;
+﻿using System.Drawing;
+using GameTest;
 using Kintsugi.Core;
 using Kintsugi.Input;
+using Kintsugi.Tiles;
 
 namespace Shard
 {
@@ -8,6 +10,7 @@ namespace Shard
     {
         GameObject background;
         List<GameObject> asteroids;
+        private GameObject grid;
         public override void Update()
         {
 
@@ -51,7 +54,9 @@ namespace Shard
 
             asteroids = new List<GameObject>();
 
-
+            grid = new Grid(GetAssetManager().GetAssetPath("TiledTesting\\forestpath.tmx"), gridVisible:true, gridColor:Color.DarkBlue);
+            grid.Transform.X = 70;
+            grid.Transform.Y = 70;
         }
 
         public void HandleInput(InputEvent inp, string eventType)

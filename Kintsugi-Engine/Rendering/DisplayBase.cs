@@ -8,6 +8,7 @@
 
 using Kintsugi.Core;
 using System.Drawing;
+using Kintsugi.Tiles;
 
 namespace Kintsugi.Rendering
 {
@@ -88,5 +89,9 @@ namespace Kintsugi.Rendering
 
         public abstract void ShowText(string text, double x, double y, int size, int r, int g, int b);
         public abstract void ShowText(char[,] text, double x, double y, int size, int r, int g, int b);
+        
+        public virtual void DrawGrid(Grid grid)
+        {
+        }
     }
 }
