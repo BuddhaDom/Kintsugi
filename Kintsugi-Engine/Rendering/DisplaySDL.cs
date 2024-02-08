@@ -247,7 +247,7 @@ namespace Kintsugi.Rendering
             foreach (var grid in _gridsToDraw)
             {
                 foreach (var layer in grid.Layers)
-                foreach (var tile in layer.Value.Tiles)
+                foreach (var tile in layer.Tiles)
                 {
                     if (tile.Id < 0) continue;
                     var tileSet = grid.TileSets[tile.TileSetId];

@@ -9,7 +9,7 @@ public class Grid : GameObject
     /// <summary>
     /// A 2D array containing the tiles existing in this grid.
     /// </summary>
-    public Dictionary<int, GridLayer> Layers { get; } = new();
+    public GridLayer[] Layers { get; }
 
     /// <summary>
     /// Number of tiles along the X axis.
@@ -54,11 +54,14 @@ public class Grid : GameObject
         TileWidth = tiledMap.TileWidth;
         this.gridVisible = gridVisible;
         this.gridColor = gridColor;
-        
+        int c; // Generic counter.
+
+        Layers = new GridLayer[tiledMap.Layers.Length];
+        c = 0;
         foreach (var tiledLayer in tiledMap.Layers)
         {
             // Initialize this key in the Layer dictionary, as wel as Tile array.
-            Layers.Add(tiledLayer.id, new GridLayer(this, tiledLayer.name));
+            Layers[c] = new GridLayer(this, tiledLayer.name);
             for (int y = 0; y < Height; y++)
             for (int x = 0; x < Width; x++)
             {
@@ -67,17 +70,17 @@ public class Grid : GameObject
                 var tileSetIndex = GetTilesetIdFromGid(tiledMap, gid);
                 
                 // Set this tile in the layer dictionary.
-                Layers[tiledLayer.id].Tiles[x,y] = new Tile(new Vec2Int(x, y), Layers[tiledLayer.id],
+                Layers[c].Tiles[x,y] = new Tile(new Vec2Int(x, y), Layers[c],
                     gid - tiledMap.Tilesets[tileSetIndex].firstgid, tileSetIndex);
             }
+            c++;
         }
 
         // Get the source paths for tilesets used by this grid.
-
         var dir = Path.GetDirectoryName(path);
         var tiledSets = tiledMap.GetTiledTilesets(dir+"/");
         TileSets = new TileSet[tiledSets.Count];
-        var c = 0;
+        c = 0;
         foreach (var image in tiledSets.Select(set => set.Value.Image))
         {
             TileSets[c] = new TileSet(
