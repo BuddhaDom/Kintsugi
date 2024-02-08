@@ -47,6 +47,7 @@ public class Grid : GameObject
     /// <param name="gridColor">Color of the grid borders if <paramref name="gridVisible"/> is <c>true</c>.</param>
     public Grid(string path, bool gridVisible = false, Color gridColor = default) 
     {
+        // Construct values and properties.
         var tiledMap = new TiledMap(path);
         Width = tiledMap.Width;
         Height = tiledMap.Height;
@@ -56,8 +57,8 @@ public class Grid : GameObject
         
         foreach (var tiledLayer in tiledMap.Layers)
         {
-            Layers.Add(tiledLayer.id, new GridLayer(
-                new Tile[Width, Height], TileWidth, this, tiledLayer.name));
+            // Initialize this key in the Layer dictionary, as wel as Tile array.
+            Layers.Add(tiledLayer.id, new GridLayer(this, tiledLayer.name));
             for (int y = 0; y < Height; y++)
             for (int x = 0; x < Width; x++)
             {
@@ -65,11 +66,13 @@ public class Grid : GameObject
                 var gid = tiledLayer.data[index];
                 var tileSetIndex = GetTilesetIdFromGid(tiledMap, gid);
                 
+                // Set this tile in the layer dictionary.
                 Layers[tiledLayer.id].Tiles[x,y] = new Tile(new Vec2Int(x, y), Layers[tiledLayer.id],
                     gid - tiledMap.Tilesets[tileSetIndex].firstgid, tileSetIndex);
             }
         }
         
+        // Get the source paths for tilesets used by this grid.
         TileSetSources = tiledMap.GetTiledTilesets(Path.GetDirectoryName(path)+"/")
             .Select(o => Path.Combine(
                 Path.GetDirectoryName(path) ?? string.Empty,
