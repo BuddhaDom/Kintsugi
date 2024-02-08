@@ -244,12 +244,6 @@ namespace Kintsugi.Rendering
                 RenderCircle(c.X, c.Y, c.Radius);
             }
 
-            foreach (Line l in _linesToDraw)
-            {
-                SDL.SDL_SetRenderDrawColor(_rend, (byte)l.R, (byte)l.G, (byte)l.B, (byte)l.A);
-                SDL.SDL_RenderDrawLine(_rend, l.Sx, l.Sy, l.Ex, l.Ey);
-            }
-
             foreach (var grid in _gridsToDraw)
             {
                 foreach (var layer in grid.Layers)
@@ -274,6 +268,12 @@ namespace Kintsugi.Rendering
                     
                     SDL.SDL_RenderCopyEx(_rend, sprite, ref sRect, ref tRect, 0, nint.Zero, SDL.SDL_RendererFlip.SDL_FLIP_NONE);
                 }
+            }
+            
+            foreach (Line l in _linesToDraw)
+            {
+                SDL.SDL_SetRenderDrawColor(_rend, (byte)l.R, (byte)l.G, (byte)l.B, (byte)l.A);
+                SDL.SDL_RenderDrawLine(_rend, l.Sx, l.Sy, l.Ex, l.Ey);
             }
 
             // Show it off.
