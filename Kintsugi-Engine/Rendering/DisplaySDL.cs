@@ -255,18 +255,20 @@ namespace Kintsugi.Rendering
                 foreach (var layer in grid.Layers)
                 foreach (var tile in layer.Value.Tiles)
                 {
-                    var source = grid.TileSetSources[tile.TileSetId];
+                    if (tile.Id < 0 || layer.Value.Name != "Terrain") continue;
+                    var tileSet = grid.TileSets[tile.TileSetId];
+                    var source = tileSet.Source;
                     var sprite = LoadTexture(source);
-                    var y = tile.Id % grid.Width;
-                    var x = tile.Id - y * grid.Width;
+                    var tileSetX = tile.Id % (tileSet.Width / grid.TileWidth);
+                    var tileSetY = tile.Id / (tileSet.Width / grid.TileWidth);
 
-                    sRect.x = x * grid.TileWidth;
-                    sRect.y = y * grid.TileWidth;
+                    sRect.x = tileSetX * grid.TileWidth;
+                    sRect.y = tileSetY * grid.TileWidth;
                     sRect.w = grid.TileWidth;
                     sRect.h = grid.TileWidth;
 
-                    tRect.x = (int)grid.Transform2D.X + tile.Position.x;
-                    tRect.y = (int)grid.Transform2D.Y + tile.Position.y;
+                    tRect.x = (int)grid.Transform2D.X + tile.Position.x * grid.TileWidth;
+                    tRect.y = (int)grid.Transform2D.Y + tile.Position.y * grid.TileWidth;
                     tRect.w = grid.TileWidth;
                     tRect.h = grid.TileWidth;
                     

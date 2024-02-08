@@ -29,7 +29,7 @@ public class Grid : GameObject
     /// <summary>
     /// Source location of the tile sets used by this grid.
     /// </summary>
-    internal string[] TileSetSources { get; }
+    internal TileSet[] TileSets { get; }
 
     private readonly bool gridVisible;
     private readonly Color gridColor;
@@ -71,15 +71,19 @@ public class Grid : GameObject
                     gid - tiledMap.Tilesets[tileSetIndex].firstgid, tileSetIndex);
             }
         }
-        
+
         // Get the source paths for tilesets used by this grid.
-        TileSetSources = tiledMap.GetTiledTilesets(Path.GetDirectoryName(path)+"/")
-            .Select(o => Path.Combine(
-                Path.GetDirectoryName(path) ?? string.Empty,
-                o.Value.Image.source)
-            ).ToArray();
+        var tiledSets = tiledMap.GetTiledTilesets(Path.GetDirectoryName(path) + "/");
+        TileSets = new TileSet[tiledSets.Count];
+        var c = 0;
+        foreach (var image in tiledSets.Select(set => set.Value.Image))
+        {
+            TileSets[c] = new TileSet(image.source, image.width, image.height);
+            c++;
+        }
     }
 
+    // TODO: Generic constructor.
     // public Grid(int gridWidth, int gridHeight, int tileWidth, bool gridVisible = false, Color gridColor = default)
     // {
     //     this.gridWidth = gridWidth;
