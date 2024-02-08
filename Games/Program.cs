@@ -1,1 +1,1 @@
-﻿new Shard.GameSpaceInvaders().Run();
+﻿new Debugging.Debugging().Run();
