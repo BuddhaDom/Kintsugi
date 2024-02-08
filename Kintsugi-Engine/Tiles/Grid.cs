@@ -1,6 +1,5 @@
 using System.Drawing;
 using Kintsugi.Core;
-using Kintsugi.Rendering;
 using TiledCS;
 
 namespace Kintsugi.Tiles;
@@ -10,7 +9,7 @@ public class Grid : GameObject
     /// <summary>
     /// A 2D array containing the tiles existing in this grid.
     /// </summary>
-    public Tile[,] Tiles { get; }
+    public Dictionary<int, GridLayer> Layers { get; } = new();
 
     /// <summary>
     /// Number of tiles along the X axis.
@@ -32,11 +31,7 @@ public class Grid : GameObject
     
     public override void Initialize()
     {
-        // Populate tiles object.
-        for (int y = 0; y < gridHeight; y++)
-        for (int x = 0; x < gridWidth; x++)
-            // Tiles[x, y] = new Tile(new Vec2Int(x,y), this);
-            return;
+        
     }
 
     /// <summary>
@@ -53,20 +48,21 @@ public class Grid : GameObject
         TileWidth = tiledMap.TileWidth;
         this.gridVisible = gridVisible;
         this.gridColor = gridColor;
-
-        Tiles = new Tile[gridWidth, gridHeight];
         
-        foreach (var layer in tiledMap.Layers)
+        foreach (var tiledLayer in tiledMap.Layers)
+        {
+            var tiles = new Tile[gridWidth,gridHeight];
             for (int y = 0; y < gridHeight; y++)
             for (int x = 0; x < gridWidth; x++)
             {
                 var index = y * gridWidth + x;
-                var gid = layer.data[index];
+                var gid = tiledLayer.data[index];
                 var tileSetIndex = GetTilesetIdFromGid(tiledMap, gid);
-                Tiles[x, y] = new Tile(new Vec2Int(x, y), this, 
+                tiles[x, y] = new Tile(new Vec2Int(x, y), this, 
                     gid - tiledMap.Tilesets[tileSetIndex].firstgid, tileSetIndex);
-                
             }
+            Layers.Add(tiledLayer.id, new GridLayer(tiles,this, tiledLayer.name));
+        }
         TileSetSources = tiledMap.GetTiledTilesets(Path.GetDirectoryName(path)+"/")
             .Select(o => Path.Combine(
                 Path.GetDirectoryName(path) ?? string.Empty,

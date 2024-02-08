@@ -252,7 +252,8 @@ namespace Kintsugi.Rendering
 
             foreach (var grid in _gridsToDraw)
             {
-                foreach (var tile in grid.Tiles)
+                foreach (var layer in grid.Layers)
+                foreach (var tile in layer.Value.Tiles)
                 {
                     var source = grid.TileSetSources[tile.TileSetId];
                     var sprite = LoadTexture(source);
