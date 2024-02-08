@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34511.84
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kintsugi-Engine", "Kintsugi-Engine\Kintsugi-Engine.csproj", "{E004C44C-867D-428A-BB6F-9D82231C7916}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kintsugi-Engine", "Kintsugi-Engine\Kintsugi-Engine.csproj", "{E004C44C-867D-428A-BB6F-9D82231C7916}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Games", "Games\Games.csproj", "{B217B485-816D-4E29-821D-7AE0AEE82682}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Games", "Games\Games.csproj", "{B217B485-816D-4E29-821D-7AE0AEE82682}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EngineTests", "EngineTests\EngineTests.csproj", "{5E98A801-FA9D-4BC9-A479-9E23E3303C42}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{B217B485-816D-4E29-821D-7AE0AEE82682}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B217B485-816D-4E29-821D-7AE0AEE82682}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B217B485-816D-4E29-821D-7AE0AEE82682}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E98A801-FA9D-4BC9-A479-9E23E3303C42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E98A801-FA9D-4BC9-A479-9E23E3303C42}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E98A801-FA9D-4BC9-A479-9E23E3303C42}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E98A801-FA9D-4BC9-A479-9E23E3303C42}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
