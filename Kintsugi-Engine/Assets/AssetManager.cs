@@ -16,7 +16,7 @@ namespace Kintsugi.Assets
         public override void RegisterAssets()
         {
             assets.Clear();
-            WalkDirectory(AssetPath);
+            WalkDirectory("");
         }
 
         public string GetName(string path)
@@ -38,32 +38,33 @@ namespace Kintsugi.Assets
             return null;
         }
 
-        public void WalkDirectory(string dir)
+        public void WalkDirectory(string relativeDir)
         {
-            string[] files = Directory.GetFiles(dir);
-            string[] dirs = Directory.GetDirectories(dir);
+            string absoluteDir = AssetPath + relativeDir;
+            string[] files = Directory.GetFiles(absoluteDir);
+            string[] dirs = Directory.GetDirectories(absoluteDir);
 
             foreach (string d in dirs)
             {
-                WalkDirectory(d);
+                WalkDirectory(relativeDir + GetName(d) + "\\");
             }
 
             foreach (string f in files)
             {
                 string filename_raw = GetName(f);
-                string filename = filename_raw;
+                string assetPath = relativeDir + filename_raw;
                 int counter = 0;
 
-                Console.WriteLine("Filename is " + filename);
+                Console.WriteLine("Loading asset " + assetPath);
 
-                while (assets.ContainsKey(filename))
+                while (assets.ContainsKey(assetPath))
                 {
                     counter += 1;
-                    filename = filename_raw + counter;
+                    assetPath = filename_raw + counter;
                 }
 
-                assets.Add(filename, f);
-                Console.WriteLine("Adding " + filename + " : " + f);
+                assets.Add(assetPath, f);
+                Console.WriteLine("Adding " + assetPath + " : " + f);
             }
 
         }
