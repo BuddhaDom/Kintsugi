@@ -13,8 +13,13 @@ namespace Kintsugi.Audio
 {
     public class SoundSDL : Sound
     {
+        public override void Initialize()
+        {
+        }
+
         public override void PlaySound(string file)
         {
+
             SDL.SDL_AudioSpec have, want;
             uint length, dev;
             nint buffer;
@@ -29,6 +34,9 @@ namespace Kintsugi.Audio
 
         }
 
+        public override void Update()
+        {
+        }
     }
 }
 
