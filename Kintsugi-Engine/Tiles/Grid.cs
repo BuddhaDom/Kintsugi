@@ -73,12 +73,16 @@ public class Grid : GameObject
         }
 
         // Get the source paths for tilesets used by this grid.
-        var tiledSets = tiledMap.GetTiledTilesets(Path.GetDirectoryName(path) + "/");
+
+        var dir = Path.GetDirectoryName(path);
+        var tiledSets = tiledMap.GetTiledTilesets(dir+"/");
         TileSets = new TileSet[tiledSets.Count];
         var c = 0;
         foreach (var image in tiledSets.Select(set => set.Value.Image))
         {
-            TileSets[c] = new TileSet(image.source, image.width, image.height);
+            TileSets[c] = new TileSet(
+                Path.Combine(dir!,image.source),
+                image.width, image.height);
             c++;
         }
     }

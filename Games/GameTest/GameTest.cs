@@ -53,7 +53,7 @@ namespace Shard
 
             asteroids = new List<GameObject>();
 
-            grid = new Grid(GetAssetManager().GetAssetPath("forestpath.tmx"));
+            grid = new Grid(GetAssetManager().GetAssetPath("TiledTesting\\forestpath.tmx"));
             grid.Transform.X = 70;
             grid.Transform.Y = 70;
         }

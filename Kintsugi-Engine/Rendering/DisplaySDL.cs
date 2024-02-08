@@ -255,7 +255,7 @@ namespace Kintsugi.Rendering
                 foreach (var layer in grid.Layers)
                 foreach (var tile in layer.Value.Tiles)
                 {
-                    if (tile.Id < 0 || layer.Value.Name != "Terrain") continue;
+                    if (tile.Id < 0) continue;
                     var tileSet = grid.TileSets[tile.TileSetId];
                     var source = tileSet.Source;
                     var sprite = LoadTexture(source);
