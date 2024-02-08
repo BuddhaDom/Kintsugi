@@ -1,9 +1,6 @@
 using System.Drawing;
-using Kintsugi.Assets;
 using Kintsugi.Core;
 using TiledCS;
-using System.Drawing;
-
 namespace Kintsugi.Tiles;
 
 /// <summary>
@@ -104,7 +101,8 @@ public class Grid : GameObject
     //     Tiles = new Tile[gridWidth, gridHeight];
     // }
 
-    public Grid(int width, int height, int tileWidth, string[] paths, GridLayer[]? layers = null, bool gridVisible = false, Color gridColor = default)
+    public Grid(int width, int height, int tileWidth, string[] tileSetPaths, 
+        GridLayer[]? layers = null, bool gridVisible = false, Color gridColor = default)
     {
         this.gridVisible = gridVisible;
         this.gridColor = gridColor;
@@ -112,9 +110,10 @@ public class Grid : GameObject
         Height = height;
         TileWidth = tileWidth;
         Layers = layers ?? Array.Empty<GridLayer>();
-        foreach (var path in paths)
+        TileSets = new TileSet[tileSetPaths.Length];
+        for (int i = 0; i < tileSetPaths.Length; i++)
         {
-            // TODO: check every path to get its width and height.
+            // TODO: Check each path to get width and height.
         }
     }
 
