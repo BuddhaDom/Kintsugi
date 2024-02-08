@@ -1,3 +1,5 @@
+using System.ComponentModel;
+
 namespace Kintsugi.Tiles;
 
 public struct GridLayer
@@ -5,25 +7,25 @@ public struct GridLayer
     public Tile[,] Tiles { get; }
     public Grid? ParentGrid { get; }
     public string Name { get; }
-    public int Width { get; }
-    public int Height { get; }
-
-    public GridLayer(Tile[,] tiles, Grid? parent = null, string name = "")
+    public int Width => Tiles.GetLength(0);
+    public int Height => Tiles.GetLength(1);
+    public int TileWidth { get; }
+    
+    public GridLayer(Tile[,] tiles, int tileWidth, Grid parent, string name = "")
     {
         Tiles = tiles ?? throw new ArgumentNullException(nameof(tiles));
+        ParentGrid = parent ?? throw new ArgumentNullException(nameof(parent));
+        TileWidth = tileWidth;
         foreach (var tile in tiles)
             Tiles[tile.Position.x, tile.Position.y].ParentLayer = this;
-        ParentGrid = parent;
         Name = name;
-        Height = tiles.GetLength(0);
-        Width = tiles.GetLength(1);
     }
 
-    public GridLayer(int width, int height, string name = "")
+    public GridLayer(int width, int height, int tileWidth, Grid parent, string name = "")
     {
+        ParentGrid = parent ?? throw new ArgumentNullException(nameof(parent));
+        TileWidth = tileWidth;
         Tiles = new Tile[width, height];
-        Width = width;
-        Height = height;
         Name = name;
     }
 }

@@ -14,21 +14,26 @@ public class Grid : GameObject
     /// <summary>
     /// Number of tiles along the X axis.
     /// </summary>
-    public int Width => gridWidth;
+    public int Width { get; }
+
     /// <summary>
     /// Number of tiles along the Y axis.
     /// </summary>
-    public int Height => gridWidth;
+    public int Height { get; }
 
+    /// <summary>
+    /// Width (in pixels) of the tiles present in this grid.
+    /// </summary>
     public int TileWidth { get; }
 
+    /// <summary>
+    /// Source location of the tile sets used by this grid.
+    /// </summary>
     internal string[] TileSetSources { get; }
 
-    private int gridWidth, gridHeight;
-    private bool gridVisible;
-    private Color gridColor;
-    private TiledMap tiledMap;
-    
+    private readonly bool gridVisible;
+    private readonly Color gridColor;
+
     public override void Initialize()
     {
         
@@ -42,26 +47,27 @@ public class Grid : GameObject
     /// <param name="gridColor">Color of the grid borders if <paramref name="gridVisible"/> is <c>true</c>.</param>
     public Grid(string path, bool gridVisible = false, Color gridColor = default) 
     {
-        tiledMap = new TiledMap(path);
-        gridWidth = tiledMap.Width;
-        gridHeight = tiledMap.Height;
+        var tiledMap = new TiledMap(path);
+        Width = tiledMap.Width;
+        Height = tiledMap.Height;
         TileWidth = tiledMap.TileWidth;
         this.gridVisible = gridVisible;
         this.gridColor = gridColor;
         
         foreach (var tiledLayer in tiledMap.Layers)
         {
-            var tiles = new Tile[gridWidth,gridHeight];
-            for (int y = 0; y < gridHeight; y++)
-            for (int x = 0; x < gridWidth; x++)
+            Layers.Add(tiledLayer.id, new GridLayer(
+                new Tile[Width, Height], TileWidth, this, tiledLayer.name));
+            for (int y = 0; y < Height; y++)
+            for (int x = 0; x < Width; x++)
             {
-                var index = y * gridWidth + x;
+                var index = y * Width + x;
                 var gid = tiledLayer.data[index];
                 var tileSetIndex = GetTilesetIdFromGid(tiledMap, gid);
-                tiles[x, y] = new Tile(new Vec2Int(x, y), 
+                
+                Layers[tiledLayer.id].Tiles[x,y] = new Tile(new Vec2Int(x, y), Layers[tiledLayer.id],
                     gid - tiledMap.Tilesets[tileSetIndex].firstgid, tileSetIndex);
             }
-            Layers.Add(tiledLayer.id, new GridLayer(tiles, this, tiledLayer.name));
         }
         
         TileSetSources = tiledMap.GetTiledTilesets(Path.GetDirectoryName(path)+"/")
@@ -83,20 +89,20 @@ public class Grid : GameObject
     {
         if (gridVisible)
         {
-            for (int i = 0; i <= gridHeight; i++) // Horizontal lines
+            for (int i = 0; i <= Height; i++) // Horizontal lines
                 Bootstrap.GetDisplay().DrawLine(
                     (int)Transform2D.X,
                     (int)(Transform2D.Y + TileWidth * i),
-                    (int)(Transform2D.X + TileWidth * gridWidth),
+                    (int)(Transform2D.X + TileWidth * Width),
                     (int)(Transform2D.Y + TileWidth * i),
                     gridColor
                 );
-            for (int i = 0; i <= gridWidth; i++) // Vertical lines
+            for (int i = 0; i <= Width; i++) // Vertical lines
                 Bootstrap.GetDisplay().DrawLine(
                     (int)(Transform2D.X + TileWidth * i),
                     (int)Transform2D.Y,
                     (int)(Transform2D.X + TileWidth * i),
-                    (int)(Transform2D.Y + TileWidth * gridHeight),
+                    (int)(Transform2D.Y + TileWidth * Height),
                     gridColor
                 );
         }
