@@ -1,12 +1,14 @@
+using System.ComponentModel;
 using Kintsugi.Core;
 using TiledCS;
 
 namespace Kintsugi.Tiles;
 
-public struct Tile(Vec2Int position, Grid parent, int tileId = 0, int tileSetId = 0)
+public struct Tile(Vec2Int position, int tileId = 0, int tileSetId = 0, GridLayer? parent = null)
 {
     public Vec2Int Position { get; } = position;
-    public Grid Parent { get; } = parent;
-    public int Id { get; } = tileId;
-    public int TileSetId { get; } = tileSetId;
+    public GridLayer? ParentLayer { get; internal set; } = parent;
+    public Grid? ParentGrid => ParentLayer?.ParentGrid;
+    public int Id { get; internal set; } = tileId;
+    public int TileSetId { get; internal set; } = tileSetId;
 }

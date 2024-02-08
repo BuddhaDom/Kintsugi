@@ -58,11 +58,12 @@ public class Grid : GameObject
                 var index = y * gridWidth + x;
                 var gid = tiledLayer.data[index];
                 var tileSetIndex = GetTilesetIdFromGid(tiledMap, gid);
-                tiles[x, y] = new Tile(new Vec2Int(x, y), this, 
+                tiles[x, y] = new Tile(new Vec2Int(x, y), 
                     gid - tiledMap.Tilesets[tileSetIndex].firstgid, tileSetIndex);
             }
-            Layers.Add(tiledLayer.id, new GridLayer(tiles,this, tiledLayer.name));
+            Layers.Add(tiledLayer.id, new GridLayer(tiles, this, tiledLayer.name));
         }
+        
         TileSetSources = tiledMap.GetTiledTilesets(Path.GetDirectoryName(path)+"/")
             .Select(o => Path.Combine(
                 Path.GetDirectoryName(path) ?? string.Empty,
