@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using Kintsugi.Core;
 
 namespace Kintsugi.Tiles;
 
@@ -46,8 +47,6 @@ public struct GridLayer
     {
         Tiles = tiles ?? throw new ArgumentNullException(nameof(tiles));
         ParentGrid = parent ?? throw new ArgumentNullException(nameof(parent));
-        foreach (var tile in tiles)
-            Tiles[tile.Position.x, tile.Position.y].ParentLayer = this;
         Name = name;
     }
 

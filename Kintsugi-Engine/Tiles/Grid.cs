@@ -1,9 +1,14 @@
 using System.Drawing;
+using Kintsugi.Assets;
 using Kintsugi.Core;
 using TiledCS;
+using System.Drawing;
 
 namespace Kintsugi.Tiles;
 
+/// <summary>
+/// A <see cref="GameObject"/> containing a set of tiles to be rendered onto the scene through layers.
+/// </summary>
 public class Grid : GameObject
 {
     /// <summary>
@@ -40,7 +45,7 @@ public class Grid : GameObject
     }
 
     /// <summary>
-    /// A <see cref="GameObject"/> containing a set of tiles to be rendered into a scene.
+    /// Build a grid from a Tiled tilemap file.
     /// </summary>
     /// <param name="path">Path of a <c>.tmx</c> file containing tile map data.</param>
     /// <param name="gridVisible"><para>Default: <c>false</c></para><c>true</c> if the grid borders are to be displayed as well.</param>
@@ -70,7 +75,7 @@ public class Grid : GameObject
                 var tileSetIndex = GetTilesetIdFromGid(tiledMap, gid);
                 
                 // Set this tile in the layer dictionary.
-                Layers[c].Tiles[x,y] = new Tile(new Vec2Int(x, y), Layers[c],
+                Layers[c].Tiles[x,y] = new Tile(new Vec2Int(x, y), 
                     gid - tiledMap.Tilesets[tileSetIndex].firstgid, tileSetIndex);
             }
             c++;
@@ -98,6 +103,20 @@ public class Grid : GameObject
     //     this.TileWidth = tileWidth;
     //     Tiles = new Tile[gridWidth, gridHeight];
     // }
+
+    public Grid(int width, int height, int tileWidth, string[] paths, GridLayer[]? layers = null, bool gridVisible = false, Color gridColor = default)
+    {
+        this.gridVisible = gridVisible;
+        this.gridColor = gridColor;
+        Width = width;
+        Height = height;
+        TileWidth = tileWidth;
+        Layers = layers ?? Array.Empty<GridLayer>();
+        foreach (var path in paths)
+        {
+            // TODO: check every path to get its width and height.
+        }
+    }
 
     public override void Update()
     {
