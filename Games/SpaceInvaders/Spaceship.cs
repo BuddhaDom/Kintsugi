@@ -12,7 +12,7 @@ namespace SpaceInvaders
         bool left, right;
         float fireCounter, fireDelay;
 
-        Event fireEvent;
+        EventDescription fireEvent;
 
         public override void Initialize()
         {

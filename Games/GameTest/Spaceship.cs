@@ -11,14 +11,10 @@ namespace GameTest
     {
         bool up, down, turnLeft, turnRight;
 
-        Event fireEvent;
+        EventDescription fireEvent;
         public override void Initialize()
         {
-            ((SoundFMOD)Bootstrap.GetSound()).LoadBank(Bootstrap.GetAssetManager().GetAssetPath("Master.bank"));
-            ((SoundFMOD)Bootstrap.GetSound()).LoadBank(Bootstrap.GetAssetManager().GetAssetPath("Master.strings.bank"));
-            var sfxbank = ((SoundFMOD)Bootstrap.GetSound()).LoadBank(Bootstrap.GetAssetManager().GetAssetPath("SFX.bank"));
-            sfxbank.PreloadSamples();
-            fireEvent = ((SoundFMOD)Bootstrap.GetSound()).LoadEvent("event:/Weapons/Pistol");
+            fireEvent = ((SoundFMOD)Bootstrap.GetSound()).LoadEventDescription("event:/Weapons/Pistol");
             this.Transform.X = 500.0f;
             this.Transform.Y = 500.0f;
             this.Transform.SpritePath = Bootstrap.GetAssetManager().GetAssetPath("spaceship.png");
@@ -62,7 +58,8 @@ namespace GameTest
 
             b.Transform.Rotate(this.Transform.Rotz);
 
-            fireEvent.PlayImmediate();
+            fireEvent.CreateInstance().Start();
+            //fireEvent.PlayImmediate();
             //Bootstrap.GetSound().PlaySound("fire.wav");
         }
 

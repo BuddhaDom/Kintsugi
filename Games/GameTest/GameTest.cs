@@ -1,4 +1,5 @@
 ﻿using GameTest;
+using Kintsugi.Audio;
 using Kintsugi.Core;
 using Kintsugi.Input;
 
@@ -11,7 +12,7 @@ namespace Shard
         public override void Update()
         {
 
-            Bootstrap.GetDisplay().ShowText("FPS: " + Bootstrap.GetSecondFPS() + " / " + Bootstrap.GetFPS(), 10, 10, 12, 255, 255, 255);
+            //Bootstrap.GetDisplay().ShowText("FPS: " + Bootstrap.GetSecondFPS() + " / " + Bootstrap.GetFPS(), 10, 10, 12, 255, 255, 255);
 
 
         }
@@ -47,10 +48,16 @@ namespace Shard
         public override void Initialize()
         {
             Bootstrap.GetInput().AddListener(this);
+
+            ((SoundFMOD)Bootstrap.GetSound()).LoadBank(Bootstrap.GetAssetManager().GetAssetPath("Master.bank"));
+            ((SoundFMOD)Bootstrap.GetSound()).LoadBank(Bootstrap.GetAssetManager().GetAssetPath("Master.strings.bank"));
+            var sfxBank = ((SoundFMOD)Bootstrap.GetSound()).LoadBank(Bootstrap.GetAssetManager().GetAssetPath("SFX.bank"));
+
+            sfxBank.PreloadSamples();
+
             CreateShip();
 
             asteroids = new List<GameObject>();
-
 
         }
 

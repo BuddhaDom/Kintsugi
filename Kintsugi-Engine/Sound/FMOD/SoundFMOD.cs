@@ -8,7 +8,6 @@
 
 using Kintsugi.Core;
 using SDL2;
-using FMOD;
 using FMOD.Studio;
 using System.IO;
 
@@ -31,19 +30,30 @@ namespace Kintsugi.Audio
 
             throw new NotImplementedException();
         }
-
+        /**
+         * <summary>
+         * Load an FMOD bank and returns a wrapper.
+         * </summary>
+         */
         public Bank LoadBank(string path)
         {
             ErrorCheck(fmodSystem.loadBankFile(path, FMOD.Studio.LOAD_BANK_FLAGS.NORMAL, out var bank));
 
             return new Bank(bank, this);
         }
-        public Event LoadEvent(string eventPath)
+
+        /**
+         * <summary>
+         * Load an FMOD event description and returns a wrapper.
+         * </summary>
+         */
+        public EventDescription LoadEventDescription(string eventPath)
         {
             ErrorCheck(fmodSystem.getEvent(eventPath, out var _event));
-            return new Event(_event);
+            return new EventDescription(_event);
         }
-        public override void Initialize()
+
+        internal override void Initialize()
         {
 
             Console.WriteLine("Initializing fmod!");
@@ -67,16 +77,38 @@ namespace Kintsugi.Audio
 
         }
 
-        public override void Update()
+        /**
+         * <summary>
+         * Set local parameter of this instance.
+         * </summary>
+         */
+        public void SetGlobalParameterByName(string parameterName, float value, bool ignoreSeekSpeed = false)
+        {
+            ErrorCheck(fmodSystem.setParameterByName(parameterName, value, ignoreSeekSpeed));
+        }
+
+        /**
+         * <summary>
+         * Set local label parameter of this instance.
+         * </summary>
+         */
+        public void SetGlobalParameterByNameWithLabel(string parameterName, string label, bool ignoreSeekSpeed = false)
+        {
+            ErrorCheck(fmodSystem.setParameterByNameWithLabel(parameterName, label, ignoreSeekSpeed));
+        }
+
+
+
+        internal override void Update()
         {
             ErrorCheck(fmodSystem.update());
         }
 
-        internal static void ErrorCheck(RESULT result)
+        internal static void ErrorCheck(FMOD.RESULT result)
         {
             if (result != FMOD.RESULT.OK)
             {
-                throw new Exception("Fmod error! + " + FMOD.Error.String(result));
+                throw new FMODException(result);
             }
         }
     }
