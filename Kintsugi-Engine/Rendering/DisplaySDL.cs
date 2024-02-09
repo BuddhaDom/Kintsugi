@@ -12,6 +12,7 @@
 */
 
 using Kintsugi.Core;
+using Kintsugi.Tiles;
 using SDL2;
 
 namespace Kintsugi.Rendering
@@ -53,6 +54,7 @@ namespace Kintsugi.Rendering
         private List<Transform> _toDraw;
         private List<Line> _linesToDraw;
         private List<Circle> _circlesToDraw;
+        private List<Grid> _gridsToDraw;
         private Dictionary<string, nint> spriteBuffer;
         public override void Initialize()
         {
@@ -63,7 +65,7 @@ namespace Kintsugi.Rendering
             _toDraw = new List<Transform>();
             _linesToDraw = new List<Line>();
             _circlesToDraw = new List<Circle>();
-
+            _gridsToDraw = new List<Grid>();
 
         }
 
@@ -242,6 +244,32 @@ namespace Kintsugi.Rendering
                 RenderCircle(c.X, c.Y, c.Radius);
             }
 
+            foreach (var grid in _gridsToDraw)
+            {
+                foreach (var layer in grid.Layers)
+                foreach (var tile in layer.Value.Tiles)
+                {
+                    if (tile.Id < 0) continue;
+                    var tileSet = grid.TileSets[tile.TileSetId];
+                    var source = tileSet.Source;
+                    var sprite = LoadTexture(source);
+                    var tileSetX = tile.Id % (tileSet.Width / grid.TileWidth);
+                    var tileSetY = tile.Id / (tileSet.Width / grid.TileWidth);
+
+                    sRect.x = tileSetX * grid.TileWidth;
+                    sRect.y = tileSetY * grid.TileWidth;
+                    sRect.w = grid.TileWidth;
+                    sRect.h = grid.TileWidth;
+
+                    tRect.x = (int)grid.Transform2D.X + tile.Position.x * grid.TileWidth;
+                    tRect.y = (int)grid.Transform2D.Y + tile.Position.y * grid.TileWidth;
+                    tRect.w = grid.TileWidth;
+                    tRect.h = grid.TileWidth;
+                    
+                    SDL.SDL_RenderCopyEx(_rend, sprite, ref sRect, ref tRect, 0, nint.Zero, SDL.SDL_RendererFlip.SDL_FLIP_NONE);
+                }
+            }
+            
             foreach (Line l in _linesToDraw)
             {
                 SDL.SDL_SetRenderDrawColor(_rend, (byte)l.R, (byte)l.G, (byte)l.B, (byte)l.A);
@@ -260,10 +288,13 @@ namespace Kintsugi.Rendering
             _toDraw.Clear();
             _circlesToDraw.Clear();
             _linesToDraw.Clear();
+            _gridsToDraw.Clear();
 
             base.ClearDisplay();
         }
 
+        public override void DrawGrid(Grid grid)
+            => _gridsToDraw.Add(grid);
     }
 
 

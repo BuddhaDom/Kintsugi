@@ -24,6 +24,7 @@
 
 using Kintsugi.Core;
 using Kintsugi.Physics.Colliders;
+using System.Globalization;
 using System.Numerics;
 
 namespace Kintsugi.Physics
@@ -121,7 +122,7 @@ namespace Kintsugi.Physics
             if (Bootstrap.CheckEnvironmentalVariable("gravity_modifier"))
             {
                 gravityModifier = float.Parse
-                    (Bootstrap.GetEnvironmentalVariable("gravity_modifier"));
+                    (Bootstrap.GetEnvironmentalVariable("gravity_modifier"), CultureInfo.InvariantCulture);
             }
             else
             {
