@@ -14,7 +14,7 @@ namespace Kintsugi.Rendering
         public float Size
         {
             get; set;
-        }
+        } = 640;
         /// <summary>
         /// Width of the camera in worldspace
         /// </summary>
