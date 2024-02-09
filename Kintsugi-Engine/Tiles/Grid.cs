@@ -1,25 +1,29 @@
 using System.Drawing;
 using Kintsugi.Core;
+using Kintsugi.Rendering;
+using SDL2;
 using TiledCS;
-
 namespace Kintsugi.Tiles;
 
+/// <summary>
+/// A <see cref="GameObject"/> containing a set of tiles to be rendered onto the scene through layers.
+/// </summary>
 public class Grid : GameObject
 {
     /// <summary>
     /// A 2D array containing the tiles existing in this grid.
     /// </summary>
-    public Dictionary<int, GridLayer> Layers { get; } = new();
+    public GridLayer[] Layers { get; }
 
     /// <summary>
     /// Number of tiles along the X axis.
     /// </summary>
-    public int Width { get; }
+    public int GridWidth { get; }
 
     /// <summary>
     /// Number of tiles along the Y axis.
     /// </summary>
-    public int Height { get; }
+    public int GridHeight { get; }
 
     /// <summary>
     /// Width (in pixels) of the tiles present in this grid.
@@ -40,44 +44,53 @@ public class Grid : GameObject
     }
 
     /// <summary>
-    /// A <see cref="GameObject"/> containing a set of tiles to be rendered into a scene.
+    /// Build a grid from a Tiled tilemap file.
     /// </summary>
-    /// <param name="path">Path of a <c>.tmx</c> file containing tile map data.</param>
-    /// <param name="gridVisible"><para>Default: <c>false</c></para><c>true</c> if the grid borders are to be displayed as well.</param>
+    /// <param name="tmxPath">Path of a <c>.tmx</c> file containing tile map data.</param>
+    /// <param name="gridVisible"><para><c>false</c></para><c>true</c> if the grid borders are to be displayed as well.</param>
     /// <param name="gridColor">Color of the grid borders if <paramref name="gridVisible"/> is <c>true</c>.</param>
-    public Grid(string path, bool gridVisible = false, Color gridColor = default) 
+    /// <exception cref="ArgumentException">Thrown if the path is either not found or not a <c>.tmx</c> file.</exception>
+    public Grid(string tmxPath, bool gridVisible = false, Color gridColor = default)
     {
+        if (!Path.Exists(tmxPath)) 
+            throw new ArgumentException("The provided file path does not exist.");
+        if (Path.GetExtension(tmxPath) != ".tmx")
+            throw new ArgumentException("The provided file path does not correspond to a .tmx file.");
+        
         // Construct values and properties.
-        var tiledMap = new TiledMap(path);
-        Width = tiledMap.Width;
-        Height = tiledMap.Height;
+        var tiledMap = new TiledMap(tmxPath);
+        GridWidth = tiledMap.Width;
+        GridHeight = tiledMap.Height;
         TileWidth = tiledMap.TileWidth;
         this.gridVisible = gridVisible;
         this.gridColor = gridColor;
-        
+        int c; // Generic counter.
+
+        Layers = new GridLayer[tiledMap.Layers.Length];
+        c = 0;
         foreach (var tiledLayer in tiledMap.Layers)
         {
             // Initialize this key in the Layer dictionary, as wel as Tile array.
-            Layers.Add(tiledLayer.id, new GridLayer(this, tiledLayer.name));
-            for (int y = 0; y < Height; y++)
-            for (int x = 0; x < Width; x++)
+            Layers[c] = new GridLayer(this, tiledLayer.name);
+            for (int y = 0; y < GridHeight; y++)
+            for (int x = 0; x < GridWidth; x++)
             {
-                var index = y * Width + x;
+                var index = y * GridWidth + x;
                 var gid = tiledLayer.data[index];
                 var tileSetIndex = GetTilesetIdFromGid(tiledMap, gid);
                 
                 // Set this tile in the layer dictionary.
-                Layers[tiledLayer.id].Tiles[x,y] = new Tile(new Vec2Int(x, y), Layers[tiledLayer.id],
+                Layers[c].Tiles[x,y] = new Tile(new Vec2Int(x, y), 
                     gid - tiledMap.Tilesets[tileSetIndex].firstgid, tileSetIndex);
             }
+            c++;
         }
 
         // Get the source paths for tilesets used by this grid.
-
-        var dir = Path.GetDirectoryName(path);
+        var dir = Path.GetDirectoryName(tmxPath);
         var tiledSets = tiledMap.GetTiledTilesets(dir+"/");
         TileSets = new TileSet[tiledSets.Count];
-        var c = 0;
+        c = 0;
         foreach (var image in tiledSets.Select(set => set.Value.Image))
         {
             TileSets[c] = new TileSet(
@@ -85,35 +98,59 @@ public class Grid : GameObject
                 image.width, image.height);
             c++;
         }
+        ValidateTileset();
     }
 
-    // TODO: Generic constructor.
-    // public Grid(int gridWidth, int gridHeight, int tileWidth, bool gridVisible = false, Color gridColor = default)
-    // {
-    //     this.gridWidth = gridWidth;
-    //     this.gridHeight = gridHeight;
-    //     this.TileWidth = tileWidth;
-    //     Tiles = new Tile[gridWidth, gridHeight];
-    // }
+    /// <summary>
+    /// Build generic grid.
+    /// </summary>
+    /// <param name="gridWidth">Width of the grid.</param>
+    /// <param name="gridHeight">Height of the grid.</param>
+    /// <param name="tileWidth">Width of a tile in pixels.</param>
+    /// <param name="tileSetPaths">Array of paths corresponding to the tileset textures.</param>
+    /// <param name="layers">Set of layers existing in this grid.</param>
+    /// <param name="gridVisible"><para><c>false</c></para><c>true</c> if the grid borders are to be displayed as well.</param>
+    /// <param name="gridColor">Color of the grid borders if <paramref name="gridVisible"/> is <c>true</c>.</param>
+    /// <exception cref="ArgumentException">Thrown if any of the paths are not found.</exception>
+    public Grid(int gridWidth, int gridHeight, int tileWidth, string[] tileSetPaths, 
+        GridLayer[]? layers = null, bool gridVisible = false, Color gridColor = default)
+    {
+        this.gridVisible = gridVisible;
+        this.gridColor = gridColor;
+        GridWidth = gridWidth;
+        GridHeight = gridHeight;
+        TileWidth = tileWidth;
+        Layers = layers ?? Array.Empty<GridLayer>();
+        TileSets = new TileSet[tileSetPaths.Length];
+        for (int i = 0; i < tileSetPaths.Length; i++)
+        {
+            if (!Path.Exists(tileSetPaths[i])) 
+                throw new ArgumentException("The provided file path does not exist.");
+            var image = ((DisplaySDL)Bootstrap.GetDisplay()).LoadTexture(tileSetPaths[i]);
+            SDL.SDL_QueryTexture(image, out _, out _, out int width, out int height);
+            TileSets[i] = new TileSet(tileSetPaths[i], width, height);
+        }
+        ValidateTileset();
+    }
 
     public override void Update()
     {
         if (gridVisible)
         {
-            for (int i = 0; i <= Height; i++) // Horizontal lines
+            for (int i = 0; i <= GridHeight; i++) // Horizontal lines
                 Bootstrap.GetDisplay().DrawLine(
                     (int)Transform2D.X,
                     (int)(Transform2D.Y + TileWidth * i),
-                    (int)(Transform2D.X + TileWidth * Width),
+                    (int)(Transform2D.X + TileWidth * GridWidth),
                     (int)(Transform2D.Y + TileWidth * i),
                     gridColor
                 );
-            for (int i = 0; i <= Width; i++) // Vertical lines
+            for (int i = 0; i <= GridWidth; i++) // Vertical lines
                 Bootstrap.GetDisplay().DrawLine(
                     (int)(Transform2D.X + TileWidth * i),
                     (int)Transform2D.Y,
                     (int)(Transform2D.X + TileWidth * i),
-                    (int)(Transform2D.Y + TileWidth * Height),
+                    (int)(Transform2D.Y + TileWidth * GridHeight),
                     gridColor
                 );
         }
@@ -133,5 +170,15 @@ public class Grid : GameObject
             else
                 return i;
         throw new Exception("Mismatch on Tilemap ID to GID information parsing.");
+    }
+
+    private void ValidateTileset()
+    {
+        foreach (var tileSet in TileSets)
+        {
+            if (tileSet.Width % TileWidth == 0 && tileSet.Height % TileWidth == 0) continue;
+            Console.Error.WriteLine("Slicing warning. Provided tileset overflows when sliced by the provided Tile width.");
+            Console.Error.WriteLine($"Remainder (px) - w:{tileSet.Width % TileWidth}, w:{tileSet.Height % TileWidth}");
+        }
     }
 }
