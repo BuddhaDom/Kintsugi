@@ -51,9 +51,17 @@ namespace TacticsGameTest
             }
             Bootstrap.GetCameraSystem().Position += movement * 16 * 5;
 
+            if (zoomOut)
+            {
+                Bootstrap.GetCameraSystem().Size *= 1f + 1f * (float)Bootstrap.GetDeltaTime();
+            }
+            if (zoomIn)
+            {
+                Bootstrap.GetCameraSystem().Size *= (1 / (1f + 1f * (float)Bootstrap.GetDeltaTime()));
+            }
         }
 
-        bool up, down, left, right;
+        bool up, down, left, right, zoomIn, zoomOut;
         public void HandleInput(InputEvent inp, string eventType)
         {
             if (eventType == "KeyDown")
@@ -77,6 +85,15 @@ namespace TacticsGameTest
                 {
                     left = true;
                 }
+                if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_Q)
+                {
+                    zoomIn = true;
+                }
+                if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_E)
+                {
+                    zoomOut = true;
+                }
+
 
             }
             else if (eventType == "KeyUp")
@@ -100,25 +117,18 @@ namespace TacticsGameTest
                 {
                     left = false;
                 }
-
-
-            }
-
-            if (eventType == "KeyDown")
-            {
                 if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_Q)
                 {
-                    Bootstrap.GetCameraSystem().Size += 1;
+                    zoomIn = false;
                 }
-
-            }
-            if (eventType == "KeyDown")
-            {
                 if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_E)
                 {
-                    Bootstrap.GetCameraSystem().Size -= 1;
+                    zoomOut = false;
                 }
+
+
             }
+
 
         }
 
