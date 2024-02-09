@@ -278,12 +278,17 @@ namespace Kintsugi.Rendering
                         Vector2 rectPoint = cam.WorldToScreenSpace(new System.Numerics.Vector2(
                             grid.Transform2D.X + tile.Position.x * grid.TileWidth,
                             grid.Transform2D.Y + tile.Position.y * grid.TileWidth));
-                        float tileSize = cam.WorldToScreenSpaceSize(grid.TileWidth);
+                        Vector2 rectPoint2 = cam.WorldToScreenSpace(new System.Numerics.Vector2(
+                            grid.Transform2D.X + ((tile.Position.x + 1) * grid.TileWidth) ,
+                            grid.Transform2D.Y + ((tile.Position.y + 1) * grid.TileWidth)));
 
-                        tRect.x = (int)Math.Ceiling(rectPoint.X);
-                        tRect.y = (int)Math.Ceiling(rectPoint.Y);
-                        tRect.w = (int)Math.Ceiling(tileSize);
-                        tRect.h = (int)Math.Ceiling(tileSize);
+                        int xsize = (int)rectPoint2.X - (int)rectPoint.X;
+                        int ysize = (int)rectPoint2.Y - (int)rectPoint.Y;
+
+                        tRect.x = (int)rectPoint.X;
+                        tRect.y = (int)rectPoint.Y;
+                        tRect.w = xsize;
+                        tRect.h = ysize;
 
                         SDL.SDL_RenderCopyEx(_rend, sprite, ref sRect, ref tRect, 0, nint.Zero, SDL.SDL_RendererFlip.SDL_FLIP_NONE);
                     }
