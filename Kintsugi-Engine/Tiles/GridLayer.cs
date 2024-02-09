@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using Kintsugi.Core;
 
 namespace Kintsugi.Tiles;
 
@@ -12,54 +13,36 @@ public struct GridLayer
     /// </summary>
     public Tile[,] Tiles { get; }
     /// <summary>
-    /// Grid to which this layer belongs to.
-    /// </summary>
-    public Grid ParentGrid { get; }
-    /// <summary>
     /// Name of this layer.
     /// </summary>
     public string Name { get; }
-    /// <summary>
-    /// Number of tiles along the X axis.
-    /// </summary>
-    public int Width => ParentGrid.Width;
-    /// <summary>
-    /// Number of tiles along the Y axis.
-    /// </summary>
-    public int Height => ParentGrid.Height;
-
-    /// <summary>
-    /// Width (in pixels) of each tile in this layer.
-    /// </summary>
-    public int TileWidth => ParentGrid.TileWidth;
     
     /// <summary>
-    /// Create from a given <see cref="Tile"/> array.
+    /// Create layer from a given <see cref="Tile"/> array.
     /// </summary>
     /// <param name="tiles">Two dimensional <see cref="Tile"/> array.</param>
-    /// <param name="parent">The <see cref="Grid"/> this layer belong to.</param>
     /// <param name="name">Name of this layer.</param>
     /// <exception cref="ArgumentNullException">
-    /// If the <see cref="Tile"/> array or the parent <see cref="Grid"/> are null.
+    /// If the <see cref="Tile"/> array is null.
     /// </exception>
-    public GridLayer(Tile[,] tiles, Grid parent, string name = "")
+    public GridLayer(Tile[,] tiles, string name = "")
     {
         Tiles = tiles ?? throw new ArgumentNullException(nameof(tiles));
-        ParentGrid = parent ?? throw new ArgumentNullException(nameof(parent));
-        foreach (var tile in tiles)
-            Tiles[tile.Position.x, tile.Position.y].ParentLayer = this;
         Name = name;
     }
 
     /// <summary>
-    /// Create an empty layer.
+    /// Create an empty layer with a width and a height.
     /// </summary>
-    /// <param name="parent">The <see cref="Grid"/> this layer belong to.</param>
+    /// <param name="width">Width of the grid.</param>
+    /// <param name="height">Height of the grid.</param>
     /// <param name="name">Name of this layer.</param>
-    /// <exception cref="ArgumentNullException">
-    /// If the <see cref="Tile"/> array or the parent <see cref="Grid"/> are null.
-    /// </exception>
-    public GridLayer(Grid parent, string name = "") : this(new Tile[parent.Width, parent.Height], parent, name)
-    {
-    }
+    public GridLayer(int width, int height, string name = "") : this(new Tile[width, height], name){}
+
+    /// <summary>
+    /// Create an empty layer fitted for a specific grid.
+    /// </summary>
+    /// <param name="parent">Grid to which this layer should comply to.</param>
+    /// <param name="name">Name of this layer.</param>
+    public GridLayer(Grid parent, string name = "") : this(parent.GridWidth, parent.GridHeight, name){}
 }
