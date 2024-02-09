@@ -25,6 +25,7 @@ namespace Kintsugi.Core
         private static InputSystem input;
         private static PhysicsManager phys;
         private static AssetManagerBase asset;
+        private static CameraSystem cameraSystem;
 
         private static int targetFrameRate;
         private static int millisPerFrame;
@@ -114,6 +115,12 @@ namespace Kintsugi.Core
             return runningGame;
         }
 
+        public static CameraSystem GetCameraSystem()
+        {
+            return cameraSystem;
+        }
+
+
         public static void Setup(string path)
         {
             Console.WriteLine("Path is " + path);
@@ -160,6 +167,8 @@ namespace Kintsugi.Core
 
                 Debug.Log("Config file... setting " + kvp.Key + " to " + kvp.Value);
             }
+
+            cameraSystem = new CameraSystem(displayEngine);
 
             if (runningGame == null)
             {

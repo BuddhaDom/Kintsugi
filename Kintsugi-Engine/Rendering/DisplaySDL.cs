@@ -14,6 +14,7 @@
 using Kintsugi.Core;
 using Kintsugi.Tiles;
 using SDL2;
+using System.Numerics;
 
 namespace Kintsugi.Rendering
 {
@@ -209,6 +210,8 @@ namespace Kintsugi.Rendering
 
         public override void Display()
         {
+            var cam = Bootstrap.GetCameraSystem();
+
 
             SDL.SDL_Rect sRect;
             SDL.SDL_Rect tRect;
@@ -230,10 +233,17 @@ namespace Kintsugi.Rendering
                 sRect.w = (int)(trans.Wid * trans.Scalex);
                 sRect.h = (int)(trans.Ht * trans.Scaley);
 
-                tRect.x = (int)trans.X;
-                tRect.y = (int)trans.Y;
-                tRect.w = sRect.w;
-                tRect.h = sRect.h;
+                Vector2 rectPoint = cam.WorldToScreenSpace(new System.Numerics.Vector2(
+                    trans.X,
+                    trans.Y));
+                float width = cam.WorldToScreenSpaceSize(sRect.w);
+                float height = cam.WorldToScreenSpaceSize(sRect.h);
+
+
+                tRect.x = (int)Math.Ceiling(rectPoint.X);
+                tRect.y = (int)Math.Ceiling(rectPoint.Y);
+                tRect.w = (int)Math.Ceiling(width);
+                tRect.h = (int)Math.Ceiling(height);
 
                 SDL.SDL_RenderCopyEx(_rend, sprite, ref sRect, ref tRect, (int)trans.Rotz, nint.Zero, SDL.SDL_RendererFlip.SDL_FLIP_NONE);
             }
@@ -241,7 +251,10 @@ namespace Kintsugi.Rendering
             foreach (Circle c in _circlesToDraw)
             {
                 SDL.SDL_SetRenderDrawColor(_rend, (byte)c.R, (byte)c.G, (byte)c.B, (byte)c.A);
-                RenderCircle(c.X, c.Y, c.Radius);
+                Vector2 centerScreen = cam.WorldToScreenSpace(new System.Numerics.Vector2(c.X, c.Y));
+                float radiusScreen = cam.WorldToScreenSpaceSize(c.Radius);
+
+                RenderCircle((int)Math.Ceiling(centerScreen.X), (int)Math.Ceiling(centerScreen.Y), (int)Math.Ceiling(radiusScreen));
             }
 
             foreach (var grid in _gridsToDraw)
@@ -261,19 +274,36 @@ namespace Kintsugi.Rendering
                     sRect.w = grid.TileWidth;
                     sRect.h = grid.TileWidth;
 
-                    tRect.x = (int)grid.Transform2D.X + tile.Position.x * grid.TileWidth;
-                    tRect.y = (int)grid.Transform2D.Y + tile.Position.y * grid.TileWidth;
-                    tRect.w = grid.TileWidth;
-                    tRect.h = grid.TileWidth;
-                    
+                    Vector2 rectPoint = cam.WorldToScreenSpace(new System.Numerics.Vector2(
+                        grid.Transform2D.X + tile.Position.x * grid.TileWidth,
+                        grid.Transform2D.Y + tile.Position.y * grid.TileWidth));
+                    Vector2 rectPoint2 = cam.WorldToScreenSpace(new System.Numerics.Vector2(
+                        grid.Transform2D.X + ((tile.Position.x + 1) * grid.TileWidth) ,
+                        grid.Transform2D.Y + ((tile.Position.y + 1) * grid.TileWidth)));
+
+                    int xsize = (int)rectPoint2.X - (int)rectPoint.X;
+                    int ysize = (int)rectPoint2.Y - (int)rectPoint.Y;
+
+                    tRect.x = (int)rectPoint.X;
+                    tRect.y = (int)rectPoint.Y;
+                    tRect.w = xsize;
+                    tRect.h = ysize;
+
                     SDL.SDL_RenderCopyEx(_rend, sprite, ref sRect, ref tRect, 0, nint.Zero, SDL.SDL_RendererFlip.SDL_FLIP_NONE);
                 }
             }
-            
+
             foreach (Line l in _linesToDraw)
             {
                 SDL.SDL_SetRenderDrawColor(_rend, (byte)l.R, (byte)l.G, (byte)l.B, (byte)l.A);
-                SDL.SDL_RenderDrawLine(_rend, l.Sx, l.Sy, l.Ex, l.Ey);
+                Vector2 start = cam.WorldToScreenSpace(new System.Numerics.Vector2(l.Sx, l.Sy));
+                Vector2 end = cam.WorldToScreenSpace(new System.Numerics.Vector2(l.Ex, l.Ey));
+
+                SDL.SDL_RenderDrawLine(_rend,
+                    (int)start.X,
+                    (int)start.Y,
+                    (int)end.X,
+                    (int)end.Y);
             }
 
             // Show it off.
