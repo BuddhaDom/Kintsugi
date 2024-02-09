@@ -49,7 +49,7 @@ namespace TacticsGameTest
             {
                 movement = movement + new Vector2((float)Bootstrap.GetDeltaTime(), 0);
             }
-            Bootstrap.GetCameraSystem().Position += movement * 16 * 5;
+            Bootstrap.GetCameraSystem().Position += movement * 1f * Bootstrap.GetCameraSystem().Size;
 
             if (zoomOut)
             {
