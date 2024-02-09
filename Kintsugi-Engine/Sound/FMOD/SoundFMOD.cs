@@ -29,18 +29,7 @@ namespace Kintsugi.Audio
         public override void PlaySound(string file)
         {
 
-            SDL.SDL_AudioSpec have, want;
-            uint length, dev;
-            nint buffer;
-
-            file = Bootstrap.GetAssetManager().GetAssetPath(file);
-
-            SDL.SDL_LoadWAV(file, out have, out buffer, out length);
-            dev = SDL.SDL_OpenAudioDevice(nint.Zero, 0, ref have, out want, 0);
-
-            int success = SDL.SDL_QueueAudio(dev, buffer, length);
-            SDL.SDL_PauseAudioDevice(dev, 0);
-
+            throw new NotImplementedException();
         }
 
         public Bank LoadBank(string path)
@@ -89,46 +78,6 @@ namespace Kintsugi.Audio
             {
                 throw new Exception("Fmod error! + " + FMOD.Error.String(result));
             }
-        }
-    }
-
-
-    public class Bank
-    {
-        SoundFMOD fmod;
-        FMOD.Studio.Bank bank;
-        internal Bank(FMOD.Studio.Bank bank, SoundFMOD fmod)
-        {
-            this.fmod = fmod;
-            this.bank = bank;
-        }
-
-        public void PreloadSamples()
-        {
-            SoundFMOD.ErrorCheck(bank.loadSampleData());
-        }
-        public void UnloadSamples()
-        {
-            SoundFMOD.ErrorCheck(bank.unloadSampleData());
-        }
-    }
-    public class Event
-    {
-        SoundFMOD soundFMOD;
-        FMOD.Studio.EventDescription eventDescription;
-        internal Event(FMOD.Studio.EventDescription eventDescription)
-        {
-            this.eventDescription = eventDescription;
-        }
-
-        /**
-         * <summary>Creates an instance of the event, plays it immediately, and releases it.</summary>
-         */
-        public void PlayImmediate()
-        {
-            SoundFMOD.ErrorCheck(eventDescription.createInstance(out var instance));
-            SoundFMOD.ErrorCheck(instance.start());
-            SoundFMOD.ErrorCheck(instance.release());
         }
     }
 }
