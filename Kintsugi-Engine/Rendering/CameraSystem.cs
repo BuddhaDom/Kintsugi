@@ -2,7 +2,7 @@
 
 namespace Kintsugi.Rendering
 {
-    internal class CameraSystem
+    public class CameraSystem
     {
         /// <summary>
         /// Center position of the camera in world space
@@ -33,31 +33,47 @@ namespace Kintsugi.Rendering
         /// <summary>
         /// Converts a point in screenspace to a point in worldspace.
         /// </summary>
-        public Vector2 ScreenToWorldSpace(int x, int y)
+        public Vector2 ScreenToWorldSpace(Vector2 screenSpace)
         {
-            Vector2 worldSpace = new Vector2(x, y);
             // Scale to world scale
-            worldSpace *= (Height / _display.GetHeight());
+            screenSpace *= (Height / _display.GetHeight());
             // Move to camera Position
-            worldSpace += Position - new Vector2(Width, Height) * 0.5f;
-            return worldSpace;
+            screenSpace += Position - new Vector2(Width, Height) * 0.5f;
+            return screenSpace;
         }
+
+        /// <summary>
+        /// Converts a size in screenspace to a size in worldspace.
+        /// </summary>
+        public float ScreenToWorldSpaceSize(float screenspaceSize)
+        {
+            return screenspaceSize * (Height / _display.GetHeight());
+        }
+
         /// <summary>
         /// Converts a point in worldspace to a point in screenspace.
         /// </summary>
         public Vector2 WorldToScreenSpace(Vector2 worldspace)
         {
             // Offset so the bottom left corner is at 0,0
-            worldspace -= Position + new Vector2(Width, Height) * 0.5f;
+            worldspace -= Position - new Vector2(Width, Height) * 0.5f;
             // Scale to fit screenspace
             worldspace *= (_display.GetHeight() / Height);
             // Probably should round to int here maybe?
             return worldspace;
         }
+
+        /// <summary>
+        /// Converts a size in worldspace to a size in screenspace.
+        /// </summary>
+        public float WorldToScreenSpaceSize(float worldspaceSize)
+        {
+            return worldspaceSize * (_display.GetHeight() / Height);
+        }
         /// <summary>
         /// Aspect ratio of the camera. Bound to the aspect ratio of the window.
         /// </summary>
-        public float AspectRatio { get => _display.GetWidth() / _display.GetHeight(); }
+        public float AspectRatio { get => (float)_display.GetWidth() / (float)_display.GetHeight(); }
 
         internal CameraSystem(DisplayBase display)
         {

@@ -115,6 +115,12 @@ namespace Kintsugi.Core
             return runningGame;
         }
 
+        public static CameraSystem GetCameraSystem()
+        {
+            return cameraSystem;
+        }
+
+
         public static void Setup(string path)
         {
             Console.WriteLine("Path is " + path);
@@ -162,7 +168,7 @@ namespace Kintsugi.Core
                 Debug.Log("Config file... setting " + kvp.Key + " to " + kvp.Value);
             }
 
-            cameraSystem = new CameraSystem()
+            cameraSystem = new CameraSystem(displayEngine);
 
             if (runningGame == null)
             {
