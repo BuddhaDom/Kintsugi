@@ -34,11 +34,11 @@ namespace Kintsugi_Engine.Objects
         internal void Begin()
         {
             RedoTurnOrder();
-            NextTurn();
             foreach (var controlGroup in controlGroups)
             {
                 controlGroup.StartRound();
             }
+            NextTurn();
         }
 
         private void NextTurn()
