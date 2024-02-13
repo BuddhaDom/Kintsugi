@@ -1,1 +1,1 @@
-﻿new Debugging.Debugging().Run();
+﻿new Shard.GameTest().Run();
