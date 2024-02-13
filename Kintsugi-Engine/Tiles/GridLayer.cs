@@ -28,6 +28,9 @@ public struct GridLayer
     public GridLayer(Tile[,] tiles, string name = "")
     {
         Tiles = tiles ?? throw new ArgumentNullException(nameof(tiles));
+        for (int y = 0; y < tiles.GetLength(1); y++)
+        for (int x = 0; x < tiles.GetLength(0); x++)
+            tiles[x, y] = Tile.Empty;
         Name = name;
     }
 
