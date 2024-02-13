@@ -12,7 +12,7 @@ namespace Kintsugi.Objects
     {
         public event EventHandler ControlGroupTurnEnd;
         public bool HasHadTurn { get; internal set; }
-        public abstract float GetInitiative();
+        public abstract float CalculateInitiative();
         public abstract void OnStartRound();
         public abstract void OnEndRound();
 
@@ -40,7 +40,7 @@ namespace Kintsugi.Objects
         internal float currentInitiative;
         internal void RecalculateInitiative()
         {
-            currentInitiative = GetInitiative();
+            currentInitiative = CalculateInitiative();
         }
         private int awaitingUnits = 0;
         internal void StartTurn()
