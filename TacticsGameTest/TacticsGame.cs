@@ -1,7 +1,9 @@
 ﻿using Kintsugi.Core;
 using Kintsugi.Input;
+using Kintsugi.Objects;
 using Kintsugi.Rendering;
 using Kintsugi.Tiles;
+using Kintsugi_Engine.Objects;
 using SDL2;
 using System;
 using System.Collections.Generic;
@@ -17,6 +19,7 @@ namespace TacticsGameTest
     {
         private GameObject grid;
 
+        private MovingScenario scenario;
 
         public override void Initialize()
         {
@@ -24,13 +27,30 @@ namespace TacticsGameTest
             grid.Transform.X = 0;
             grid.Transform.Y = 0;
             Bootstrap.GetCameraSystem().Size = 16 * 10;
+
+            scenario = new MovingScenario();
+            var group = new MyControlGroup();
+            var actor = new MovementActor("actor1");
+            var actor2 = new MovementActor("actor2");
+
+            group.AddActor(actor);
+            group.AddActor(actor2);
+
+            var group2 = new MyControlGroup();
+            var actor3 = new MovementActor("actor3");
+
+            group2.AddActor(actor3);
+
+            scenario.AddControlGroup(group);
+            scenario.AddControlGroup(group2);
+
+            scenario.BeginScenario();
         }
 
         public override void Update()
         {
-            Bootstrap.GetInput().AddListener(this);
 
-            Bootstrap.GetDisplay().ShowText("FPS: " + Bootstrap.GetSecondFPS() + " / " + Bootstrap.GetFPS(), 10, 10, 12, 255, 255, 255);
+            //Bootstrap.GetDisplay().ShowText("FPS: " + Bootstrap.GetSecondFPS() + " / " + Bootstrap.GetFPS(), 10, 10, 12, 255, 255, 255);
 
             var movement = Vector2.Zero;
             if (up)

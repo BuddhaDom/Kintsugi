@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Kintsugi_Engine.Objects
 {
-    internal abstract class ScenarioManager
+    public abstract class ScenarioManager
     {
         public event EventHandler OnTurnOrderFinished;
 

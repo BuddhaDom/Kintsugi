@@ -19,6 +19,16 @@ namespace Kintsugi.Objects
         public abstract void OnStartTurn();
         public abstract void OnEndTurn();
 
+        public void AddActor(Actor actor)
+        {
+            units.Add(actor);
+        }
+        public void RemoveActor(Actor actor)
+        {
+            units.Remove(actor);
+        }
+
+
         internal void StartRound()
         {
             HasHadTurn = false;
