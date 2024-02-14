@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Kintsugi_Engine.Objects
+namespace Kintsugi.Objects
 {
     public class Unit : TileObject
     {
