@@ -4,15 +4,11 @@ using TiledCS;
 
 namespace Kintsugi.Tiles;
 
-public struct Tile(Vec2Int position, int tileId = 0, int tileSetId = 0)
+public struct Tile(int tileId = -1, int tileSetId = -1)
 {
+    public static Tile Empty => new();
     /// <summary>
-    /// Position of this tile on its layer.
-    /// </summary>
-    public Vec2Int Position { get; } = position;
-    
-    /// <summary>
-    /// Local ID of this tile in its tile set.
+    /// Local ID of this tile's sprite in its tile set.
     /// </summary>
     public int Id { get; internal set; } = tileId;
     /// <summary>

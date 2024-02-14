@@ -80,8 +80,10 @@ public class Grid : GameObject
                 var tileSetIndex = GetTilesetIdFromGid(tiledMap, gid);
                 
                 // Set this tile in the layer dictionary.
-                Layers[c].Tiles[x,y] = new Tile(new Vec2Int(x, y), 
-                    gid - tiledMap.Tilesets[tileSetIndex].firstgid, tileSetIndex);
+                Layers[c].Tiles[x,y] = new Tile( 
+                    gid - tiledMap.Tilesets[tileSetIndex].firstgid, 
+                    tileSetIndex
+                    );
             }
             c++;
         }

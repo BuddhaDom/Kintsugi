@@ -260,37 +260,38 @@ namespace Kintsugi.Rendering
             foreach (var grid in _gridsToDraw)
             {
                 foreach (var layer in grid.Layers)
-                foreach (var tile in layer.Tiles)
-                {
-                    if (tile.Id < 0) continue;
-                    var tileSet = grid.TileSets[tile.TileSetId];
-                    var source = tileSet.Source;
-                    var sprite = LoadTexture(source);
-                    var tileSetX = tile.Id % (tileSet.Width / grid.TileWidth);
-                    var tileSetY = tile.Id / (tileSet.Width / grid.TileWidth);
+                    for (int y = 0; y < grid.GridHeight; y++)
+                    for (int x = 0; x < grid.GridWidth; x++)
+                    {
+                        if (layer.Tiles[x,y].TileSetId < 0 || layer.Tiles[x,y].Id < 0) continue;
+                        var tileSet = grid.TileSets[layer.Tiles[x,y].TileSetId];
+                        var source = tileSet.Source;
+                        var sprite = LoadTexture(source);
+                        var tileSetX = layer.Tiles[x,y].Id % (tileSet.Width / grid.TileWidth);
+                        var tileSetY = layer.Tiles[x,y].Id / (tileSet.Width / grid.TileWidth);
 
-                    sRect.x = tileSetX * grid.TileWidth;
-                    sRect.y = tileSetY * grid.TileWidth;
-                    sRect.w = grid.TileWidth;
-                    sRect.h = grid.TileWidth;
+                        sRect.x = tileSetX * grid.TileWidth;
+                        sRect.y = tileSetY * grid.TileWidth;
+                        sRect.w = grid.TileWidth;
+                        sRect.h = grid.TileWidth;
 
-                    Vector2 rectPoint = cam.WorldToScreenSpace(new System.Numerics.Vector2(
-                        grid.Transform2D.X + tile.Position.x * grid.TileWidth,
-                        grid.Transform2D.Y + tile.Position.y * grid.TileWidth));
-                    Vector2 rectPoint2 = cam.WorldToScreenSpace(new System.Numerics.Vector2(
-                        grid.Transform2D.X + ((tile.Position.x + 1) * grid.TileWidth) ,
-                        grid.Transform2D.Y + ((tile.Position.y + 1) * grid.TileWidth)));
+                        Vector2 rectPoint = cam.WorldToScreenSpace(new System.Numerics.Vector2(
+                            grid.Transform2D.X + x * grid.TileWidth,
+                            grid.Transform2D.Y + y * grid.TileWidth));
+                        Vector2 rectPoint2 = cam.WorldToScreenSpace(new System.Numerics.Vector2(
+                            grid.Transform2D.X + (x + 1) * grid.TileWidth,
+                            grid.Transform2D.Y + (y + 1) * grid.TileWidth));
 
-                    int xsize = (int)rectPoint2.X - (int)rectPoint.X;
-                    int ysize = (int)rectPoint2.Y - (int)rectPoint.Y;
+                        int xsize = (int)rectPoint2.X - (int)rectPoint.X;
+                        int ysize = (int)rectPoint2.Y - (int)rectPoint.Y;
 
-                    tRect.x = (int)rectPoint.X;
-                    tRect.y = (int)rectPoint.Y;
-                    tRect.w = xsize;
-                    tRect.h = ysize;
+                        tRect.x = (int)rectPoint.X;
+                        tRect.y = (int)rectPoint.Y;
+                        tRect.w = xsize;
+                        tRect.h = ysize;
 
-                    SDL.SDL_RenderCopyEx(_rend, sprite, ref sRect, ref tRect, 0, nint.Zero, SDL.SDL_RendererFlip.SDL_FLIP_NONE);
-                }
+                        SDL.SDL_RenderCopyEx(_rend, sprite, ref sRect, ref tRect, 0, nint.Zero, SDL.SDL_RendererFlip.SDL_FLIP_NONE);
+                    }
             }
 
             foreach (Line l in _linesToDraw)
