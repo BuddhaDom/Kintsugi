@@ -126,8 +126,6 @@ public class Grid : GameObject
         TileSets = new TileSet[tileSetPaths.Length];
         for (int i = 0; i < tileSetPaths.Length; i++)
         {
-            if (!Path.Exists(tileSetPaths[i])) 
-                throw new ArgumentException("The provided file path does not exist.");
             var image = ((DisplaySDL)Bootstrap.GetDisplay()).LoadTexture(tileSetPaths[i]);
             SDL.SDL_QueryTexture(image, out _, out _, out int width, out int height);
             TileSets[i] = new TileSet(tileSetPaths[i], width, height);
