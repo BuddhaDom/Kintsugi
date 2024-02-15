@@ -1,4 +1,6 @@
-﻿using Kintsugi_Engine.Core;
+﻿using Engine.EventSystem;
+using Kintsugi.EventSystem.Events;
+using Kintsugi_Engine.Core;
 using Kintsugi_Engine.Objects;
 using System;
 using System.Collections.Generic;
@@ -88,7 +90,7 @@ namespace Kintsugi.Objects
 
             if (awaitingUnits == 0)
             {
-                EndTurn();
+                EventManager.I.Queue(new EndTurnEvent(this));
             }
         }
 
