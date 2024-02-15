@@ -3,7 +3,6 @@ using Kintsugi.Input;
 using Kintsugi.Objects;
 using Kintsugi.Rendering;
 using Kintsugi.Tiles;
-using Kintsugi_Engine.Objects;
 using SDL2;
 using System;
 using System.Collections.Generic;

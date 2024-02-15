@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Kintsugi.EventSystem.Events
 {
-    internal class ActionEvent : Event
+    public class ActionEvent : Event
     {
         private Action action;
         public ActionEvent(Action action)

@@ -1,8 +1,10 @@
 ﻿using Kintsugi.Core;
 using Kintsugi.Input;
 using Kintsugi.Objects;
-using Kintsugi_Engine.Objects;
+using Kintsugi.EventSystem;
 using SDL2;
+using Engine.EventSystem;
+using Kintsugi.EventSystem.Events;
 
 namespace TacticsGameTest
 {
@@ -22,20 +24,37 @@ namespace TacticsGameTest
                 {
                     if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_W)
                     {
+                        EventManager.I.Queue(
+                            new ActionEvent(() =>
+                                Transform.GridPosition += Vec2Int.Up
+                                ));
+                        EndTurn();
                     }
                     if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_S)
                     {
-
+                        EventManager.I.Queue(
+                            new ActionEvent(() =>
+                                Transform.GridPosition += Vec2Int.Down
+                                ));
+                        EndTurn();
                     }
                     if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_A)
                     {
-
+                        EventManager.I.Queue(
+                            new ActionEvent(() =>
+                                Transform.GridPosition += Vec2Int.Left
+                                ));
+                        EndTurn();
                     }
                     if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_D)
                     {
+                        EventManager.I.Queue(
+                            new ActionEvent(() =>
+                                Transform.GridPosition += Vec2Int.Right
+                                ));
+                        EndTurn();
 
                     }
-
                     if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_SPACE)
                     {
                         EndTurn();
