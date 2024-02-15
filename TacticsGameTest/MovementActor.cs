@@ -20,6 +20,22 @@ namespace TacticsGameTest
             {
                 if (eventType == "KeyDown")
                 {
+                    if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_W)
+                    {
+                    }
+                    if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_S)
+                    {
+
+                    }
+                    if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_A)
+                    {
+
+                    }
+                    if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_D)
+                    {
+
+                    }
+
                     if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_SPACE)
                     {
                         EndTurn();
