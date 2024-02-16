@@ -13,7 +13,7 @@ namespace Kintsugi.Audio
 {
     public class SoundSDL : Sound
     {
-        public override void Initialize()
+        internal override void Initialize()
         {
         }
 
@@ -34,7 +34,7 @@ namespace Kintsugi.Audio
 
         }
 
-        public override void Update()
+        internal override void Update()
         {
         }
     }

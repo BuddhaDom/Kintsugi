@@ -58,8 +58,8 @@ namespace GameTest
 
             b.Transform.Rotate(this.Transform.Rotz);
 
-            fireEvent.CreateInstance().Start();
-            //fireEvent.PlayImmediate();
+            //fireEvent.CreateInstance().Start();
+            fireEvent.PlayImmediate();
             //Bootstrap.GetSound().PlaySound("fire.wav");
         }
 
