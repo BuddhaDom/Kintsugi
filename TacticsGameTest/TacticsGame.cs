@@ -10,13 +10,14 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using Kintsugi.Objects;
 
 namespace TacticsGameTest
 {
     internal class TacticsGame : Game, IInputListener
     {
-        private GameObject grid;
-
+        private Grid grid;
+        private TileObject character;
 
         public override void Initialize()
         {
@@ -24,6 +25,13 @@ namespace TacticsGameTest
             grid.Transform.X = 0;
             grid.Transform.Y = 0;
             Bootstrap.GetCameraSystem().Size = 16 * 10;
+
+            character = new TileObject
+            {
+                Transform = new TileObjectTransform(Vec2Int.One * 3, 0, grid),
+                Collider = new TileObjectCollider([0], [1]),
+                Sprite = new TileObjectSprite(GetAssetManager().GetAssetPath("guy.png"), new Vector2(0, -2))
+            };
         }
 
         public override void Update()

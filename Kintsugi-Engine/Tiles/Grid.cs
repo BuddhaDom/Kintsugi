@@ -1,5 +1,7 @@
 using System.Drawing;
+using System.Numerics;
 using Kintsugi.Core;
+using Kintsugi.Objects;
 using Kintsugi.Rendering;
 using SDL2;
 using TiledCS;
@@ -29,6 +31,8 @@ public class Grid : GameObject
     /// Width (in pixels) of the tiles present in this grid.
     /// </summary>
     public int TileWidth { get; }
+    
+    public List<TileObject> Objects { get; }
 
     /// <summary>
     /// Source location of the tile sets used by this grid.
@@ -38,10 +42,6 @@ public class Grid : GameObject
     private readonly bool gridVisible;
     private readonly Color gridColor;
 
-    public override void Initialize()
-    {
-        
-    }
 
     /// <summary>
     /// Build a grid from a Tiled tilemap file.
@@ -62,6 +62,7 @@ public class Grid : GameObject
         GridWidth = tiledMap.Width;
         GridHeight = tiledMap.Height;
         TileWidth = tiledMap.TileWidth;
+        Objects = new List<TileObject>();
         this.gridVisible = gridVisible;
         this.gridColor = gridColor;
         int c; // Generic counter.
@@ -123,6 +124,7 @@ public class Grid : GameObject
         GridHeight = gridHeight;
         TileWidth = tileWidth;
         Layers = layers ?? Array.Empty<GridLayer>();
+        Objects = new List<TileObject>();
         TileSets = new TileSet[tileSetPaths.Length];
         for (int i = 0; i < tileSetPaths.Length; i++)
         {
