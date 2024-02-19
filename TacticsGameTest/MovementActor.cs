@@ -26,7 +26,7 @@ namespace TacticsGameTest
                     {
                         EventManager.I.Queue(
                             new ActionEvent(() =>
-                                Transform.GridPosition += Vec2Int.Up
+                                Transform.GridPosition -= Vec2Int.Up
                                 ));
                         EndTurn();
                     }
@@ -34,7 +34,7 @@ namespace TacticsGameTest
                     {
                         EventManager.I.Queue(
                             new ActionEvent(() =>
-                                Transform.GridPosition += Vec2Int.Down
+                                Transform.GridPosition -= Vec2Int.Down
                                 ));
                         EndTurn();
                     }
@@ -83,5 +83,13 @@ namespace TacticsGameTest
 
             Console.WriteLine(name + " Start Turn");
         }
+
+        public MovementActor(TileObjectTransform transform, TileObjectCollider? collider = null, TileObjectSprite? sprite = null, string name = "") : base(transform, collider, sprite)
+        {
+            this.name = name;
+            Bootstrap.GetInput().AddListener(this);
+        }
+
+        public MovementActor() : this(new TileObjectTransform()) {}
     }
 }

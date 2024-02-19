@@ -259,39 +259,98 @@ namespace Kintsugi.Rendering
 
             foreach (var grid in _gridsToDraw)
             {
-                foreach (var layer in grid.Layers)
+                for (int i = 0; i < grid.Layers.Length; i++)
+                {
+                    #region Tile
+                    var layer = grid.Layers[i];
                     for (int y = 0; y < grid.GridHeight; y++)
                     for (int x = 0; x < grid.GridWidth; x++)
                     {
-                        if (layer.Tiles[x,y].TileSetId < 0 || layer.Tiles[x,y].Id < 0) continue;
-                        var tileSet = grid.TileSets[layer.Tiles[x,y].TileSetId];
+                        if (layer.Tiles[x, y].TileSetId < 0 && layer.Tiles[x, y].Id < 0) continue;
+                        
+                        var tileSet = grid.TileSets[layer.Tiles[x, y].TileSetId];
+                        var tileSetX = layer.Tiles[x, y].Id % (tileSet.Width / grid.TileWidth);
+                        var tileSetY = layer.Tiles[x, y].Id / (tileSet.Width / grid.TileWidth);
+
                         var source = tileSet.Source;
                         var sprite = LoadTexture(source);
-                        var tileSetX = layer.Tiles[x,y].Id % (tileSet.Width / grid.TileWidth);
-                        var tileSetY = layer.Tiles[x,y].Id / (tileSet.Width / grid.TileWidth);
 
                         sRect.x = tileSetX * grid.TileWidth;
                         sRect.y = tileSetY * grid.TileWidth;
                         sRect.w = grid.TileWidth;
                         sRect.h = grid.TileWidth;
 
-                        Vector2 rectPoint = cam.WorldToScreenSpace(new System.Numerics.Vector2(
+                        var uScreenPos = cam.WorldToScreenSpace(new Vector2(
                             grid.Transform2D.X + x * grid.TileWidth,
                             grid.Transform2D.Y + y * grid.TileWidth));
-                        Vector2 rectPoint2 = cam.WorldToScreenSpace(new System.Numerics.Vector2(
+                        var vScreenPos = cam.WorldToScreenSpace(new Vector2(
                             grid.Transform2D.X + (x + 1) * grid.TileWidth,
                             grid.Transform2D.Y + (y + 1) * grid.TileWidth));
 
-                        int xsize = (int)rectPoint2.X - (int)rectPoint.X;
-                        int ysize = (int)rectPoint2.Y - (int)rectPoint.Y;
+                        int xsize = (int)vScreenPos.X - (int)uScreenPos.X;
+                        int ysize = (int)vScreenPos.Y - (int)uScreenPos.Y;
 
-                        tRect.x = (int)rectPoint.X;
-                        tRect.y = (int)rectPoint.Y;
+                        tRect.x = (int)uScreenPos.X;
+                        tRect.y = (int)uScreenPos.Y;
                         tRect.w = xsize;
                         tRect.h = ysize;
 
-                        SDL.SDL_RenderCopyEx(_rend, sprite, ref sRect, ref tRect, 0, nint.Zero, SDL.SDL_RendererFlip.SDL_FLIP_NONE);
+                        SDL.SDL_RenderCopyEx(_rend,
+                            sprite,
+                            ref sRect,
+                            ref tRect,
+                            0,
+                            nint.Zero,
+                            SDL.SDL_RendererFlip.SDL_FLIP_NONE);
                     }
+                    #endregion
+
+                    #region TileObjects
+                    for (int y = 0; y < grid.GridHeight; y++)
+                    for (int x = 0; x < grid.GridWidth; x++)
+                    {
+                        foreach (var tileObject in grid.Objects.Where(o =>
+                                     o.Sprite != null &&
+                                     o.Transform.Layer == i &&
+                                     o.Transform.GridPosition.Equals(new Vec2Int(x, y)
+                                     )))
+                        {
+                            var sprite = LoadTexture(tileObject.Sprite!.SpritePath);
+
+                            sRect.x = 0;
+                            sRect.y = 0;
+                            sRect.w = tileObject.Sprite!.Width;
+                            sRect.h = tileObject.Sprite!.Height;
+
+                            var localTilePivot = tileObject.Sprite.TilePivot * grid.TileWidth;
+                            var pivotOffsets = localTilePivot - tileObject.Sprite.ImagePivot;
+
+                            var uScreenPos = cam.WorldToScreenSpace(new Vector2(
+                                grid.Transform2D.X + x * grid.TileWidth + pivotOffsets.X,
+                                grid.Transform2D.Y + y * grid.TileWidth + pivotOffsets.Y));
+                            var vScreenPos = cam.WorldToScreenSpace(new Vector2(
+                                grid.Transform2D.X + x * grid.TileWidth + pivotOffsets.X + tileObject.Sprite.Width,
+                                grid.Transform2D.Y + y * grid.TileWidth + pivotOffsets.Y + tileObject.Sprite.Height));
+
+                            int xsize = (int)vScreenPos.X - (int)uScreenPos.X;
+                            int ysize = (int)vScreenPos.Y - (int)uScreenPos.Y;
+
+                            tRect.x = (int)uScreenPos.X;
+                            tRect.y = (int)uScreenPos.Y;
+                            tRect.w = xsize;
+                            tRect.h = ysize;
+
+                            SDL.SDL_RenderCopyEx(_rend,
+                                sprite,
+                                ref sRect,
+                                ref tRect,
+                                0,
+                                nint.Zero,
+                                SDL.SDL_RendererFlip.SDL_FLIP_NONE);
+                        }
+                    }
+                    #endregion
+                }
             }
 
             foreach (Line l in _linesToDraw)
