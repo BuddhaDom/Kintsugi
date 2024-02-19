@@ -1,4 +1,5 @@
-﻿using System.Net.Mime;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Net.Mime;
 using System.Numerics;
 using Kintsugi.Core;
 using Kintsugi.Rendering;
@@ -61,17 +62,29 @@ namespace Kintsugi.Objects
 
     public class TileObjectSprite
     {
+        
         internal nint Sprite { get; }
         public string SpritePath { get; }
-        public Vector2 Pivot { get; }
+        /// <summary>
+        /// Position on the tile from which the object is rendered.
+        /// Defined between <see cref="Vector2.Zero"/> and <see cref="Vector2.One"/> as the upper and lower bounds of the tile width.
+        /// </summary>
+        public Vector2 TilePivot { get; }
+        /// <summary>
+        /// Position on the sprite which will match positions with the <see cref="TilePivot"/>.
+        /// Defined between this sprite's <see cref="Height"/> and <see cref="Width"/>. 
+        /// </summary>
+        public Vector2 ImagePivot { get; set; }
 
         public int Height { get; }
         
         public int Width { get; }
-        public TileObjectSprite(string spritePath, Vector2 pivot)
+        
+        public TileObjectSprite(string spritePath, Vector2 tilePivot, Vector2 imagePivot)
         {
             SpritePath = spritePath;
-            Pivot = pivot;
+            TilePivot = tilePivot;
+            ImagePivot = imagePivot;
             if (spritePath != "")
             {
                 Sprite = ((DisplaySDL)Bootstrap.GetDisplay()).LoadTexture(spritePath);
@@ -81,6 +94,6 @@ namespace Kintsugi.Objects
             }
         }
 
-        public TileObjectSprite() : this("", Vector2.Zero) {}
+        public TileObjectSprite() : this("", Vector2.Zero, Vector2.Zero) {}
     }
 }

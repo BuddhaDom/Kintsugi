@@ -26,12 +26,13 @@ namespace TacticsGameTest
             grid.Transform.Y = 0;
             Bootstrap.GetCameraSystem().Size = 16 * 10;
 
-            character = new TileObject
-            {
-                Transform = new TileObjectTransform(Vec2Int.One * 3, 0, grid),
-                Collider = new TileObjectCollider([0], [1]),
-                Sprite = new TileObjectSprite(GetAssetManager().GetAssetPath("guy.png"), new Vector2(0, -2))
-            };
+            
+            // TODO: This sucks.
+            var transform = new TileObjectTransform(Vec2Int.One * 3, 0, grid);
+            var collider = new TileObjectCollider([0], [1]);
+            var sprite = new TileObjectSprite(GetAssetManager().GetAssetPath("guy.png"), Vector2.One / 2,
+                new Vector2(8, 8));
+            character = new TileObject(transform,collider,sprite);
         }
 
         public override void Update()

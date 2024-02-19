@@ -271,7 +271,7 @@ namespace Kintsugi.Rendering
                         
                         #region Tile
                         
-                        if (layer.Tiles[x, y].TileSetId < 0 || layer.Tiles[x, y].Id < 0)
+                        if (layer.Tiles[x, y].TileSetId >= 0 || layer.Tiles[x, y].Id >= 0)
                         {
                             var source = tileSet.Source;
                             var sprite = LoadTexture(source);
@@ -281,22 +281,28 @@ namespace Kintsugi.Rendering
                             sRect.w = grid.TileWidth;
                             sRect.h = grid.TileWidth;
 
-                            Vector2 pointU = cam.WorldToScreenSpace(new Vector2(
+                            Vector2 uScreenPos = cam.WorldToScreenSpace(new Vector2(
                                 grid.Transform2D.X + x * grid.TileWidth,
                                 grid.Transform2D.Y + y * grid.TileWidth));
-                            Vector2 pointV = cam.WorldToScreenSpace(new Vector2(
+                            Vector2 vScreenPos = cam.WorldToScreenSpace(new Vector2(
                                 grid.Transform2D.X + (x + 1) * grid.TileWidth,
                                 grid.Transform2D.Y + (y + 1) * grid.TileWidth));
 
-                            int xsize = (int)pointV.X - (int)pointU.X;
-                            int ysize = (int)pointV.Y - (int)pointU.Y;
+                            int xsize = (int)vScreenPos.X - (int)uScreenPos.X;
+                            int ysize = (int)vScreenPos.Y - (int)uScreenPos.Y;
 
-                            tRect.x = (int)pointU.X;
-                            tRect.y = (int)pointU.Y;
+                            tRect.x = (int)uScreenPos.X;
+                            tRect.y = (int)uScreenPos.Y;
                             tRect.w = xsize;
                             tRect.h = ysize;
 
-                            SDL.SDL_RenderCopyEx(_rend, sprite, ref sRect, ref tRect, 0, nint.Zero, SDL.SDL_RendererFlip.SDL_FLIP_NONE);
+                            SDL.SDL_RenderCopyEx(_rend,
+                                sprite,
+                                ref sRect,
+                                ref tRect,
+                                0,
+                                nint.Zero,
+                                SDL.SDL_RendererFlip.SDL_FLIP_NONE);
                         }
                         
                         #endregion
@@ -309,22 +315,38 @@ namespace Kintsugi.Rendering
                                      o.Transform.GridPosition.Equals(new Vec2Int(x,y)
                                      )))
                         {
+                            var sprite = LoadTexture(tileObject.Sprite!.SpritePath);
+
                             sRect.x = 0;
                             sRect.y = 0;
                             sRect.w = tileObject.Sprite!.Width;
-                            sRect.w = tileObject.Sprite!.Height;
+                            sRect.h = tileObject.Sprite!.Height;
                             
-                            Vector2 rectPoint = cam.WorldToScreenSpace(new Vector2(
-                                grid.Transform2D.X + x * tileObject.Sprite!.Width,
-                                grid.Transform2D.Y + y * tileObject.Sprite!.Height));
-                            Vector2 rectPoint2 = cam.WorldToScreenSpace(new Vector2(
-                                grid.Transform2D.X + (x + 1) * tileObject.Sprite!.Width,
-                                grid.Transform2D.Y + (y + 1) * tileObject.Sprite!.Height));
+                            var localTilePivot = tileObject.Sprite.TilePivot * grid.TileWidth;
+                            var pivotOffsets = localTilePivot - tileObject.Sprite.ImagePivot;
+                            
+                            Vector2 uScreenPos = cam.WorldToScreenSpace(new Vector2(
+                                grid.Transform2D.X + x * grid.TileWidth + pivotOffsets.X,
+                                grid.Transform2D.Y + y * grid.TileWidth + pivotOffsets.Y));
+                            Vector2 vScreenPos = cam.WorldToScreenSpace(new Vector2(
+                                grid.Transform2D.X + x * grid.TileWidth + pivotOffsets.X + tileObject.Sprite.Width,
+                                grid.Transform2D.Y + y * grid.TileWidth + pivotOffsets.Y + tileObject.Sprite.Height));
 
-                            int xsize = (int)rectPoint2.X - (int)rectPoint.X;
-                            int ysize = (int)rectPoint2.Y - (int)rectPoint.Y;
+                            int xsize = (int)vScreenPos.X - (int)uScreenPos.X;
+                            int ysize = (int)vScreenPos.Y - (int)uScreenPos.Y;
                             
-                            // TODO: World space to screen space for guy.png sprite.
+                            tRect.x = (int)uScreenPos.X;
+                            tRect.y = (int)uScreenPos.Y;
+                            tRect.w = xsize;
+                            tRect.h = ysize;
+                            
+                            SDL.SDL_RenderCopyEx(_rend,
+                                sprite,
+                                ref sRect,
+                                ref tRect,
+                                0,
+                                nint.Zero,
+                                SDL.SDL_RendererFlip.SDL_FLIP_NONE);
                         }
                         
                         #endregion
