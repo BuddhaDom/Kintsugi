@@ -33,14 +33,14 @@ namespace Kintsugi.Objects
         {
             HasHadTurn = false;
             OnStartRound();
-            foreach (var unit in units)
+            foreach (var unit in actors)
             {
                 unit.StartRound();
             }
         }
         internal void EndRound()
         {
-            foreach (var unit in units)
+            foreach (var unit in actors)
             {
                 unit.EndRound();
             }
@@ -52,18 +52,18 @@ namespace Kintsugi.Objects
         {
             currentInitiative = CalculateInitiative();
         }
-        private int awaitingUnits = 0;
+        private int awaitingActors = 0;
         internal void StartTurn()
         {
-            awaitingUnits = units.Count;
-            foreach (var unit in units)
+            awaitingActors = actors.Count;
+            foreach (var unit in actors)
             // technically we need to do this first in an extreme edge case
             // where the dev ends everyones turn immediately...
             {
-                unit.OnUnitTurnEnd += UnitTurnOver;
+                unit.OnActorTurnEnd += UnitTurnOver;
             }
             OnStartTurn();
-            foreach (var unit in units)
+            foreach (var unit in actors)
             {
                 unit.StartTurn();
             }
@@ -79,20 +79,20 @@ namespace Kintsugi.Objects
         {
             if (sender == null)
             {
-                throw new NullReferenceException("Null unit ended its turn, which is illegal.");
+                throw new NullReferenceException("Null actor ended its turn, which is illegal.");
             }
 
-            var unit = sender as Actor;
-            unit.OnUnitTurnEnd -= UnitTurnOver;
-            awaitingUnits--;
+            var actor = sender as Actor;
+            actor.OnActorTurnEnd -= UnitTurnOver;
+            awaitingActors--;
 
-            if (awaitingUnits == 0)
+            if (awaitingActors == 0)
             {
                 EventManager.I.Queue(new EndTurnEvent(this));
             }
         }
 
-        private List<Actor> units = new();
+        private List<Actor> actors = new();
 
     }
 

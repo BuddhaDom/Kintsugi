@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace Kintsugi.Objects
 {
-    public abstract class Actor : Unit
+    internal abstract class Actor : TileObject
     {
-        public event EventHandler OnUnitTurnEnd;
-        public bool InTurn { get; private set; } = false;
+        public event EventHandler OnActorTurnEnd;
+
         public abstract void OnStartTurn();
         public abstract void OnEndTurn();
         public abstract void OnStartRound();
@@ -39,7 +39,7 @@ namespace Kintsugi.Objects
         {
             InTurn = false;
             OnEndTurn();
-            OnUnitTurnEnd?.Invoke(this, EventArgs.Empty);
+            OnActorTurnEnd?.Invoke(this, EventArgs.Empty);
         }
     }
 }
