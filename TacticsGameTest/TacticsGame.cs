@@ -18,7 +18,7 @@ namespace TacticsGameTest
     internal class TacticsGame : Game, IInputListener
     {
         private Grid grid;
-        private Actor character;
+        private MovementActor character;
         private MovingScenario scenario;
 
         public override void Initialize()
@@ -29,21 +29,22 @@ namespace TacticsGameTest
             Bootstrap.GetCameraSystem().Size = 16 * 10;
 
             
-            // TODO: This sucks.
+            // TODO: This sucks. Should be attached to grid on the transform itself.
             var transform = new TileObjectTransform(Vec2Int.One * 3, 0, grid);
             var collider = new TileObjectCollider([0], [1]);
             var sprite = new TileObjectSprite(GetAssetManager().GetAssetPath("guy.png"), Vector2.One / 2,
                 new Vector2(6.5f, 8.5f));
-            character = new TileObject(transform,collider,sprite);
+            character = new MovementActor(transform,collider,sprite);
             scenario = new MovingScenario();
             var group = new MyControlGroup();
-            var actor = new MovementActor("actor1");
 
-            group.AddActor(actor);
+            group.AddActor(character);
 
             scenario.AddControlGroup(group);
 
             scenario.BeginScenario();
+            
+            Bootstrap.GetInput().AddListener(this);
         }
 
         public override void Update()
@@ -85,22 +86,22 @@ namespace TacticsGameTest
         {
             if (eventType == "KeyDown")
             {
-                if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_W)
+                if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_UP)
                 {
                     up = true;
                 }
 
-                if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_S)
+                if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_DOWN)
                 {
                     down = true;
                 }
 
-                if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_D)
+                if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_RIGHT)
                 {
                     right = true;
                 }
 
-                if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_A)
+                if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_LEFT)
                 {
                     left = true;
                 }
@@ -117,22 +118,22 @@ namespace TacticsGameTest
             }
             else if (eventType == "KeyUp")
             {
-                if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_W)
+                if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_UP)
                 {
                     up = false;
                 }
 
-                if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_S)
+                if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_DOWN)
                 {
                     down = false;
                 }
 
-                if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_D)
+                if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_RIGHT)
                 {
                     right = false;
                 }
 
-                if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_A)
+                if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_LEFT)
                 {
                     left = false;
                 }

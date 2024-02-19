@@ -42,5 +42,11 @@ namespace Kintsugi.Objects
             OnEndTurn();
             OnActorTurnEnd?.Invoke(this, EventArgs.Empty);
         }
+
+        public Actor(TileObjectTransform transform, TileObjectCollider? collider = null, TileObjectSprite? sprite = null) : base(transform, collider, sprite)
+        {
+        }
+
+        public Actor() : this(new TileObjectTransform()) {}
     }
 }

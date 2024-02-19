@@ -32,6 +32,7 @@ public class Grid : GameObject
     /// </summary>
     public int TileWidth { get; }
     
+    // TODO: Change to Dict of vec2int Positions to Lists of TileObjects
     public List<TileObject> Objects { get; }
 
     /// <summary>
