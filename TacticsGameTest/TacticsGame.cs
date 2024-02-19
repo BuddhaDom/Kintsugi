@@ -1,5 +1,6 @@
 ﻿using Kintsugi.Core;
 using Kintsugi.Input;
+using Kintsugi.Objects;
 using Kintsugi.Rendering;
 using Kintsugi.Tiles;
 using SDL2;
@@ -17,7 +18,8 @@ namespace TacticsGameTest
     internal class TacticsGame : Game, IInputListener
     {
         private Grid grid;
-        private TileObject character;
+        private Actor character;
+        private MovingScenario scenario;
 
         public override void Initialize()
         {
@@ -33,13 +35,21 @@ namespace TacticsGameTest
             var sprite = new TileObjectSprite(GetAssetManager().GetAssetPath("guy.png"), Vector2.One / 2,
                 new Vector2(6.5f, 8.5f));
             character = new TileObject(transform,collider,sprite);
+            scenario = new MovingScenario();
+            var group = new MyControlGroup();
+            var actor = new MovementActor("actor1");
+
+            group.AddActor(actor);
+
+            scenario.AddControlGroup(group);
+
+            scenario.BeginScenario();
         }
 
         public override void Update()
         {
-            Bootstrap.GetInput().AddListener(this);
 
-            Bootstrap.GetDisplay().ShowText("FPS: " + Bootstrap.GetSecondFPS() + " / " + Bootstrap.GetFPS(), 10, 10, 12, 255, 255, 255);
+            //Bootstrap.GetDisplay().ShowText("FPS: " + Bootstrap.GetSecondFPS() + " / " + Bootstrap.GetFPS(), 10, 10, 12, 255, 255, 255);
 
             var movement = Vector2.Zero;
             if (up)
