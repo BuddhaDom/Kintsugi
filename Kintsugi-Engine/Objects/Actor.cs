@@ -8,8 +8,9 @@ using System.Threading.Tasks;
 
 namespace Kintsugi.Objects
 {
-    internal abstract class Actor : TileObject
+    public abstract class Actor : TileObject
     {
+        public bool InTurn { get; private set; } = false;
         public event EventHandler OnActorTurnEnd;
 
         public abstract void OnStartTurn();

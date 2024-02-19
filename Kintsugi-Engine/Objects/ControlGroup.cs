@@ -21,11 +21,11 @@ namespace Kintsugi.Objects
 
         public void AddActor(Actor actor)
         {
-            units.Add(actor);
+            actors.Add(actor);
         }
         public void RemoveActor(Actor actor)
         {
-            units.Remove(actor);
+            actors.Remove(actor);
         }
 
 
