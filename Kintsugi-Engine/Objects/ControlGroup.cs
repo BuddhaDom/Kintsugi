@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Engine.EventSystem;
+using Kintsugi.EventSystem.Events;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,6 +18,16 @@ namespace Kintsugi.Objects
 
         public abstract void OnStartTurn();
         public abstract void OnEndTurn();
+
+        public void AddActor(Actor actor)
+        {
+            actors.Add(actor);
+        }
+        public void RemoveActor(Actor actor)
+        {
+            actors.Remove(actor);
+        }
+
 
         internal void StartRound()
         {
@@ -76,7 +88,7 @@ namespace Kintsugi.Objects
 
             if (awaitingActors == 0)
             {
-                EndTurn();
+                EventManager.I.Queue(new EndTurnEvent(this));
             }
         }
 
