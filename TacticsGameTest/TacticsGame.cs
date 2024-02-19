@@ -21,7 +21,7 @@ namespace TacticsGameTest
 
         public override void Initialize()
         {
-            grid = new Grid(GetAssetManager().GetAssetPath("TiledTesting\\forestpath.tmx"), gridVisible: false, gridColor: Color.DarkBlue);
+            grid = new Grid(GetAssetManager().GetAssetPath("TiledTesting\\forestpath.tmx"), gridVisible: true, gridColor: Color.DarkBlue);
             grid.Transform.X = 0;
             grid.Transform.Y = 0;
             Bootstrap.GetCameraSystem().Size = 16 * 10;
@@ -31,7 +31,7 @@ namespace TacticsGameTest
             var transform = new TileObjectTransform(Vec2Int.One * 3, 0, grid);
             var collider = new TileObjectCollider([0], [1]);
             var sprite = new TileObjectSprite(GetAssetManager().GetAssetPath("guy.png"), Vector2.One / 2,
-                new Vector2(8, 8));
+                new Vector2(6.5f, 8.5f));
             character = new TileObject(transform,collider,sprite);
         }
 

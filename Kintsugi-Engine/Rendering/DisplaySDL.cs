@@ -261,58 +261,58 @@ namespace Kintsugi.Rendering
             {
                 for (int i = 0; i < grid.Layers.Length; i++)
                 {
+                    #region Tile
                     var layer = grid.Layers[i];
                     for (int y = 0; y < grid.GridHeight; y++)
                     for (int x = 0; x < grid.GridWidth; x++)
                     {
-                        var tileSet = grid.TileSets[layer.Tiles[x,y].TileSetId];
-                        var tileSetX = layer.Tiles[x,y].Id % (tileSet.Width / grid.TileWidth);
-                        var tileSetY = layer.Tiles[x,y].Id / (tileSet.Width / grid.TileWidth);
+                        if (layer.Tiles[x, y].TileSetId < 0 && layer.Tiles[x, y].Id < 0) continue;
                         
-                        #region Tile
-                        
-                        if (layer.Tiles[x, y].TileSetId >= 0 || layer.Tiles[x, y].Id >= 0)
-                        {
-                            var source = tileSet.Source;
-                            var sprite = LoadTexture(source);
-                            
-                            sRect.x = tileSetX * grid.TileWidth;
-                            sRect.y = tileSetY * grid.TileWidth;
-                            sRect.w = grid.TileWidth;
-                            sRect.h = grid.TileWidth;
+                        var tileSet = grid.TileSets[layer.Tiles[x, y].TileSetId];
+                        var tileSetX = layer.Tiles[x, y].Id % (tileSet.Width / grid.TileWidth);
+                        var tileSetY = layer.Tiles[x, y].Id / (tileSet.Width / grid.TileWidth);
 
-                            Vector2 uScreenPos = cam.WorldToScreenSpace(new Vector2(
-                                grid.Transform2D.X + x * grid.TileWidth,
-                                grid.Transform2D.Y + y * grid.TileWidth));
-                            Vector2 vScreenPos = cam.WorldToScreenSpace(new Vector2(
-                                grid.Transform2D.X + (x + 1) * grid.TileWidth,
-                                grid.Transform2D.Y + (y + 1) * grid.TileWidth));
+                        var source = tileSet.Source;
+                        var sprite = LoadTexture(source);
 
-                            int xsize = (int)vScreenPos.X - (int)uScreenPos.X;
-                            int ysize = (int)vScreenPos.Y - (int)uScreenPos.Y;
+                        sRect.x = tileSetX * grid.TileWidth;
+                        sRect.y = tileSetY * grid.TileWidth;
+                        sRect.w = grid.TileWidth;
+                        sRect.h = grid.TileWidth;
 
-                            tRect.x = (int)uScreenPos.X;
-                            tRect.y = (int)uScreenPos.Y;
-                            tRect.w = xsize;
-                            tRect.h = ysize;
+                        var uScreenPos = cam.WorldToScreenSpace(new Vector2(
+                            grid.Transform2D.X + x * grid.TileWidth,
+                            grid.Transform2D.Y + y * grid.TileWidth));
+                        var vScreenPos = cam.WorldToScreenSpace(new Vector2(
+                            grid.Transform2D.X + (x + 1) * grid.TileWidth,
+                            grid.Transform2D.Y + (y + 1) * grid.TileWidth));
 
-                            SDL.SDL_RenderCopyEx(_rend,
-                                sprite,
-                                ref sRect,
-                                ref tRect,
-                                0,
-                                nint.Zero,
-                                SDL.SDL_RendererFlip.SDL_FLIP_NONE);
-                        }
-                        
-                        #endregion
+                        int xsize = (int)vScreenPos.X - (int)uScreenPos.X;
+                        int ysize = (int)vScreenPos.Y - (int)uScreenPos.Y;
 
-                        #region TileObjects
+                        tRect.x = (int)uScreenPos.X;
+                        tRect.y = (int)uScreenPos.Y;
+                        tRect.w = xsize;
+                        tRect.h = ysize;
 
+                        SDL.SDL_RenderCopyEx(_rend,
+                            sprite,
+                            ref sRect,
+                            ref tRect,
+                            0,
+                            nint.Zero,
+                            SDL.SDL_RendererFlip.SDL_FLIP_NONE);
+                    }
+                    #endregion
+
+                    #region TileObjects
+                    for (int y = 0; y < grid.GridHeight; y++)
+                    for (int x = 0; x < grid.GridWidth; x++)
+                    {
                         foreach (var tileObject in grid.Objects.Where(o =>
                                      o.Sprite != null &&
-                                     o.Transform.Layer == i && 
-                                     o.Transform.GridPosition.Equals(new Vec2Int(x,y)
+                                     o.Transform.Layer == i &&
+                                     o.Transform.GridPosition.Equals(new Vec2Int(x, y)
                                      )))
                         {
                             var sprite = LoadTexture(tileObject.Sprite!.SpritePath);
@@ -321,25 +321,25 @@ namespace Kintsugi.Rendering
                             sRect.y = 0;
                             sRect.w = tileObject.Sprite!.Width;
                             sRect.h = tileObject.Sprite!.Height;
-                            
+
                             var localTilePivot = tileObject.Sprite.TilePivot * grid.TileWidth;
                             var pivotOffsets = localTilePivot - tileObject.Sprite.ImagePivot;
-                            
-                            Vector2 uScreenPos = cam.WorldToScreenSpace(new Vector2(
+
+                            var uScreenPos = cam.WorldToScreenSpace(new Vector2(
                                 grid.Transform2D.X + x * grid.TileWidth + pivotOffsets.X,
                                 grid.Transform2D.Y + y * grid.TileWidth + pivotOffsets.Y));
-                            Vector2 vScreenPos = cam.WorldToScreenSpace(new Vector2(
+                            var vScreenPos = cam.WorldToScreenSpace(new Vector2(
                                 grid.Transform2D.X + x * grid.TileWidth + pivotOffsets.X + tileObject.Sprite.Width,
                                 grid.Transform2D.Y + y * grid.TileWidth + pivotOffsets.Y + tileObject.Sprite.Height));
 
                             int xsize = (int)vScreenPos.X - (int)uScreenPos.X;
                             int ysize = (int)vScreenPos.Y - (int)uScreenPos.Y;
-                            
+
                             tRect.x = (int)uScreenPos.X;
                             tRect.y = (int)uScreenPos.Y;
                             tRect.w = xsize;
                             tRect.h = ysize;
-                            
+
                             SDL.SDL_RenderCopyEx(_rend,
                                 sprite,
                                 ref sRect,
@@ -348,9 +348,8 @@ namespace Kintsugi.Rendering
                                 nint.Zero,
                                 SDL.SDL_RendererFlip.SDL_FLIP_NONE);
                         }
-                        
-                        #endregion
                     }
+                    #endregion
                 }
             }
 
