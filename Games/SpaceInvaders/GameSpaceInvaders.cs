@@ -34,7 +34,6 @@ namespace Shard
         public override void Update()
         {
             Bootstrap.GetDisplay().ShowText("FPS: " + Bootstrap.GetFPS(), 10, 10, 12, 255, 255, 255);
-
             int ymod = 0;
             int deaths = 0;
 
