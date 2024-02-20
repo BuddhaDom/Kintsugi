@@ -17,6 +17,10 @@ namespace Kintsugi.Objects
 
         private bool begun = false;
         public bool RecalculateInitiativeOnNewRound = false;
+        /// <summary>
+        /// If the scenario ends suddenly, should the current round end-hook trigger?
+        /// </summary>
+        public bool ResolveCurrentRoundOnScenarioStop = false; // Does not work yet
         public abstract void OnBeginScenario();
         public abstract void OnEndScenario();
         public void BeginScenario()
