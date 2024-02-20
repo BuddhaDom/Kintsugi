@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Kintsugi_Engine.Core
+namespace Kintsugi.EventSystem
 {
-    public struct GridPosition
+    public abstract class Event
     {
-        public int X;
-        public int Y;
+        public abstract void Execute();
     }
 }

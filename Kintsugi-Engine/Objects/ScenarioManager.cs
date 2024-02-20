@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Kintsugi_Engine.Objects
+namespace Kintsugi.Objects
 {
-    internal abstract class ScenarioManager
+    public abstract class ScenarioManager
     {
         public event EventHandler OnTurnOrderFinished;
 

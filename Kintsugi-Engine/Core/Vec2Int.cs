@@ -7,12 +7,12 @@ public struct Vec2Int(int x, int y)
 
     #region Static Properties
 
-    public static Vec2Int Up => new Vec2Int(0, 1);
-    public static Vec2Int Down => new Vec2Int(0, -1);
-    public static Vec2Int Left => new Vec2Int(-1, 0);
-    public static Vec2Int Right => new Vec2Int(1, 0);
-    public static Vec2Int One => new Vec2Int(1, 1);
-    public static Vec2Int Zero => new Vec2Int(0, 0);
+    public static readonly Vec2Int Up = new(0, 1);
+    public static readonly Vec2Int Down = new(0, -1);
+    public static readonly Vec2Int Left = new(-1, 0);
+    public static readonly Vec2Int Right = new(1, 0);
+    public static readonly Vec2Int One = new(1, 1);
+    public static readonly Vec2Int Zero = new(0, 0);
     
     #endregion
 
@@ -36,9 +36,9 @@ public struct Vec2Int(int x, int y)
         => new Vec2Int(end.x - start.x, end.y - start.y);
 
     /// <returns>Offset between this vector and another.</returns>
-    /// <param name="vector">Target vector to measure to.</param>
-    public Vec2Int Distance(Vec2Int vector)
-        => new Vec2Int(vector.x - x, vector.y - y);
+    /// <param name="other">Target vector to measure to.</param>
+    public Vec2Int Distance(Vec2Int other)
+        => new Vec2Int(other.x - x, other.y - y);
 
     /// <summary>
     /// Sum of the multiplications between x and y of two vectors.
@@ -50,26 +50,37 @@ public struct Vec2Int(int x, int y)
     /// <summary>
     /// Sum of the multiplications between this and a target vector.
     /// </summary>
-    /// <param name="vector">Target vector.</param>
+    /// <param name="other">Target vector.</param>
     /// <returns>Dot product between both vectors</returns>
-    public int DotProduct(Vec2Int vector)
-        => vector.x * x + vector.y + y;
+    public int DotProduct(Vec2Int other)
+        => other.x * x + other.y + y;
     
     /// <returns>Maximum X and Y between two vectors.</returns>
     public static Vec2Int Max(Vec2Int a, Vec2Int b)
         => new Vec2Int(Math.Max(a.x, b.x), Math.Max(a.y, b.y));
     
     /// <returns>Maximum X and Y between this and another vector..</returns>
-    public Vec2Int Max(Vec2Int vector)
-        => new Vec2Int(Math.Max(vector.x, x), Math.Max(vector.y, y));
+    public Vec2Int Max(Vec2Int other)
+        => new Vec2Int(Math.Max(other.x, x), Math.Max(other.y, y));
     
     /// <returns>Minimum X and Y between two vectors.</returns>
     public static Vec2Int Min(Vec2Int a, Vec2Int b)
         => new Vec2Int(Math.Min(a.x, b.x), Math.Min(a.y, b.y));
     
     /// <returns>Minimum X and Y between this and another vector.</returns>
-    public Vec2Int Min(Vec2Int vector)
-        => new Vec2Int(Math.Min(vector.x, x), Math.Min(vector.y, y));
+    public Vec2Int Min(Vec2Int other)
+        => new Vec2Int(Math.Min(other.x, x), Math.Min(other.y, y));
+    
+    public bool Equals(Vec2Int other)
+        => x == other.x && y == other.y;
+
+    public override bool Equals(object? obj)
+        => obj is Vec2Int other && Equals(other);
+
+    public override int GetHashCode() 
+        => HashCode.Combine(x, y);
+    
+    public override string ToString() => $"[{x}, {y}]";
     
     #endregion
 
@@ -94,6 +105,4 @@ public struct Vec2Int(int x, int y)
         => (a.x != b.x) | (a.y != b.y);
     
     #endregion
-    
-    public override string ToString() => $"[{x}, {y}]";
 }

@@ -1,5 +1,7 @@
 using System.Drawing;
+using System.Numerics;
 using Kintsugi.Core;
+using Kintsugi.Objects;
 using Kintsugi.Rendering;
 using SDL2;
 using TiledCS;
@@ -29,6 +31,9 @@ public class Grid : GameObject
     /// Width (in pixels) of the tiles present in this grid.
     /// </summary>
     public int TileWidth { get; }
+    
+    // TODO: Change to Dict of vec2int Positions to Lists of TileObjects
+    public List<TileObject> Objects { get; }
 
     /// <summary>
     /// Source location of the tile sets used by this grid.
@@ -38,10 +43,6 @@ public class Grid : GameObject
     private readonly bool gridVisible;
     private readonly Color gridColor;
 
-    public override void Initialize()
-    {
-        
-    }
 
     /// <summary>
     /// Build a grid from a Tiled tilemap file.
@@ -62,6 +63,7 @@ public class Grid : GameObject
         GridWidth = tiledMap.Width;
         GridHeight = tiledMap.Height;
         TileWidth = tiledMap.TileWidth;
+        Objects = new List<TileObject>();
         this.gridVisible = gridVisible;
         this.gridColor = gridColor;
         int c; // Generic counter.
@@ -80,8 +82,10 @@ public class Grid : GameObject
                 var tileSetIndex = GetTilesetIdFromGid(tiledMap, gid);
                 
                 // Set this tile in the layer dictionary.
-                Layers[c].Tiles[x,y] = new Tile(new Vec2Int(x, y), 
-                    gid - tiledMap.Tilesets[tileSetIndex].firstgid, tileSetIndex);
+                Layers[c].Tiles[x,y] = new Tile( 
+                    gid - tiledMap.Tilesets[tileSetIndex].firstgid, 
+                    tileSetIndex
+                    );
             }
             c++;
         }
@@ -121,11 +125,10 @@ public class Grid : GameObject
         GridHeight = gridHeight;
         TileWidth = tileWidth;
         Layers = layers ?? Array.Empty<GridLayer>();
+        Objects = new List<TileObject>();
         TileSets = new TileSet[tileSetPaths.Length];
         for (int i = 0; i < tileSetPaths.Length; i++)
         {
-            if (!Path.Exists(tileSetPaths[i])) 
-                throw new ArgumentException("The provided file path does not exist.");
             var image = ((DisplaySDL)Bootstrap.GetDisplay()).LoadTexture(tileSetPaths[i]);
             SDL.SDL_QueryTexture(image, out _, out _, out int width, out int height);
             TileSets[i] = new TileSet(tileSetPaths[i], width, height);
