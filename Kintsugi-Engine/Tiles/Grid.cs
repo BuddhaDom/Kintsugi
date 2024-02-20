@@ -160,6 +160,27 @@ public class Grid : GameObject
         Bootstrap.GetDisplay().DrawGrid(this);
     }
     
+    public Vec2Int WorldToGridPosition(Vector2 worldPosition)
+    {
+        var localPosition = worldPosition - new Vector2(Transform.X, Transform.Y);
+
+        var localPositionScaled = new Vector2(localPosition.X / TileWidth, localPosition.Y / TileWidth);
+        Vec2Int gridPos = new Vec2Int((int)MathF.Floor(localPositionScaled.X), (int)MathF.Floor(localPositionScaled.Y));
+        return gridPos;
+    }
+
+    public Vector2 GridToWorldPosition(Vec2Int gridPosition)
+    {
+        var scaledWorldPosition = gridPosition * TileWidth;
+        return new Vector2(scaledWorldPosition.x, scaledWorldPosition.y) + new Vector2(Transform.X, Transform.Y);
+    }
+    public Vector2 GridCenterToWorldPosition(Vec2Int gridPosition)
+    {
+        var scaledWorldPosition = gridPosition * TileWidth;
+        return new Vector2(scaledWorldPosition.x, scaledWorldPosition.y) + new Vector2(Transform.X, Transform.Y) + Vector2.One * TileWidth / 2f;
+    }
+
+
     private static int GetTilesetIdFromGid(TiledMap map, int gid)
     {
         for (int i = 0; i < map.Tilesets.Length ; i++)
