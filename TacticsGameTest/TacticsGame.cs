@@ -19,6 +19,7 @@ namespace TacticsGameTest
     {
         private Grid grid;
         private MovementActor character;
+        private MovementActor character2;
         private MovingScenario scenario;
 
         public override void Initialize()
@@ -31,16 +32,21 @@ namespace TacticsGameTest
             
             // TODO: This sucks. Should be attached to grid on the transform itself.
             var transform = new TileObjectTransform(Vec2Int.One * 3, 0, grid);
+            var transform2 = new TileObjectTransform(new Vec2Int(1,2), 0, grid);
             var collider = new TileObjectCollider([0], [1]);
             var sprite = new TileObjectSprite(GetAssetManager().GetAssetPath("guy.png"), Vector2.One / 2,
                 new Vector2(6.5f, 8.5f));
-            character = new MovementActor(transform,collider,sprite);
+            character = new MovementActor(transform,collider,sprite, "john");
+            character2 = new MovementActor(transform2, collider, sprite, "bob");
             scenario = new MovingScenario();
-            var group = new MyControlGroup();
+            var group = new MyControlGroup("john's group");
+            var group2 = new MyControlGroup("bob's group");
 
             group.AddActor(character);
+            group2.AddActor(character2);
 
             scenario.AddControlGroup(group);
+            scenario.AddControlGroup(group2);
 
             scenario.BeginScenario();
             

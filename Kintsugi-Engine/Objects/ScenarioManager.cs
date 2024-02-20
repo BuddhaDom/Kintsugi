@@ -11,7 +11,12 @@ namespace Kintsugi.Objects
     {
         public event EventHandler OnTurnOrderFinished;
 
+        public ScenarioManager() {
+            roundManager = new(this);
+        }
+
         private bool begun = false;
+        public bool RecalculateInitiativeOnNewRound = false;
         public abstract void OnBeginScenario();
         public abstract void OnEndScenario();
         public void BeginScenario()
@@ -44,7 +49,7 @@ namespace Kintsugi.Objects
             roundManager.Begin();
         }
 
-        private RoundManager roundManager = new();
+        private RoundManager roundManager;
 
     }
 }

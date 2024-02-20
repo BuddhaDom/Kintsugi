@@ -19,6 +19,11 @@ namespace Kintsugi.Objects
         public abstract void OnStartTurn();
         public abstract void OnEndTurn();
 
+        public void SetInitiative(float value)
+        {
+            currentInitiative = value;
+        }
+
         public void AddActor(Actor actor)
         {
             actors.Add(actor);
