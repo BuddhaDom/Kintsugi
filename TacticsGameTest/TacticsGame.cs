@@ -52,6 +52,7 @@ namespace TacticsGameTest
 
             //Bootstrap.GetDisplay().ShowText("FPS: " + Bootstrap.GetSecondFPS() + " / " + Bootstrap.GetFPS(), 10, 10, 12, 255, 255, 255);
 
+
             var movement = Vector2.Zero;
             if (up)
             {
@@ -84,6 +85,14 @@ namespace TacticsGameTest
         bool up, down, left, right, zoomIn, zoomOut;
         public void HandleInput(InputEvent inp, string eventType)
         {
+            if (eventType == "MouseDown")
+            {
+                var gridPos = grid.WorldToGridPosition(Bootstrap.GetCameraSystem().ScreenToWorldSpace(new Vector2(inp.X, inp.Y)));
+                Console.WriteLine(gridPos);
+                Console.WriteLine(grid.GridToWorldPosition(gridPos));
+
+            }
+
             if (eventType == "KeyDown")
             {
                 if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_UP)
