@@ -40,13 +40,13 @@ namespace TacticsGameTest
             character2 = new MovementActor(transform2, collider, sprite, "bob");
             scenario = new MovingScenario();
             var group = new MyControlGroup("john's group");
-            var group2 = new MyControlGroup("bob's group");
+            // var group2 = new MyControlGroup("bob's group");
 
             group.AddActor(character);
-            group2.AddActor(character2);
+            group.AddActor(character2);
 
             scenario.AddControlGroup(group);
-            scenario.AddControlGroup(group2);
+            // scenario.AddControlGroup(group2);
 
             scenario.BeginScenario();
             

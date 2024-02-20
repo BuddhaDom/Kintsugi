@@ -19,10 +19,8 @@ namespace Kintsugi.Objects
         public abstract void OnStartTurn();
         public abstract void OnEndTurn();
 
-        public void SetInitiative(float value)
-        {
-            currentInitiative = value;
-        }
+
+
 
         public void AddActor(Actor actor)
         {
@@ -52,10 +50,10 @@ namespace Kintsugi.Objects
             OnEndRound();
         }
 
-        internal float currentInitiative;
+        public float CurrentInitiative {  get; set; }
         internal void RecalculateInitiative()
         {
-            currentInitiative = CalculateInitiative();
+            CurrentInitiative = CalculateInitiative();
         }
         private int awaitingActors = 0;
         internal void StartTurn()

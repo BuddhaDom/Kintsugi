@@ -89,11 +89,11 @@ namespace Kintsugi.Objects
 
         private static int ControlGroupComparer(ControlGroup a, ControlGroup b)
         {
-            if (a.currentInitiative == b.currentInitiative)
+            if (a.CurrentInitiative == b.CurrentInitiative)
             {
                 return 0;
             }
-            else if (a.currentInitiative < b.currentInitiative)
+            else if (a.CurrentInitiative < b.CurrentInitiative)
             {
                 return 1;
             }
