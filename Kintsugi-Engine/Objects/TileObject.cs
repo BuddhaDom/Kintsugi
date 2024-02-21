@@ -1,99 +1,141 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Net.Mime;
-using System.Numerics;
+﻿using System.Numerics;
 using Kintsugi.Core;
-using Kintsugi.Rendering;
+using Kintsugi.Objects.Properties;
 using Kintsugi.Tiles;
 using SixLabors.ImageSharp;
 
 namespace Kintsugi.Objects
 {
+    /// <summary>
+    /// An object that can be used and placed into a <see cref="Grid"/>. 
+    /// </summary>
     public class TileObject
     {
-        public TileObjectTransform Transform { get; set; }
-        public TileObjectCollider? Collider { get; set; }
-        public TileObjectSprite? Sprite { get; set; }
+        /// <summary>
+        /// Transform properties of this object.
+        /// </summary>
+        public TileObjectTransform Transform { get; private set; } = new();
+        /// <summary>
+        /// Collision properties of this object.
+        /// </summary>
+        public TileObjectCollider? Collider { get; private set; }
+        /// <summary>
+        /// Graphic properties of this object.
+        /// </summary>
+        public TileObjectSprite? Sprite { get; private set; }
 
-        public TileObject(TileObjectTransform transform, TileObjectCollider? collider = null, TileObjectSprite? sprite = null)
+        /// <summary>
+        /// Establish the position of this object in a grid system. This method also updates 
+        /// </summary>
+        /// <param name="position">New coordinates of the object.</param>
+        public void SetPosition(Vec2Int position)
         {
-            Transform = transform;
-            Collider = collider;
-            Sprite = sprite;
-
-            transform.Grid?.Objects.Add(this);
+            if(Transform.Grid != null)
+                RemoveFromGridTileObjects(Transform.Grid);
+            Transform.Position = position;
+            if(Transform.Grid != null)
+                AddToGridTileObjects(Transform.Grid);
         }
 
-        public TileObject() : this(new TileObjectTransform()) {}
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="vector"></param>
+        public void Move(Vec2Int vector)
+            => SetPosition(Transform.Position + vector);
+
+        public void RemoveFromGrid()
+        {
+            if (Transform.Grid == null) return;
+            RemoveFromGridTileObjects(Transform.Grid);
+            Transform.Grid = null;
+        }
+
+        private void RemoveFromGridTileObjects(Grid grid)
+        {
+            if (!grid.TileObjects.TryGetValue(Transform.Position, out _)) return;
+            grid.TileObjects[Transform.Position].Remove(this);
+            if (grid.TileObjects[Transform.Position].Count == 0)
+                grid.TileObjects.Remove(Transform.Position);
+        }
+
+        public void AddToGrid(Grid grid, int layer = 0)
+        {
+            ArgumentNullException.ThrowIfNull(grid);
+            
+            AddToGridTileObjects(grid);
+            Transform.Grid = grid;
+            Transform.Layer = layer;
+        }
+
+        private void AddToGridTileObjects(Grid grid)
+        {
+            if (grid.TileObjects.TryGetValue(Transform.Position, out var value))
+                value.Add(this);
+            else
+                grid.TileObjects.Add(Transform.Position, new List<TileObject> { this });
+        }
+
+        public void SetCollider(HashSet<string> belongLayers, HashSet<string> collideLayers, bool isTrigger = false)
+        {
+            Collider ??= new TileObjectCollider();
+            Collider.IsTrigger = isTrigger;
+            Collider.BelongLayers = belongLayers;
+            Collider.CollideLayers = collideLayers;
+        }
+
+        public void SetSprite(string path, Vector2 tilePivot = default, Vector2 imagePivot = default)
+        {
+            // Initialize the property.
+            Sprite ??= new TileObjectSprite();
+            Sprite.Path = path;
+            Sprite.TilePivot = tilePivot;
+            Sprite.ImagePivot = imagePivot;
+            
+            // Get the Height and Width
+            if (path == "") return;
+            var image = Image.Load(path);
+            Sprite.Height = image.Height;
+            Sprite.Width = image.Width;
+            image.Dispose();
+        }
     }
     
-    public class TileObjectCollider
+    namespace Properties
     {
-        public HashSet<string> BelongLayers { get; set; }
-        public HashSet<string> CollideLayers { get; set; }
-        public bool IsTrigger { get; set; }
-
-        public TileObjectCollider(HashSet<string> belongLayers, HashSet<string> collideLayers, bool isTrigger = false)
+        public class TileObjectTransform
         {
-            BelongLayers = belongLayers;
-            CollideLayers = collideLayers;
-            IsTrigger = isTrigger;
+            public Vec2Int Position { get; internal set; } = Vec2Int.Zero;
+            public Facing Facing { get; internal set; } = Facing.East;
+            public Grid? Grid { get; internal set; }
+            public int Layer { get; internal set; }
         }
         
-        public TileObjectCollider() : this([],[]) {}
-    }
-
-    public class TileObjectTransform
-    {
-        public Grid? Grid { get; set; }
-        public Vec2Int GridPosition { get; set; }
-        public int Layer { get; set; }
-        public Facing Facing { get; set; }
-
-        public TileObjectTransform(Vec2Int gridPosition, int layer = 0, Grid? grid = null, Facing facing = Facing.East)
+        public class TileObjectCollider
         {
-            Grid = grid;
-            GridPosition = gridPosition;
-            Layer = layer;
-            Facing = facing;
+            public HashSet<string> BelongLayers { get; internal set; } = [];
+            public HashSet<string> CollideLayers { get; internal set; } = [];
+            public bool IsTrigger { get; internal set; }
         }
-
-        public TileObjectTransform() : this(Vec2Int.Zero) {}
-    }
-
-    public class TileObjectSprite
-    {
         
-        internal nint Sprite { get; }
-        public string SpritePath { get; }
-        /// <summary>
-        /// Position on the tile from which the object is rendered.
-        /// Defined between <see cref="Vector2.Zero"/> and <see cref="Vector2.One"/> as the upper and lower bounds of the tile width.
-        /// </summary>
-        public Vector2 TilePivot { get; }
-        /// <summary>
-        /// Position on the sprite which will match positions with the <see cref="TilePivot"/>.
-        /// Defined between this sprite's <see cref="Height"/> and <see cref="Width"/>. 
-        /// </summary>
-        public Vector2 ImagePivot { get; set; }
-
-        public int Height { get; }
-        
-        public int Width { get; }
-        
-        public TileObjectSprite(string spritePath, Vector2 tilePivot, Vector2 imagePivot)
+        public class TileObjectSprite
         {
-            SpritePath = spritePath;
-            TilePivot = tilePivot;
-            ImagePivot = imagePivot;
-            if (spritePath != "")
-            {
-                Sprite = ((DisplaySDL)Bootstrap.GetDisplay()).LoadTexture(spritePath);
-                var image = Image.Load(spritePath);
-                Height = image.Height;
-                Width = image.Width;
-            }
-        }
+            public string Path { get; internal set; } = "";
+            /// <summary>
+            /// Position on the tile from which the object is rendered.
+            /// Defined between <see cref="Vector2.Zero"/> and <see cref="Vector2.One"/> as the upper and lower bounds of the tile width.
+            /// </summary>
+            public Vector2 TilePivot { get; internal set; } = Vector2.Zero;
+            /// <summary>
+            /// Position on the sprite which will match positions with the <see cref="TilePivot"/>.
+            /// Defined between this sprite's <see cref="Height"/> and <see cref="Width"/>. 
+            /// </summary>
+            public Vector2 ImagePivot { get; internal set; } = Vector2.Zero;
 
-        public TileObjectSprite() : this("", Vector2.Zero, Vector2.Zero) {}
+            public int Height { get; internal set; }
+            
+            public int Width { get; internal set; }
+        }
     }
+
 }

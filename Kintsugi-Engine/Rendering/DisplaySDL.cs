@@ -15,6 +15,7 @@ using Kintsugi.Core;
 using Kintsugi.Tiles;
 using SDL2;
 using System.Numerics;
+using Kintsugi.Objects;
 
 namespace Kintsugi.Rendering
 {
@@ -245,7 +246,13 @@ namespace Kintsugi.Rendering
                 tRect.w = (int)Math.Ceiling(width);
                 tRect.h = (int)Math.Ceiling(height);
 
-                SDL.SDL_RenderCopyEx(_rend, sprite, ref sRect, ref tRect, (int)trans.Rotz, nint.Zero, SDL.SDL_RendererFlip.SDL_FLIP_NONE);
+                SDL.SDL_RenderCopyEx(_rend,
+                    sprite,
+                    ref sRect,
+                    ref tRect,
+                    (int)trans.Rotz,
+                    nint.Zero,
+                    SDL.SDL_RendererFlip.SDL_FLIP_NONE);
             }
 
             foreach (Circle c in _circlesToDraw)
@@ -254,7 +261,9 @@ namespace Kintsugi.Rendering
                 Vector2 centerScreen = cam.WorldToScreenSpace(new System.Numerics.Vector2(c.X, c.Y));
                 float radiusScreen = cam.WorldToScreenSpaceSize(c.Radius);
 
-                RenderCircle((int)Math.Ceiling(centerScreen.X), (int)Math.Ceiling(centerScreen.Y), (int)Math.Ceiling(radiusScreen));
+                RenderCircle((int)Math.Ceiling(centerScreen.X),
+                    (int)Math.Ceiling(centerScreen.Y),
+                    (int)Math.Ceiling(radiusScreen));
             }
 
             foreach (var grid in _gridsToDraw)
@@ -309,13 +318,11 @@ namespace Kintsugi.Rendering
                     for (int y = 0; y < grid.GridHeight; y++)
                     for (int x = 0; x < grid.GridWidth; x++)
                     {
-                        foreach (var tileObject in grid.Objects.Where(o =>
-                                     o.Sprite != null &&
-                                     o.Transform.Layer == i &&
-                                     o.Transform.GridPosition.Equals(new Vec2Int(x, y)
-                                     )))
+                        if (!grid.TileObjects.TryGetValue(new Vec2Int(x, y), out var tileObjects)) 
+                            continue;
+                        foreach (var tileObject in tileObjects.Where(o=> o.Transform.Layer == i))
                         {
-                            var sprite = LoadTexture(tileObject.Sprite!.SpritePath);
+                            var sprite = LoadTexture(tileObject.Sprite!.Path);
 
                             sRect.x = 0;
                             sRect.y = 0;
@@ -330,7 +337,8 @@ namespace Kintsugi.Rendering
                                 grid.Transform2D.Y + y * grid.TileWidth + pivotOffsets.Y));
                             var vScreenPos = cam.WorldToScreenSpace(new Vector2(
                                 grid.Transform2D.X + x * grid.TileWidth + pivotOffsets.X + tileObject.Sprite.Width,
-                                grid.Transform2D.Y + y * grid.TileWidth + pivotOffsets.Y + tileObject.Sprite.Height));
+                                grid.Transform2D.Y + y * grid.TileWidth + pivotOffsets.Y +
+                                tileObject.Sprite.Height));
 
                             int xsize = (int)vScreenPos.X - (int)uScreenPos.X;
                             int ysize = (int)vScreenPos.Y - (int)uScreenPos.Y;
