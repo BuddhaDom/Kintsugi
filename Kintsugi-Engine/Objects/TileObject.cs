@@ -28,11 +28,11 @@ namespace Kintsugi.Objects
     
     public class TileObjectCollider
     {
-        public HashSet<int> BelongLayers { get; set; }
-        public HashSet<int> CollideLayers { get; set; }
+        public HashSet<string> BelongLayers { get; set; }
+        public HashSet<string> CollideLayers { get; set; }
         public bool IsTrigger { get; set; }
 
-        public TileObjectCollider(HashSet<int> belongLayers, HashSet<int> collideLayers, bool isTrigger = false)
+        public TileObjectCollider(HashSet<string> belongLayers, HashSet<string> collideLayers, bool isTrigger = false)
         {
             BelongLayers = belongLayers;
             CollideLayers = collideLayers;
