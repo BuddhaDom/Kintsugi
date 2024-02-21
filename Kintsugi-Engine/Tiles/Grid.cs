@@ -1,5 +1,4 @@
 using System.Drawing;
-using System.Numerics;
 using Kintsugi.Core;
 using Kintsugi.Objects;
 using Kintsugi.Rendering;
@@ -32,7 +31,7 @@ public class Grid : GameObject
     /// </summary>
     public int TileWidth { get; }
     
-    public Dictionary<Vec2Int, List<TileObject>> TileObjects { get; }
+    internal Dictionary<Vec2Int, List<TileObject>> TileObjects { get; }
 
     /// <summary>
     /// Source location of the tile sets used by this grid.
@@ -65,10 +64,9 @@ public class Grid : GameObject
         TileObjects = new Dictionary<Vec2Int, List<TileObject>>();
         this.gridVisible = gridVisible;
         this.gridColor = gridColor;
-        int c; // Generic counter.
 
         Layers = new GridLayer[tiledMap.Layers.Length];
-        c = 0;
+        var c = 0; // Generic counter.
         foreach (var tiledLayer in tiledMap.Layers)
         {
             // Initialize this key in the Layer dictionary, as wel as Tile array.
@@ -124,7 +122,7 @@ public class Grid : GameObject
         GridHeight = gridHeight;
         TileWidth = tileWidth;
         Layers = layers ?? Array.Empty<GridLayer>();
-        TileObjects = new Dictionary<Vec2Int, List<TileObject>?>();
+        TileObjects = new Dictionary<Vec2Int, List<TileObject>>();
         TileSets = new TileSet[tileSetPaths.Length];
         for (int i = 0; i < tileSetPaths.Length; i++)
         {
@@ -183,4 +181,12 @@ public class Grid : GameObject
             Console.Error.WriteLine($"Remainder (px) - w:{tileSet.Width % TileWidth}, w:{tileSet.Height % TileWidth}");
         }
     }
+
+    public IReadOnlyList<TileObject>? GetObjectsAtPosition(Vec2Int position)
+    {
+        TileObjects.TryGetValue(position, out var result);
+        return result;
+    }
+
+    public IReadOnlyDictionary<Vec2Int, List<TileObject>> GetObjects() => TileObjects;
 }

@@ -1,17 +1,9 @@
 ﻿using Kintsugi.Core;
 using Kintsugi.Input;
-using Kintsugi.Objects;
-using Kintsugi.Rendering;
 using Kintsugi.Tiles;
 using SDL2;
-using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
-using Kintsugi.Objects;
 
 namespace TacticsGameTest
 {
@@ -37,7 +29,7 @@ namespace TacticsGameTest
             character = new MovementActor("Guy Dudelyn from house Brolew");
             character.AddToGrid(grid);
             character.SetPosition(Vec2Int.One * 3);
-            character.SetCollider([0], [1]);
+            character.SetCollider(["mine"], ["yours"]);
             character.SetSprite(GetAssetManager().GetAssetPath("guy.png"), 
                 Vector2.One / 2, new Vector2(6.5f, 8.5f));
             scenario = new MovingScenario();
