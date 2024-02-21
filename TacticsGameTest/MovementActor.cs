@@ -89,7 +89,5 @@ namespace TacticsGameTest
             this.name = name;
             Bootstrap.GetInput().AddListener(this);
         }
-
-        public MovementActor() : this(new TileObjectTransform()) {}
     }
 }

@@ -33,7 +33,7 @@ public class Grid : GameObject
     public int TileWidth { get; }
     
     // TODO: Change to Dict of vec2int Positions to Lists of TileObjects
-    public List<TileObject> Objects { get; }
+    public Dictionary<Vec2Int, List<TileObject>> Objects { get; }
 
     /// <summary>
     /// Source location of the tile sets used by this grid.
