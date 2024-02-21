@@ -71,6 +71,7 @@ public class Grid : GameObject
         {
             // Initialize this key in the Layer dictionary, as wel as Tile array.
             Layers[c] = new GridLayer(this, tiledLayer.name);
+            ParseTiledProperties(tiledLayer, Layers[c]);
             for (int y = 0; y < GridHeight; y++)
             for (int x = 0; x < GridWidth; x++)
             {
@@ -100,7 +101,30 @@ public class Grid : GameObject
             c++;
         }
         ValidateTileset();
+
+        void ParseTiledProperties(TiledLayer tiledLayer, GridLayer gridLayer)
+        {
+            foreach (var prop in tiledLayer.properties)
+            {
+                var split = prop.name.Split(':');
+                if (split.Length != 2) {
+                    continue;
+                }
+                if (split[0].ToLower() == "kintsugi")
+                {
+                    switch (split[1].ToLower())
+                    {
+                        case "collisionlayer":
+                            gridLayer.CollisionLayer = prop.value;
+                            break;
+                        default:
+                            throw new Exception("Found Kintsugi property in " + tiledLayer + " but doesnt match any valid layer property");
+                    }
+                }
+            }
+        }
     }
+
 
     /// <summary>
     /// Build generic grid.
