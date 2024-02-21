@@ -27,14 +27,13 @@ namespace TacticsGameTest
             grid.Transform.X = 0;
             grid.Transform.Y = 0;
             Bootstrap.GetCameraSystem().Size = 16 * 10;
-
             
-            // TODO: This sucks. Should be attached to grid on the transform itself.
-            var transform = new TileObjectTransform(Vec2Int.One * 3, 0, grid);
-            var collider = new TileObjectCollider([0], [1]);
-            var sprite = new TileObjectSprite(GetAssetManager().GetAssetPath("guy.png"), Vector2.One / 2,
+            character = new MovementActor("Guy Dudelyn from house Brolew");
+            character.SetPosition(Vec2Int.One * 3);
+            character.AddToGrid(grid);
+            character.SetCollider(new HashSet<int>{0}, new HashSet<int>{1});
+            character.SetSprite(GetAssetManager().GetAssetPath("guy.png"), Vector2.One / 2,
                 new Vector2(6.5f, 8.5f));
-            character = new MovementActor(transform,collider,sprite);
             scenario = new MovingScenario();
             var group = new MyControlGroup();
 

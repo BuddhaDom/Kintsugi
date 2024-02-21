@@ -32,8 +32,7 @@ public class Grid : GameObject
     /// </summary>
     public int TileWidth { get; }
     
-    // TODO: Change to Dict of vec2int Positions to Lists of TileObjects
-    public Dictionary<Vec2Int, List<TileObject>> Objects { get; }
+    public Dictionary<Vec2Int, List<TileObject>?> TileObjects { get; }
 
     /// <summary>
     /// Source location of the tile sets used by this grid.
@@ -63,7 +62,7 @@ public class Grid : GameObject
         GridWidth = tiledMap.Width;
         GridHeight = tiledMap.Height;
         TileWidth = tiledMap.TileWidth;
-        Objects = new List<TileObject>();
+        TileObjects = new Dictionary<Vec2Int, List<TileObject>?>();
         this.gridVisible = gridVisible;
         this.gridColor = gridColor;
         int c; // Generic counter.
@@ -125,7 +124,7 @@ public class Grid : GameObject
         GridHeight = gridHeight;
         TileWidth = tileWidth;
         Layers = layers ?? Array.Empty<GridLayer>();
-        Objects = new List<TileObject>();
+        TileObjects = new Dictionary<Vec2Int, List<TileObject>?>();
         TileSets = new TileSet[tileSetPaths.Length];
         for (int i = 0; i < tileSetPaths.Length; i++)
         {
