@@ -1,8 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Net.Mime;
-using System.Numerics;
+﻿using System.Numerics;
 using Kintsugi.Core;
-using Kintsugi.Rendering;
 using Kintsugi.Tiles;
 using SixLabors.ImageSharp;
 
@@ -16,16 +13,15 @@ namespace Kintsugi.Objects
 
         public void SetPosition(Vec2Int position)
         {
-            if (Transform.Grid != null)
-            {
-                AddToGridTileObjects(Transform.Grid);
+            if(Transform.Grid != null)
                 RemoveFromGridTileObjects(Transform.Grid);
-            }
             Transform.Position = position;
+            if(Transform.Grid != null)
+                AddToGridTileObjects(Transform.Grid);
         }
 
         public void Move(Vec2Int vector)
-            => SetPosition(Transform.Position + Transform.Position);
+            => SetPosition(Transform.Position + vector);
 
         public void RemoveFromGrid()
         {
@@ -36,6 +32,7 @@ namespace Kintsugi.Objects
 
         private void RemoveFromGridTileObjects(Grid grid)
         {
+            if (!grid.TileObjects.TryGetValue(Transform.Position, out _)) return;
             grid.TileObjects[Transform.Position].Remove(this);
             if (grid.TileObjects[Transform.Position].Count == 0)
                 grid.TileObjects.Remove(Transform.Position);
@@ -43,6 +40,8 @@ namespace Kintsugi.Objects
 
         public void AddToGrid(Grid grid, int layer = 0)
         {
+            ArgumentNullException.ThrowIfNull(grid);
+            
             AddToGridTileObjects(grid);
             Transform.Grid = grid;
             Transform.Layer = layer;
@@ -96,7 +95,7 @@ namespace Kintsugi.Objects
             image.Dispose();
         }
     }
-    
+
     public class TileObjectTransform
     {
         public Vec2Int Position { get; internal set; } = Vec2Int.Zero;

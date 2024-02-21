@@ -23,17 +23,23 @@ namespace TacticsGameTest
 
         public override void Initialize()
         {
-            grid = new Grid(GetAssetManager().GetAssetPath("TiledTesting\\forestpath.tmx"), gridVisible: true, gridColor: Color.DarkBlue);
-            grid.Transform.X = 0;
-            grid.Transform.Y = 0;
+            grid = new Grid(GetAssetManager().GetAssetPath("TiledTesting\\forestpath.tmx"), 
+                gridVisible: true, gridColor: Color.DarkBlue)
+            {
+                Transform =
+                {
+                    X = 0,
+                    Y = 0
+                }
+            };
             Bootstrap.GetCameraSystem().Size = 16 * 10;
             
             character = new MovementActor("Guy Dudelyn from house Brolew");
-            character.SetPosition(Vec2Int.One * 3);
             character.AddToGrid(grid);
-            character.SetCollider(new HashSet<int>{0}, new HashSet<int>{1});
-            character.SetSprite(GetAssetManager().GetAssetPath("guy.png"), Vector2.One / 2,
-                new Vector2(6.5f, 8.5f));
+            character.SetPosition(Vec2Int.One * 3);
+            character.SetCollider([0], [1]);
+            character.SetSprite(GetAssetManager().GetAssetPath("guy.png"), 
+                Vector2.One / 2, new Vector2(6.5f, 8.5f));
             scenario = new MovingScenario();
             var group = new MyControlGroup();
 

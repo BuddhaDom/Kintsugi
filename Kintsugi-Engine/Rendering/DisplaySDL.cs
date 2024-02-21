@@ -320,7 +320,7 @@ namespace Kintsugi.Rendering
                     {
                         if (!grid.TileObjects.TryGetValue(new Vec2Int(x, y), out var tileObjects)) 
                             continue;
-                        foreach (var tileObject in tileObjects)
+                        foreach (var tileObject in tileObjects.Where(o=> o.Transform.Layer == i))
                         {
                             var sprite = LoadTexture(tileObject.Sprite!.Path);
 
