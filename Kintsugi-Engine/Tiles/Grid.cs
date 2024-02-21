@@ -32,7 +32,7 @@ public class Grid : GameObject
     /// </summary>
     public int TileWidth { get; }
     
-    public Dictionary<Vec2Int, List<TileObject>?> TileObjects { get; }
+    public Dictionary<Vec2Int, List<TileObject>> TileObjects { get; }
 
     /// <summary>
     /// Source location of the tile sets used by this grid.
@@ -62,7 +62,7 @@ public class Grid : GameObject
         GridWidth = tiledMap.Width;
         GridHeight = tiledMap.Height;
         TileWidth = tiledMap.TileWidth;
-        TileObjects = new Dictionary<Vec2Int, List<TileObject>?>();
+        TileObjects = new Dictionary<Vec2Int, List<TileObject>>();
         this.gridVisible = gridVisible;
         this.gridColor = gridColor;
         int c; // Generic counter.
