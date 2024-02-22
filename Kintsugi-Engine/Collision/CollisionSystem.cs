@@ -163,7 +163,7 @@ namespace Kintsugi.Collision
         public static List<TileObjectCollider> GetCollidingTriggersWithGridlayer(TileObjectCollider collider, GridLayer gridLayer, Vec2Int position)
         {
             List<TileObjectCollider> colliders = new();
-            if (collider == null) return colliders;
+            if (collider == null || gridLayer.CollisionLayers == null) return colliders;
 
             if (!gridLayer.Tiles[position.x, position.y].IsEmpty)
             {

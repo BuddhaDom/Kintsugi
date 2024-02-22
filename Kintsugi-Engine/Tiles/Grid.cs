@@ -115,7 +115,11 @@ public class Grid : GameObject
                     switch (split[1].ToLower())
                     {
                         case "collisionlayer":
-                            gridLayer.CollisionLayer = prop.value;
+                            if (gridLayer.Collider == null)
+                            {
+                                gridLayer.Collider = new Objects.Properties.TileObjectCollider();
+                            }
+                            gridLayer.Collider.CollideLayers.Add(prop.value);
                             break;
                         default:
                             throw new Exception("Found Kintsugi property in " + tiledLayer + " but doesnt match any valid layer property");
