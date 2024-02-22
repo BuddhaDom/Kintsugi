@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using Kintsugi.Core;
+using Kintsugi.Objects.Properties;
 
 namespace Kintsugi.Tiles;
 
@@ -8,6 +9,8 @@ namespace Kintsugi.Tiles;
 /// </summary>
 public struct GridLayer
 {
+    public TileObjectCollider Collider { get; set; }
+
     /// <summary>
     /// Array of tiles belonging to this layer.
     /// </summary>
@@ -40,8 +43,8 @@ public struct GridLayer
     {
         Tiles = tiles ?? throw new ArgumentNullException(nameof(tiles));
         for (int y = 0; y < tiles.GetLength(1); y++)
-        for (int x = 0; x < tiles.GetLength(0); x++)
-            tiles[x, y] = Tile.Empty;
+            for (int x = 0; x < tiles.GetLength(0); x++)
+                tiles[x, y] = Tile.Empty;
         Name = name;
     }
 
@@ -51,12 +54,12 @@ public struct GridLayer
     /// <param name="width">Width of the grid.</param>
     /// <param name="height">Height of the grid.</param>
     /// <param name="name">Name of this layer.</param>
-    public GridLayer(int width, int height, string name = "") : this(new Tile[width, height], name){}
+    public GridLayer(int width, int height, string name = "") : this(new Tile[width, height], name) { }
 
     /// <summary>
     /// Create an empty layer fitted for a specific grid.
     /// </summary>
     /// <param name="parent">Grid to which this layer should comply to.</param>
     /// <param name="name">Name of this layer.</param>
-    public GridLayer(Grid parent, string name = "") : this(parent.GridWidth, parent.GridHeight, name){}
+    public GridLayer(Grid parent, string name = "") : this(parent.GridWidth, parent.GridHeight, name) { }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using Kintsugi.Collision;
 using Kintsugi.Core;
 using Kintsugi.Objects.Properties;
 using Kintsugi.Tiles;
@@ -30,11 +31,47 @@ namespace Kintsugi.Objects
         /// <param name="position">New coordinates of the object.</param>
         public void SetPosition(Vec2Int position)
         {
-            if(Transform.Grid != null)
+            if (Transform.Grid != null)
                 RemoveFromGridTileObjects(Transform.Grid);
             Transform.Position = position;
-            if(Transform.Grid != null)
+            if (Transform.Grid != null)
                 AddToGridTileObjects(Transform.Grid);
+            ResolveTriggerCollisions(position);
+        }
+
+        private void ResolveTriggerCollisions(Vec2Int pos)
+        {
+            if (Transform.Grid != null && Collider != null)
+            {
+                List<TileObjectCollider> selfTriggers = new();
+                List<TileObjectCollider> otherTriggers = new();
+
+                otherTriggers.AddRange(CollisionSystem.GetCollidingTriggers(Collider, Transform.Grid, Transform.Position));
+                var otherObjects = Transform.Grid.GetObjectsAtPosition(pos);
+                if (otherObjects != null)
+                {
+                    foreach (var tileObject in otherObjects)
+                    {
+                        if (tileObject != this && tileObject.Collider != null)
+                        {
+                            if (CollisionSystem.TriggerCollision(tileObject.Collider, Collider))
+                            {
+                                selfTriggers.Add(tileObject.Collider);
+                            }
+                        }
+                    }
+                }
+                
+                foreach (var selfTrigger in selfTriggers)
+                {
+                    selfTrigger.OnTriggerCollision(Collider, selfTrigger);
+                }
+                foreach (var otherTrigger in otherTriggers)
+                {
+                    otherTrigger.OnTriggerCollision(otherTrigger, Collider);
+                }
+
+            }
         }
 
         /// <summary>
@@ -62,7 +99,7 @@ namespace Kintsugi.Objects
         public void AddToGrid(Grid grid, int layer = 0)
         {
             ArgumentNullException.ThrowIfNull(grid);
-            
+
             AddToGridTileObjects(grid);
             Transform.Grid = grid;
             Transform.Layer = layer;
@@ -91,7 +128,7 @@ namespace Kintsugi.Objects
             Sprite.Path = path;
             Sprite.TilePivot = tilePivot;
             Sprite.ImagePivot = imagePivot;
-            
+
             // Get the Height and Width
             if (path == "") return;
             var image = Image.Load(path);
@@ -100,7 +137,7 @@ namespace Kintsugi.Objects
             image.Dispose();
         }
     }
-    
+
     namespace Properties
     {
         public class TileObjectTransform
@@ -110,14 +147,19 @@ namespace Kintsugi.Objects
             public Grid? Grid { get; internal set; }
             public int Layer { get; internal set; }
         }
-        
+
         public class TileObjectCollider
         {
             public HashSet<string> BelongLayers { get; internal set; } = [];
             public HashSet<string> CollideLayers { get; internal set; } = [];
             public bool IsTrigger { get; internal set; }
+
+            public virtual void OnTriggerCollision(TileObjectCollider @this, TileObjectCollider other)
+            {
+                Console.WriteLine("Trigger collision between " + @this + " and " + other);
+            }
         }
-        
+
         public class TileObjectSprite
         {
             public string Path { get; internal set; } = "";
@@ -133,7 +175,7 @@ namespace Kintsugi.Objects
             public Vector2 ImagePivot { get; internal set; } = Vector2.Zero;
 
             public int Height { get; internal set; }
-            
+
             public int Width { get; internal set; }
         }
     }
