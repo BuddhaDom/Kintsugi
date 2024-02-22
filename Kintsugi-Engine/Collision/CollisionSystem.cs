@@ -9,11 +9,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TiledCS;
 
 namespace Kintsugi.Collision
 {
     public static class CollisionSystem
     {
+        // current rules:
+        // Collisions are one way (a collides with b doesnt imply b collides with a)
+        // colliderA vs colliderB checks if A collides with B but not if B collides with A
+        // collider vs trigger triggers the trigger
+        // trigger vs collider is nothing
+        //Check between colliders       !
+        //Check between tileobjects     !
+        //Collide at                    !
+        //Collide at with grid          !
+        //Collide at with gridlayer     !
+        //collide at with tileobjects   !
+        //trigger at                    !
+        //trigger at with grid          !
+        //trigger at with grid layer    !
+        //triggers at with tileobjects  !
+
         public static string CollisionLayerEmpty => "";
         internal static bool CollisionLayerOverlaps(HashSet<string> collidingObject, HashSet<string> collidesWith)
         {
@@ -26,95 +43,116 @@ namespace Kintsugi.Collision
             }
             return false;
         }
-
-        /*
-        public static List<TileObjectCollider> GetCollidingTriggers(TileObject tileObject, Vec2Int position)
+        public static bool CollideWith(TileObjectCollider collider, TileObjectCollider otherCollider)
         {
-            
-            List<TileObjectCollider> colliders = new();
-
-            var grid = tileObject.Transform.Grid;
-            if (grid == null)
+            if (!collider.IsTrigger && !otherCollider.IsTrigger && CollisionLayerOverlaps(collider.CollideLayers, otherCollider.BelongLayers))
             {
-                return colliders;
-            }
-            var otherObjects = grid.GetObjectsAtPosition(position);
-            foreach (var otherTileObject in otherObjects)
-            {
-                if (TileobjectCollidesWithTileobject)
-                {
-                    return true;
-                }
+                return true;
             }
             return false;
-
         }
-        */
-        public static bool TileobjectCollidesWithTileobject(TileObject tileObject, TileObject otherTileObject)
+        public static bool TriggerCollision(TileObjectCollider collider, TileObjectCollider otherCollider)
         {
-            if (tileObject.Collider == null || otherTileObject.Collider == null)
+            if (!collider.IsTrigger && otherCollider.IsTrigger && CollisionLayerOverlaps(collider.CollideLayers, otherCollider.BelongLayers))
             {
-                return false;
+                return true;
             }
-            return CollisionLayerOverlaps(tileObject.Collider.CollideLayers, tileObject.Collider.BelongLayers);
+            return false;
         }
-
-        public static bool TileobjectCollidesAt(TileObject tileObject, Vec2Int position)
+        public static bool Collides(TileObjectCollider collider, Grid grid, Vec2Int position)
         {
-            var grid = tileObject.Transform.Grid;
-            if (grid == null || tileObject.Collider == null) return false;
-            
-            var otherObjects = grid.GetObjectsAtPosition(position);
-            if (otherObjects == null) return false;
-
-            foreach (var otherObject in otherObjects)
+            if (TileObjectCollidesWithTileobjects(collider, grid, position))
             {
-                if (TileobjectCollidesWithTileobject(tileObject, otherObject))
-                {
-                    return true;
-                }
+                return true;
             }
-            if (tileObject.Transform.Grid != null && TileObjectCollidesWithGrid(tileObject, tileObject.Transform.Grid))
+
+            if (grid != null && TileObjectCollidesWithGrid(collider, grid, position))
             {
                 return true;
             }
 
             return false;
         }
-
-        public static bool TileObjectCollidesWithGrid(TileObject tileObject, Grid grid)
+        public static List<TileObjectCollider> GetCollidingTriggers(TileObjectCollider collider, Grid grid, Vec2Int position)
         {
-            if (tileObject.Collider == null) return false;
+            List<TileObjectCollider> colliders = new();
+            if (collider == null || grid == null) return colliders;
 
-            int x, y;
-            x = tileObject.Transform.Position.x;
-            y = tileObject.Transform.Position.y;
+            colliders.AddRange(GetCollidingTriggersWithTileobjects(collider, grid, position));
 
-            foreach (var gridLayer in grid.Layers)
+            colliders.AddRange(GetCollidingTriggersWithGrid(collider, grid, position));
+
+            return colliders;
+        }
+        public static bool TileObjectCollidesWithTileobjects(TileObjectCollider collider, Grid grid, Vec2Int position)
+        {
+            var otherObjects = grid.GetObjectsAtPosition(position);
+            if (otherObjects == null) return false;
+
+            foreach (var otherObject in otherObjects)
             {
-                if (TileObjectCollidesWithGridLayer(tileObject, gridLayer))
+                if (otherObject.Collider != null && CollideWith(collider, otherObject.Collider))
                 {
                     return true;
                 }
             }
             return false;
         }
-
-        /*
-        public static List<CollidingObject> TileObjectGetGridLayerTriggerCollisions(TileObject tileObject, GridLayer gridLayer)
+        public static List<TileObjectCollider> GetCollidingTriggersWithTileobjects(TileObjectCollider collider, Grid grid, Vec2Int position)
         {
-            List<CollidingObject> collisions = new List<CollidingObject>();
-            if (tileObject.Collider == null) return collisions;
+            List<TileObjectCollider> colliders = new();
+            if (collider == null) return colliders;
+
+            var otherObjects = grid.GetObjectsAtPosition(position);
+            if (otherObjects == null) return colliders;
+
+            foreach (var otherObject in otherObjects)
+            {
+                if (otherObject.Collider != null && TriggerCollision(collider, otherObject.Collider))
+                {
+                    colliders.Add(otherObject.Collider);
+                }
+            }
+            return colliders;
+        }
+        public static bool TileObjectCollidesWithGrid(TileObjectCollider collider, Grid grid, Vec2Int position)
+        {
+            if (collider == null) return false;
 
             int x, y;
-            x = tileObject.Transform.Position.x;
-            y = tileObject.Transform.Position.y;
+            x = position.x;
+            y = position.y;
 
-            if (!gridLayer.Tiles[x, y].IsEmpty)
+            foreach (var gridLayer in grid.Layers)
+            {
+                if (TileObjectCollidesWithGridLayer(collider, gridLayer, position))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        public static List<TileObjectCollider> GetCollidingTriggersWithGrid(TileObjectCollider collider, Grid grid, Vec2Int position)
+        {
+            List<TileObjectCollider> colliders = new();
+
+            if (collider == null) return colliders;
+
+            foreach (var gridLayer in grid.Layers)
+            {
+                colliders.AddRange(GetCollidingTriggersWithGridlayer(collider, gridLayer, position));
+            }
+            return colliders;
+        }
+        public static bool TileObjectCollidesWithGridLayer(TileObjectCollider collider, GridLayer gridLayer, Vec2Int position)
+        {
+            if (collider == null) return false;
+
+            if (!gridLayer.Tiles[position.x, position.y].IsEmpty)
             {
                 foreach (var gridCollisionLayer in gridLayer.CollisionLayers)
                 {
-                    if (tileObject.Collider.CollideLayers.Contains(gridCollisionLayer))
+                    if (collider.CollideLayers.Contains(gridCollisionLayer))
                     {
                         return true;
                     }
@@ -122,26 +160,23 @@ namespace Kintsugi.Collision
             }
             return false;
         }
-        */
-        public static bool TileObjectCollidesWithGridLayer(TileObject tileObject, GridLayer gridLayer)
+        public static List<TileObjectCollider> GetCollidingTriggersWithGridlayer(TileObjectCollider collider, GridLayer gridLayer, Vec2Int position)
         {
-            if (tileObject.Collider == null) return false;
+            List<TileObjectCollider> colliders = new();
+            if (collider == null) return colliders;
 
-            int x, y;
-            x = tileObject.Transform.Position.x;
-            y = tileObject.Transform.Position.y;
-
-            if (!gridLayer.Tiles[x, y].IsEmpty)
+            if (!gridLayer.Tiles[position.x, position.y].IsEmpty)
             {
                 foreach (var gridCollisionLayer in gridLayer.CollisionLayers)
                 {
-                    if (tileObject.Collider.CollideLayers.Contains(gridCollisionLayer))
+                    if (collider.CollideLayers.Contains(gridCollisionLayer))
                     {
-                        return true;
+                        throw new NotImplementedException("No colliders on grid layers yet");
+                        //return colliders.Add();
                     }
                 }
             }
-            return false;
+            return colliders;
         }
     }
 }
