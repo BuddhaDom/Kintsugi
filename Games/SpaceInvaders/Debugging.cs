@@ -11,7 +11,7 @@ namespace Debugging
     {
         public override void Initialize()
         {
-            Dice.Roll(5, 20, true); // 3d6
+            Dice.Roll(5, 20, true);
             Dice.Roll(5, 1, false, true);
         }
 
