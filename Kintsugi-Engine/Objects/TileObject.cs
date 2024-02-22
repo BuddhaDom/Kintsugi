@@ -38,12 +38,15 @@ namespace Kintsugi.Objects
         }
 
         /// <summary>
-        /// 
+        /// Move this object towards a target vector.
         /// </summary>
-        /// <param name="vector"></param>
+        /// <param name="vector">The direction to move to.</param>
         public void Move(Vec2Int vector)
             => SetPosition(Transform.Position + vector);
 
+        /// <summary>
+        /// Remove this objects grid. Does nothing if the grid is already <c>null</c>.
+        /// </summary>
         public void RemoveFromGrid()
         {
             if (Transform.Grid == null) return;
@@ -51,23 +54,38 @@ namespace Kintsugi.Objects
             Transform.Grid = null;
         }
 
+        /// <summary>
+        /// Remove this object from the target grid's <see cref="Grid.TileObjects"/> property.
+        /// </summary>
+        /// <param name="grid">Target grid to affect.</param>
         private void RemoveFromGridTileObjects(Grid grid)
         {
-            if (!grid.TileObjects.TryGetValue(Transform.Position, out _)) return;
-            grid.TileObjects[Transform.Position].Remove(this);
+            ArgumentNullException.ThrowIfNull(grid);
+            
+            if (grid.TileObjects.TryGetValue(Transform.Position, out _)) return;
+                grid.TileObjects[Transform.Position].Remove(this);
+                
             if (grid.TileObjects[Transform.Position].Count == 0)
                 grid.TileObjects.Remove(Transform.Position);
         }
 
-        public void AddToGrid(Grid grid, int layer = 0)
+        /// <summary>
+        /// Add this tile object to a grid, and on a specific layer.
+        /// </summary>
+        /// <param name="grid">Target grid to place the object in.</param>
+        /// <param name="layer">Layer of the grid to which this tile object will belong to.</param>
+        public void AddToGrid(Grid grid, int layer)
         {
             ArgumentNullException.ThrowIfNull(grid);
-            
             AddToGridTileObjects(grid);
             Transform.Grid = grid;
             Transform.Layer = layer;
         }
 
+        /// <summary>
+        /// Add this object to a target grid's <see cref="Grid.TileObjects"/> property.
+        /// </summary>
+        /// <param name="grid">Target grid to affect.</param>
         private void AddToGridTileObjects(Grid grid)
         {
             if (grid.TileObjects.TryGetValue(Transform.Position, out var value))
@@ -76,6 +94,12 @@ namespace Kintsugi.Objects
                 grid.TileObjects.Add(Transform.Position, new List<TileObject> { this });
         }
 
+        /// <summary>
+        /// Add a collider property to this object.
+        /// </summary>
+        /// <param name="belongLayers">The collision layers to which this object belongs to.</param>
+        /// <param name="collideLayers">The collision layers this object should collide with.</param>
+        /// <param name="isTrigger"><c>true</c> if this collider should act as a trigger.</param>
         public void SetCollider(HashSet<string> belongLayers, HashSet<string> collideLayers, bool isTrigger = false)
         {
             Collider ??= new TileObjectCollider();
@@ -84,6 +108,16 @@ namespace Kintsugi.Objects
             Collider.CollideLayers = collideLayers;
         }
 
+        /// <summary>
+        /// Set the sprite properties for this object.
+        /// </summary>
+        /// <param name="path">Path to the sprite's graphic.</param>
+        /// <param name="tilePivot">
+        /// Position on the tile from which the object is rendered. Defined between <see cref="Vector2.Zero"/> and
+        /// <see cref="Vector2.One"/> as the upper and lower bounds of the tile width. </param>
+        /// <param name="imagePivot">
+        /// Position on the sprite which will match positions with the <paramref name="tilePivot"/>.
+        /// Defined between <see cref="Vector2.Zero"/> the pixel width and height of the sprite.</param>
         public void SetSprite(string path, Vector2 tilePivot = default, Vector2 imagePivot = default)
         {
             // Initialize the property.
@@ -128,7 +162,7 @@ namespace Kintsugi.Objects
             public Vector2 TilePivot { get; internal set; } = Vector2.Zero;
             /// <summary>
             /// Position on the sprite which will match positions with the <see cref="TilePivot"/>.
-            /// Defined between this sprite's <see cref="Height"/> and <see cref="Width"/>. 
+            /// Defined between <see cref="Vector2.Zero"/> and this sprite's <see cref="Width"/> and <see cref="Height"/>. 
             /// </summary>
             public Vector2 ImagePivot { get; internal set; } = Vector2.Zero;
 
