@@ -25,7 +25,8 @@ namespace Kintsugi.Objects
         public TileObjectSprite? Sprite { get; private set; }
 
         /// <summary>
-        /// Establish the position of this object in a grid system. This method also updates 
+        /// Establish the position of this object in a grid system. This method also updates the grid's
+        /// <see cref="Grid.TileObjects"/> dictionary.
         /// </summary>
         /// <param name="position">New coordinates of the object.</param>
         public void SetPosition(Vec2Int position)
@@ -137,23 +138,56 @@ namespace Kintsugi.Objects
     
     namespace Properties
     {
+        /// <summary>
+        /// Transform properties of a tile object.
+        /// </summary>
         public class TileObjectTransform
         {
+            /// <summary>
+            /// Position of the tile object in a grid system. 
+            /// </summary>
             public Vec2Int Position { get; internal set; } = Vec2Int.Zero;
+            /// <summary>
+            /// Direction the tile object is facing towards.
+            /// </summary>
             public Facing Facing { get; internal set; } = Facing.East;
+            /// <summary>
+            /// Grid to which the tile object belongs to, if any.
+            /// </summary>
             public Grid? Grid { get; internal set; }
+            /// <summary>
+            /// Layer to which the tile object belongs to in its grid, if any.
+            /// </summary>
             public int Layer { get; internal set; }
         }
         
+        /// <summary>
+        /// Collision properties of a tile object.
+        /// </summary>
         public class TileObjectCollider
         {
+            /// <summary>
+            /// Collection of layers the object belongs to.
+            /// </summary>
             public HashSet<string> BelongLayers { get; internal set; } = [];
+            /// <summary>
+            /// Collection of layers the tile object collides with.
+            /// </summary>
             public HashSet<string> CollideLayers { get; internal set; } = [];
+            /// <summary>
+            /// <c>true</c> if the tile object is treated as a trigger collider.
+            /// </summary>
             public bool IsTrigger { get; internal set; }
         }
         
+        /// <summary>
+        /// Graphic properties of a tile object.
+        /// </summary>
         public class TileObjectSprite
         {
+            /// <summary>
+            /// File path of the tile object's sprite.
+            /// </summary>
             public string Path { get; internal set; } = "";
             /// <summary>
             /// Position on the tile from which the object is rendered.
@@ -165,9 +199,13 @@ namespace Kintsugi.Objects
             /// Defined between <see cref="Vector2.Zero"/> and this sprite's <see cref="Width"/> and <see cref="Height"/>. 
             /// </summary>
             public Vector2 ImagePivot { get; internal set; } = Vector2.Zero;
-
+            /// <summary>
+            /// Height of the object in pixels.
+            /// </summary>
             public int Height { get; internal set; }
-            
+            /// <summary>
+            /// Width of the object in pixels.
+            /// </summary>
             public int Width { get; internal set; }
         }
     }
