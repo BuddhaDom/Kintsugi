@@ -1,4 +1,5 @@
-﻿using Kintsugi.Objects;
+﻿using Kintsugi.Core;
+using Kintsugi.Objects;
 
 namespace TacticsGameTest
 {
@@ -6,6 +7,7 @@ namespace TacticsGameTest
     {
         public override void OnBeginScenario()
         {
+            RecalculateInitiativeOnNewRound = true;
             Console.WriteLine("Scenario begun!");
         }
 
@@ -16,14 +18,22 @@ namespace TacticsGameTest
     }
     internal class MyControlGroup : ControlGroup
     {
+        private string name;
+        public MyControlGroup(string name)
+        {
+            this.name = name;
+        }
         public override float CalculateInitiative()
         {
-            return 1;
+            var initiative = Dice.Roll(1, 20);
+            Console.WriteLine(name + " rolled initiative " + initiative);
+            return initiative;
         }
 
         public override void OnEndRound()
         {
             Console.WriteLine("CG End Round");
+            CurrentInitiative = 0;
         }
 
         public override void OnEndTurn()

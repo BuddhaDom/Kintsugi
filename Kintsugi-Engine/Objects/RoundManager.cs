@@ -23,6 +23,9 @@ namespace Kintsugi.Objects
                 return controlGroups[currentControlGroup];
             }
         }
+        public RoundManager(ScenarioManager scenarioManager) {
+            this.scenarioManager = scenarioManager;
+        }
 
         internal void AddToTurnOrder(ControlGroup c)
         {
@@ -68,9 +71,11 @@ namespace Kintsugi.Objects
 
         private void RedoTurnOrder()
         {
-            foreach (var controlGroup in controlGroups)
-            {
-                controlGroup.RecalculateInitiative();
+            if(scenarioManager.RecalculateInitiativeOnNewRound){
+                foreach (var controlGroup in controlGroups)
+                {
+                    controlGroup.RecalculateInitiative();
+                }
             }
             currentControlGroup = -1;
 
@@ -84,15 +89,15 @@ namespace Kintsugi.Objects
 
         private static int ControlGroupComparer(ControlGroup a, ControlGroup b)
         {
-            if (a.currentInitiative == b.currentInitiative)
+            if (a.CurrentInitiative == b.CurrentInitiative)
             {
                 return 0;
             }
-            else if (a.currentInitiative > b.currentInitiative)
+            else if (a.CurrentInitiative < b.CurrentInitiative)
             {
                 return 1;
             }
-            else// (a.currentInitiative < b.currentInitiative)
+            else// (a.currentInitiative > b.currentInitiative)
             {
                 return -1;
             }
@@ -105,6 +110,7 @@ namespace Kintsugi.Objects
         private int currentControlGroup = -1;
 
         List<ControlGroup> controlGroups = new();
+        private ScenarioManager scenarioManager;
     }
 
 }
