@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using System.Runtime.CompilerServices;
 using Kintsugi.Core;
 using Kintsugi.Objects.Properties;
 using Kintsugi.Tiles;
@@ -14,7 +15,7 @@ namespace Kintsugi.Objects
         /// <summary>
         /// Transform properties of this object.
         /// </summary>
-        public TileObjectTransform Transform { get; private set; } = new();
+        public TileObjectTransform Transform { get; private set; }
         /// <summary>
         /// Collision properties of this object.
         /// </summary>
@@ -23,6 +24,14 @@ namespace Kintsugi.Objects
         /// Graphic properties of this object.
         /// </summary>
         public TileObjectSprite? Sprite { get; private set; }
+        
+        /// <summary>
+        /// Creates a <see cref="TileObject"/> with a default Transform property. 
+        /// </summary>
+        public TileObject()
+        {
+            Transform = new TileObjectTransform(this);
+        }
 
         /// <summary>
         /// Establish the position of this object in a grid system. This method also updates the grid's
@@ -96,18 +105,25 @@ namespace Kintsugi.Objects
         }
 
         /// <summary>
-        /// Add a collider property to this object.
+        /// Add a collider property to this object with these parameters.
         /// </summary>
         /// <param name="belongLayers">The collision layers to which this object belongs to.</param>
         /// <param name="collideLayers">The collision layers this object should collide with.</param>
         /// <param name="isTrigger"><c>true</c> if this collider should act as a trigger.</param>
         public void SetCollider(HashSet<string> belongLayers, HashSet<string> collideLayers, bool isTrigger = false)
         {
-            Collider ??= new TileObjectCollider();
+            Collider ??= new TileObjectCollider(this);
             Collider.IsTrigger = isTrigger;
-            Collider.BelongLayers = belongLayers;
-            Collider.CollideLayers = collideLayers;
+            Collider.BelongLayers = [..belongLayers];
+            Collider.CollideLayers = [..collideLayers];
         }
+
+        /// <summary>
+        /// Add a collider property to this property to be copied from another <see cref="TileObjectCollider"/>.
+        /// </summary>
+        /// <param name="collider">Collider object to copy from.</param>
+        public void SetCollider(TileObjectCollider collider)
+            => SetCollider([..collider.BelongLayers], [..collider.CollideLayers], collider.IsTrigger);
 
         /// <summary>
         /// Set the sprite properties for this object.
@@ -122,7 +138,7 @@ namespace Kintsugi.Objects
         public void SetSprite(string path, Vector2 tilePivot = default, Vector2 imagePivot = default)
         {
             // Initialize the property.
-            Sprite ??= new TileObjectSprite();
+            Sprite ??= new TileObjectSprite(this);
             Sprite.Path = path;
             Sprite.TilePivot = tilePivot;
             Sprite.ImagePivot = imagePivot;
@@ -134,6 +150,13 @@ namespace Kintsugi.Objects
             Sprite.Width = image.Width;
             image.Dispose();
         }
+
+        /// <summary>
+        /// Add a sprite to this property to be copied from another <see cref="TileObjectSprite"/>
+        /// </summary>
+        /// <param name="sprite">Sprite to copy from.</param>
+        public void SetSprite(TileObjectSprite sprite)
+            => SetSprite(sprite.Path, sprite.TilePivot, sprite.ImagePivot);
     }
     
     namespace Properties
@@ -141,7 +164,7 @@ namespace Kintsugi.Objects
         /// <summary>
         /// Transform properties of a tile object.
         /// </summary>
-        public class TileObjectTransform
+        public class TileObjectTransform(TileObject parent)
         {
             /// <summary>
             /// Position of the tile object in a grid system. 
@@ -159,12 +182,16 @@ namespace Kintsugi.Objects
             /// Layer to which the tile object belongs to in its grid, if any.
             /// </summary>
             public int Layer { get; internal set; }
+            /// <summary>
+            /// The object this property modifies.
+            /// </summary>
+            public TileObject Parent { get; } = parent;
         }
         
         /// <summary>
         /// Collision properties of a tile object.
         /// </summary>
-        public class TileObjectCollider
+        public class TileObjectCollider(TileObject parent)
         {
             /// <summary>
             /// Collection of layers the object belongs to.
@@ -178,12 +205,16 @@ namespace Kintsugi.Objects
             /// <c>true</c> if the tile object is treated as a trigger collider.
             /// </summary>
             public bool IsTrigger { get; internal set; }
+            /// <summary>
+            /// The object this property modifies.
+            /// </summary>
+            public TileObject Parent { get; } = parent;
         }
         
         /// <summary>
         /// Graphic properties of a tile object.
         /// </summary>
-        public class TileObjectSprite
+        public class TileObjectSprite(TileObject parent)
         {
             /// <summary>
             /// File path of the tile object's sprite.
@@ -207,6 +238,10 @@ namespace Kintsugi.Objects
             /// Width of the object in pixels.
             /// </summary>
             public int Width { get; internal set; }
+            /// <summary>
+            /// The object this property modifies.
+            /// </summary>
+            public TileObject Parent { get; } = parent;
         }
     }
 
