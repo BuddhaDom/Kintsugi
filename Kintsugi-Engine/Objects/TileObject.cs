@@ -154,9 +154,9 @@ namespace Kintsugi.Objects
             public HashSet<string> CollideLayers { get; internal set; } = [];
             public bool IsTrigger { get; internal set; }
 
-            public virtual void OnTriggerCollision(TileObjectCollider @this, TileObjectCollider other)
+            public virtual void OnTriggerCollision(TileObjectCollider other)
             {
-                Console.WriteLine("Trigger collision between " + @this + " and " + other);
+                Console.WriteLine("Trigger collision between " + this + " and " + other);
             }
         }
 
