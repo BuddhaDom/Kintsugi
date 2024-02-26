@@ -24,6 +24,7 @@ namespace Kintsugi.Objects
 
         public void AddActor(Actor actor)
         {
+            if (actor == null) throw new Exception("Cannot add null actor to group");
             actors.Add(actor);
         }
         public void RemoveActor(Actor actor)
@@ -50,7 +51,7 @@ namespace Kintsugi.Objects
             OnEndRound();
         }
 
-        public float CurrentInitiative {  get; set; }
+        public float CurrentInitiative { get; set; }
         internal void RecalculateInitiative()
         {
             CurrentInitiative = CalculateInitiative();

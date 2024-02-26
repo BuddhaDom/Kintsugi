@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,7 +12,8 @@ namespace Kintsugi.Objects
     {
         public event EventHandler OnTurnOrderFinished;
 
-        public ScenarioManager() {
+        public ScenarioManager()
+        {
             roundManager = new(this);
         }
 
@@ -40,6 +42,8 @@ namespace Kintsugi.Objects
         }
         public void AddControlGroup(ControlGroup c)
         {
+            if (c == null) throw new Exception("Cannot add null control group to scenario");
+
             roundManager.AddToTurnOrder(c);
         }
         internal void NextRound(object? sender, EventArgs e)
