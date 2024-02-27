@@ -6,7 +6,7 @@ namespace Kintsugi.Tiles;
 
 public struct Tile(int tileId = -1, int tileSetId = -1)
 {
-    public bool IsEmpty => Id == -1;
+    public bool IsEmpty => Id < 0;
     public static Tile Empty => new();
     /// <summary>
     /// Local ID of this tile's sprite in its tile set.

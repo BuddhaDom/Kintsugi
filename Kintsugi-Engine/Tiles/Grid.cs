@@ -1,4 +1,5 @@
 using System.Drawing;
+using Kintsugi.Collision;
 using Kintsugi.Core;
 using Kintsugi.Objects;
 using Kintsugi.Rendering;
@@ -70,8 +71,7 @@ public class Grid : GameObject
         foreach (var tiledLayer in tiledMap.Layers)
         {
             // Initialize this key in the Layer dictionary, as wel as Tile array.
-            Layers[c] = new GridLayer(this, tiledLayer.name);
-            ParseTiledProperties(tiledLayer, Layers[c]);
+            Layers[c] = ParseTiledProperties(tiledLayer, new GridLayer(this, tiledLayer.name));
             for (int y = 0; y < GridHeight; y++)
             for (int x = 0; x < GridWidth; x++)
             {
@@ -102,7 +102,7 @@ public class Grid : GameObject
         }
         ValidateTileset();
 
-        void ParseTiledProperties(TiledLayer tiledLayer, GridLayer gridLayer)
+        GridLayer ParseTiledProperties(TiledLayer tiledLayer, GridLayer gridLayer)
         {
             foreach (var prop in tiledLayer.properties)
             {
@@ -117,15 +117,25 @@ public class Grid : GameObject
                         case "collisionlayer":
                             if (gridLayer.Collider == null)
                             {
-                                gridLayer.Collider = new Objects.Properties.TileObjectCollider();
+                                gridLayer.Collider = new Collider();
                             }
                             gridLayer.Collider.CollideLayers.Add(prop.value);
+                            gridLayer.Collider.BelongLayers.Add(prop.value);
+
+                            break;
+                        case "istrigger":
+                            if (gridLayer.Collider == null)
+                            {
+                                gridLayer.Collider = new Collider();
+                            }
+                            gridLayer.Collider.IsTrigger = true;
                             break;
                         default:
                             throw new Exception("Found Kintsugi property in " + tiledLayer + " but doesnt match any valid layer property");
                     }
                 }
             }
+            return gridLayer;
         }
     }
 

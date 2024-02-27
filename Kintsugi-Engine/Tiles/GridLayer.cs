@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using Kintsugi.Collision;
 using Kintsugi.Core;
 using Kintsugi.Objects.Properties;
 
@@ -9,7 +10,7 @@ namespace Kintsugi.Tiles;
 /// </summary>
 public struct GridLayer
 {
-    public TileObjectCollider Collider { get; set; }
+    public Collider Collider { get; internal set; }
 
     /// <summary>
     /// Array of tiles belonging to this layer.
@@ -19,17 +20,6 @@ public struct GridLayer
     /// Name of this layer.
     /// </summary>
     public string Name { get; }
-
-    private List<string> _collisionLayers;
-    public void AddLayer(string layer)
-    {
-        _collisionLayers.Add(layer);
-    }
-    public void RemoveLayer(string layer)
-    {
-        _collisionLayers.Remove(layer);
-    }
-    public readonly IReadOnlyList<string> CollisionLayers => _collisionLayers;
 
     /// <summary>
     /// Create layer from a given <see cref="Tile"/> array.

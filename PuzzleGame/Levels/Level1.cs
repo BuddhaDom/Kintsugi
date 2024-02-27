@@ -22,13 +22,8 @@ namespace PuzzleGame.Levels
 
 
             // TODO: This sucks. Should be attached to grid on the transform itself.
-            var transform = new TileObjectTransform(new Vec2Int(0, 5), 3, grid);
-            var transform2 = new TileObjectTransform(new Vec2Int(1, 2), 0, grid);
-            var collider = new TileObjectCollider([0], [1]);
-            var sprite = new TileObjectSprite(game.GetAssetManager().GetAssetPath("guy.png"), Vector2.One / 2,
-                new Vector2(6.5f, 8.5f));
-            var character = new MovementActor(transform, collider, sprite, "john");
-            var character2 = new MovementActor(transform2, collider, sprite, "bob");
+            var character = ActorFactory.Zombie(game, grid, 3);
+            character.SetPosition(new Vec2Int(0, 5));
             var scenario = new MovingScenario();
             var group_player = new PlayerControlGroup("PLAYER");
             var group_environment = new EnvironmentControlGroup("ENVIRONMENT");

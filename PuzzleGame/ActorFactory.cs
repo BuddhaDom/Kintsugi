@@ -1,10 +1,12 @@
 ﻿using Kintsugi.Core;
 using Kintsugi.Objects;
+using Kintsugi.Objects.Properties;
 using Kintsugi.Tiles;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,13 +14,13 @@ namespace PuzzleGame
 {
     static class ActorFactory
     {
-        public static MovementActor Zombie(Game game)
+        public static MovementActor Zombie(Game game, Grid grid, int layer)
         {
-            var transform = new TileObjectTransform(Vec2Int.One * 3, 0);
-            var collider = new TileObjectCollider([0], [1]);
-            var sprite = new TileObjectSprite(game.GetAssetManager().GetAssetPath("guy.png"), Vector2.One / 2,
+            var character = new MovementActor("Zombie");
+            character.SetCollider(["unit"], ["wall", "spikes"], false);
+            character.SetSprite(game.GetAssetManager().GetAssetPath("guy.png"), Vector2.One / 2,
                 new Vector2(6.5f, 8.5f));
-            var character = new MovementActor(transform, collider, sprite, "Zombie");
+            character.AddToGrid(grid, layer);
             character.speed = 1;
             return character;
         }

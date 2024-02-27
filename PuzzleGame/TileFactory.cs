@@ -1,5 +1,6 @@
 ﻿using Kintsugi.Core;
 using Kintsugi.Objects;
+using Kintsugi.Objects.Properties;
 using Kintsugi.Tiles;
 using System;
 using System.Collections.Generic;
@@ -12,13 +13,12 @@ namespace PuzzleGame
 {
     static class TileFactory
     {
-        public static TileObject Wall(Game game)
+        public static TileObject Wall(Game game, Grid grid, int layer)
         {
-            var transform = new TileObjectTransform(Vec2Int.One * 3, 0);
-            var collider = new TileObjectCollider([0], [1]);
-            var sprite = new TileObjectSprite(game.GetAssetManager().GetAssetPath("guy.png"), Vector2.One / 2,
+            var character = new TileObject();
+            character.SetSprite(game.GetAssetManager().GetAssetPath("guy.png"), Vector2.One / 2,
                 new Vector2(6.5f, 8.5f));
-            var character = new TileObject(transform, collider, sprite);
+            character.AddToGrid(grid, layer);
             return character;
         }
     }

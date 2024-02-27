@@ -43,8 +43,8 @@ namespace Kintsugi.Objects
         {
             if (Transform.Grid != null && Collider != null)
             {
-                List<TileObjectCollider> selfTriggers = new();
-                List<TileObjectCollider> otherTriggers = new();
+                List<Collider> selfTriggers = new();
+                List<Collider> otherTriggers = new();
 
                 otherTriggers.AddRange(CollisionSystem.GetCollidingTriggers(Collider, Transform.Grid, Transform.Position));
                 var otherObjects = Transform.Grid.GetObjectsAtPosition(pos);
@@ -60,15 +60,16 @@ namespace Kintsugi.Objects
                             }
                         }
                     }
+                    selfTriggers.AddRange(CollisionSystem.GetGridCollidingTriggersWithTileobjects(Transform.Grid, Transform.Position));
                 }
                 
                 foreach (var selfTrigger in selfTriggers)
                 {
-                    selfTrigger.OnTriggerCollision(Collider, selfTrigger);
+                    selfTrigger.OnTriggerCollision(Collider);
                 }
                 foreach (var otherTrigger in otherTriggers)
                 {
-                    otherTrigger.OnTriggerCollision(otherTrigger, Collider);
+                    Collider.OnTriggerCollision(otherTrigger);
                 }
 
             }
@@ -148,16 +149,8 @@ namespace Kintsugi.Objects
             public int Layer { get; internal set; }
         }
 
-        public class TileObjectCollider
+        public class TileObjectCollider: Collider
         {
-            public HashSet<string> BelongLayers { get; internal set; } = [];
-            public HashSet<string> CollideLayers { get; internal set; } = [];
-            public bool IsTrigger { get; internal set; }
-
-            public virtual void OnTriggerCollision(TileObjectCollider other)
-            {
-                Console.WriteLine("Trigger collision between " + this + " and " + other);
-            }
         }
 
         public class TileObjectSprite

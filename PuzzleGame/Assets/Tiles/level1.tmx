@@ -28,6 +28,7 @@
  <layer id="2" name="WaterLayer" width="6" height="6">
   <properties>
    <property name="kintsugi:collisionlayer" value="spikes"/>
+   <property name="kintsugi:istrigger" type="bool" value="true"/>
   </properties>
   <data encoding="csv">
 0,0,0,42,0,0,
