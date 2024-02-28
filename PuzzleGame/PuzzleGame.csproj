@@ -8,10 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Levels\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Kintsugi-Engine\Kintsugi-Engine.csproj" />
   </ItemGroup>
 

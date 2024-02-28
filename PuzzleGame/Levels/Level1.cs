@@ -35,4 +35,29 @@ namespace PuzzleGame.Levels
             scenario.BeginScenario();
         }
     }
+    internal class Level2 : Level
+    {
+        public override string GridPath => "Tiles\\level2.tmx";
+
+        public override void SetUp()
+        {
+            Bootstrap.GetCameraSystem().Size = 16 * 10;
+
+            var character = ActorFactory.Zombie(game, grid);
+            character.SetPosition(new Vec2Int(0, 4));
+
+            var character2 = ActorFactory.Zombie(game, grid);
+            character2.SetPosition(new Vec2Int(3, 4));
+
+            var scenario = new MovingScenario();
+
+            group_player.AddActor(character);
+            group_player.AddActor(character2);
+
+            scenario.AddControlGroup(group_player);
+            // scenario.AddControlGroup(group2);
+
+            scenario.BeginScenario();
+        }
+    }
 }
