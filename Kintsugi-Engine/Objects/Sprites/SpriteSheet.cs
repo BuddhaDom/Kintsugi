@@ -12,11 +12,12 @@ public struct SpriteSheet
     public required int SpriteWidth { get; init; }
     public required int SheetPixelHeight { get; init; }
     public required int SheetPixelWidth { get; init; }
-    public Vector2 Pivot { get; } = Vector2.Zero;
+    public Vector2 TilePivot { get; } = Vector2.Zero;
+    public Vector2 ImagePivot { get; } = Vector2.Zero;
     public Vector2 Padding { get; }
     public Vector2 Margin { get; }
 
-    public SpriteSheet(string path, int width, int height, int spriteHeight, int spriteWidth, Vector2 pivot, Vector2 padding, Vector2 margin)
+    public SpriteSheet(string path, int width, int height, int spriteHeight, int spriteWidth, Vector2 tilePivot, Vector2 imagePivot, Vector2 padding, Vector2 margin)
     {
         Path = path;
         Width = width;
@@ -25,7 +26,8 @@ public struct SpriteSheet
         SpriteWidth = spriteWidth;
         Padding = padding;
         Margin = margin;
-        Pivot = pivot;
+        TilePivot = tilePivot;
+        ImagePivot = imagePivot;
         
         // Get the Height and Width
         if (path == "") return;
@@ -36,5 +38,5 @@ public struct SpriteSheet
     }
 
     public SpriteSheet(string path, int width, int height, int spriteHeight, int spriteWidth) :
-        this(path, width, height, spriteHeight, spriteWidth, Vector2.Zero, Vector2.Zero, Vector2.Zero) {}
+        this(path, width, height, spriteHeight, spriteWidth, Vector2.Zero, Vector2.Zero, Vector2.Zero, Vector2.Zero) {}
 }

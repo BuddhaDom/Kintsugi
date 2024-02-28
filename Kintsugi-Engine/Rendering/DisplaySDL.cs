@@ -322,12 +322,9 @@ namespace Kintsugi.Rendering
                             continue;
                         foreach (var tileObject in tileObjects.Where(o=> o.Transform.Layer == i))
                         {
-                            var sprite = LoadTexture(tileObject.Sprite!.Path);
+                            var sprite = tileObject.Sprite!.Texture;
 
-                            sRect.x = 0;
-                            sRect.y = 0;
-                            sRect.w = tileObject.Sprite!.Width;
-                            sRect.h = tileObject.Sprite!.Height;
+                            sRect = tileObject.Sprite!.SourceRect();
 
                             var localTilePivot = tileObject.Sprite.TilePivot * grid.TileWidth;
                             var pivotOffsets = localTilePivot - tileObject.Sprite.ImagePivot;
@@ -336,9 +333,9 @@ namespace Kintsugi.Rendering
                                 grid.Transform2D.X + x * grid.TileWidth + pivotOffsets.X,
                                 grid.Transform2D.Y + y * grid.TileWidth + pivotOffsets.Y));
                             var vScreenPos = cam.WorldToScreenSpace(new Vector2(
-                                grid.Transform2D.X + x * grid.TileWidth + pivotOffsets.X + tileObject.Sprite.Width,
+                                grid.Transform2D.X + x * grid.TileWidth + pivotOffsets.X + tileObject.Sprite.SpriteWidth,
                                 grid.Transform2D.Y + y * grid.TileWidth + pivotOffsets.Y +
-                                tileObject.Sprite.Height));
+                                tileObject.Sprite.SpriteHeight));
 
                             int xsize = (int)vScreenPos.X - (int)uScreenPos.X;
                             int ysize = (int)vScreenPos.Y - (int)uScreenPos.Y;

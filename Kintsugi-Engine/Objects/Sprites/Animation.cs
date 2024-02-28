@@ -1,4 +1,6 @@
+using System.Numerics;
 using Kintsugi.Core;
+using Kintsugi.Rendering;
 using SDL2;
 
 namespace Kintsugi.Objects.Sprites;
@@ -17,7 +19,12 @@ public class Animation : ISpriteable
     public float StartTime { get; set; }
     public float CurrentTime => Bootstrap.GetCurrentMillis() / 1000f - StartTime;
     private List<int> BounceFrameIndexes { get; }
-    
+    public nint Texture => ((DisplaySDL)Bootstrap.GetDisplay()).LoadTexture(SpriteSheet.Path);
+    public Vector2 TilePivot { get; }
+    public Vector2 ImagePivot { get; }
+    public int SpriteWidth { get; }
+    public int SpriteHeight { get; }
+
     public Animation(float timeLength, SpriteSheet spriteSheet, IEnumerable<int> frames, int repeats = 0, bool shouldBounce = false)
     {
         TimeLength = timeLength;

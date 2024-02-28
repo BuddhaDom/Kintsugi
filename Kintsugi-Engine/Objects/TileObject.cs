@@ -1,8 +1,8 @@
 ﻿using System.Numerics;
-using System.Runtime.CompilerServices;
 using Kintsugi.Core;
 using Kintsugi.Objects.Properties;
 using Kintsugi.Objects.Sprites;
+using Kintsugi.Rendering;
 using Kintsugi.Tiles;
 using SDL2;
 using SixLabors.ImageSharp;
@@ -148,8 +148,8 @@ namespace Kintsugi.Objects
             // Get the Height and Width
             if (path == "") return;
             var image = Image.Load(path);
-            Sprite.Height = image.Height;
-            Sprite.Width = image.Width;
+            Sprite.SpriteHeight = image.Height;
+            Sprite.SpriteWidth = image.Width;
             image.Dispose();
         }
 
@@ -159,6 +159,11 @@ namespace Kintsugi.Objects
         /// <param name="sprite">Sprite to copy from.</param>
         public void SetSprite(TileObjectSprite sprite)
             => SetSprite(sprite.Path, sprite.TilePivot, sprite.ImagePivot);
+
+        public void SetSprite(Animation animation)
+        {
+            
+        }
     }
     
     namespace Properties
@@ -221,35 +226,39 @@ namespace Kintsugi.Objects
             /// <summary>
             /// File path of the tile object's sprite.
             /// </summary>
-            public string Path { get; internal set; } = "";
+            public string Path { get; set; } = "";
             /// <summary>
             /// Position on the tile from which the object is rendered.
             /// Defined between <see cref="Vector2.Zero"/> and <see cref="Vector2.One"/> as the upper and lower bounds of the tile width.
             /// </summary>
-            public Vector2 TilePivot { get; internal set; } = Vector2.Zero;
+            public Vector2 TilePivot { get; set; } = Vector2.Zero;
             /// <summary>
             /// Position on the sprite which will match positions with the <see cref="TilePivot"/>.
-            /// Defined between <see cref="Vector2.Zero"/> and this sprite's <see cref="Width"/> and <see cref="Height"/>. 
+            /// Defined between <see cref="Vector2.Zero"/> and this sprite's <see cref="SpriteWidth"/> and <see cref="SpriteHeight"/>. 
             /// </summary>
-            public Vector2 ImagePivot { get; internal set; } = Vector2.Zero;
+            public Vector2 ImagePivot { get; set; } = Vector2.Zero;
             /// <summary>
             /// Height of the object in pixels.
             /// </summary>
-            public int Height { get; internal set; }
+            public int SpriteHeight { get; set; }
             /// <summary>
             /// Width of the object in pixels.
             /// </summary>
-            public int Width { get; internal set; }
+            public int SpriteWidth { get; set; }
             /// <summary>
             /// The object this property modifies.
             /// </summary>
             public TileObject Parent { get; } = parent;
 
             public SDL.SDL_Rect SourceRect()
-            {
-                
-            }
+                => new() {
+                    x = 0,
+                    y = 0,
+                    w = SpriteWidth,
+                    h = SpriteHeight,
+                };
+            
+            public nint Texture => ((DisplaySDL)Bootstrap.GetDisplay()).LoadTexture(Path);
         }
     }
-
 }
