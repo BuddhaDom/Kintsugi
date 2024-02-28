@@ -154,6 +154,7 @@ namespace Kintsugi.Core
                         break;
                     case "sound":
                         soundEngine = (Sound)ob;
+                        soundEngine.Initialize();
                         break;
                     case "asset":
                         asset = (AssetManagerBase)ob;
@@ -343,6 +344,9 @@ namespace Kintsugi.Core
                     }
 
                 }
+
+                // Update sound engine
+                soundEngine.Update();
 
                 // Render the screen.
                 GetDisplay().Display();
