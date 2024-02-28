@@ -10,7 +10,25 @@ using Kintsugi.Objects.Properties;
 
 namespace PuzzleGame
 {
-    internal class MovementActor : Actor, IInputListener
+    internal class BaseActor : Actor
+    {
+        public override void OnEndRound()
+        {
+        }
+
+        public override void OnEndTurn()
+        {
+        }
+
+        public override void OnStartRound()
+        {
+        }
+
+        public override void OnStartTurn()
+        {
+        }
+    }
+    internal class MovementActor : BaseActor, IInputListener
     {
         private string name;
         public int speed;

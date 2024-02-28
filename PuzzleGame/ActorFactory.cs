@@ -34,5 +34,16 @@ namespace PuzzleGame
             character.speed = 2;
             return character;
         }
+        public static Actor Goal(Game game, Grid grid)
+        {
+            var character = new BaseActor();
+            character.SetSprite(game.GetAssetManager().GetAssetPath("guy.png"), Vector2.One / 2,
+                new Vector2(6.5f, 8.5f)); 
+            character.SetCollider([], ["unit"], false);
+
+            character.AddToGrid(grid, 3); 
+            return character;
+        }
+
     }
 }
