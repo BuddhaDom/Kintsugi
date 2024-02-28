@@ -110,6 +110,7 @@ namespace Kintsugi.Collision
         }
         public static bool CollidesColliderWithTileobjectsAtPosition(Collider collider, Grid grid, Vec2Int position)
         {
+            if (grid == null) return false;
             var otherObjects = grid.GetObjectsAtPosition(position);
             if (otherObjects == null) return false;
 
