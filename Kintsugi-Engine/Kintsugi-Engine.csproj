@@ -14,22 +14,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<NativeSayersSDL2CoreLibs Remove="Sound\FMOD\API\fmod.dll" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<NativeSayersSDL2CoreLibs Remove="Sound\FMOD\API\fmodL.dll" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <NativeSayersSDL2CoreLibs Remove="fmodstudio.dll" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <NativeSayersSDL2CoreLibs Remove="fmod.dll" />
-	</ItemGroup>
-
-	<ItemGroup>
 	  <None Update="fmod.dll">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
