@@ -26,14 +26,12 @@ namespace TacticsGameTest
                 }
             };
             Bootstrap.GetCameraSystem().Size = 16 * 10;
-
             character = new MovementActor("Guy Dudelyn from house Brolew");
-            character.AddToGrid(grid);
+            character.AddToGrid(grid, 0);
             character.SetPosition(Vec2Int.One * 3);
             character.SetCollider(["mine"], ["yours"]);
             character.SetSprite(GetAssetManager().GetAssetPath("guy.png"),
                 Vector2.One / 2, new Vector2(6.5f, 8.5f));
-
             scenario = new MovingScenario();
             var group = new MyControlGroup("john's group");
             // var group2 = new MyControlGroup("bob's group");

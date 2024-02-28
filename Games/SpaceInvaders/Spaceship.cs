@@ -1,4 +1,5 @@
-﻿using Kintsugi.Core;
+﻿using Kintsugi.Audio;
+using Kintsugi.Core;
 using Kintsugi.Input;
 using Kintsugi.Physics;
 using SDL2;
@@ -11,6 +12,7 @@ namespace SpaceInvaders
         bool left, right;
         float fireCounter, fireDelay;
 
+        EventDescription fireEvent;
 
         public override void Initialize()
         {
