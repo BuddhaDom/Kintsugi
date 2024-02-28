@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Kintsugi.Objects;
 using PuzzleGame.Levels;
+using Kintsugi.Audio;
 
 namespace PuzzleGame
 {
@@ -25,6 +26,10 @@ namespace PuzzleGame
 
         public override void Initialize()
         {
+            var master_bank = ((SoundFMOD)Bootstrap.GetSound()).LoadBank(Bootstrap.GetAssetManager().GetAssetPath("audio\\fmod_project\\Build\\Desktop\\Master.bank"));
+            ((SoundFMOD)Bootstrap.GetSound()).LoadBank(Bootstrap.GetAssetManager().GetAssetPath("audio\\fmod_project\\Build\\Desktop\\Master.strings.bank"));
+            master_bank.PreloadSamples();
+
             var level1 = new Level1();
             level1.Load(this);
             Bootstrap.GetInput().AddListener(this);

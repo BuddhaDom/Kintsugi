@@ -1,4 +1,6 @@
-﻿using Kintsugi.Collision;
+﻿using Kintsugi.Audio;
+using Kintsugi.Collision;
+using Kintsugi.Core;
 using PuzzleGame;
 using System;
 using System.Collections.Generic;
@@ -17,6 +19,8 @@ namespace PuzzleGame
             {
                 if (c.TileObject is MovementActor a)
                 {
+                    var fireEvent = ((SoundFMOD)Bootstrap.GetSound()).LoadEventDescription("event:/Timbral");
+                    fireEvent.PlayImmediate();
                     a.RemoveFromGrid();
                     Console.WriteLine("Kill " + a);
                 }
