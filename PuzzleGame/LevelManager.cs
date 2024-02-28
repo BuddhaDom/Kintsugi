@@ -42,5 +42,15 @@ namespace PuzzleGame
             curLevel = Levels[currentIndex];
             curLevel.Load(Bootstrap.GetRunningGame());
         }
+        public void ResetLevel()
+        {
+            if (curLevel != null)
+            {
+                curLevel.Unload();
+                curLevel.Load(Bootstrap.GetRunningGame());
+
+            }
+        }
+
     }
 }

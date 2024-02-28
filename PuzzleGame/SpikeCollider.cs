@@ -22,6 +22,7 @@ namespace PuzzleGame
                     var fireEvent = ((SoundFMOD)Bootstrap.GetSound()).LoadEventDescription("event:/Timbral");
                     fireEvent.PlayImmediate();
                     a.RemoveFromGrid();
+                    LevelManager.Instance.ResetLevel();
                     Console.WriteLine("Kill " + a);
                 }
             }
