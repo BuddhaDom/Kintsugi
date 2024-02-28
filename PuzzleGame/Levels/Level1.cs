@@ -22,10 +22,14 @@ namespace PuzzleGame.Levels
             
 
             // TODO: This sucks. Should be attached to grid on the transform itself.
-            var character = ActorFactory.Skeleton(game, grid);
+            var character = ActorFactory.Zombie(game, grid);
             character.SetPosition(new Vec2Int(0, 5));
             var scenario = new MovingScenario();
-
+            scenario.goals = new List<Actor>()
+            {
+                ActorFactory.Goal(game, grid),
+            };
+            scenario.goals[0].SetPosition(new Vec2Int(4, 0));
             group_player.AddActor(character);
             //group.AddActor(character2);
 

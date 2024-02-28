@@ -37,6 +37,7 @@ namespace Kintsugi.Objects
         internal void Begin()
         {
             RedoTurnOrder();
+            scenarioManager.OnBeginRound();
             foreach (var controlGroup in controlGroups)
             {
                 controlGroup.StartRound();
@@ -50,6 +51,7 @@ namespace Kintsugi.Objects
             currentControlGroup++;
             if (ValidGroup())
             {
+                scenarioManager.OnBeginTurn();
                 CurrentControlGroup.StartTurn();
                 CurrentControlGroup.ControlGroupTurnEnd += HandleControlGroupTurnEnd;
             }
@@ -59,6 +61,7 @@ namespace Kintsugi.Objects
                 {
                     controlGroup.EndRound();
                 }
+                scenarioManager.OnEndRound();
                 OnRoundFinished?.Invoke(this, EventArgs.Empty);
             }
         }
@@ -66,6 +69,7 @@ namespace Kintsugi.Objects
         private void HandleControlGroupTurnEnd(object? sender, EventArgs e)
         {
             CurrentControlGroup.ControlGroupTurnEnd -= HandleControlGroupTurnEnd;
+            scenarioManager.OnEndTurn();
             NextTurn();
         }
 

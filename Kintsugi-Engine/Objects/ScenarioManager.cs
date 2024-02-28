@@ -25,6 +25,11 @@ namespace Kintsugi.Objects
         public bool ResolveCurrentRoundOnScenarioStop = false; // Does not work yet
         public abstract void OnBeginScenario();
         public abstract void OnEndScenario();
+        public abstract void OnBeginRound();
+        public abstract void OnEndRound();
+        public abstract void OnBeginTurn();
+        public abstract void OnEndTurn();
+
         public void BeginScenario()
         {
             if (begun)
