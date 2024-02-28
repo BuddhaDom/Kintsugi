@@ -30,8 +30,8 @@ namespace PuzzleGame
             ((SoundFMOD)Bootstrap.GetSound()).LoadBank(Bootstrap.GetAssetManager().GetAssetPath("audio\\fmod_project\\Build\\Desktop\\Master.strings.bank"));
             master_bank.PreloadSamples();
 
-            var level1 = new Level2();
-            level1.Load(this);
+            var level = new Level3();
+            level.Load(this);
            
 
             Bootstrap.GetInput().AddListener(this);

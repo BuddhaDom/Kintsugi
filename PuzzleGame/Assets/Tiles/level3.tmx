@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="6" height="6" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="3">
+ <tileset firstgid="1" source="dungeon_tilemap_packed.tsx"/>
+ <tileset firstgid="133" source="battle_tilemap_packed.tsx"/>
+ <layer id="1" name="Ground" width="6" height="6">
+  <data encoding="csv">
+49,49,50,49,49,49,
+50,49,49,49,49,49,
+49,49,49,49,49,49,
+49,49,50,49,49,49,
+49,49,49,49,49,49,
+49,49,49,49,50,49
+</data>
+ </layer>
+ <layer id="5" name="Walls" width="6" height="6">
+  <properties>
+   <property name="kintsugi:collisionlayerbelong" value="wall"/>
+  </properties>
+  <data encoding="csv">
+0,0,0,0,0,0,
+41,0,0,0,0,0,
+0,41,0,0,0,0,
+0,0,0,0,0,41,
+0,0,0,0,41,0,
+0,0,0,0,0,0
+</data>
+ </layer>
+ <layer id="2" name="WaterLayer" width="6" height="6">
+  <properties>
+   <property name="kintsugi:collisionlayercollide" value="unit"/>
+   <property name="kintsugi:istrigger" type="bool" value="true"/>
+  </properties>
+  <data encoding="csv">
+0,0,0,0,0,0,
+0,0,0,0,42,0,
+0,0,0,42,0,0,
+0,0,0,0,0,0,
+0,0,0,0,0,0,
+0,0,0,0,0,0
+</data>
+ </layer>
+</map>
