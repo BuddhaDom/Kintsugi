@@ -27,7 +27,7 @@ namespace PuzzleGame.Levels
             // TODO: This sucks. Should be attached to grid on the transform itself.
             var character = ActorFactory.Zombie(game, grid);
             character.SetPosition(new Vec2Int(0, 5));
-            scenario = new MovingScenario();
+           // scenario = new MovingScenario();
             scenario.goals = new List<Actor>()
             {
                 ActorFactory.Goal(game, grid),
@@ -48,6 +48,7 @@ namespace PuzzleGame.Levels
 
         public override void SetUp()
         {
+            
             Bootstrap.GetCameraSystem().Size = 4 * 15;
             Bootstrap.GetCameraSystem().Position = new Vector2(50, 50);
 
@@ -57,7 +58,14 @@ namespace PuzzleGame.Levels
             var character2 = ActorFactory.Zombie(game, grid);
             character2.SetPosition(new Vec2Int(3, 4));
 
-            scenario = new MovingScenario();
+
+            scenario.goals = new List<Actor>()
+            {
+                ActorFactory.Goal(game, grid),
+                ActorFactory.Goal(game, grid),
+            };
+            scenario.goals[0].SetPosition(new Vec2Int(0, 1));
+            scenario.goals[1].SetPosition(new Vec2Int(2, 0));
 
             group_player.AddActor(character);
             group_player.AddActor(character2);
@@ -83,7 +91,13 @@ namespace PuzzleGame.Levels
             var character2 = ActorFactory.Zombie(game, grid);
             character2.SetPosition(new Vec2Int(4, 5));
 
-            scenario = new MovingScenario();
+            scenario.goals = new List<Actor>()
+            {
+                ActorFactory.Goal(game, grid),
+                ActorFactory.Goal(game, grid),
+            };
+            scenario.goals[0].SetPosition(new Vec2Int(2, 0));
+            scenario.goals[1].SetPosition(new Vec2Int(3, 0));
 
             group_player.AddActor(character);
             group_player.AddActor(character2);

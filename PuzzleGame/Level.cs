@@ -33,6 +33,7 @@ namespace PuzzleGame
 
             grid.Layers[2].SwitchColliderType<SpikeCollider>();
 
+            scenario = new MovingScenario();
 
             group_player = new PlayerControlGroup("PLAYER");
             group_environment = new EnvironmentControlGroup("ENVIRONMENT");

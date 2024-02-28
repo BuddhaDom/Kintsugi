@@ -1,4 +1,5 @@
-﻿using Kintsugi.Collision;
+﻿using Kintsugi.Audio;
+using Kintsugi.Collision;
 using Kintsugi.Core;
 using Kintsugi.Objects;
 
@@ -40,6 +41,8 @@ namespace PuzzleGame
                 {
 
                     Console.WriteLine("cogneratiualations");
+                    var sfx_success = ((SoundFMOD)Bootstrap.GetSound()).LoadEventDescription("event:/ConfirmJingle");
+                    sfx_success.PlayImmediate();
                     LevelManager.Instance.LoadNext();
                 }
             }
