@@ -42,6 +42,7 @@ namespace PuzzleGame
         public abstract void SetUp();
         public void Unload()
         {
+            grid.ToBeDestroyed = true;
             grid = null;
             scenario.EndScenario();
             scenario = null;
