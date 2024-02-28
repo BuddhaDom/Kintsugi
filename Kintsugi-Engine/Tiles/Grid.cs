@@ -112,15 +112,22 @@ public class Grid : GameObject
                 }
                 if (split[0].ToLower() == "kintsugi")
                 {
+                    var propertyName = split[1].ToLower();
                     switch (split[1].ToLower())
                     {
-                        case "collisionlayer":
+                        case "collisionlayerbelong":
+                            if (gridLayer.Collider == null)
+                            {
+                                gridLayer.Collider = new Collider();
+                            }
+                            gridLayer.Collider.BelongLayers.Add(prop.value);
+                            break;
+                        case "collisionlayercollide":
                             if (gridLayer.Collider == null)
                             {
                                 gridLayer.Collider = new Collider();
                             }
                             gridLayer.Collider.CollideLayers.Add(prop.value);
-                            gridLayer.Collider.BelongLayers.Add(prop.value);
 
                             break;
                         case "istrigger":
@@ -131,7 +138,7 @@ public class Grid : GameObject
                             gridLayer.Collider.IsTrigger = true;
                             break;
                         default:
-                            throw new Exception("Found Kintsugi property in " + tiledLayer + " but doesnt match any valid layer property");
+                            throw new Exception("Found Kintsugi property " + propertyName + " in " + tiledLayer + " but doesnt match any valid layer property");
                     }
                 }
             }
