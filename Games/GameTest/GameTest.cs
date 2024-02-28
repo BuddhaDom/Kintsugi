@@ -52,9 +52,9 @@ namespace Shard
         {
             Bootstrap.GetInput().AddListener(this);
 
-            ((SoundFMOD)Bootstrap.GetSound()).LoadBank(Bootstrap.GetAssetManager().GetAssetPath("Master.bank"));
-            ((SoundFMOD)Bootstrap.GetSound()).LoadBank(Bootstrap.GetAssetManager().GetAssetPath("Master.strings.bank"));
-            var sfxBank = ((SoundFMOD)Bootstrap.GetSound()).LoadBank(Bootstrap.GetAssetManager().GetAssetPath("SFX.bank"));
+            ((SoundFMOD)Bootstrap.GetSound()).LoadBank(Bootstrap.GetAssetManager().GetAssetPath("FMOD\\Master.bank"));
+            ((SoundFMOD)Bootstrap.GetSound()).LoadBank(Bootstrap.GetAssetManager().GetAssetPath("FMOD\\Master.strings.bank"));
+            var sfxBank = ((SoundFMOD)Bootstrap.GetSound()).LoadBank(Bootstrap.GetAssetManager().GetAssetPath("FMOD\\SFX.bank"));
 
             sfxBank.PreloadSamples();
 
