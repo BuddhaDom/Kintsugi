@@ -1,8 +1,7 @@
 using System.Numerics;
-using Kintsugi.Core;
 using SixLabors.ImageSharp;
 
-namespace Kintsugi.Animation;
+namespace Kintsugi.Objects.Sprites;
 
 public struct SpriteSheet
 {

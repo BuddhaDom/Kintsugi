@@ -2,7 +2,9 @@
 using System.Runtime.CompilerServices;
 using Kintsugi.Core;
 using Kintsugi.Objects.Properties;
+using Kintsugi.Objects.Sprites;
 using Kintsugi.Tiles;
+using SDL2;
 using SixLabors.ImageSharp;
 
 namespace Kintsugi.Objects
@@ -23,7 +25,7 @@ namespace Kintsugi.Objects
         /// <summary>
         /// Graphic properties of this object.
         /// </summary>
-        public TileObjectSprite? Sprite { get; private set; }
+        public ISpriteable? Sprite { get; private set; }
         
         /// <summary>
         /// Creates a <see cref="TileObject"/> with a default Transform property. 
@@ -214,7 +216,7 @@ namespace Kintsugi.Objects
         /// <summary>
         /// Graphic properties of a tile object.
         /// </summary>
-        public class TileObjectSprite(TileObject parent)
+        public class TileObjectSprite(TileObject parent) : ISpriteable
         {
             /// <summary>
             /// File path of the tile object's sprite.
@@ -242,6 +244,11 @@ namespace Kintsugi.Objects
             /// The object this property modifies.
             /// </summary>
             public TileObject Parent { get; } = parent;
+
+            public SDL.SDL_Rect SourceRect()
+            {
+                
+            }
         }
     }
 

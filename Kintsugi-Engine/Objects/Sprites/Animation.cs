@@ -1,9 +1,9 @@
 using Kintsugi.Core;
 using SDL2;
 
-namespace Kintsugi.Animation;
+namespace Kintsugi.Objects.Sprites;
 
-public class Animation
+public class Animation : ISpriteable
 {
     private float TimeLength { get; set; }
     public SpriteSheet SpriteSheet { get; set; }
@@ -15,9 +15,7 @@ public class Animation
     public bool ShouldBounce { get; set; }
 
     public float StartTime { get; set; }
-    public float CurrentTime { get; private set; }
-    public float WorldStartTime { get; private set; }
-    public float WorldCurrentTime => WorldStartTime + CurrentTime;
+    public float CurrentTime => Bootstrap.GetCurrentMillis() / 1000f - StartTime;
     private List<int> BounceFrameIndexes { get; }
     
     public Animation(float timeLength, SpriteSheet spriteSheet, IEnumerable<int> frames, int repeats = 0, bool shouldBounce = false)
@@ -34,38 +32,34 @@ public class Animation
 
     public Animation(float timeLength, SpriteSheet spriteSheet, int fromIndex, int toIndex, int repeats = 0, bool shouldBounce = false) :
         this(timeLength, spriteSheet, Enumerable.Range(fromIndex, toIndex), repeats, shouldBounce) {}
-
-    public SDL.SDL_Rect SourceRectAt(float time)
+    
+    public SDL.SDL_Rect SourceRect()
     {
-        float localTime;
         int indexAtTime;
 
-        if (Repeats != 0 && (time - WorldStartTime) / TimeLength >= Repeats)
+        if (Repeats != 0 && (CurrentTime - StartTime) / TimeLength >= Repeats)
         {
-            localTime = TimeLength;
             indexAtTime = ShouldBounce ? 0 : BounceFrameIndexes.Count;
         }
         else
         {
-            localTime = (time - StartTime) % TimeLength;
+            var localTime = (CurrentTime - StartTime) % TimeLength;
             indexAtTime = (int)(localTime * (ShouldBounce ? BounceFrameIndexes : FrameIndexes).Count / TimeLength);
         }
-
-        var ss = SpriteSheet;
 
         int rectIndex = (ShouldBounce ? BounceFrameIndexes : FrameIndexes)[indexAtTime];
 
         var coordinates = new Vec2Int(
-                rectIndex % ss.Width,
-                rectIndex / ss.Width
-            );
+            rectIndex % SpriteSheet.Width, 
+            rectIndex / SpriteSheet.Width
+        );
         
         return new SDL.SDL_Rect
         {
-            h = ss.SpriteHeight,
-            w = ss.SpriteWidth,
-            x = (int) ((ss.SpriteWidth + ss.Padding.X) * coordinates.x + ss.Margin.X),
-            y = (int) ((ss.SpriteHeight + ss.Padding.Y) * coordinates.y + ss.Margin.Y),
+            h = SpriteSheet.SpriteHeight,
+            w = SpriteSheet.SpriteWidth,
+            x = (int) ((SpriteSheet.SpriteWidth + SpriteSheet.Padding.X) * coordinates.x + SpriteSheet.Margin.X),
+            y = (int) ((SpriteSheet.SpriteHeight + SpriteSheet.Padding.Y) * coordinates.y + SpriteSheet.Margin.Y),
         };
     }
 }
