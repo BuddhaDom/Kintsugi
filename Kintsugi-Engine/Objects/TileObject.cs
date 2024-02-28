@@ -109,7 +109,7 @@ namespace Kintsugi.Objects
         {
             ArgumentNullException.ThrowIfNull(grid);
             
-            if (grid.TileObjects.TryGetValue(Transform.Position, out _)) return;
+            if (grid.TileObjects.TryGetValue(Transform.Position, out _))
                 grid.TileObjects[Transform.Position].Remove(this);
                 
             if (grid.TileObjects[Transform.Position].Count == 0)
