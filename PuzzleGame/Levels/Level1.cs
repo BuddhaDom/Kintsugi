@@ -13,11 +13,10 @@ namespace PuzzleGame.Levels
 {
     internal class Level1 : Level
     {
-        public override void Load(Game game)
+        public override string GridPath => "Tiles\\level1.tmx";
+
+        public override void SetUp()
         {
-            grid = new Grid(game.GetAssetManager().GetAssetPath("Tiles\\level1.tmx"), gridVisible: true, gridColor: Color.DarkBlue);
-            grid.Transform.X = 0;
-            grid.Transform.Y = 0;
             Bootstrap.GetCameraSystem().Size = 16 * 10;
 
             grid.Layers[2].SwitchColliderType<SpikeCollider>();
@@ -26,8 +25,6 @@ namespace PuzzleGame.Levels
             var character = ActorFactory.Zombie(game, grid, 3);
             character.SetPosition(new Vec2Int(0, 5));
             var scenario = new MovingScenario();
-            var group_player = new PlayerControlGroup("PLAYER");
-            var group_environment = new EnvironmentControlGroup("ENVIRONMENT");
 
             group_player.AddActor(character);
             //group.AddActor(character2);
