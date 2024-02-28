@@ -6,6 +6,7 @@
 *   
 */
 
+using Engine.EventSystem;
 using Kintsugi.Assets;
 using Kintsugi.Audio;
 using Kintsugi.Input;
@@ -25,6 +26,7 @@ namespace Kintsugi.Core
         private static InputSystem input;
         private static PhysicsManager phys;
         private static AssetManagerBase asset;
+        private static CameraSystem cameraSystem;
 
         private static int targetFrameRate;
         private static int millisPerFrame;
@@ -114,6 +116,12 @@ namespace Kintsugi.Core
             return runningGame;
         }
 
+        public static CameraSystem GetCameraSystem()
+        {
+            return cameraSystem;
+        }
+
+
         public static void Setup(string path)
         {
             Console.WriteLine("Path is " + path);
@@ -161,6 +169,8 @@ namespace Kintsugi.Core
 
                 Debug.Log("Config file... setting " + kvp.Key + " to " + kvp.Value);
             }
+
+            cameraSystem = new CameraSystem(displayEngine);
 
             if (runningGame == null)
             {
@@ -303,6 +313,8 @@ namespace Kintsugi.Core
                     // Get input, which works at 50 FPS to make sure it doesn't interfere with the 
                     // variable frame rates.
                     input.GetInput();
+
+                    EventManager.I.ProcessQueue();
 
                     // Update runs as fast as the system lets it.  Any kind of movement or counter 
                     // increment should be based then on the deltaTime variable.

@@ -1,9 +1,18 @@
+using System.ComponentModel;
 using Kintsugi.Core;
+using TiledCS;
 
 namespace Kintsugi.Tiles;
 
-public struct Tile(Vec2Int position, Grid parent)
+public struct Tile(int tileId = -1, int tileSetId = -1)
 {
-    public Vec2Int Position { get; } = position;
-    public Grid Parent { get; } = parent;
+    public static Tile Empty => new();
+    /// <summary>
+    /// Local ID of this tile's sprite in its tile set.
+    /// </summary>
+    public int Id { get; internal set; } = tileId;
+    /// <summary>
+    /// ID of the tile set this tile uses.
+    /// </summary>
+    public int TileSetId { get; internal set; } = tileSetId;
 }

@@ -152,6 +152,7 @@ namespace GameTest
                 MyBody.AddForce(this.Transform.Forward, -0.2f);
             }
 
+            Bootstrap.GetCameraSystem().Position = Transform2D.Centre;
 
         }
 
