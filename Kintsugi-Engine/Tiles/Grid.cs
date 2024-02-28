@@ -265,7 +265,7 @@ public class Grid : GameObject
     /// <returns>A dictionary of coordinates as keys, and collections of <see cref="TileObject"/> as values.</returns>
     public IReadOnlyDictionary<Vec2Int, List<TileObject>> GetObjects() => TileObjects;
 
-    public void IsGridPositionWithinGrid(Vec2Int gridPosition)
+    public bool IsGridPositionWithinGrid(Vec2Int gridPosition)
     {
         return gridPosition.x >= 0 && gridPosition.x < GridWidth && gridPosition.y >= 0 && gridPosition.y < GridHeight;
     }
