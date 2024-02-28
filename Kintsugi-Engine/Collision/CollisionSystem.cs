@@ -13,6 +13,8 @@ using TiledCS;
 
 namespace Kintsugi.Collision
 {
+    public enum VoidCollideMode { always, never, voidlayer };
+
     public static class CollisionSystem
     {
         // current rules:
@@ -31,12 +33,11 @@ namespace Kintsugi.Collision
         //trigger at with grid layer    !
         //triggers at with tileobjects  !
 
-        private enum VoidCollideMode { always, never, voidlayer };
-        private static VoidCollideMode voidCollideMode = CollisionSystem.VoidCollideMode.never;
+        public static VoidCollideMode VoidCollideMode { get; set; } = VoidCollideMode.always;
         private static Collider voidCollider;
         private static bool VoidCollision(Collider c)
         {
-            switch (voidCollideMode)
+            switch (VoidCollideMode)
             {
                 case VoidCollideMode.always:
                     return true;
@@ -146,6 +147,11 @@ namespace Kintsugi.Collision
             x = position.x;
             y = position.y;
 
+            if (!grid.IsGridPositionWithinGrid(position))
+            {
+                return VoidCollision(collider);
+            }
+
             foreach (var gridLayer in grid.Layers)
             {
                 if (CollidesColliderWithGridLayerAtPosition(collider, gridLayer, position))
@@ -185,6 +191,11 @@ namespace Kintsugi.Collision
 
             if (gridLayer.Collider.IsTrigger) return false;
 
+            if (!gridLayer.IsGridPositionWithinGrid(position))
+            {
+                return VoidCollision(collider);
+            }
+
             if (!gridLayer.Tiles[position.x, position.y].IsEmpty)
             {
                 if (CollisionSystem.CollidesColliderWithCollider(collider, gridLayer.Collider))
@@ -198,6 +209,11 @@ namespace Kintsugi.Collision
         {
             List<Collider> colliders = new();
             if (collider == null || gridLayer.Collider == null) return colliders;
+
+            if (!gridLayer.IsGridPositionWithinGrid(position))
+            {
+                return colliders;
+            }
 
             if (!gridLayer.Tiles[position.x, position.y].IsEmpty)
             {
@@ -213,6 +229,12 @@ namespace Kintsugi.Collision
         {
             List<Collider> colliders = new();
             if (gridLayer.Collider == null) return colliders;
+
+            if (!gridLayer.IsGridPositionWithinGrid(position))
+            {
+                return colliders;
+            }
+
 
             if (!gridLayer.Tiles[position.x, position.y].IsEmpty)
             {

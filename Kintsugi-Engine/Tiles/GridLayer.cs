@@ -76,4 +76,10 @@ public class GridLayer
     /// <param name="parent">Grid to which this layer should comply to.</param>
     /// <param name="name">Name of this layer.</param>
     public GridLayer(Grid parent, string name = "") : this(parent.GridWidth, parent.GridHeight, name) { }
+
+    public bool IsGridPositionWithinGrid(Vec2Int gridPosition)
+    {
+        return gridPosition.x >= 0 && gridPosition.x < Tiles.GetLength(0) && gridPosition.y >= 0 && gridPosition.y < Tiles.GetLength(1);
+    }
+
 }
