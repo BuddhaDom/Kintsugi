@@ -28,7 +28,7 @@ namespace PuzzleGame
 
                     if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_W)
                     {
-                        if (!CollisionSystem.Collides(Collider, Transform.Grid, Transform.Position + Vec2Int.Down))
+                        if (!CollisionSystem.CollidesColliderWithPosition(Collider, Transform.Grid, Transform.Position + Vec2Int.Down))
                         {
                             EventManager.I.Queue(
                                 new ActionEvent(() =>
@@ -39,7 +39,7 @@ namespace PuzzleGame
                     }
                     if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_S)
                     {
-                        if (!CollisionSystem.Collides(Collider, Transform.Grid, Transform.Position + Vec2Int.Up))
+                        if (!CollisionSystem.CollidesColliderWithPosition(Collider, Transform.Grid, Transform.Position + Vec2Int.Up))
                         {
                             EventManager.I.Queue(
                                 new ActionEvent(() =>
@@ -50,7 +50,7 @@ namespace PuzzleGame
                     }
                     if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_A)
                     {
-                        if (!CollisionSystem.Collides(Collider, Transform.Grid, Transform.Position + Vec2Int.Left))
+                        if (!CollisionSystem.CollidesColliderWithPosition(Collider, Transform.Grid, Transform.Position + Vec2Int.Left))
                         {
                             EventManager.I.Queue(
                                 new ActionEvent(() =>
@@ -61,7 +61,7 @@ namespace PuzzleGame
                     }
                     if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_D)
                     {
-                        if (!CollisionSystem.Collides(Collider, Transform.Grid, Transform.Position + Vec2Int.Right))
+                        if (!CollisionSystem.CollidesColliderWithPosition(Collider, Transform.Grid, Transform.Position + Vec2Int.Right))
                         {
                             EventManager.I.Queue(
                                 new ActionEvent(() =>

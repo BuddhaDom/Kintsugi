@@ -43,7 +43,7 @@ namespace Kintsugi.Collision
             }
             return false;
         }
-        public static bool CollideWith(Collider collider, Collider otherCollider)
+        public static bool CollidesColliderWithCollider(Collider collider, Collider otherCollider)
         {
             if (!collider.IsTrigger && !otherCollider.IsTrigger && CollisionLayerOverlaps(collider.CollideLayers, otherCollider.BelongLayers))
             {
@@ -51,7 +51,7 @@ namespace Kintsugi.Collision
             }
             return false;
         }
-        public static bool TriggerCollision(Collider collider, Collider otherCollider)
+        public static bool TriggerCollidesColliderWithCollider(Collider collider, Collider otherCollider)
         {
             if ((collider.IsTrigger || otherCollider.IsTrigger) && CollisionLayerOverlaps(collider.CollideLayers, otherCollider.BelongLayers))
             {
@@ -59,46 +59,46 @@ namespace Kintsugi.Collision
             }
             return false;
         }
-        public static bool Collides(Collider collider, Grid grid, Vec2Int position)
+        public static bool CollidesColliderWithPosition(Collider collider, Grid grid, Vec2Int position)
         {
-            if (TileObjectCollidesWithTileobjects(collider, grid, position))
+            if (CollidesColliderWithTileobjectsAtPosition(collider, grid, position))
             {
                 return true;
             }
 
-            if (grid != null && TileObjectCollidesWithGrid(collider, grid, position))
+            if (grid != null && CollidesColliderWithGridAtPosition(collider, grid, position))
             {
                 return true;
             }
 
             return false;
         }
-        public static List<Collider> GetCollidingTriggers(Collider collider, Grid grid, Vec2Int position)
+        public static List<Collider> GetCollidingTriggersColliderWithPosition(Collider collider, Grid grid, Vec2Int position)
         {
             List<Collider> colliders = new();
             if (collider == null || grid == null) return colliders;
 
-            colliders.AddRange(GetCollidingTriggersWithTileobjects(collider, grid, position));
+            colliders.AddRange(GetCollidingTriggersColliderWithTileobjectsAtPosition(collider, grid, position));
 
-            colliders.AddRange(GetCollidingTriggersWithGrid(collider, grid, position));
+            colliders.AddRange(GetCollidingTriggersColliderWithGridAtPosition(collider, grid, position));
 
             return colliders;
         }
-        public static bool TileObjectCollidesWithTileobjects(Collider collider, Grid grid, Vec2Int position)
+        public static bool CollidesColliderWithTileobjectsAtPosition(Collider collider, Grid grid, Vec2Int position)
         {
             var otherObjects = grid.GetObjectsAtPosition(position);
             if (otherObjects == null) return false;
 
             foreach (var otherObject in otherObjects)
             {
-                if (otherObject.Collider != null && CollideWith(collider, otherObject.Collider))
+                if (otherObject.Collider != null && CollidesColliderWithCollider(collider, otherObject.Collider))
                 {
                     return true;
                 }
             }
             return false;
         }
-        public static List<Collider> GetCollidingTriggersWithTileobjects(Collider collider, Grid grid, Vec2Int position)
+        public static List<Collider> GetCollidingTriggersColliderWithTileobjectsAtPosition(Collider collider, Grid grid, Vec2Int position)
         {
             List<Collider> colliders = new();
             if (collider == null) return colliders;
@@ -108,14 +108,14 @@ namespace Kintsugi.Collision
 
             foreach (var otherObject in otherObjects)
             {
-                if (otherObject.Collider != null && TriggerCollision(collider, otherObject.Collider))
+                if (otherObject.Collider != null && TriggerCollidesColliderWithCollider(collider, otherObject.Collider))
                 {
                     colliders.Add(otherObject.Collider);
                 }
             }
             return colliders;
         }
-        public static bool TileObjectCollidesWithGrid(Collider collider, Grid grid, Vec2Int position)
+        public static bool CollidesColliderWithGridAtPosition(Collider collider, Grid grid, Vec2Int position)
         {
             if (collider == null) return false;
 
@@ -125,14 +125,14 @@ namespace Kintsugi.Collision
 
             foreach (var gridLayer in grid.Layers)
             {
-                if (TileObjectCollidesWithGridLayer(collider, gridLayer, position))
+                if (CollidesColliderWithGridLayerAtPosition(collider, gridLayer, position))
                 {
                     return true;
                 }
             }
             return false;
         }
-        public static List<Collider> GetCollidingTriggersWithGrid(Collider collider, Grid grid, Vec2Int position)
+        public static List<Collider> GetCollidingTriggersColliderWithGridAtPosition(Collider collider, Grid grid, Vec2Int position)
         {
             List<Collider> colliders = new();
 
@@ -140,23 +140,23 @@ namespace Kintsugi.Collision
 
             foreach (var gridLayer in grid.Layers)
             {
-                colliders.AddRange(GetCollidingTriggersWithGridlayer(collider, gridLayer, position));
+                colliders.AddRange(GetCollidingTriggersColliderWithGridlayerAtPosition(collider, gridLayer, position));
             }
             return colliders;
         }
 
-        public static List<Collider> GetGridCollidingTriggersWithTileobjects(Grid grid, Vec2Int position)
+        public static List<Collider> GetCollidingTriggersGridAtPositionWithTileobjectsAtPosition(Grid grid, Vec2Int position)
         {
             List<Collider> colliders = new();
 
             foreach (var gridLayer in grid.Layers)
             {
-                colliders.AddRange(GetCollidingTileobjectTriggersWithGridlayer(grid, gridLayer, position));
+                colliders.AddRange(GetCollidingTriggersGridlayerAtPositionWithTileobjectsAtPosition(grid, gridLayer, position));
             }
             return colliders;
         }
 
-        public static bool TileObjectCollidesWithGridLayer(Collider collider, GridLayer gridLayer, Vec2Int position)
+        public static bool CollidesColliderWithGridLayerAtPosition(Collider collider, GridLayer gridLayer, Vec2Int position)
         {
             if (collider == null || gridLayer.Collider == null) return false;
 
@@ -164,21 +164,21 @@ namespace Kintsugi.Collision
 
             if (!gridLayer.Tiles[position.x, position.y].IsEmpty)
             {
-                if (CollisionSystem.CollideWith(collider, gridLayer.Collider))
+                if (CollisionSystem.CollidesColliderWithCollider(collider, gridLayer.Collider))
                 {
                     return true;
                 }
             }
             return false;
         }
-        public static List<Collider> GetCollidingTriggersWithGridlayer(Collider collider, GridLayer gridLayer, Vec2Int position)
+        public static List<Collider> GetCollidingTriggersColliderWithGridlayerAtPosition(Collider collider, GridLayer gridLayer, Vec2Int position)
         {
             List<Collider> colliders = new();
             if (collider == null || gridLayer.Collider == null) return colliders;
 
             if (!gridLayer.Tiles[position.x, position.y].IsEmpty)
             {
-                if (CollisionSystem.TriggerCollision(collider, gridLayer.Collider))
+                if (CollisionSystem.TriggerCollidesColliderWithCollider(collider, gridLayer.Collider))
                 {
                     colliders.Add(gridLayer.Collider);
                     Console.WriteLine("Trying to get trigger collider on grid layer");
@@ -186,7 +186,7 @@ namespace Kintsugi.Collision
             }
             return colliders;
         }
-        public static List<Collider> GetCollidingTileobjectTriggersWithGridlayer(Grid grid, GridLayer gridLayer, Vec2Int position)
+        public static List<Collider> GetCollidingTriggersGridlayerAtPositionWithTileobjectsAtPosition(Grid grid, GridLayer gridLayer, Vec2Int position)
         {
             List<Collider> colliders = new();
             if (gridLayer.Collider == null) return colliders;
@@ -197,7 +197,7 @@ namespace Kintsugi.Collision
                 {
                     if (tileObject.Collider == null) continue;
                     
-                    if (CollisionSystem.TriggerCollision(gridLayer.Collider, tileObject.Collider))
+                    if (CollisionSystem.TriggerCollidesColliderWithCollider(gridLayer.Collider, tileObject.Collider))
                     {
                         colliders.Add(gridLayer.Collider);
                         Console.WriteLine("Trying to get trigger collider on grid layer");

@@ -46,7 +46,7 @@ namespace Kintsugi.Objects
                 List<Collider> selfTriggers = new();
                 List<Collider> otherTriggers = new();
 
-                otherTriggers.AddRange(CollisionSystem.GetCollidingTriggers(Collider, Transform.Grid, Transform.Position));
+                otherTriggers.AddRange(CollisionSystem.GetCollidingTriggersColliderWithPosition(Collider, Transform.Grid, Transform.Position));
                 var otherObjects = Transform.Grid.GetObjectsAtPosition(pos);
                 if (otherObjects != null)
                 {
@@ -54,13 +54,13 @@ namespace Kintsugi.Objects
                     {
                         if (tileObject != this && tileObject.Collider != null)
                         {
-                            if (CollisionSystem.TriggerCollision(tileObject.Collider, Collider))
+                            if (CollisionSystem.TriggerCollidesColliderWithCollider(tileObject.Collider, Collider))
                             {
                                 selfTriggers.Add(tileObject.Collider);
                             }
                         }
                     }
-                    selfTriggers.AddRange(CollisionSystem.GetGridCollidingTriggersWithTileobjects(Transform.Grid, Transform.Position));
+                    selfTriggers.AddRange(CollisionSystem.GetCollidingTriggersGridAtPositionWithTileobjectsAtPosition(Transform.Grid, Transform.Position));
                 }
                 
                 foreach (var selfTrigger in selfTriggers)
