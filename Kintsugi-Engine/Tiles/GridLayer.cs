@@ -8,10 +8,34 @@ namespace Kintsugi.Tiles;
 /// <summary>
 /// A layer belonging to a grid, containing tiles.
 /// </summary>
-public struct GridLayer
+public class GridLayer
 {
-    public Collider Collider { get; internal set; }
+    public GridlayerCollider Collider { get; private set; }
 
+    public void SetCollider(HashSet<string> belongLayers, HashSet<string> collideLayers, bool isTrigger = false)
+    {
+        Collider ??= new GridlayerCollider();
+        Collider.IsTrigger = isTrigger;
+        Collider.BelongLayers = belongLayers;
+        Collider.CollideLayers = collideLayers;
+    }
+    public void SetColliderTyped<T>(HashSet<string> belongLayers, HashSet<string> collideLayers, bool isTrigger = false)
+        where T : GridlayerCollider, TileObjectColliderInitialize, new()
+    {
+        Collider = new T();
+        Collider.IsTrigger = isTrigger;
+        Collider.BelongLayers = belongLayers;
+        Collider.CollideLayers = collideLayers;
+    }
+    public void SwitchColliderType<T>()
+        where T: GridlayerCollider, new()
+    {
+        var newCol = new T();
+        newCol.IsTrigger = Collider.IsTrigger;
+        newCol.BelongLayers = Collider.BelongLayers;
+        newCol.CollideLayers = Collider.CollideLayers;
+        Collider = newCol;
+    }
     /// <summary>
     /// Array of tiles belonging to this layer.
     /// </summary>

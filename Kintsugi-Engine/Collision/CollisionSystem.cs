@@ -31,6 +31,29 @@ namespace Kintsugi.Collision
         //trigger at with grid layer    !
         //triggers at with tileobjects  !
 
+        private enum VoidCollideMode { always, never, voidlayer };
+        private static VoidCollideMode voidCollideMode = CollisionSystem.VoidCollideMode.never;
+        private static Collider voidCollider;
+        private static bool VoidCollision(Collider c)
+        {
+            switch (voidCollideMode)
+            {
+                case VoidCollideMode.always:
+                    return true;
+                case VoidCollideMode.never:
+                    return false;
+                case VoidCollideMode.voidlayer:
+                    if (voidCollider == null)
+                    {
+                        voidCollider = new Collider();
+                        voidCollider.BelongLayers.Add("void");
+                    }
+                    return CollidesColliderWithCollider(c, voidCollider);
+                default:
+                    return true;
+            }
+        }
+
         public static string CollisionLayerEmpty => "";
         internal static bool CollisionLayerOverlaps(HashSet<string> collidingObject, HashSet<string> collidesWith)
         {

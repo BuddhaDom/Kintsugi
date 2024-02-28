@@ -8,6 +8,7 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using TacticsGameTest;
 
 namespace PuzzleGame.Levels
 {
@@ -20,6 +21,7 @@ namespace PuzzleGame.Levels
             grid.Transform.Y = 0;
             Bootstrap.GetCameraSystem().Size = 16 * 10;
 
+            grid.Layers[2].SwitchColliderType<SpikeCollider>();
 
             // TODO: This sucks. Should be attached to grid on the transform itself.
             var character = ActorFactory.Zombie(game, grid, 3);

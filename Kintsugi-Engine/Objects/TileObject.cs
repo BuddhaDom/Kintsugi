@@ -19,7 +19,7 @@ namespace Kintsugi.Objects
         /// <summary>
         /// Collision properties of this object.
         /// </summary>
-        public TileObjectCollider? Collider { get; private set; }
+        public Collider? Collider { get; private set; }
         /// <summary>
         /// Graphic properties of this object.
         /// </summary>
@@ -117,6 +117,16 @@ namespace Kintsugi.Objects
         public void SetCollider(HashSet<string> belongLayers, HashSet<string> collideLayers, bool isTrigger = false)
         {
             Collider ??= new TileObjectCollider();
+            ((TileObjectColliderInitialize)Collider).Initialize(this);
+            Collider.IsTrigger = isTrigger;
+            Collider.BelongLayers = belongLayers;
+            Collider.CollideLayers = collideLayers;
+        }
+        public void SetColliderTyped<T>(HashSet<string> belongLayers, HashSet<string> collideLayers, bool isTrigger = false)
+            where T: TileObjectCollider, TileObjectColliderInitialize, new()
+        {
+            Collider = new T();
+            ((TileObjectColliderInitialize)Collider).Initialize(this);
             Collider.IsTrigger = isTrigger;
             Collider.BelongLayers = belongLayers;
             Collider.CollideLayers = collideLayers;
@@ -147,10 +157,6 @@ namespace Kintsugi.Objects
             public Facing Facing { get; internal set; } = Facing.East;
             public Grid? Grid { get; internal set; }
             public int Layer { get; internal set; }
-        }
-
-        public class TileObjectCollider: Collider
-        {
         }
 
         public class TileObjectSprite
