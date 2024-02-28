@@ -25,6 +25,8 @@ namespace PuzzleGame
             grid.Transform.X = 0;
             grid.Transform.Y = 0;
 
+            grid.Layers[2].SwitchColliderType<SpikeCollider>();
+
 
             group_player = new PlayerControlGroup("PLAYER");
             group_environment = new EnvironmentControlGroup("ENVIRONMENT");

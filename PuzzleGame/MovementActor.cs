@@ -28,54 +28,44 @@ namespace PuzzleGame
 
                     if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_W)
                     {
-                        if (!CollisionSystem.CollidesColliderWithPosition(Collider, Transform.Grid, Transform.Position + Vec2Int.Down))
-                        {
-                            EventManager.I.Queue(
-                                new ActionEvent(() =>
-                                    Move(Vec2Int.Down)
-                                    ));
-                            EndTurn();
-                        }
+                        QueueMove(Vec2Int.Down);
+                        EndTurn();
                     }
                     if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_S)
                     {
-                        if (!CollisionSystem.CollidesColliderWithPosition(Collider, Transform.Grid, Transform.Position + Vec2Int.Up))
-                        {
-                            EventManager.I.Queue(
-                                new ActionEvent(() =>
-                                    Move(Vec2Int.Up)
-                                    ));
-                            EndTurn();
-                        }
+                        QueueMove(Vec2Int.Up);
+                        EndTurn();
+                        
                     }
                     if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_A)
                     {
-                        if (!CollisionSystem.CollidesColliderWithPosition(Collider, Transform.Grid, Transform.Position + Vec2Int.Left))
-                        {
-                            EventManager.I.Queue(
-                                new ActionEvent(() =>
-                                    Move(Vec2Int.Left)
-                                    ));
-                            EndTurn();
-                        }
+                        QueueMove(Vec2Int.Left);
+                        EndTurn();
+                        
                     }
                     if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_D)
                     {
-                        if (!CollisionSystem.CollidesColliderWithPosition(Collider, Transform.Grid, Transform.Position + Vec2Int.Right))
-                        {
-                            EventManager.I.Queue(
-                                new ActionEvent(() =>
-                                    Move(Vec2Int.Right)
-                                    ));
-                            EndTurn();
-                        }
-
+                        QueueMove(Vec2Int.Right);
+                        EndTurn();
                     }
                     if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_SPACE)
                     {
                         EndTurn();
                     }
                 }
+            }
+        }
+
+        public void QueueMove(Vec2Int move)
+        {
+            for (int i = 0; i < speed; i++)
+            {
+                EventManager.I.Queue(
+                                new ActionEvent(() => {
+                                    if (!CollisionSystem.CollidesColliderWithPosition(Collider, Transform.Grid, Transform.Position + move))
+                                        Move(move);
+                                }
+                                    ));
             }
         }
 

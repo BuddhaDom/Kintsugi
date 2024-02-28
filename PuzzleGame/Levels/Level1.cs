@@ -19,10 +19,10 @@ namespace PuzzleGame.Levels
         {
             Bootstrap.GetCameraSystem().Size = 16 * 10;
 
-            grid.Layers[2].SwitchColliderType<SpikeCollider>();
+            
 
             // TODO: This sucks. Should be attached to grid on the transform itself.
-            var character = ActorFactory.Zombie(game, grid, 3);
+            var character = ActorFactory.Skeleton(game, grid);
             character.SetPosition(new Vec2Int(0, 5));
             var scenario = new MovingScenario();
 
