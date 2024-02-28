@@ -1,4 +1,5 @@
-﻿using Kintsugi.Core;
+﻿using Kintsugi.Audio;
+using Kintsugi.Core;
 using Kintsugi.Tiles;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,9 @@ namespace PuzzleGame
         public abstract string GridPath { get; }
         public void Load(Game game) {
             this.game = game;
+
+            var ambience = ((SoundFMOD)Bootstrap.GetSound()).LoadEventDescription("event:/DungeonAmbience");
+            ambience.PlayImmediate();
 
             grid = new Grid(game.GetAssetManager().GetAssetPath(GridPath), gridVisible: true, gridColor: Color.DarkBlue);
             grid.Transform.X = 0;
