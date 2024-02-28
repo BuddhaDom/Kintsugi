@@ -41,7 +41,7 @@ namespace PuzzleGame
                 new Vector2(6.5f, 8.5f)); 
             character.SetCollider([], ["unit"], false);
 
-            character.AddToGrid(grid, 3); 
+            character.AddToGrid(grid, 2); 
             return character;
         }
 

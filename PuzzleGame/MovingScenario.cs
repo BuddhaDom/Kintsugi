@@ -6,7 +6,6 @@ namespace PuzzleGame
 {
     internal class MovingScenario : ScenarioManager
     {
-        public EventHandler OnWin;
         public List<Actor> goals = new();
         public override void OnBeginRound()
         {
@@ -39,7 +38,9 @@ namespace PuzzleGame
 
                 if (allCollides)
                 {
+
                     Console.WriteLine("cogneratiualations");
+                    LevelManager.Instance.LoadNext();
                 }
             }
         }

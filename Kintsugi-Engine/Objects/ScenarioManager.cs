@@ -11,7 +11,7 @@ namespace Kintsugi.Objects
     public abstract class ScenarioManager
     {
         public event EventHandler OnTurnOrderFinished;
-
+        private bool ended;
         public ScenarioManager()
         {
             roundManager = new(this);
@@ -43,6 +43,7 @@ namespace Kintsugi.Objects
         public void EndScenario()
         {
             OnEndScenario();
+            roundManager.OnRoundFinished -= NextRound;
             OnTurnOrderFinished?.Invoke(this, EventArgs.Empty);
         }
         public void AddControlGroup(ControlGroup c)

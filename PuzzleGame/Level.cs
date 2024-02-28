@@ -12,6 +12,8 @@ namespace PuzzleGame
     internal abstract class Level
     {
         public Grid grid;
+        public MovingScenario scenario;
+
         public PlayerControlGroup group_player;
         public EnvironmentControlGroup group_environment;
 
@@ -37,6 +39,8 @@ namespace PuzzleGame
         public void Unload()
         {
             grid = null;
+            scenario.EndScenario();
+            scenario = null;
         }
     }
 }
