@@ -6,10 +6,11 @@ namespace Kintsugi.Objects.Graphics;
 public struct SpriteSheet : ISpriteProperties
 {
     public int CellsPerRow { get; init; }
+    public int CellsPerColumn { get; init; }
     public Vector2 Padding { get; }
     public Vector2 Margin { get; }
 
-    public SpriteSheet(string path, int cellsPerRow, int spriteHeight, int spriteWidth, 
+    public SpriteSheet(string path, int cellsPerRow, int cellsPerColumn, int spriteHeight, int spriteWidth, 
         Vector2 tilePivot = default, Vector2 imagePivot= default, Vector2 padding= default, Vector2 margin= default)
     {
         Path = path;
@@ -19,6 +20,7 @@ public struct SpriteSheet : ISpriteProperties
         ImagePivot = imagePivot;
         
         CellsPerRow = cellsPerRow;
+        CellsPerColumn = cellsPerColumn;
         Padding = padding;
         Margin = margin;
         

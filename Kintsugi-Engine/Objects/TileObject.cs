@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using System.Runtime.CompilerServices;
 using Kintsugi.Core;
 using Kintsugi.Objects.Graphics;
 using Kintsugi.Objects.Properties;
@@ -134,12 +135,10 @@ namespace Kintsugi.Objects
         /// <param name="imagePivot">
         /// Position on the sprite which will match positions with the <paramref name="tilePivot"/>.
         /// Defined between <see cref="Vector2.Zero"/> the pixel width and height of the sprite.</param>
-        public void SetSpriteSingle(string path, Vector2 tilePivot = default, Vector2 imagePivot = default)
+        public void SetSpriteSingle(string path, Vector2 tilePivot = default, Vector2 imagePivot = default) 
         {
-            // Initialize the property.
-            Graphic ??= new SpriteSingle(this);
-            ((SpriteSingle)Graphic).Sprite = new Sprite(path);
-            Graphic.Properties.TilePivot = tilePivot;
+            SetSpriteSingle(new Sprite(path));
+            Graphic!.Properties.TilePivot = tilePivot;
             Graphic.Properties.ImagePivot = imagePivot;
         }
 
@@ -149,6 +148,21 @@ namespace Kintsugi.Objects
         /// <param name="sprite">Sprite to copy from.</param>
         public void SetSpriteSingle(SpriteSingle sprite)
             => SetSpriteSingle(sprite.Sprite.Path, sprite.Sprite.TilePivot, sprite.Sprite.ImagePivot);
+
+        public void SetSpriteSingle(Sprite sprite)
+        {
+            // Initialize the property.
+            Graphic ??= new SpriteSingle(this);
+            ((SpriteSingle)Graphic).Sprite = sprite;
+        }
+
+        
+
+        public void SetAnimation(SpriteSheet spriteSheet, float runTime, IOrderedEnumerable<int> frames, 
+            int repeats = 0, bool bounces = false, bool autoStart = false)
+        {
+            Graphic ??= new Animation(this);
+        }
         
         public void SetAnimation(Animation animation)
         {
