@@ -1,10 +1,8 @@
 ﻿using System.Numerics;
 using Kintsugi.Core;
+using Kintsugi.Objects.Graphics;
 using Kintsugi.Objects.Properties;
-using Kintsugi.Objects.Sprites;
-using Kintsugi.Rendering;
 using Kintsugi.Tiles;
-using SDL2;
 using SixLabors.ImageSharp;
 
 namespace Kintsugi.Objects
@@ -25,7 +23,7 @@ namespace Kintsugi.Objects
         /// <summary>
         /// Graphic properties of this object.
         /// </summary>
-        public ISpriteable? Sprite { get; private set; }
+        public ISpriteable? Graphic { get; private set; }
         
         /// <summary>
         /// Creates a <see cref="TileObject"/> with a default Transform property. 
@@ -137,30 +135,30 @@ namespace Kintsugi.Objects
         /// <param name="imagePivot">
         /// Position on the sprite which will match positions with the <paramref name="tilePivot"/>.
         /// Defined between <see cref="Vector2.Zero"/> the pixel width and height of the sprite.</param>
-        public void SetSprite(string path, Vector2 tilePivot = default, Vector2 imagePivot = default)
+        public void SetSpriteSingle(string path, Vector2 tilePivot = default, Vector2 imagePivot = default)
         {
             // Initialize the property.
-            Sprite ??= new TileObjectSprite(this);
-            Sprite.Path = path;
-            Sprite.TilePivot = tilePivot;
-            Sprite.ImagePivot = imagePivot;
+            Graphic ??= new SpriteSingle(this);
+            Graphic.Properties.Path = path;
+            Graphic.Properties.TilePivot = tilePivot;
+            Graphic.Properties.ImagePivot = imagePivot;
             
             // Get the Height and Width
             if (path == "") return;
             var image = Image.Load(path);
-            Sprite.SpriteHeight = image.Height;
-            Sprite.SpriteWidth = image.Width;
+            Graphic.Properties.SpriteHeight = image.Height;
+            Graphic.Properties.SpriteWidth = image.Width;
             image.Dispose();
         }
 
         /// <summary>
-        /// Add a sprite to this property to be copied from another <see cref="TileObjectSprite"/>
+        /// Add a sprite to this property to be copied from another <see cref="SpriteSingle"/>
         /// </summary>
         /// <param name="sprite">Sprite to copy from.</param>
-        public void SetSprite(TileObjectSprite sprite)
-            => SetSprite(sprite.Path, sprite.TilePivot, sprite.ImagePivot);
-
-        public void SetSprite(Animation animation)
+        public void SetSpriteSingle(SpriteSingle sprite)
+            => SetSpriteSingle(sprite.Sprite.Path, sprite.Sprite.TilePivot, sprite.Sprite.ImagePivot);
+        
+        public void SetAnimation(Animation animation)
         {
             
         }
@@ -216,49 +214,6 @@ namespace Kintsugi.Objects
             /// The object this property modifies.
             /// </summary>
             public TileObject Parent { get; } = parent;
-        }
-        
-        /// <summary>
-        /// Graphic properties of a tile object.
-        /// </summary>
-        public class TileObjectSprite(TileObject parent) : ISpriteable
-        {
-            /// <summary>
-            /// File path of the tile object's sprite.
-            /// </summary>
-            public string Path { get; set; } = "";
-            /// <summary>
-            /// Position on the tile from which the object is rendered.
-            /// Defined between <see cref="Vector2.Zero"/> and <see cref="Vector2.One"/> as the upper and lower bounds of the tile width.
-            /// </summary>
-            public Vector2 TilePivot { get; set; } = Vector2.Zero;
-            /// <summary>
-            /// Position on the sprite which will match positions with the <see cref="TilePivot"/>.
-            /// Defined between <see cref="Vector2.Zero"/> and this sprite's <see cref="SpriteWidth"/> and <see cref="SpriteHeight"/>. 
-            /// </summary>
-            public Vector2 ImagePivot { get; set; } = Vector2.Zero;
-            /// <summary>
-            /// Height of the object in pixels.
-            /// </summary>
-            public int SpriteHeight { get; set; }
-            /// <summary>
-            /// Width of the object in pixels.
-            /// </summary>
-            public int SpriteWidth { get; set; }
-            /// <summary>
-            /// The object this property modifies.
-            /// </summary>
-            public TileObject Parent { get; } = parent;
-
-            public SDL.SDL_Rect SourceRect()
-                => new() {
-                    x = 0,
-                    y = 0,
-                    w = SpriteWidth,
-                    h = SpriteHeight,
-                };
-            
-            public nint Texture => ((DisplaySDL)Bootstrap.GetDisplay()).LoadTexture(Path);
         }
     }
 }

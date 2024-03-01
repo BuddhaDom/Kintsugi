@@ -31,7 +31,7 @@ namespace TacticsGameTest
             character.AddToGrid(grid, 0);
             character.SetPosition(Vec2Int.One * 3);
             character.SetCollider(["mine"], ["yours"]);
-            character.SetSprite(GetAssetManager().GetAssetPath("guy.png"), 
+            character.SetSpriteSingle(GetAssetManager().GetAssetPath("guy.png"), 
                 Vector2.One / 2, new Vector2(6.5f, 8.5f));
                 
             scenario = new MovingScenario();

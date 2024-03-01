@@ -318,24 +318,25 @@ namespace Kintsugi.Rendering
                     for (int y = 0; y < grid.GridHeight; y++)
                     for (int x = 0; x < grid.GridWidth; x++)
                     {
+                        // Only proceed if there's any TileObjects in this coordinate.
                         if (!grid.TileObjects.TryGetValue(new Vec2Int(x, y), out var tileObjects)) 
                             continue;
                         foreach (var tileObject in tileObjects.Where(o=> o.Transform.Layer == i))
                         {
-                            var sprite = tileObject.Sprite!.Texture;
+                            var sprite = ((DisplaySDL)Bootstrap.GetDisplay()).LoadTexture(tileObject.Graphic!.Properties.Path);
 
-                            sRect = tileObject.Sprite!.SourceRect();
+                            sRect = tileObject.Graphic!.SourceRect();
 
-                            var localTilePivot = tileObject.Sprite.TilePivot * grid.TileWidth;
-                            var pivotOffsets = localTilePivot - tileObject.Sprite.ImagePivot;
+                            var localTilePivot = tileObject.Graphic.Properties.TilePivot * grid.TileWidth;
+                            var pivotOffsets = localTilePivot - tileObject.Graphic.Properties.ImagePivot;
 
                             var uScreenPos = cam.WorldToScreenSpace(new Vector2(
                                 grid.Transform2D.X + x * grid.TileWidth + pivotOffsets.X,
                                 grid.Transform2D.Y + y * grid.TileWidth + pivotOffsets.Y));
                             var vScreenPos = cam.WorldToScreenSpace(new Vector2(
-                                grid.Transform2D.X + x * grid.TileWidth + pivotOffsets.X + tileObject.Sprite.SpriteWidth,
+                                grid.Transform2D.X + x * grid.TileWidth + pivotOffsets.X + tileObject.Graphic.Properties.SpriteWidth,
                                 grid.Transform2D.Y + y * grid.TileWidth + pivotOffsets.Y +
-                                tileObject.Sprite.SpriteHeight));
+                                tileObject.Graphic.Properties.SpriteHeight));
 
                             int xsize = (int)vScreenPos.X - (int)uScreenPos.X;
                             int ysize = (int)vScreenPos.Y - (int)uScreenPos.Y;
