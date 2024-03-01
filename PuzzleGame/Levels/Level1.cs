@@ -123,22 +123,16 @@ namespace PuzzleGame.Levels
             var character2 = ActorFactory.Zombie(game, grid);
             character2.SetPosition(new Vec2Int(0, 3));
 
-            var character3 = ActorFactory.Skeleton(game, grid);
-            character3.SetPosition(new Vec2Int(0, 5));
-
             scenario.goals = new List<Actor>()
             {
-                ActorFactory.Goal(game, grid),
                 ActorFactory.Goal(game, grid),
                 ActorFactory.Goal(game, grid),
             };
             scenario.goals[0].SetPosition(new Vec2Int(1, 1));
             scenario.goals[1].SetPosition(new Vec2Int(1, 3));
-            scenario.goals[2].SetPosition(new Vec2Int(1, 5));
 
             group_player.AddActor(character);
             group_player.AddActor(character2);
-            group_player.AddActor(character3);
 
             scenario.AddControlGroup(group_player);
             // scenario.AddControlGroup(group2);
