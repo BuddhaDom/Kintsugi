@@ -108,14 +108,52 @@ namespace PuzzleGame.Levels
             scenario.BeginScenario();
         }
     }
+    internal class Level4 : Level
+    {
+        public override string GridPath => "Tiles\\level4.tmx";
+
+        public override void SetUp()
+        {
+            Bootstrap.GetCameraSystem().Size = 4 * 15;
+            Bootstrap.GetCameraSystem().Position = new Vector2(50, 50);
+
+            var character = ActorFactory.Skeleton(game, grid);
+            character.SetPosition(new Vec2Int(0, 1));
+
+            var character2 = ActorFactory.Zombie(game, grid);
+            character2.SetPosition(new Vec2Int(0, 3));
+
+            var character3 = ActorFactory.Skeleton(game, grid);
+            character3.SetPosition(new Vec2Int(0, 5));
+
+            scenario.goals = new List<Actor>()
+            {
+                ActorFactory.Goal(game, grid),
+                ActorFactory.Goal(game, grid),
+                ActorFactory.Goal(game, grid),
+            };
+            scenario.goals[0].SetPosition(new Vec2Int(1, 1));
+            scenario.goals[1].SetPosition(new Vec2Int(1, 3));
+            scenario.goals[2].SetPosition(new Vec2Int(1, 5));
+
+            group_player.AddActor(character);
+            group_player.AddActor(character2);
+            group_player.AddActor(character3);
+
+            scenario.AddControlGroup(group_player);
+            // scenario.AddControlGroup(group2);
+
+            scenario.BeginScenario();
+        }
+    }
     internal class cutscene_EasterEgg : Level
     {
         public override string GridPath => "Tiles\\cutscene_Easteregg.tmx";
 
         public override void SetUp()
         {
-            Bootstrap.GetCameraSystem().Size = 4 * 15;
-            Bootstrap.GetCameraSystem().Position = new Vector2(50, 50);
+            Bootstrap.GetCameraSystem().Size = 2 * 10;
+            Bootstrap.GetCameraSystem().Position = new Vector2(150, 150);
 
             var music = ((SoundFMOD)Bootstrap.GetSound()).LoadEventDescription("event:/Music");
             music.PlayImmediate();

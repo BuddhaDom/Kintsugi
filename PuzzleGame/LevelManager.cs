@@ -25,6 +25,7 @@ namespace PuzzleGame
 
 
         public List<Level> Levels = new List<Level>{
+            new Level4(),
             new Level1(),
             new Level2(),
             new Level3(),
