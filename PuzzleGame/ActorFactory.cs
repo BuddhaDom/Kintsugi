@@ -35,6 +35,18 @@ namespace PuzzleGame
             return character;
         }
 
+        public static MovementActor Mummy(Game game, Grid grid)
+        {
+            var character = new MovementActor("Mummy");
+            character.SetCollider(["unit"], ["unit", "flying_unit", "wall", "spikes"], false);
+            character.SetSprite(game.GetAssetManager().GetAssetPath("mummy.png"), Vector2.One / 2,
+                new Vector2(6.5f, 8.5f));
+            character.AddToGrid(grid, 2); // this should be inherited from a generic unit
+            character.speed = 1;
+            character.reverse_movement = -1;
+            return character;
+        }
+
         public static MovementActor Ghost(Game game, Grid grid)
         {
             var character = new MovementActor("Ghost");

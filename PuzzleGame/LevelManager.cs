@@ -25,12 +25,13 @@ namespace PuzzleGame
 
 
         public List<Level> Levels = new List<Level>{
-            new Level6(),
-            new Level5(),
-            new Level4(),
             new Level1(),
             new Level2(),
             new Level3(),
+            new Level4(),
+            new Level5(),
+            new Level6(),
+            new Level7(),
             new cutscene_EasterEgg()
         };
         int currentIndex = -1;

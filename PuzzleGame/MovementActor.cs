@@ -7,6 +7,7 @@ using Engine.EventSystem;
 using Kintsugi.EventSystem.Events;
 using Kintsugi.Collision;
 using Kintsugi.Objects.Properties;
+using FMOD;
 
 namespace PuzzleGame
 {
@@ -32,6 +33,7 @@ namespace PuzzleGame
     {
         private string name;
         public int speed;
+        public int reverse_movement = 1;
         public MovementActor(string name)
         {
             this.name = name;
@@ -46,24 +48,24 @@ namespace PuzzleGame
 
                     if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_W)
                     {
-                        QueueMove(Vec2Int.Down);
+                        QueueMove(Vec2Int.Down * reverse_movement);
                         EndTurn();
                     }
                     if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_S)
                     {
-                        QueueMove(Vec2Int.Up);
+                        QueueMove(Vec2Int.Up * reverse_movement);
                         EndTurn();
                         
                     }
                     if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_A)
                     {
-                        QueueMove(Vec2Int.Left);
+                        QueueMove(Vec2Int.Left * reverse_movement);
                         EndTurn();
                         
                     }
                     if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_D)
                     {
-                        QueueMove(Vec2Int.Right);
+                        QueueMove(Vec2Int.Right * reverse_movement);
                         EndTurn();
                     }
                     if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_SPACE)

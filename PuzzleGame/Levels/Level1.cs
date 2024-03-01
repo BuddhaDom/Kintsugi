@@ -211,13 +211,46 @@ namespace PuzzleGame.Levels
             scenario.BeginScenario();
         }
     }
+    internal class Level7 : Level
+    {
+        public override string GridPath => "Tiles\\level7.tmx";
+
+        public override void SetUp()
+        {
+            Bootstrap.GetCameraSystem().Size = 4 * 20;
+            Bootstrap.GetCameraSystem().Position = new Vector2(70, 75);
+
+            var character = ActorFactory.Zombie(game, grid);
+            character.SetPosition(new Vec2Int(5, 4));
+
+            var character2 = ActorFactory.Mummy(game, grid);
+            character2.SetPosition(new Vec2Int(3, 4));
+
+            scenario.goals = new List<Actor>()
+            {
+                ActorFactory.Goal(game, grid),
+                ActorFactory.Goal(game, grid),
+            };
+            scenario.goals[0].SetPosition(new Vec2Int(0, 2));
+            scenario.goals[1].SetPosition(new Vec2Int(8, 1));
+
+
+            group_player.AddActor(character);
+            group_player.AddActor(character2);
+
+            scenario.AddControlGroup(group_player);
+            // scenario.AddControlGroup(group2);
+
+            scenario.BeginScenario();
+        }
+    }
     internal class cutscene_EasterEgg : Level
     {
         public override string GridPath => "Tiles\\cutscene_Easteregg.tmx";
 
         public override void SetUp()
         {
-            Bootstrap.GetCameraSystem().Size = 2 * 10;
+            Bootstrap.GetCameraSystem().Size = 20 * 10;
             Bootstrap.GetCameraSystem().Position = new Vector2(150, 150);
 
             var music = ((SoundFMOD)Bootstrap.GetSound()).LoadEventDescription("event:/Music");
