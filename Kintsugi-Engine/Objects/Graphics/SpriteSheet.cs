@@ -36,8 +36,8 @@ public struct SpriteSheet : ISpriteProperties
     public string Path { get; set; }
     public int SpriteWidth { get; set; }
     public int SpriteHeight { get; set; }
-    public Vector2 TilePivot { get; set; }
-    public Vector2 ImagePivot { get; set; }
     public int ImageWidth { get; set; }
     public int ImageHeight { get; set; }
+    public Vector2 TilePivot { get; set; }
+    public Vector2 ImagePivot { get; set; }
 }

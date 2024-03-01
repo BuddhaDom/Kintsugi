@@ -318,14 +318,17 @@ namespace Kintsugi.Rendering
                     for (int y = 0; y < grid.GridHeight; y++)
                     for (int x = 0; x < grid.GridWidth; x++)
                     {
-                        // Only proceed if there's any TileObjects in this coordinate.
+                        // Only proceed if there's any TileObjects in this coordinate with a graphic element.
                         if (!grid.TileObjects.TryGetValue(new Vec2Int(x, y), out var tileObjects)) 
                             continue;
-                        foreach (var tileObject in tileObjects.Where(o=> o.Transform.Layer == i))
+                        foreach (var tileObject in tileObjects.Where(o=> 
+                                     o.Transform.Layer == i &&
+                                     o.Graphic != null
+                                     ))
                         {
                             var sprite = ((DisplaySDL)Bootstrap.GetDisplay()).LoadTexture(tileObject.Graphic!.Properties.Path);
 
-                            sRect = tileObject.Graphic!.SourceRect();
+                            sRect = tileObject.Graphic.SourceRect();
 
                             var localTilePivot = tileObject.Graphic.Properties.TilePivot * grid.TileWidth;
                             var pivotOffsets = localTilePivot - tileObject.Graphic.Properties.ImagePivot;

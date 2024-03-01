@@ -4,7 +4,7 @@ namespace Kintsugi.Objects.Graphics;
 
 public class SpriteSingle(TileObject parent) : ISpriteable
 {
-    public Sprite Sprite { get; set; }
+    public Sprite Sprite { get; internal set; }
     /// <summary>
     /// The object this property modifies.
     /// </summary>
@@ -18,5 +18,4 @@ public class SpriteSingle(TileObject parent) : ISpriteable
             w = Sprite.SpriteWidth,
             h = Sprite.SpriteHeight,
         };
-    
 }

@@ -13,7 +13,7 @@ public class Animation(TileObject parent) : ISpriteable
     public bool ShouldBounce { get; set; }
     public float StartTime { get; set; }
     public float CurrentTime => Bootstrap.GetCurrentMillis() / 1000f - StartTime;
-    public SpriteSheet SpriteSheet { get; set; }
+    public SpriteSheet SpriteSheet { get; internal set; }
     private IReadOnlyList<int> frameIndexes = [];
     public IReadOnlyList<int> FrameIndexes
     {

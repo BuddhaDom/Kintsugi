@@ -39,7 +39,7 @@ namespace TacticsGameTest
             // var group2 = new MyControlGroup("bob's group");
 
             group.AddActor(character);
-            group.AddActor(character2);
+            //group.AddActor(character2);
 
             scenario.AddControlGroup(group);
             // scenario.AddControlGroup(group2);

@@ -5,11 +5,9 @@ namespace Kintsugi.Objects.Graphics;
 
 public struct Sprite : ISpriteProperties
 {
-    public Sprite(string path, int spriteHeight, int spriteWidth)
+    public Sprite(string path)
     {
         Path = path;
-        SpriteHeight = spriteHeight;
-        SpriteWidth = spriteWidth;
         
         // Get the Height and Width
         if (path == "") return;
@@ -17,6 +15,9 @@ public struct Sprite : ISpriteProperties
         ImageHeight = image.Height;
         ImageWidth = image.Width;
         image.Dispose();
+        
+        SpriteHeight = ImageHeight;
+        SpriteWidth = ImageWidth;
     }
     
     // ===================================================
@@ -25,8 +26,8 @@ public struct Sprite : ISpriteProperties
     public string Path { get; set; } = "";
     public int SpriteWidth { get; set; }
     public int SpriteHeight { get; set; }
-    public Vector2 TilePivot { get; set; } = Vector2.Zero;
-    public Vector2 ImagePivot { get; set; } = Vector2.Zero;
     public int ImageWidth { get; set; }
     public int ImageHeight { get; set; }
+    public Vector2 TilePivot { get; set; }
+    public Vector2 ImagePivot { get; set; }
 }

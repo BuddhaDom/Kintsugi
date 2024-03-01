@@ -72,9 +72,8 @@ namespace Kintsugi.Objects
         {
             ArgumentNullException.ThrowIfNull(grid);
             
-            if (grid.TileObjects.TryGetValue(Transform.Position, out _)) return;
+            if (grid.TileObjects.TryGetValue(Transform.Position, out _))
                 grid.TileObjects[Transform.Position].Remove(this);
-                
             if (grid.TileObjects[Transform.Position].Count == 0)
                 grid.TileObjects.Remove(Transform.Position);
         }
@@ -139,16 +138,9 @@ namespace Kintsugi.Objects
         {
             // Initialize the property.
             Graphic ??= new SpriteSingle(this);
-            Graphic.Properties.Path = path;
+            ((SpriteSingle)Graphic).Sprite = new Sprite(path);
             Graphic.Properties.TilePivot = tilePivot;
             Graphic.Properties.ImagePivot = imagePivot;
-            
-            // Get the Height and Width
-            if (path == "") return;
-            var image = Image.Load(path);
-            Graphic.Properties.SpriteHeight = image.Height;
-            Graphic.Properties.SpriteWidth = image.Width;
-            image.Dispose();
         }
 
         /// <summary>
