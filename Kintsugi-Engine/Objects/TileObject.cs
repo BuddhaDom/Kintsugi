@@ -1,6 +1,7 @@
 ﻿using System.Numerics;
 using System.Runtime.CompilerServices;
 using Kintsugi.Core;
+using Kintsugi.Objects.Graphics;
 using Kintsugi.Objects.Properties;
 using Kintsugi.Tiles;
 using SixLabors.ImageSharp;
@@ -23,7 +24,7 @@ namespace Kintsugi.Objects
         /// <summary>
         /// Graphic properties of this object.
         /// </summary>
-        public TileObjectSprite? Sprite { get; private set; }
+        public ISpriteable? Graphic { get; private set; }
         
         /// <summary>
         /// Creates a <see cref="TileObject"/> with a default Transform property. 
@@ -72,9 +73,8 @@ namespace Kintsugi.Objects
         {
             ArgumentNullException.ThrowIfNull(grid);
             
-            if (grid.TileObjects.TryGetValue(Transform.Position, out _)) return;
+            if (grid.TileObjects.TryGetValue(Transform.Position, out _))
                 grid.TileObjects[Transform.Position].Remove(this);
-                
             if (grid.TileObjects[Transform.Position].Count == 0)
                 grid.TileObjects.Remove(Transform.Position);
         }
@@ -135,28 +135,42 @@ namespace Kintsugi.Objects
         /// <param name="imagePivot">
         /// Position on the sprite which will match positions with the <paramref name="tilePivot"/>.
         /// Defined between <see cref="Vector2.Zero"/> the pixel width and height of the sprite.</param>
-        public void SetSprite(string path, Vector2 tilePivot = default, Vector2 imagePivot = default)
+        public void SetSpriteSingle(string path, Vector2 tilePivot = default, Vector2 imagePivot = default) 
         {
-            // Initialize the property.
-            Sprite ??= new TileObjectSprite(this);
-            Sprite.Path = path;
-            Sprite.TilePivot = tilePivot;
-            Sprite.ImagePivot = imagePivot;
-            
-            // Get the Height and Width
-            if (path == "") return;
-            var image = Image.Load(path);
-            Sprite.Height = image.Height;
-            Sprite.Width = image.Width;
-            image.Dispose();
+            SetSpriteSingle(new Sprite(path));
+            Graphic!.Properties.TilePivot = tilePivot;
+            Graphic.Properties.ImagePivot = imagePivot;
         }
 
-        /// <summary>
-        /// Add a sprite to this property to be copied from another <see cref="TileObjectSprite"/>
-        /// </summary>
-        /// <param name="sprite">Sprite to copy from.</param>
-        public void SetSprite(TileObjectSprite sprite)
-            => SetSprite(sprite.Path, sprite.TilePivot, sprite.ImagePivot);
+        public void SetSpriteSingle(Sprite sprite)
+        {
+            Graphic ??= new SpriteSingle(this);
+            ((SpriteSingle)Graphic).Sprite = sprite;
+        }
+
+        public void SetSpriteSingle(SpriteSingle spriteSingle)
+            => SetSpriteSingle(spriteSingle.Sprite);
+
+        public void SetAnimation(SpriteSheet spriteSheet, double timeLength, IEnumerable<int> frames,
+            int repeats = 0, bool bounces = false, bool autoStart = true)
+        {
+            var animation = new Animation(this, timeLength, spriteSheet, frames, repeats, bounces);
+            Graphic ??= animation;
+            if (autoStart) ((Animation)Graphic).Start();
+        }
+        
+        public void SetAnimation(string path, int spriteHeight, int spriteWidth, int spritesPerRow, double timeLength,
+            IEnumerable<int> frames, Vector2 tilePivot = default, Vector2 imagePivot = default,
+            Vector2 padding = default, Vector2 margin = default, int repeats = 0, bool bounces = false, 
+            bool autoStart = true)
+            => SetAnimation(
+                new SpriteSheet(path, spriteHeight, spriteWidth, spritesPerRow, tilePivot, imagePivot, padding, margin),
+                timeLength, frames, repeats, bounces, autoStart
+            );
+
+        public void SetAnimation(Animation animation, bool autoStart = true)
+            => SetAnimation(animation.SpriteSheet, animation.TimeLength, animation.FrameIndexes, animation.Repeats,
+                animation.Bounces, autoStart);
     }
     
     namespace Properties
@@ -210,39 +224,5 @@ namespace Kintsugi.Objects
             /// </summary>
             public TileObject Parent { get; } = parent;
         }
-        
-        /// <summary>
-        /// Graphic properties of a tile object.
-        /// </summary>
-        public class TileObjectSprite(TileObject parent)
-        {
-            /// <summary>
-            /// File path of the tile object's sprite.
-            /// </summary>
-            public string Path { get; internal set; } = "";
-            /// <summary>
-            /// Position on the tile from which the object is rendered.
-            /// Defined between <see cref="Vector2.Zero"/> and <see cref="Vector2.One"/> as the upper and lower bounds of the tile width.
-            /// </summary>
-            public Vector2 TilePivot { get; internal set; } = Vector2.Zero;
-            /// <summary>
-            /// Position on the sprite which will match positions with the <see cref="TilePivot"/>.
-            /// Defined between <see cref="Vector2.Zero"/> and this sprite's <see cref="Width"/> and <see cref="Height"/>. 
-            /// </summary>
-            public Vector2 ImagePivot { get; internal set; } = Vector2.Zero;
-            /// <summary>
-            /// Height of the object in pixels.
-            /// </summary>
-            public int Height { get; internal set; }
-            /// <summary>
-            /// Width of the object in pixels.
-            /// </summary>
-            public int Width { get; internal set; }
-            /// <summary>
-            /// The object this property modifies.
-            /// </summary>
-            public TileObject Parent { get; } = parent;
-        }
     }
-
 }
