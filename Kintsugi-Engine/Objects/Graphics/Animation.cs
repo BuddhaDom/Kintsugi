@@ -5,15 +5,17 @@ namespace Kintsugi.Objects.Graphics;
 
 public class Animation(TileObject parent) : ISpriteable
 {
-    public float TimeLength { get; set; }
+    public double TimeLength { get; set; }
     /// <summary>
     /// Number of times the animation should repeat. Set to <c>0</c> if it repeats indefinitely.
     /// </summary>
     public int Repeats { get; set; }
-    public bool ShouldBounce { get; set; }
-    public float StartTime { get; set; }
-    public float CurrentTime => Bootstrap.GetCurrentMillis() / 1000f - StartTime;
+    public bool Bounces { get; set; }
+    public bool Playing { get; private set; }
+    public double StartTime { get; private set; }
+    public double PlayingTime => Playing ? Bootstrap.TimeElapsed - StartTime : 0d;
     public SpriteSheet SpriteSheet { get; internal set; }
+    private IReadOnlyList<int> BounceFrameIndexes { get; set; } = [];
     private IReadOnlyList<int> frameIndexes = [];
     public IReadOnlyList<int> FrameIndexes
     {
@@ -21,28 +23,31 @@ public class Animation(TileObject parent) : ISpriteable
         set
         {
             frameIndexes = value;
-            BounceFrameIndexes = new List<int>(value).Concat(value.AsEnumerable().Reverse().SkipLast(1)).ToList();
+            BounceFrameIndexes = new List<int>(value).Concat(value.AsEnumerable().Reverse().Skip(1).SkipLast(1)).ToList();
         }
     }
-    private List<int> BounceFrameIndexes { get; set; } = [];
     
-    public Animation(float timeLength, SpriteSheet graphic, IOrderedEnumerable<int> frames, TileObject parent,
-        int repeats = 0, bool shouldBounce = false) : this(parent)
+    public Animation(TileObject parent, double timeLength, SpriteSheet graphic, IEnumerable<int> frames,
+        int repeats = 0, bool bounces = false) : this(parent)
     {
         TimeLength = timeLength;
         SpriteSheet = graphic;
         Parent = parent;
         Repeats = repeats;
-        ShouldBounce = shouldBounce;
+        Bounces = bounces;
         FrameIndexes = frames.ToList();
     }
 
-    public Animation(float timeLength, SpriteSheet graphic, int fromIndex, int toIndex, TileObject parent, 
-        int repeats = 0, bool shouldBounce = false) :
-        this(timeLength, graphic, (IOrderedEnumerable<int>)Enumerable.Range(fromIndex, toIndex), 
-            parent, repeats, shouldBounce) {}
+    public void Start()
+    {
+        StartTime = Bootstrap.TimeElapsed;
+        Playing = true;
+    }
 
-    public void Start() => StartTime = Bootstrap.GetCurrentMillis() / 1000f;
+    public void Stop()
+    {
+        Playing = false;
+    }
     
     // TODO: Pause, End, and functions of the likes.
     
@@ -56,21 +61,21 @@ public class Animation(TileObject parent) : ISpriteable
     {
         int indexAtTime;
 
-        if (Repeats != 0 && (CurrentTime - StartTime) / TimeLength >= Repeats)
+        if (Repeats != 0 && PlayingTime / TimeLength >= Repeats)
         {
-            indexAtTime = ShouldBounce ? 0 : BounceFrameIndexes.Count;
+            indexAtTime = Bounces ? 0 : FrameIndexes.Count - 1;
         }
         else
         {
-            var localTime = (CurrentTime - StartTime) % TimeLength;
-            indexAtTime = (int)(localTime * (ShouldBounce ? BounceFrameIndexes : FrameIndexes).Count / TimeLength);
+            var localTime = PlayingTime % TimeLength;
+            indexAtTime = (int)(localTime * (Bounces ? BounceFrameIndexes : FrameIndexes).Count / TimeLength);
         }
 
-        int rectIndex = (ShouldBounce ? BounceFrameIndexes : FrameIndexes)[indexAtTime];
+        int rectIndex = (Bounces ? BounceFrameIndexes : FrameIndexes)[indexAtTime];
 
         var coordinates = new Vec2Int(
-            rectIndex % SpriteSheet.CellsPerRow, 
-            rectIndex / SpriteSheet.CellsPerRow
+            rectIndex % SpriteSheet.SpritesPerRow, 
+            rectIndex / SpriteSheet.SpritesPerRow
         );
         
         return new SDL.SDL_Rect

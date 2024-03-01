@@ -142,32 +142,35 @@ namespace Kintsugi.Objects
             Graphic.Properties.ImagePivot = imagePivot;
         }
 
-        /// <summary>
-        /// Add a sprite to this property to be copied from another <see cref="SpriteSingle"/>
-        /// </summary>
-        /// <param name="sprite">Sprite to copy from.</param>
-        public void SetSpriteSingle(SpriteSingle sprite)
-            => SetSpriteSingle(sprite.Sprite.Path, sprite.Sprite.TilePivot, sprite.Sprite.ImagePivot);
-
         public void SetSpriteSingle(Sprite sprite)
         {
-            // Initialize the property.
             Graphic ??= new SpriteSingle(this);
             ((SpriteSingle)Graphic).Sprite = sprite;
         }
 
-        
+        public void SetSpriteSingle(SpriteSingle spriteSingle)
+            => SetSpriteSingle(spriteSingle.Sprite);
 
-        public void SetAnimation(SpriteSheet spriteSheet, float runTime, IOrderedEnumerable<int> frames, 
-            int repeats = 0, bool bounces = false, bool autoStart = false)
+        public void SetAnimation(SpriteSheet spriteSheet, double timeLength, IEnumerable<int> frames,
+            int repeats = 0, bool bounces = false, bool autoStart = true)
         {
-            Graphic ??= new Animation(this);
+            var animation = new Animation(this, timeLength, spriteSheet, frames, repeats, bounces);
+            Graphic ??= animation;
+            if (autoStart) ((Animation)Graphic).Start();
         }
         
-        public void SetAnimation(Animation animation)
-        {
-            
-        }
+        public void SetAnimation(string path, int spriteHeight, int spriteWidth, int spritesPerRow, double timeLength,
+            IEnumerable<int> frames, Vector2 tilePivot = default, Vector2 imagePivot = default,
+            Vector2 padding = default, Vector2 margin = default, int repeats = 0, bool bounces = false, 
+            bool autoStart = true)
+            => SetAnimation(
+                new SpriteSheet(path, spriteHeight, spriteWidth, spritesPerRow, tilePivot, imagePivot, padding, margin),
+                timeLength, frames, repeats, bounces, autoStart
+            );
+
+        public void SetAnimation(Animation animation, bool autoStart = true)
+            => SetAnimation(animation.SpriteSheet, animation.TimeLength, animation.FrameIndexes, animation.Repeats,
+                animation.Bounces, autoStart);
     }
     
     namespace Properties

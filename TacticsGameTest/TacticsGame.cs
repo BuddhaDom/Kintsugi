@@ -4,6 +4,8 @@ using Kintsugi.Tiles;
 using SDL2;
 using System.Drawing;
 using System.Numerics;
+using System.Threading.Tasks.Dataflow;
+using Kintsugi.Objects.Graphics;
 
 namespace TacticsGameTest
 {
@@ -31,8 +33,19 @@ namespace TacticsGameTest
             character.AddToGrid(grid, 0);
             character.SetPosition(Vec2Int.One * 3);
             character.SetCollider(["mine"], ["yours"]);
-            character.SetSpriteSingle(GetAssetManager().GetAssetPath("guy.png"), 
-                Vector2.One / 2, new Vector2(6.5f, 8.5f));
+            // character.SetSpriteSingle(GetAssetManager().GetAssetPath("guy.png"), 
+            //     Vector2.One / 2, new Vector2(6.5f, 8.5f));
+
+            var frames = new List<int>();
+            frames.AddRange(Enumerable.Range(00,16));
+            frames.AddRange(Enumerable.Range(20,16));
+            frames.AddRange(Enumerable.Range(40,16));
+
+            character.SetAnimation(
+                GetAssetManager().GetAssetPath("bro.png"),
+                32, 32, 4, 3, frames, tilePivot: new Vector2(-0.5f, -0.5f),
+                repeats: 0, bounces: false, autoStart: true
+            );
                 
             scenario = new MovingScenario();
             var group = new MyControlGroup("john's group");
