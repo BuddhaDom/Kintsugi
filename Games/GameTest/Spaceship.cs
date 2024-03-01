@@ -1,4 +1,5 @@
-﻿using Kintsugi.Core;
+﻿using Kintsugi.Audio;
+using Kintsugi.Core;
 using Kintsugi.Input;
 using Kintsugi.Physics;
 using SDL2;
@@ -10,10 +11,10 @@ namespace GameTest
     {
         bool up, down, turnLeft, turnRight;
 
-
+        EventDescription fireEvent;
         public override void Initialize()
         {
-
+            fireEvent = ((SoundFMOD)Bootstrap.GetSound()).LoadEventDescription("event:/Weapons/Pistol");
             this.Transform.X = 500.0f;
             this.Transform.Y = 500.0f;
             this.Transform.SpritePath = Bootstrap.GetAssetManager().GetAssetPath("spaceship.png");
@@ -57,7 +58,9 @@ namespace GameTest
 
             b.Transform.Rotate(this.Transform.Rotz);
 
-            Bootstrap.GetSound().PlaySound("fire.wav");
+            //fireEvent.CreateInstance().Start();
+            fireEvent.PlayImmediate();
+            //Bootstrap.GetSound().PlaySound("fire.wav");
         }
 
         public void HandleInput(InputEvent inp, string eventType)
