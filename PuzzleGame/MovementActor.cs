@@ -39,6 +39,7 @@ namespace PuzzleGame
             this.name = name;
             Bootstrap.GetInput().AddListener(this);
         }
+        private static MoveEvent moveEvent;
         public void HandleInput(InputEvent inp, string eventType)
         {
             if (InTurn)
@@ -55,13 +56,13 @@ namespace PuzzleGame
                     {
                         QueueMove(Vec2Int.Up * reverse_movement);
                         EndTurn();
-                        
+
                     }
                     if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_A)
                     {
                         QueueMove(Vec2Int.Left * reverse_movement);
                         EndTurn();
-                        
+
                     }
                     if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_D)
                     {
@@ -78,20 +79,18 @@ namespace PuzzleGame
 
         public void QueueMove(Vec2Int move)
         {
-            for (int i = 0; i < speed; i++)
+            if (moveEvent == null)
             {
-                EventManager.I.Queue(
-                                new ActionEvent(() => {
-                                    if (!CollisionSystem.CollidesColliderWithPosition(Collider, Transform.Grid, Transform.Position + move))
-                                        Move(move);
-                                }
-                                    ));
+                moveEvent = new(Transform.Grid);
+                EventManager.I.Queue(moveEvent);
             }
+            moveEvent.AddActorToMove(this, move, speed);
         }
 
         public override void OnEndRound()
         {
             //Console.WriteLine(name + " End Round");
+            moveEvent = null;
         }
 
         public override void OnEndTurn()
@@ -101,7 +100,6 @@ namespace PuzzleGame
 
         public override void OnStartRound()
         {
-            //Console.WriteLine(name + " Start Round");
         }
 
         public override void OnStartTurn()

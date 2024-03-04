@@ -60,6 +60,7 @@ namespace PuzzleGame
     internal class PlayerControlGroup : ControlGroup
     {
         private string name;
+        public static MoveEvent moveEvent;
         public PlayerControlGroup(string name)
         {
             this.name = name;
