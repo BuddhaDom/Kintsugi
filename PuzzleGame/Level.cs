@@ -21,11 +21,10 @@ namespace PuzzleGame
         public Game game;
 
         public abstract string GridPath { get; }
-        public void Load(Game game) {
+        public void Load(Game game)
+        {
             this.game = game;
 
-            var ambience = ((SoundFMOD)Bootstrap.GetSound()).LoadEventDescription("event:/DungeonAmbience");
-            ambience.PlayImmediate();
 
             grid = new Grid(game.GetAssetManager().GetAssetPath(GridPath), gridVisible: true, gridColor: Color.DarkBlue);
             grid.Transform.X = 0;

@@ -29,8 +29,10 @@ namespace PuzzleGame
             var master_bank = ((SoundFMOD)Bootstrap.GetSound()).LoadBank(Bootstrap.GetAssetManager().GetAssetPath("audio\\fmod_project\\Build\\Desktop\\Master.bank"));
             ((SoundFMOD)Bootstrap.GetSound()).LoadBank(Bootstrap.GetAssetManager().GetAssetPath("audio\\fmod_project\\Build\\Desktop\\Master.strings.bank"));
             master_bank.PreloadSamples();
+            var ambience = ((SoundFMOD)Bootstrap.GetSound()).LoadEventDescription("event:/DungeonAmbience");
+            ambience.PlayImmediate();
 
-            LevelManager.Instance.LoadNext();           
+            LevelManager.Instance.LoadNext();
 
             Bootstrap.GetInput().AddListener(this);
         }
