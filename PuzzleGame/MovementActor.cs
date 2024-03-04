@@ -91,23 +91,23 @@ namespace PuzzleGame
 
         public override void OnEndRound()
         {
-            Console.WriteLine(name + " End Round");
+            //Console.WriteLine(name + " End Round");
         }
 
         public override void OnEndTurn()
         {
-            Console.WriteLine(name + " End Turn");
+            //Console.WriteLine(name + " End Turn");
         }
 
         public override void OnStartRound()
         {
-            Console.WriteLine(name + " Start Round");
+            //Console.WriteLine(name + " Start Round");
         }
 
         public override void OnStartTurn()
         {
 
-            Console.WriteLine(name + " Start Turn");
+            //Console.WriteLine(name + " Start Turn");
         }
     }
 }
