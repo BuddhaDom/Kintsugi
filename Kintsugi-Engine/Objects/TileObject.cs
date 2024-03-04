@@ -5,6 +5,7 @@ using Kintsugi.Objects.Graphics;
 using Kintsugi.Objects.Properties;
 using Kintsugi.Tiles;
 using SixLabors.ImageSharp;
+using TweenSharp.Animation;
 
 namespace Kintsugi.Objects
 {
@@ -25,6 +26,8 @@ namespace Kintsugi.Objects
         /// Graphic properties of this object.
         /// </summary>
         public ISpriteable? Graphic { get; private set; }
+
+        public TileObjectEasing? Easing { get; private set; }
         
         /// <summary>
         /// Creates a <see cref="TileObject"/> with a default Transform property. 
@@ -223,6 +226,15 @@ namespace Kintsugi.Objects
             /// The object this property modifies.
             /// </summary>
             public TileObject Parent { get; } = parent;
+        }
+
+        public class TileObjectEasing(TileObject parent)
+        {
+            public Easing.EasingFunction EasingFunction = Easing.Linear;
+            public double Length { get; set; }
+            private double StartTime;
+            private double PlayingTime;
+            
         }
     }
 }
