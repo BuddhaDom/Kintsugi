@@ -1,4 +1,5 @@
 using System.Numerics;
+using Kintsugi.Core;
 using SixLabors.ImageSharp;
 
 namespace Kintsugi.Objects.Graphics;
@@ -13,8 +14,7 @@ public struct SpriteSheet : ISpriteProperties
         Vector2 tilePivot = default, Vector2 imagePivot= default, Vector2 padding= default, Vector2 margin= default)
     {
         Path = path;
-        SpriteHeight = spriteHeight;
-        SpriteWidth = spriteWidth;
+        Dimensions = new Vec2Int(spriteHeight, spriteWidth);
         TilePivot = tilePivot;
         ImagePivot = imagePivot;
         
@@ -34,8 +34,7 @@ public struct SpriteSheet : ISpriteProperties
     //         ISpriteProperties  Implementation
     // ===================================================
     public string Path { get; set; }
-    public int SpriteWidth { get; set; }
-    public int SpriteHeight { get; set; }
+    public Vec2Int Dimensions { get; set; }
     public int ImageWidth { get; set; }
     public int ImageHeight { get; set; }
     public Vector2 TilePivot { get; set; }
