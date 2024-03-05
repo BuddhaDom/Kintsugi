@@ -15,6 +15,7 @@ namespace Kintsugi.EventSystem
         {
             if (!HasBeenExecuted)
             {
+                Console.WriteLine("Executing " + this.ToString() );
                 OnExecute();
                 HasBeenExecuted = true;
             }

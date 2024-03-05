@@ -1,5 +1,7 @@
-﻿using Kintsugi.Audio;
+﻿using Engine.EventSystem;
+using Kintsugi.Audio;
 using Kintsugi.Core;
+using Kintsugi.Input;
 using Kintsugi.Tiles;
 using System;
 using System.Collections.Generic;
@@ -46,6 +48,8 @@ namespace PuzzleGame
             grid = null;
             scenario.EndScenario();
             scenario = null;
+            EventManager.I.ClearQueue();
+            Bootstrap.GetInput().ClearListeners();
         }
     }
 }

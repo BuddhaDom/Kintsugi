@@ -17,7 +17,10 @@ namespace Engine.EventSystem
         {
             get => _instance;
         }
-
+        public void ClearQueue()
+        {
+            EventQueue.Clear();
+        }
         public void Queue(Event @event)
         {
             EventQueue.Insert(EventQueue.Count, @event);
