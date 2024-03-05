@@ -9,7 +9,8 @@ namespace Kintsugi.EventSystem
 {
     public abstract class Event: IAwaitable
     {
-        private List<IAwaitable> _awaits;
+        private List<IAwaitable> _startAwaits;
+        private List<IAwaitable> _finishAwaits;
         public bool HasBeenExecuted { get; protected set; }
         public void Execute()
         {
@@ -36,27 +37,47 @@ namespace Kintsugi.EventSystem
         }
 
 
-        public Event AddAwait()
+        public Event AddFinishAwait(IAwaitable await)
         {
-            _awaits ??= new List<IAwaitable>();
+            _finishAwaits ??= new List<IAwaitable>();
+            _finishAwaits.Add(await);
             return this;
         }
-        public Event AddAwaits(params IAwaitable[] awaits)
+        public Event AddFinishAwait(params IAwaitable[] awaits)
         {
-            _awaits ??= new List<IAwaitable>();
+            _finishAwaits ??= new List<IAwaitable>();
             foreach (var await in awaits)
             {
-                _awaits.Add(await);
+                _finishAwaits.Add(await);
             }
             return this;
         }
 
-        public virtual bool IsFinished() => HasBeenExecuted;
-        public bool AllAwaitsFinished()
-        {
-            if (_awaits == null) return true;
 
-            foreach (var await in _awaits)
+        public Event AddStartAwait(IAwaitable await)
+        {
+            _startAwaits ??= new List<IAwaitable>();
+            _startAwaits.Add(await);
+            return this;
+        }
+        public Event AddStartAwaits(params IAwaitable[] awaits)
+        {
+            _startAwaits ??= new List<IAwaitable>();
+            foreach (var await in awaits)
+            {
+                _startAwaits.Add(await);
+            }
+            return this;
+        }
+
+        public virtual bool IsFinished() => HasBeenExecuted && AllFinishAwaitsFinished();
+        public bool AllStartAwaitsFinished() => AllAwaitsFinished(_startAwaits);
+        public bool AllFinishAwaitsFinished() => AllAwaitsFinished(_finishAwaits);
+        private bool AllAwaitsFinished(List<IAwaitable> awaits)
+        {
+            if (awaits == null) return true;
+
+            foreach (var await in awaits)
             {
                 if (!await.IsFinished())
                 {

@@ -24,34 +24,58 @@ namespace TacticsGameTest
                 {
                     if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_W)
                     {
-                        EventManager.I.Queue(
-                            new ActionEvent(() =>
-                                Move(Vec2Int.Up * -1) 
-                                ));
+                        var event1 = new ActionEvent(() => Move(Vec2Int.Down))
+                            .AddFinishAwait(this.Easing);
+
+                        var event2 = new ActionEvent(() => Move(Vec2Int.Down))
+                            .AddStartAwait(event1)
+                            .AddFinishAwait(this.Easing)
+                            .SetAsQueueBlocker();
+
+                        EventManager.I.Queue(event1);
+                        EventManager.I.Queue(event2);
                         EndTurn();
                     }
                     if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_S)
                     {
-                        EventManager.I.Queue(
-                            new ActionEvent(() =>
-                                Move(Vec2Int.Down * -1) 
-                                ));
+                        var event1 = new ActionEvent(() => Move(Vec2Int.Up))
+                            .AddFinishAwait(this.Easing);
+
+                        var event2 = new ActionEvent(() => Move(Vec2Int.Up))
+                            .AddStartAwait(event1)
+                            .AddFinishAwait(this.Easing)
+                            .SetAsQueueBlocker();
+
+                        EventManager.I.Queue(event1);
+                        EventManager.I.Queue(event2);
                         EndTurn();
                     }
                     if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_A)
                     {
-                        EventManager.I.Queue(
-                            new ActionEvent(() =>
-                                Move(Vec2Int.Left) 
-                                ));
+                        var event1 = new ActionEvent(() => Move(Vec2Int.Left))
+                            .AddFinishAwait(this.Easing);
+
+                        var event2 = new ActionEvent(() => Move(Vec2Int.Left))
+                            .AddStartAwait(event1)
+                            .AddFinishAwait(this.Easing)
+                            .SetAsQueueBlocker();
+
+                        EventManager.I.Queue(event1);
+                        EventManager.I.Queue(event2);
                         EndTurn();
                     }
                     if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_D)
                     {
-                        EventManager.I.Queue(
-                            new ActionEvent(() =>
-                                Move(Vec2Int.Right) 
-                                ));
+                        var event1 = new ActionEvent(() => Move(Vec2Int.Right))
+                            .AddFinishAwait(this.Easing);
+
+                        var event2 = new ActionEvent(() => Move(Vec2Int.Right))
+                            .AddStartAwait(event1)
+                            .AddFinishAwait(this.Easing)
+                            .SetAsQueueBlocker();
+
+                        EventManager.I.Queue(event1);
+                        EventManager.I.Queue(event2);
                         EndTurn();
                     }
                     if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_SPACE)
