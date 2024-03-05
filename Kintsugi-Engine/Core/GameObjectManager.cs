@@ -43,6 +43,14 @@ namespace Kintsugi.Core
 
         public void Update()
         {
+            for (int i = myObjects.Count - 1; i >= 0; i--)
+            {
+                if (myObjects[i].ToBeDestroyed)
+                {
+                    myObjects.RemoveAt(i);
+                }
+
+            }
             foreach (var gameObject in myObjects)
             {
                 gameObject.Update();

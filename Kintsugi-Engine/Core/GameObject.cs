@@ -13,6 +13,7 @@ namespace Kintsugi.Core
 {
     public class GameObject
     {
+        internal bool ToBeDestroyed;
         public Vector2 Position;
         public GameObject()
         {
@@ -21,7 +22,7 @@ namespace Kintsugi.Core
         public virtual void Update() { }
         public void Destroy()
         {
-
+            ToBeDestroyed = true;
         }
     }
 }
