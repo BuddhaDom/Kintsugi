@@ -11,15 +11,31 @@ using System.Numerics;
 
 namespace Kintsugi.Core
 {
+    /// <summary>
+    /// The core representation of an "object" in the Kintsugi engine. Contains properties that allow it to be
+    /// displayed, moved around, and destroyed.
+    /// </summary>
     public class GameObject
     {
         internal bool ToBeDestroyed;
+        /// <summary>
+        /// This object's world space position.
+        /// </summary>
         public Vector2 Position;
+        /// <summary>
+        /// Create an instance and add it to the <see cref="GameObjectManager"/>.
+        /// </summary>
         public GameObject()
         {
             GameObjectManager.GetInstance().AddGameObject(this);
         }
+        /// <summary>
+        /// Method to be called every frame.
+        /// </summary>
         public virtual void Update() { }
+        /// <summary>
+        /// Queue this object to be destroyed.
+        /// </summary>
         public void Destroy()
         {
             ToBeDestroyed = true;
