@@ -12,6 +12,9 @@ namespace Kintsugi.Objects
     {
         public event EventHandler OnRoundFinished;
 
+        /// <summary>
+        /// Get the control group whose turn it currently is.
+        /// </summary>
         public ControlGroup? CurrentControlGroup
         {
             get
@@ -27,6 +30,9 @@ namespace Kintsugi.Objects
             this.scenarioManager = scenarioManager;
         }
 
+        /// <summary>
+        /// Add a control group to the turn order, automatically places it according to its initiative.
+        /// </summary>
         internal void AddToTurnOrder(ControlGroup c)
         {
             c.RecalculateInitiative();
