@@ -14,7 +14,7 @@ namespace Kintsugi.EventSystem.Events
         {
             this.action = action;
         }
-        public override void Execute()
+        public override void OnExecute()
         {
             action.Invoke();
         }

@@ -34,7 +34,7 @@ public class TileObject
     public TileObject()
     {
         Transform = new TileObjectTransform(this);
-        Easing = new TileObjectEasing(this);
+        Easing = new TileObjectEasing();
     }
 
 
@@ -233,7 +233,7 @@ public class TileObject
             animation.Bounces, autoStart);
 
     public void SetEasing(Easing.EasingFunction function,[Range(0,double.MaxValue)] double duration)
-        => Easing = new TileObjectEasing(this) 
+        => Easing = new TileObjectEasing() 
         {
             EasingFunction = function,
             Duration = duration,

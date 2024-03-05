@@ -1,6 +1,8 @@
-﻿using Kintsugi.Audio;
+﻿using Engine.EventSystem;
+using Kintsugi.Audio;
 using Kintsugi.Collision;
 using Kintsugi.Core;
+using Kintsugi.EventSystem.Events;
 using Kintsugi.Objects.Properties;
 using PuzzleGame;
 using System;
@@ -22,8 +24,13 @@ namespace PuzzleGame
                 {
                     var fireEvent = ((SoundFMOD)Bootstrap.GetSound()).LoadEventDescription("event:/Timbral");
                     fireEvent.PlayImmediate();
-                    a.RemoveFromGrid();
-                    LevelManager.Instance.ResetLevel();
+                    EventManager.I.Queue(
+                        new BlockQueueForSeconds(1f
+                        ));
+                    EventManager.I.Queue(
+                        new ActionEvent(
+                            () => LevelManager.Instance.ResetLevel()
+                            ));
                     Console.WriteLine("Kill " + a);
                 }
             }

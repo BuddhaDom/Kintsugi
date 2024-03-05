@@ -1,4 +1,6 @@
 ﻿using Kintsugi.EventSystem;
+using Kintsugi.EventSystem.Await;
+using Kintsugi.EventSystem.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +13,6 @@ namespace Engine.EventSystem
     {
         internal List<Event> EventQueue = new();
         private static EventManager _instance = new();
-
         public static EventManager I
         {
             get => _instance;
@@ -21,19 +22,48 @@ namespace Engine.EventSystem
         {
             EventQueue.Insert(EventQueue.Count, @event);
         }
+        public void Queue(Action action)
+        {
+            EventQueue.Insert(EventQueue.Count, new ActionEvent(action));
+        }
+
         public void QueueImmediate(Event @event)
         {
             EventQueue.Insert(0, @event);
         }
+        public void QueueImmediate(Action action)
+        {
+            EventQueue.Insert(0, new ActionEvent(action));
+        }
 
         internal void ProcessQueue()
         {
-            while (EventQueue.Count > 0)
+            for (int i = 0; i < EventQueue.Count; i++)
             {
-                var currentEvent = EventQueue.First();
-                EventQueue.RemoveAt(0);
+                var currentEvent = EventQueue[i];
+                // This event has already finished, keep going.
+                if (currentEvent.IsFinished())
+                {
+                    EventQueue.RemoveAt(i);
+                    i--;
+                    continue;
+                }
+                // This event blocks the queue, so stop processing.
+                if (currentEvent.BlockQueue())
+                {
+                    return;
+                }
+                // This event is still waiting for its dependencies
+                if (!currentEvent.AllAwaitsFinished())
+                {
+                    continue;
+                }
 
-                currentEvent.Execute();
+                // if it hasnt been executed yet, execute it.
+                if (!currentEvent.HasBeenExecuted)
+                {
+                    currentEvent.Execute();
+                }
             }
         }
     }

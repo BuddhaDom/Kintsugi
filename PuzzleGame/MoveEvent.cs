@@ -31,7 +31,7 @@ namespace PuzzleGame
             movementDictionary.Add(actor, new ActorMove { move = move, times = times });
         }
         private Dictionary<MovementActor, ActorMove> movementDictionary = new();
-        public override void Execute()
+        public override void OnExecute()
         {
             while (movementDictionary.Count > 0)
             {

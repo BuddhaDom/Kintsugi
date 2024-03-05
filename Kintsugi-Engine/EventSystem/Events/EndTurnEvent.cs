@@ -14,7 +14,7 @@ namespace Kintsugi.EventSystem.Events
         {
             this.controlGroup = controlGroup;
         }
-        public override void Execute()
+        public override void OnExecute()
         {
             controlGroup.EndTurn();
         }
