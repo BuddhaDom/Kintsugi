@@ -1,10 +1,11 @@
 using System.Numerics;
 using Kintsugi.Core;
+using Kintsugi.EventSystem.Await;
 using TweenSharp.Animation;
 
 namespace Kintsugi.Objects.Properties;
 
-public class TileObjectEasing(TileObject parent)
+public class TileObjectEasing: IAwaitable
 {
     public Easing.EasingFunction EasingFunction { get; internal set; } = Easing.Constant(1d);
     public double Duration { get; internal set; } = 1d;
@@ -16,6 +17,8 @@ public class TileObjectEasing(TileObject parent)
     public Vector2 TargetPosition { get; internal set; }
     public Vector2 CurrentPosition => 
         (TargetPosition - StartPosition) * (float)Evaluate() + StartPosition;
+
+    public bool IsFinished() => Progress >= 1f;
 
     public double Evaluate(double progress) => EasingFunction(progress);
     public double Evaluate() => EasingFunction(Progress);

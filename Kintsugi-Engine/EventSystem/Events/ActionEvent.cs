@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Kintsugi.EventSystem.Events
 {
+    /// <summary>
+    /// An event that triggers the given action when executed.
+    /// </summary>
     public class ActionEvent : Event
     {
         private Action action;
@@ -14,7 +17,7 @@ namespace Kintsugi.EventSystem.Events
         {
             this.action = action;
         }
-        public override void Execute()
+        public override void OnExecute()
         {
             action.Invoke();
         }

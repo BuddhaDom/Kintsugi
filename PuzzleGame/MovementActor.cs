@@ -37,7 +37,7 @@ namespace PuzzleGame
         public MovementActor(string name)
         {
             this.name = name;
-            Bootstrap.GetInput().AddListener(this);
+            LevelManager.Instance.AddLevelListener(this);
         }
         private static MoveEvent moveEvent;
         public void HandleInput(InputEvent inp, string eventType)

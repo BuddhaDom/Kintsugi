@@ -1,9 +1,10 @@
 using Kintsugi.Core;
+using Kintsugi.EventSystem.Await;
 using SDL2;
 
 namespace Kintsugi.Objects.Graphics;
 
-public class Animation : ISpriteable
+public class Animation : ISpriteable, IAwaitable
 {
     public double TimeLength { get; set; }
     /// <summary>
@@ -54,7 +55,9 @@ public class Animation : ISpriteable
     //         ISpriteable Implementations
     // ==========================================
     public ISpriteProperties Properties => SpriteSheet;
-    
+
+    public bool IsFinished() => Playing == false;
+
     public SDL.SDL_Rect SourceRect()
     {
         int indexAtTime;

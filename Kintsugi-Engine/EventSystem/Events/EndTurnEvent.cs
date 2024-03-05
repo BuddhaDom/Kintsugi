@@ -6,7 +6,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Kintsugi.EventSystem.Events
-{
+{    
+    /// <summary>
+    /// An event that ends the turn for the given control group.
+    /// </summary>
     internal class EndTurnEvent : Event
     {
         private ControlGroup controlGroup; 
@@ -14,7 +17,7 @@ namespace Kintsugi.EventSystem.Events
         {
             this.controlGroup = controlGroup;
         }
-        public override void Execute()
+        public override void OnExecute()
         {
             controlGroup.EndTurn();
         }

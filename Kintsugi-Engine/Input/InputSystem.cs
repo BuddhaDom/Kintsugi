@@ -31,6 +31,10 @@ namespace Kintsugi.Input
                 myListeners.Add(il);
             }
         }
+        public void ClearListeners()
+        {
+            myListeners.Clear();
+        }
 
         public void RemoveListener(IInputListener il)
         {

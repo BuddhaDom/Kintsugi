@@ -1,0 +1,19 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Kintsugi.EventSystem.Await
+{
+    /// <summary>
+    /// Something that can be finished and waited on.
+    /// </summary>
+    public interface IAwaitable
+    {
+        /// <summary>
+        /// Whether it needs to be waited on any longer.
+        /// </summary>
+        public abstract bool IsFinished();
+    }
+}
