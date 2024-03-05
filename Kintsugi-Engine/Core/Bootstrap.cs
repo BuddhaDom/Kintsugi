@@ -276,17 +276,6 @@ namespace Kintsugi.Core
             long timeInMillisecondsStart, lastTick, timeInMillisecondsEnd;
             long interval;
             int sleep;
-            bool physUpdate = false;
-            bool physDebug = false;
-
-            timeInMillisecondsStart = startTime;
-            lastTick = startTime;
-
-            if (GetEnvironmentalVariable("physics_debug") == "1")
-            {
-                physDebug = true;
-            }
-
 
             while (true)
             {
