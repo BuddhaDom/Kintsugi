@@ -1,4 +1,5 @@
 ﻿using Kintsugi.Core;
+using Kintsugi.EventSystem.Await;
 using Kintsugi.Objects;
 using System;
 using System.Collections.Generic;
@@ -8,19 +9,21 @@ using System.Threading.Tasks;
 
 namespace Kintsugi.EventSystem.Events
 {
+    /// <summary>
+    /// An event that blocks the queue for the given amount of seconds after executed.
+    /// </summary>
     public class BlockQueueForSeconds : Event
     {
-        private double endTime;
+        private float seconds;
         public BlockQueueForSeconds(float seconds)
         {
-            endTime = Bootstrap.TimeElapsed + seconds;
+            shouldBlockQueue = true;
+            this.seconds = seconds;
         }
-        public override bool BlockQueue() => true;
-        public override bool IsFinished() => Bootstrap.TimeElapsed > endTime;
-
 
         public override void OnExecute()
         {
+            AddFinishAwait(new WaitForSeconds(seconds));
         }
     }
 }

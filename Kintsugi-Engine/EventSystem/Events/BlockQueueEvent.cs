@@ -7,7 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Kintsugi.EventSystem.Events
-{
+{    /// <summary>
+     /// An event that blocks the queue until finished.
+     /// </summary>
     public class BlockQueueEvent : Event
     {
         public override bool BlockQueue() => true;

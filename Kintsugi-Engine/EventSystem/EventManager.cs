@@ -17,23 +17,37 @@ namespace Engine.EventSystem
         {
             get => _instance;
         }
+        /// <summary>
+        /// Removes all events in the queue.
+        /// </summary>
         public void ClearQueue()
         {
             EventQueue.Clear();
         }
+        /// <summary>
+        /// Add event to the start of the queue.
+        /// </summary>
         public void Queue(Event @event)
         {
             EventQueue.Insert(EventQueue.Count, @event);
         }
+        /// <summary>
+        /// Add action as an event to the start of the queue.
+        /// </summary>
         public void Queue(Action action)
         {
             EventQueue.Insert(EventQueue.Count, new ActionEvent(action));
         }
-
+        /// <summary>
+        /// Add event to the end of the queue.
+        /// </summary>
         public void QueueImmediate(Event @event)
         {
             EventQueue.Insert(0, @event);
         }
+        /// <summary>
+        /// Add action as an event to the end of the queue.
+        /// </summary>
         public void QueueImmediate(Action action)
         {
             EventQueue.Insert(0, new ActionEvent(action));
