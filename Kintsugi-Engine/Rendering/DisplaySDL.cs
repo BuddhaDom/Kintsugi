@@ -15,6 +15,8 @@ using Kintsugi.Core;
 using Kintsugi.Tiles;
 using SDL2;
 using System.Numerics;
+using Kintsugi.Objects;
+using TweenSharp.Animation;
 
 namespace Kintsugi.Rendering
 {
@@ -245,7 +247,13 @@ namespace Kintsugi.Rendering
                 tRect.w = (int)Math.Ceiling(width);
                 tRect.h = (int)Math.Ceiling(height);
 
-                SDL.SDL_RenderCopyEx(_rend, sprite, ref sRect, ref tRect, (int)trans.Rotz, nint.Zero, SDL.SDL_RendererFlip.SDL_FLIP_NONE);
+                SDL.SDL_RenderCopyEx(_rend,
+                    sprite,
+                    ref sRect,
+                    ref tRect,
+                    (int)trans.Rotz,
+                    nint.Zero,
+                    SDL.SDL_RendererFlip.SDL_FLIP_NONE);
             }
 
             foreach (Circle c in _circlesToDraw)
@@ -254,7 +262,9 @@ namespace Kintsugi.Rendering
                 Vector2 centerScreen = cam.WorldToScreenSpace(new System.Numerics.Vector2(c.X, c.Y));
                 float radiusScreen = cam.WorldToScreenSpaceSize(c.Radius);
 
-                RenderCircle((int)Math.Ceiling(centerScreen.X), (int)Math.Ceiling(centerScreen.Y), (int)Math.Ceiling(radiusScreen));
+                RenderCircle((int)Math.Ceiling(centerScreen.X),
+                    (int)Math.Ceiling(centerScreen.Y),
+                    (int)Math.Ceiling(radiusScreen));
             }
 
             foreach (var grid in _gridsToDraw)
@@ -309,29 +319,30 @@ namespace Kintsugi.Rendering
                     for (int y = 0; y < grid.GridHeight; y++)
                     for (int x = 0; x < grid.GridWidth; x++)
                     {
-                        foreach (var tileObject in grid.Objects.Where(o =>
-                                     o.Sprite != null &&
+                        // Only proceed if there's any TileObjects in this coordinate with a graphic element.
+                        if (!grid.TileObjects.TryGetValue(new Vec2Int(x, y), out var tileObjects)) 
+                            continue;
+                        foreach (var tileObject in tileObjects.Where(o=> 
                                      o.Transform.Layer == i &&
-                                     o.Transform.GridPosition.Equals(new Vec2Int(x, y)
-                                     )))
+                                     o.Graphic != null
+                                     ))
                         {
-                            var sprite = LoadTexture(tileObject.Sprite!.SpritePath);
+                            var sprite = ((DisplaySDL)Bootstrap.GetDisplay()).LoadTexture(tileObject.Graphic!.Properties.Path);
 
-                            sRect.x = 0;
-                            sRect.y = 0;
-                            sRect.w = tileObject.Sprite!.Width;
-                            sRect.h = tileObject.Sprite!.Height;
+                            sRect = tileObject.Graphic.SourceRect();
 
-                            var localTilePivot = tileObject.Sprite.TilePivot * grid.TileWidth;
-                            var pivotOffsets = localTilePivot - tileObject.Sprite.ImagePivot;
+                            var localTilePivot = tileObject.Graphic.Properties.TilePivot * grid.TileWidth;
+                            var pivotOffsets = localTilePivot - tileObject.Graphic.Properties.ImagePivot;
 
-                            var uScreenPos = cam.WorldToScreenSpace(new Vector2(
-                                grid.Transform2D.X + x * grid.TileWidth + pivotOffsets.X,
-                                grid.Transform2D.Y + y * grid.TileWidth + pivotOffsets.Y));
-                            var vScreenPos = cam.WorldToScreenSpace(new Vector2(
-                                grid.Transform2D.X + x * grid.TileWidth + pivotOffsets.X + tileObject.Sprite.Width,
-                                grid.Transform2D.Y + y * grid.TileWidth + pivotOffsets.Y + tileObject.Sprite.Height));
-
+                            var uScreenPos = cam.WorldToScreenSpace(
+                                tileObject.Easing.CurrentPosition +
+                                pivotOffsets
+                            );
+                            var vScreenPos = cam.WorldToScreenSpace(
+                                tileObject.Easing.CurrentPosition
+                                + pivotOffsets + tileObject.Graphic.Properties.Dimensions
+                            );
+                                
                             int xsize = (int)vScreenPos.X - (int)uScreenPos.X;
                             int ysize = (int)vScreenPos.Y - (int)uScreenPos.Y;
 
