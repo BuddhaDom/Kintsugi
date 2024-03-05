@@ -31,7 +31,7 @@ public class TileObjectTransform(TileObject parent)
     public TileObject Parent { get; } = parent;
 
     public Vector2 WorldSpacePosition => Grid == null ? Vector2.Zero : new Vector2(
-        Grid.Transform2D.X + Position.x * Grid.TileWidth,
-        Grid.Transform2D.Y + Position.y * Grid.TileWidth
+        Grid.Position.X + Position.x * Grid.TileWidth,
+        Grid.Position.Y + Position.y * Grid.TileWidth
     );
 }

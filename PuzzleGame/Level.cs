@@ -29,8 +29,8 @@ namespace PuzzleGame
 
 
             grid = new Grid(game.GetAssetManager().GetAssetPath(GridPath), gridVisible: true, gridColor: Color.DarkBlue);
-            grid.Transform.X = 0;
-            grid.Transform.Y = 0;
+            grid.Position.X = 0;
+            grid.Position.Y = 0;
 
             grid.Layers[2].SwitchColliderType<SpikeCollider>();
 
@@ -50,7 +50,7 @@ namespace PuzzleGame
         }
         public void Unload()
         {
-            grid.ToBeDestroyed = true;
+            grid.Destroy();
             grid = null;
             scenario.EndScenario();
             scenario = null;

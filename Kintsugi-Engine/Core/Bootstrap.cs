@@ -316,13 +316,6 @@ namespace Kintsugi.Core
                     // Update the physics.  If it's too soon, it'll return false.   Otherwise 
                     // it'll return true.
 
-                    if (physUpdate)
-                    {
-                        // If it did tick, give every object an Update
-                        // that is pinned to the timing of the physics system.
-                        GameObjectManager.GetInstance().PhysicsUpdate();
-                    }
-
                 }
 
                 // Update sound engine

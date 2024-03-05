@@ -7,118 +7,21 @@
 *   @version 1.0
 *   
 */
+using System.Numerics;
+
 namespace Kintsugi.Core
 {
     public class GameObject
     {
-        private Transform3D transform;
-        private bool transient;
-        private bool toBeDestroyed;
-        private bool visible;
-        private List<string> tags;
-
-        public void AddTag(string str)
-        {
-            if (tags.Contains(str))
-            {
-                return;
-            }
-
-            tags.Add(str);
-        }
-
-        public void RemoveTag(string str)
-        {
-            tags.Remove(str);
-        }
-
-        public bool CheckTag(string tag)
-        {
-            return tags.Contains(tag);
-        }
-
-        public string GetTags()
-        {
-            string str = "";
-
-            foreach (string s in tags)
-            {
-                str += s;
-                str += ";";
-            }
-
-            return str;
-        }
-        public Transform3D Transform
-        {
-            get => transform;
-        }
-
-        public Transform Transform2D
-        {
-            get => transform;
-        }
-
-
-        public bool Visible
-        {
-            get => visible;
-            set => visible = value;
-        }
-        public bool Transient { get => transient; set => transient = value; }
-        public bool ToBeDestroyed { get => toBeDestroyed; set => toBeDestroyed = value; }
-
-        public virtual void Initialize()
-        {
-        }
-
-        public virtual void Update()
-        {
-
-        }
-
-        public virtual void PhysicsUpdate()
-        {
-        }
-
-        public virtual void PrePhysicsUpdate()
-        {
-        }
-
+        public Vector2 Position;
         public GameObject()
         {
             GameObjectManager.GetInstance().AddGameObject(this);
-
-            transform = new Transform3D(this);
-            visible = false;
-
-            ToBeDestroyed = false;
-            tags = new List<string>();
-
-            Initialize();
-
         }
-
-        public void CheckDestroyMe()
+        public virtual void Update() { }
+        public void Destroy()
         {
 
-            if (!transient)
-            {
-                return;
-            }
-
-            if (Transform.X > 0 && Transform.X < Bootstrap.GetDisplay().GetWidth())
-            {
-                if (Transform.Y > 0 && Transform.Y < Bootstrap.GetDisplay().GetHeight())
-                {
-                    return;
-                }
-            }
-
-
-            ToBeDestroyed = true;
-
         }
-
     }
 }

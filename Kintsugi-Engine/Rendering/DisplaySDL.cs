@@ -17,6 +17,7 @@ using SDL2;
 using System.Numerics;
 using Kintsugi.Objects;
 using TweenSharp.Animation;
+using Kintsugi.Objects.Graphics;
 
 namespace Kintsugi.Rendering
 {
@@ -54,7 +55,6 @@ namespace Kintsugi.Rendering
 
     public class DisplaySDL : DisplayText
     {
-        private List<Transform> _toDraw;
         private List<Line> _linesToDraw;
         private List<Circle> _circlesToDraw;
         private List<Grid> _gridsToDraw;
@@ -65,27 +65,16 @@ namespace Kintsugi.Rendering
 
             base.Initialize();
 
-            _toDraw = new List<Transform>();
             _linesToDraw = new List<Line>();
             _circlesToDraw = new List<Circle>();
             _gridsToDraw = new List<Grid>();
 
         }
 
-        public nint LoadTexture(Transform trans)
+        public nint LoadTexture(ISpriteable sprite)
         {
             nint ret;
-            uint format;
-            int access;
-            int w;
-            int h;
-
-            ret = LoadTexture(trans.SpritePath);
-
-            SDL.SDL_QueryTexture(ret, out format, out access, out w, out h);
-            trans.Ht = h;
-            trans.Wid = w;
-            trans.RecalculateCentre();
+            ret = LoadTexture(sprite.Properties.Path);
 
             return ret;
 
@@ -116,19 +105,10 @@ namespace Kintsugi.Rendering
 
         public override void AddToDraw(GameObject gob)
         {
-            _toDraw.Add(gob.Transform);
-
-            if (gob.Transform.SpritePath == null)
-            {
-                return;
-            }
-
-            LoadTexture(gob.Transform.SpritePath);
         }
 
         public override void RemoveToDraw(GameObject gob)
         {
-            _toDraw.Remove(gob.Transform);
         }
 
 
@@ -218,44 +198,6 @@ namespace Kintsugi.Rendering
             SDL.SDL_Rect sRect;
             SDL.SDL_Rect tRect;
 
-
-
-            foreach (Transform trans in _toDraw)
-            {
-
-                if (trans.SpritePath == null)
-                {
-                    continue;
-                }
-
-                var sprite = LoadTexture(trans);
-
-                sRect.x = 0;
-                sRect.y = 0;
-                sRect.w = (int)(trans.Wid * trans.Scalex);
-                sRect.h = (int)(trans.Ht * trans.Scaley);
-
-                Vector2 rectPoint = cam.WorldToScreenSpace(new System.Numerics.Vector2(
-                    trans.X,
-                    trans.Y));
-                float width = cam.WorldToScreenSpaceSize(sRect.w);
-                float height = cam.WorldToScreenSpaceSize(sRect.h);
-
-
-                tRect.x = (int)Math.Ceiling(rectPoint.X);
-                tRect.y = (int)Math.Ceiling(rectPoint.Y);
-                tRect.w = (int)Math.Ceiling(width);
-                tRect.h = (int)Math.Ceiling(height);
-
-                SDL.SDL_RenderCopyEx(_rend,
-                    sprite,
-                    ref sRect,
-                    ref tRect,
-                    (int)trans.Rotz,
-                    nint.Zero,
-                    SDL.SDL_RendererFlip.SDL_FLIP_NONE);
-            }
-
             foreach (Circle c in _circlesToDraw)
             {
                 SDL.SDL_SetRenderDrawColor(_rend, (byte)c.R, (byte)c.G, (byte)c.B, (byte)c.A);
@@ -274,75 +216,29 @@ namespace Kintsugi.Rendering
                     #region Tile
                     var layer = grid.Layers[i];
                     for (int y = 0; y < grid.GridHeight; y++)
-                    for (int x = 0; x < grid.GridWidth; x++)
-                    {
-                        if (layer.Tiles[x, y].TileSetId < 0 && layer.Tiles[x, y].Id < 0) continue;
-                        
-                        var tileSet = grid.TileSets[layer.Tiles[x, y].TileSetId];
-                        var tileSetX = layer.Tiles[x, y].Id % (tileSet.Width / grid.TileWidth);
-                        var tileSetY = layer.Tiles[x, y].Id / (tileSet.Width / grid.TileWidth);
-
-                        var source = tileSet.Source;
-                        var sprite = LoadTexture(source);
-
-                        sRect.x = tileSetX * grid.TileWidth;
-                        sRect.y = tileSetY * grid.TileWidth;
-                        sRect.w = grid.TileWidth;
-                        sRect.h = grid.TileWidth;
-
-                        var uScreenPos = cam.WorldToScreenSpace(new Vector2(
-                            grid.Transform2D.X + x * grid.TileWidth,
-                            grid.Transform2D.Y + y * grid.TileWidth));
-                        var vScreenPos = cam.WorldToScreenSpace(new Vector2(
-                            grid.Transform2D.X + (x + 1) * grid.TileWidth,
-                            grid.Transform2D.Y + (y + 1) * grid.TileWidth));
-
-                        int xsize = (int)vScreenPos.X - (int)uScreenPos.X;
-                        int ysize = (int)vScreenPos.Y - (int)uScreenPos.Y;
-
-                        tRect.x = (int)uScreenPos.X;
-                        tRect.y = (int)uScreenPos.Y;
-                        tRect.w = xsize;
-                        tRect.h = ysize;
-
-                        SDL.SDL_RenderCopyEx(_rend,
-                            sprite,
-                            ref sRect,
-                            ref tRect,
-                            0,
-                            nint.Zero,
-                            SDL.SDL_RendererFlip.SDL_FLIP_NONE);
-                    }
-                    #endregion
-
-                    #region TileObjects
-                    for (int y = 0; y < grid.GridHeight; y++)
-                    for (int x = 0; x < grid.GridWidth; x++)
-                    {
-                        // Only proceed if there's any TileObjects in this coordinate with a graphic element.
-                        if (!grid.TileObjects.TryGetValue(new Vec2Int(x, y), out var tileObjects)) 
-                            continue;
-                        foreach (var tileObject in tileObjects.Where(o=> 
-                                     o.Transform.Layer == i &&
-                                     o.Graphic != null
-                                     ))
+                        for (int x = 0; x < grid.GridWidth; x++)
                         {
-                            var sprite = ((DisplaySDL)Bootstrap.GetDisplay()).LoadTexture(tileObject.Graphic!.Properties.Path);
+                            if (layer.Tiles[x, y].TileSetId < 0 && layer.Tiles[x, y].Id < 0) continue;
 
-                            sRect = tileObject.Graphic.SourceRect();
+                            var tileSet = grid.TileSets[layer.Tiles[x, y].TileSetId];
+                            var tileSetX = layer.Tiles[x, y].Id % (tileSet.Width / grid.TileWidth);
+                            var tileSetY = layer.Tiles[x, y].Id / (tileSet.Width / grid.TileWidth);
 
-                            var localTilePivot = tileObject.Graphic.Properties.TilePivot * grid.TileWidth;
-                            var pivotOffsets = localTilePivot - tileObject.Graphic.Properties.ImagePivot;
+                            var source = tileSet.Source;
+                            var sprite = LoadTexture(source);
 
-                            var uScreenPos = cam.WorldToScreenSpace(
-                                tileObject.Easing.CurrentPosition +
-                                pivotOffsets
-                            );
-                            var vScreenPos = cam.WorldToScreenSpace(
-                                tileObject.Easing.CurrentPosition
-                                + pivotOffsets + tileObject.Graphic.Properties.Dimensions
-                            );
-                                
+                            sRect.x = tileSetX * grid.TileWidth;
+                            sRect.y = tileSetY * grid.TileWidth;
+                            sRect.w = grid.TileWidth;
+                            sRect.h = grid.TileWidth;
+
+                            var uScreenPos = cam.WorldToScreenSpace(new Vector2(
+                                grid.Position.X + x * grid.TileWidth,
+                                grid.Position.Y + y * grid.TileWidth));
+                            var vScreenPos = cam.WorldToScreenSpace(new Vector2(
+                                grid.Position.X + (x + 1) * grid.TileWidth,
+                                grid.Position.Y + (y + 1) * grid.TileWidth));
+
                             int xsize = (int)vScreenPos.X - (int)uScreenPos.X;
                             int ysize = (int)vScreenPos.Y - (int)uScreenPos.Y;
 
@@ -359,7 +255,53 @@ namespace Kintsugi.Rendering
                                 nint.Zero,
                                 SDL.SDL_RendererFlip.SDL_FLIP_NONE);
                         }
-                    }
+                    #endregion
+
+                    #region TileObjects
+                    for (int y = 0; y < grid.GridHeight; y++)
+                        for (int x = 0; x < grid.GridWidth; x++)
+                        {
+                            // Only proceed if there's any TileObjects in this coordinate with a graphic element.
+                            if (!grid.TileObjects.TryGetValue(new Vec2Int(x, y), out var tileObjects))
+                                continue;
+                            foreach (var tileObject in tileObjects.Where(o =>
+                                         o.Transform.Layer == i &&
+                                         o.Graphic != null
+                                         ))
+                            {
+                                var sprite = ((DisplaySDL)Bootstrap.GetDisplay()).LoadTexture(tileObject.Graphic!.Properties.Path);
+
+                                sRect = tileObject.Graphic.SourceRect();
+
+                                var localTilePivot = tileObject.Graphic.Properties.TilePivot * grid.TileWidth;
+                                var pivotOffsets = localTilePivot - tileObject.Graphic.Properties.ImagePivot;
+
+                                var uScreenPos = cam.WorldToScreenSpace(
+                                    tileObject.Easing.CurrentPosition +
+                                    pivotOffsets
+                                );
+                                var vScreenPos = cam.WorldToScreenSpace(
+                                    tileObject.Easing.CurrentPosition
+                                    + pivotOffsets + tileObject.Graphic.Properties.Dimensions
+                                );
+
+                                int xsize = (int)vScreenPos.X - (int)uScreenPos.X;
+                                int ysize = (int)vScreenPos.Y - (int)uScreenPos.Y;
+
+                                tRect.x = (int)uScreenPos.X;
+                                tRect.y = (int)uScreenPos.Y;
+                                tRect.w = xsize;
+                                tRect.h = ysize;
+
+                                SDL.SDL_RenderCopyEx(_rend,
+                                    sprite,
+                                    ref sRect,
+                                    ref tRect,
+                                    0,
+                                    nint.Zero,
+                                    SDL.SDL_RendererFlip.SDL_FLIP_NONE);
+                            }
+                        }
                     #endregion
                 }
             }
@@ -385,8 +327,6 @@ namespace Kintsugi.Rendering
 
         public override void ClearDisplay()
         {
-
-            _toDraw.Clear();
             _circlesToDraw.Clear();
             _linesToDraw.Clear();
             _gridsToDraw.Clear();
