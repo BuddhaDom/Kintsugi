@@ -1,5 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
 using System.Numerics;
+using Kintsugi.Collision;
+using System.ComponentModel.DataAnnotations;
 using Kintsugi.Core;
 using Kintsugi.Objects.Graphics;
 using Kintsugi.Objects.Properties;
@@ -36,27 +37,103 @@ public class TileObject
         Easing = new TileObjectEasing(this);
     }
 
+
+    private void ResolveTriggerCollisions(Vec2Int pos)
+    {
+        if (Transform.Grid != null && Collider != null)
+        {
+            List<Collider> selfTriggers = new();
+            List<Collider> otherTriggers = new();
+
+            otherTriggers.AddRange(CollisionSystem.GetCollidingTriggersColliderWithPosition(Collider, Transform.Grid, Transform.Position));
+            var otherObjects = Transform.Grid.GetObjectsAtPosition(pos);
+            if (otherObjects != null)
+            {
+                foreach (var tileObject in otherObjects)
+                {
+                    if (tileObject != this && tileObject.Collider != null)
+                    {
+                        if (CollisionSystem.TriggerCollidesColliderWithCollider(tileObject.Collider, Collider))
+                        {
+                            selfTriggers.Add(tileObject.Collider);
+                        }
+                    }
+                }
+                selfTriggers.AddRange(CollisionSystem.GetCollidingTriggersGridAtPositionWithTileobjectsAtPosition(Transform.Grid, Transform.Position));
+            }
+            
+            foreach (var selfTrigger in selfTriggers)
+            {
+                selfTrigger.OnTriggerCollision(Collider);
+            }
+            foreach (var otherTrigger in otherTriggers)
+            {
+                Collider.OnTriggerCollision(otherTrigger);
+            }
+
+        }
+    }
+
+    /// <summary>
+    /// Add a collider property to this object with these parameters.
+    /// </summary>
+    /// <param name="belongLayers">The collision layers to which this object belongs to.</param>
+    /// <param name="collideLayers">The collision layers this object should collide with.</param>
+    /// <param name="isTrigger"><c>true</c> if this collider should act as a trigger.</param>
+    public void SetCollider(HashSet<string> belongLayers, HashSet<string> collideLayers, bool isTrigger = false)
+    {
+        Collider ??= new TileObjectCollider();
+        ((TileObjectColliderInitialize)Collider).Initialize(this);
+        Collider.IsTrigger = isTrigger;
+        Collider.BelongLayers = belongLayers;
+        Collider.CollideLayers = collideLayers;
+    }
+    public void SetColliderTyped<T>(HashSet<string> belongLayers, HashSet<string> collideLayers, bool isTrigger = false)
+        where T: TileObjectCollider, TileObjectColliderInitialize, new()
+    {
+        Collider = new T();
+        ((TileObjectColliderInitialize)Collider).Initialize(this);
+        Collider.IsTrigger = isTrigger;
+        Collider.BelongLayers = [..belongLayers];
+        Collider.CollideLayers = [..collideLayers];
+    }
+
+    /// <summary>
+    /// Add a collider property to this property to be copied from another <see cref="TileObjectCollider"/>.
+    /// </summary>
+    /// <param name="collider">Collider object to copy from.</param>
+    public void SetCollider(TileObjectCollider collider)
+        => SetCollider([..collider.BelongLayers], [..collider.CollideLayers], collider.IsTrigger);
     /// <summary>
     /// Establish the position of this object in a grid system. This method also updates the grid's
     /// <see cref="Grid.TileObjects"/> dictionary.
     /// </summary>
     /// <param name="position">New coordinates of the object.</param>
-    public void SetPosition(Vec2Int position)
+    public void SetPosition(Vec2Int position, bool ease = true)
     {
         if (Transform.Grid != null)
             RemoveFromGridTileObjects(Transform.Grid);
         Transform.Position = position;
-        Easing.BeginTowards(Transform.WorldSpacePosition);
-        if(Transform.Grid != null)
+        if (ease)
+        {
+            Easing.BeginTowards(Transform.WorldSpacePosition);
+        }
+        else
+        {
+            Easing.TargetPosition = Transform.WorldSpacePosition;
+            Easing.End();
+        }
+        if (Transform.Grid != null)
             AddToGridTileObjects(Transform.Grid);
+        ResolveTriggerCollisions(position);
     }
 
     /// <summary>
     /// Move this object towards a target vector.
     /// </summary>
     /// <param name="vector">The direction to move to.</param>
-    public void Move(Vec2Int vector)
-        => SetPosition(Transform.Position + vector);
+    public void Move(Vec2Int vector, bool ease = true)
+        => SetPosition(Transform.Position + vector, ease);
 
     /// <summary>
     /// Remove this objects grid. Does nothing if the grid is already <c>null</c>.
@@ -93,6 +170,7 @@ public class TileObject
         AddToGridTileObjects(grid);
         Transform.Grid = grid;
         Transform.Layer = layer;
+        Easing.StartPosition = Transform.WorldSpacePosition;
     }
 
     /// <summary>
@@ -106,27 +184,6 @@ public class TileObject
         else
             grid.TileObjects.Add(Transform.Position, [this]);
     }
-
-    /// <summary>
-    /// Add a collider property to this object with these parameters.
-    /// </summary>
-    /// <param name="belongLayers">The collision layers to which this object belongs to.</param>
-    /// <param name="collideLayers">The collision layers this object should collide with.</param>
-    /// <param name="isTrigger"><c>true</c> if this collider should act as a trigger.</param>
-    public void SetCollider(HashSet<string> belongLayers, HashSet<string> collideLayers, bool isTrigger = false)
-    {
-        Collider ??= new TileObjectCollider(this);
-        Collider.IsTrigger = isTrigger;
-        Collider.BelongLayers = [..belongLayers];
-        Collider.CollideLayers = [..collideLayers];
-    }
-
-    /// <summary>
-    /// Add a collider property to this property to be copied from another <see cref="TileObjectCollider"/>.
-    /// </summary>
-    /// <param name="collider">Collider object to copy from.</param>
-    public void SetCollider(TileObjectCollider collider)
-        => SetCollider([..collider.BelongLayers], [..collider.CollideLayers], collider.IsTrigger);
 
     /// <summary>
     /// Set the sprite properties for this object.
@@ -147,7 +204,7 @@ public class TileObject
 
     public void SetSpriteSingle(Sprite sprite)
     {
-        Graphic ??= new SpriteSingle(this);
+        Graphic = new SpriteSingle();
         ((SpriteSingle)Graphic).Sprite = sprite;
     }
 
@@ -157,8 +214,8 @@ public class TileObject
     public void SetAnimation(SpriteSheet spriteSheet, double timeLength, IEnumerable<int> frames,
         int repeats = 0, bool bounces = false, bool autoStart = true)
     {
-        var animation = new Animation(this, timeLength, spriteSheet, frames, repeats, bounces);
-        Graphic ??= animation;
+        var animation = new Animation(timeLength, spriteSheet, frames, repeats, bounces);
+        Graphic = animation;
         if (autoStart) ((Animation)Graphic).Start();
     }
         

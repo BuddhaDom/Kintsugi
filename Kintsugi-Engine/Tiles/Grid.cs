@@ -1,4 +1,6 @@
 using System.Drawing;
+using System.Numerics;
+using Kintsugi.Collision;
 using Kintsugi.Core;
 using Kintsugi.Objects;
 using Kintsugi.Rendering;
@@ -79,7 +81,7 @@ public class Grid : GameObject
         foreach (var tiledLayer in tiledMap.Layers)
         {
             // Initialize this key in the Layer dictionary, as wel as Tile array.
-            Layers[c] = new GridLayer(this, tiledLayer.name);
+            Layers[c] = ParseTiledProperties(tiledLayer, new GridLayer(this, tiledLayer.name));
             for (int y = 0; y < GridHeight; y++)
             for (int x = 0; x < GridWidth; x++)
             {
@@ -109,7 +111,53 @@ public class Grid : GameObject
             c++;
         }
         ValidateTileset();
+
+        GridLayer ParseTiledProperties(TiledLayer tiledLayer, GridLayer gridLayer)
+        {
+
+            var belong = new HashSet<string>();
+            var collides = new HashSet<string>();
+            var isTrigger = false;
+            foreach (var prop in tiledLayer.properties)
+            {
+                var split = prop.name.Split(':');
+                if (split.Length != 2) {
+                    continue;
+                }
+                if (split[0].ToLower() == "kintsugi")
+                {
+                    var propertyName = split[1].ToLower();
+
+
+
+                    switch (split[1].ToLower())
+                    {
+
+                        case "collisionlayerbelong":
+                            belong.Add(prop.value);
+                            break;
+                        case "collisionlayercollide":
+                            collides.Add(prop.value);
+
+                            break;
+                        case "istrigger":
+                            isTrigger = true;
+                            break;
+                        default:
+                            throw new Exception("Found Kintsugi property " + propertyName + " in " + tiledLayer + " but doesnt match any valid layer property");
+                    }
+                }
+            }
+
+            if (belong.Count != 0 || collides.Count != 0)
+            {
+                gridLayer.SetCollider(belong, collides, isTrigger);
+            }
+
+            return gridLayer;
+        }
     }
+
 
     /// <summary>
     /// Build generic grid.
@@ -246,4 +294,9 @@ public class Grid : GameObject
     /// </summary>
     /// <returns>A dictionary of coordinates as keys, and collections of <see cref="TileObject"/> as values.</returns>
     public IReadOnlyDictionary<Vec2Int, List<TileObject>> GetObjects() => TileObjects;
+
+    public bool IsGridPositionWithinGrid(Vec2Int gridPosition)
+    {
+        return gridPosition.x >= 0 && gridPosition.x < GridWidth && gridPosition.y >= 0 && gridPosition.y < GridHeight;
+    }
 }

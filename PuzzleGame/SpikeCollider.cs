@@ -1,0 +1,32 @@
+﻿using Kintsugi.Audio;
+using Kintsugi.Collision;
+using Kintsugi.Core;
+using Kintsugi.Objects.Properties;
+using PuzzleGame;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace PuzzleGame
+{
+    internal class SpikeCollider: GridLayerCollider
+    {
+        public override void OnTriggerCollision(Collider other)
+        {
+            base.OnTriggerCollision(other);
+            if (other is TileObjectCollider c)
+            {
+                if (c.TileObject is MovementActor a)
+                {
+                    var fireEvent = ((SoundFMOD)Bootstrap.GetSound()).LoadEventDescription("event:/Timbral");
+                    fireEvent.PlayImmediate();
+                    a.RemoveFromGrid();
+                    LevelManager.Instance.ResetLevel();
+                    Console.WriteLine("Kill " + a);
+                }
+            }
+        }
+    }
+}

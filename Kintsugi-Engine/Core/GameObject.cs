@@ -146,7 +146,7 @@ namespace Kintsugi.Core
             PhysicsManager.GetInstance().RemovePhysicsObject(myBody);
 
             myBody = null;
-            transform = null;
+            //transform = null;
         }
 
 

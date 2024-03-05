@@ -2,13 +2,12 @@ using SDL2;
 
 namespace Kintsugi.Objects.Graphics;
 
-public class SpriteSingle(TileObject parent) : ISpriteable
+public class SpriteSingle : ISpriteable
 {
     public Sprite Sprite { get; internal set; }
     /// <summary>
     /// The object this property modifies.
     /// </summary>
-    public TileObject Parent { get; set; } = parent;
     public ISpriteProperties Properties => Sprite;
     
     public SDL.SDL_Rect SourceRect()

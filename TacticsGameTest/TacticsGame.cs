@@ -19,7 +19,7 @@ namespace TacticsGameTest
 
         public override void Initialize()
         {
-            grid = new Grid(GetAssetManager().GetAssetPath("TiledTesting\\forestpath.tmx"), 
+            grid = new Grid(GetAssetManager().GetAssetPath("TiledTesting\\forestpath.tmx"),
                 gridVisible: true, gridColor: Color.DarkBlue)
             {
                 Transform =
@@ -29,7 +29,6 @@ namespace TacticsGameTest
                 }
             };
             Bootstrap.GetCameraSystem().Size = 16 * 10;
-            
             character = new MovementActor("Guy Dudelyn from house Brolew");
             character.AddToGrid(grid, 0);
             character.SetPosition(Vec2Int.One * 3);
@@ -61,7 +60,7 @@ namespace TacticsGameTest
             // scenario.AddControlGroup(group2);
 
             scenario.BeginScenario();
-            
+
             Bootstrap.GetInput().AddListener(this);
         }
 
