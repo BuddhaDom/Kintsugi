@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace Engine.EventSystem
 {
+    /// <summary>
+    /// Manager class for events in the engine.
+    /// </summary>
     public class EventManager
     {
         internal List<Event> EventQueue = new();
