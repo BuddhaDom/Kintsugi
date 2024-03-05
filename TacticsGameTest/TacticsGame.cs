@@ -1,17 +1,12 @@
 ﻿using Kintsugi.Core;
 using Kintsugi.Input;
-using Kintsugi.Objects;
-using Kintsugi.Rendering;
 using Kintsugi.Tiles;
 using SDL2;
-using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
-using Kintsugi.Objects;
+using System.Threading.Tasks.Dataflow;
+using Kintsugi.Objects.Graphics;
+using TweenSharp.Animation;
 
 namespace TacticsGameTest
 {
@@ -19,28 +14,51 @@ namespace TacticsGameTest
     {
         private Grid grid;
         private MovementActor character;
+        private MovementActor character2;
         private MovingScenario scenario;
 
         public override void Initialize()
         {
-            grid = new Grid(GetAssetManager().GetAssetPath("TiledTesting\\forestpath.tmx"), gridVisible: true, gridColor: Color.DarkBlue);
-            grid.Transform.X = 0;
-            grid.Transform.Y = 0;
+            grid = new Grid(GetAssetManager().GetAssetPath("TiledTesting\\forestpath.tmx"), 
+                gridVisible: true, gridColor: Color.DarkBlue)
+            {
+                Transform =
+                {
+                    X = 0,
+                    Y = 0
+                }
+            };
             Bootstrap.GetCameraSystem().Size = 16 * 10;
-
             
-            // TODO: This sucks. Should be attached to grid on the transform itself.
-            var transform = new TileObjectTransform(Vec2Int.One * 3, 0, grid);
-            var collider = new TileObjectCollider([0], [1]);
-            var sprite = new TileObjectSprite(GetAssetManager().GetAssetPath("guy.png"), Vector2.One / 2,
-                new Vector2(6.5f, 8.5f));
-            character = new MovementActor(transform,collider,sprite);
+            character = new MovementActor("Guy Dudelyn from house Brolew");
+            character.AddToGrid(grid, 0);
+            character.SetPosition(Vec2Int.One * 3);
+            character.SetCollider(["mine"], ["yours"]);
+            // character.SetSpriteSingle(GetAssetManager().GetAssetPath("guy.png"), 
+            //     Vector2.One / 2, new Vector2(6.5f, 8.5f));
+
+            var frames = new List<int>();
+            frames.AddRange(Enumerable.Range(00,16));
+            frames.AddRange(Enumerable.Range(20,16));
+            frames.AddRange(Enumerable.Range(40,16));
+
+            character.SetAnimation(
+                GetAssetManager().GetAssetPath("bro.png"),
+                32, 32, 4, 3, frames, tilePivot: new Vector2(-0.5f, -0.5f),
+                repeats: 0, bounces: false, autoStart: true
+            );
+            
+            character.SetEasing(Easing.QuadraticEaseOut, 0.5);
+                
             scenario = new MovingScenario();
-            var group = new MyControlGroup();
+            var group = new MyControlGroup("john's group");
+            // var group2 = new MyControlGroup("bob's group");
 
             group.AddActor(character);
+            //group.AddActor(character2);
 
             scenario.AddControlGroup(group);
+            // scenario.AddControlGroup(group2);
 
             scenario.BeginScenario();
             

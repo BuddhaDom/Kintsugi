@@ -1,5 +1,4 @@
 using System.Drawing;
-using System.Numerics;
 using Kintsugi.Core;
 using Kintsugi.Objects;
 using Kintsugi.Rendering;
@@ -32,15 +31,23 @@ public class Grid : GameObject
     /// </summary>
     public int TileWidth { get; }
     
-    // TODO: Change to Dict of vec2int Positions to Lists of TileObjects
-    public List<TileObject> Objects { get; }
+    /// <summary>
+    /// A dictionary containing coordinates and objects placed on that coordinate of this grid.
+    /// </summary>
+    internal Dictionary<Vec2Int, List<TileObject>> TileObjects { get; }
 
     /// <summary>
     /// Source location of the tile sets used by this grid.
     /// </summary>
     internal TileSet[] TileSets { get; }
 
+    /// <summary>
+    /// Should the grid borders be visible?
+    /// </summary>
     private readonly bool gridVisible;
+    /// <summary>
+    /// What is the color of the grid border?
+    /// </summary>
     private readonly Color gridColor;
 
 
@@ -63,13 +70,12 @@ public class Grid : GameObject
         GridWidth = tiledMap.Width;
         GridHeight = tiledMap.Height;
         TileWidth = tiledMap.TileWidth;
-        Objects = new List<TileObject>();
+        TileObjects = new Dictionary<Vec2Int, List<TileObject>>();
         this.gridVisible = gridVisible;
         this.gridColor = gridColor;
-        int c; // Generic counter.
 
         Layers = new GridLayer[tiledMap.Layers.Length];
-        c = 0;
+        var c = 0; // Generic counter.
         foreach (var tiledLayer in tiledMap.Layers)
         {
             // Initialize this key in the Layer dictionary, as wel as Tile array.
@@ -125,7 +131,7 @@ public class Grid : GameObject
         GridHeight = gridHeight;
         TileWidth = tileWidth;
         Layers = layers ?? Array.Empty<GridLayer>();
-        Objects = new List<TileObject>();
+        TileObjects = new Dictionary<Vec2Int, List<TileObject>>();
         TileSets = new TileSet[tileSetPaths.Length];
         for (int i = 0; i < tileSetPaths.Length; i++)
         {
@@ -181,6 +187,13 @@ public class Grid : GameObject
     }
 
 
+    /// <summary>
+    /// Get the Tileset ID from a given global ID.
+    /// </summary>
+    /// <param name="map">Tilemap this ob</param>
+    /// <param name="gid"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     private static int GetTilesetIdFromGid(TiledMap map, int gid)
     {
         for (int i = 0; i < map.Tilesets.Length ; i++)
@@ -196,6 +209,9 @@ public class Grid : GameObject
         throw new Exception("Mismatch on Tilemap ID to GID information parsing.");
     }
 
+    /// <summary>
+    /// Precautionary checks of the tileset assets for developers.
+    /// </summary>
     private void ValidateTileset()
     {
         foreach (var tileSet in TileSets)
@@ -205,4 +221,21 @@ public class Grid : GameObject
             Console.Error.WriteLine($"Remainder (px) - w:{tileSet.Width % TileWidth}, w:{tileSet.Height % TileWidth}");
         }
     }
+
+    /// <summary>
+    /// Get every <see cref="TileObject"/> at a specified coordinate, regardless of layer.
+    /// </summary>
+    /// <param name="position">Coordinate from which to query.</param>
+    /// <returns>A collection of <see cref="TileObject"/> located in this position.</returns>
+    public IReadOnlyList<TileObject>? GetObjectsAtPosition(Vec2Int position)
+    {
+        TileObjects.TryGetValue(position, out var result);
+        return result;
+    }
+
+    /// <summary>
+    /// Get the dictionary containing all <see cref="TileObject"/>s placed in this grid. 
+    /// </summary>
+    /// <returns>A dictionary of coordinates as keys, and collections of <see cref="TileObject"/> as values.</returns>
+    public IReadOnlyDictionary<Vec2Int, List<TileObject>> GetObjects() => TileObjects;
 }

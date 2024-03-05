@@ -1,3 +1,5 @@
+using System.Numerics;
+
 namespace Kintsugi.Core;
 
 public struct Vec2Int(int x, int y)
@@ -87,22 +89,25 @@ public struct Vec2Int(int x, int y)
     #region Operators
 
     public static Vec2Int operator -(Vec2Int a, Vec2Int b)
-        => new Vec2Int(a.x - b.x, a.y - b.y);
+        => new(a.x - b.x, a.y - b.y);
 
     public static Vec2Int operator +(Vec2Int a, Vec2Int b)
-        => new Vec2Int(a.x + b.x, a.y + b.y);
+        => new(a.x + b.x, a.y + b.y);
 
     public static Vec2Int operator *(Vec2Int a, Vec2Int b)
-        => new Vec2Int(a.x * b.x, a.y * b.y);
+        => new(a.x * b.x, a.y * b.y);
     
     public static Vec2Int operator *(Vec2Int v, int m)
-        => new Vec2Int(v.x * m, v.y * m);
+        => new(v.x * m, v.y * m);
 
     public static bool operator ==(Vec2Int a, Vec2Int b)
         => (a.x == b.x) & (a.y == b.y);
 
     public static bool operator !=(Vec2Int a, Vec2Int b)
         => (a.x != b.x) | (a.y != b.y);
-    
+
+    public static implicit operator Vector2(Vec2Int v)
+        => new(v.x, v.y);
+
     #endregion
 }

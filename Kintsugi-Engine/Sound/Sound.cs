@@ -11,6 +11,7 @@ namespace Kintsugi.Audio
     abstract public class Sound
     {
         abstract public void PlaySound(string file);
-
+        abstract internal void Initialize();
+        abstract internal void Update();
     }
 }
