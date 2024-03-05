@@ -9,10 +9,16 @@
 
 namespace Kintsugi.Input
 {
+    /// <summary>
+    /// Interface to implement when listening for inputs.
+    /// </summary>
     public interface IInputListener
     {
-
-
+        /// <summary>
+        /// Method ocurring when an input event is caught.
+        /// </summary>
+        /// <param name="inp">Input event.</param>
+        /// <param name="eventType">Type of event.</param>
         public void HandleInput(InputEvent inp, string eventType);
     }
 }
