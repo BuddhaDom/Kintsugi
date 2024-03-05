@@ -4,6 +4,9 @@ using Kintsugi.Tiles;
 using SDL2;
 using System.Drawing;
 using System.Numerics;
+using System.Threading.Tasks.Dataflow;
+using Kintsugi.Objects.Graphics;
+using TweenSharp.Animation;
 
 namespace TacticsGameTest
 {
@@ -30,13 +33,28 @@ namespace TacticsGameTest
             character.AddToGrid(grid, 0);
             character.SetPosition(Vec2Int.One * 3);
             character.SetCollider(["mine"], ["yours"]);
-            character.SetSprite(GetAssetManager().GetAssetPath("guy.png"),
-                Vector2.One / 2, new Vector2(6.5f, 8.5f));
+            // character.SetSpriteSingle(GetAssetManager().GetAssetPath("guy.png"), 
+            //     Vector2.One / 2, new Vector2(6.5f, 8.5f));
+
+            var frames = new List<int>();
+            frames.AddRange(Enumerable.Range(00,16));
+            frames.AddRange(Enumerable.Range(20,16));
+            frames.AddRange(Enumerable.Range(40,16));
+
+            character.SetAnimation(
+                GetAssetManager().GetAssetPath("bro.png"),
+                32, 32, 4, 3, frames, tilePivot: new Vector2(-0.5f, -0.5f),
+                repeats: 0, bounces: false, autoStart: true
+            );
+            
+            character.SetEasing(Easing.QuadraticEaseOut, 0.5);
+                
             scenario = new MovingScenario();
             var group = new MyControlGroup("john's group");
             // var group2 = new MyControlGroup("bob's group");
 
             group.AddActor(character);
+            //group.AddActor(character2);
 
             scenario.AddControlGroup(group);
             // scenario.AddControlGroup(group2);
@@ -50,6 +68,7 @@ namespace TacticsGameTest
         {
 
             //Bootstrap.GetDisplay().ShowText("FPS: " + Bootstrap.GetSecondFPS() + " / " + Bootstrap.GetFPS(), 10, 10, 12, 255, 255, 255);
+
 
             var movement = Vector2.Zero;
             if (up)
@@ -83,6 +102,14 @@ namespace TacticsGameTest
         bool up, down, left, right, zoomIn, zoomOut;
         public void HandleInput(InputEvent inp, string eventType)
         {
+            if (eventType == "MouseDown")
+            {
+                var gridPos = grid.WorldToGridPosition(Bootstrap.GetCameraSystem().ScreenToWorldSpace(new Vector2(inp.X, inp.Y)));
+                Console.WriteLine(gridPos);
+                Console.WriteLine(grid.GridToWorldPosition(gridPos));
+
+            }
+
             if (eventType == "KeyDown")
             {
                 if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_UP)

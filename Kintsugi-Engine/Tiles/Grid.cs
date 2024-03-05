@@ -212,7 +212,36 @@ public class Grid : GameObject
         }
         Bootstrap.GetDisplay().DrawGrid(this);
     }
-    
+
+    /// <summary>
+    /// Calculates the cell in the grid that contains the given world position.
+    /// </summary>
+    public Vec2Int WorldToGridPosition(Vector2 worldPosition)
+    {
+        var localPosition = worldPosition - new Vector2(Transform.X, Transform.Y);
+
+        var localPositionScaled = new Vector2(localPosition.X / TileWidth, localPosition.Y / TileWidth);
+        Vec2Int gridPos = new Vec2Int((int)MathF.Floor(localPositionScaled.X), (int)MathF.Floor(localPositionScaled.Y));
+        return gridPos;
+    }
+    /// <summary>
+    /// Returns the world position of the upper left corner of the cell in the grid.
+    /// </summary>
+    public Vector2 GridToWorldPosition(Vec2Int gridPosition)
+    {
+        var scaledWorldPosition = gridPosition * TileWidth;
+        return new Vector2(scaledWorldPosition.x, scaledWorldPosition.y) + new Vector2(Transform.X, Transform.Y);
+    }
+    /// <summary>
+    /// Returns the world position of the center of the cell in the grid.
+    /// </summary>
+    public Vector2 GridCenterToWorldPosition(Vec2Int gridPosition)
+    {
+        var scaledWorldPosition = gridPosition * TileWidth;
+        return new Vector2(scaledWorldPosition.x, scaledWorldPosition.y) + new Vector2(Transform.X, Transform.Y) + Vector2.One * TileWidth / 2f;
+    }
+
+
     /// <summary>
     /// Get the Tileset ID from a given global ID.
     /// </summary>
