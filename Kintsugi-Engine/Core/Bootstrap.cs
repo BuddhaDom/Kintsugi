@@ -10,7 +10,6 @@ using Engine.EventSystem;
 using Kintsugi.Assets;
 using Kintsugi.Audio;
 using Kintsugi.Input;
-using Kintsugi.Physics;
 using Kintsugi.Rendering;
 
 namespace Kintsugi.Core
@@ -24,7 +23,6 @@ namespace Kintsugi.Core
         private static DisplayBase displayEngine;
         private static Sound soundEngine;
         private static InputSystem input;
-        private static PhysicsManager phys;
         private static AssetManagerBase asset;
         private static CameraSystem cameraSystem;
 
@@ -130,8 +128,6 @@ namespace Kintsugi.Core
             Type t;
             object ob;
             bool bailOut = false;
-
-            phys = PhysicsManager.GetInstance();
 
             foreach (KeyValuePair<string, string> kvp in config)
             {
@@ -267,8 +263,6 @@ namespace Kintsugi.Core
             // Start the game running.
             runningGame.Initialize();
 
-
-            phys.GravityModifier = 0.1f;
             // This is our game loop.
             MainLoop();
 
@@ -282,17 +276,6 @@ namespace Kintsugi.Core
             long timeInMillisecondsStart, lastTick, timeInMillisecondsEnd;
             long interval;
             int sleep;
-            bool physUpdate = false;
-            bool physDebug = false;
-
-            timeInMillisecondsStart = startTime;
-            lastTick = startTime;
-
-            if (GetEnvironmentalVariable("physics_debug") == "1")
-            {
-                physDebug = true;
-            }
-
 
             while (true)
             {
@@ -319,29 +302,8 @@ namespace Kintsugi.Core
                     // Update runs as fast as the system lets it.  Any kind of movement or counter 
                     // increment should be based then on the deltaTime variable.
                     GameObjectManager.GetInstance().Update();
-
-                    // This will Update every 20 milliseconds or thereabouts.  Our physics system aims 
-                    // at a 50 FPS cycle.
-                    if (phys.WillTick())
-                    {
-                        GameObjectManager.GetInstance().PrePhysicsUpdate();
-                    }
-
                     // Update the physics.  If it's too soon, it'll return false.   Otherwise 
                     // it'll return true.
-                    physUpdate = phys.Update();
-
-                    if (physUpdate)
-                    {
-                        // If it did tick, give every object an Update
-                        // that is pinned to the timing of the physics system.
-                        GameObjectManager.GetInstance().PhysicsUpdate();
-                    }
-
-                    if (physDebug)
-                    {
-                        phys.DrawDebugColliders();
-                    }
 
                 }
 

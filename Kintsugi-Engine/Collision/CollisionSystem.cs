@@ -1,8 +1,6 @@
 ﻿using Kintsugi.Core;
 using Kintsugi.Objects;
 using Kintsugi.Objects.Properties;
-using Kintsugi.Physics;
-using Kintsugi.Physics.Colliders;
 using Kintsugi.Tiles;
 using System;
 using System.Collections.Generic;
@@ -16,7 +14,8 @@ namespace Kintsugi.Collision
     /// <summary>
     /// How a collision outside the grid should be handled.
     /// </summary>
-    public enum VoidCollideMode { 
+    public enum VoidCollideMode
+    {
         /// <summary>
         /// Checking collisions outside the grid will always report as a collision
         /// </summary>
@@ -315,7 +314,7 @@ namespace Kintsugi.Collision
                 foreach (var tileObject in grid.GetObjectsAtPosition(position) ?? Enumerable.Empty<TileObject>())
                 {
                     if (tileObject.Collider == null) continue;
-                    
+
                     if (CollisionSystem.TriggerCollidesColliderWithCollider(gridLayer.Collider, tileObject.Collider))
                     {
                         colliders.Add(gridLayer.Collider);

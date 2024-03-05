@@ -41,60 +41,20 @@ namespace Kintsugi.Core
             myObjects.Remove(gob);
         }
 
-
-        public void PhysicsUpdate()
-        {
-            GameObject gob;
-            for (int i = 0; i < myObjects.Count; i++)
-            {
-                gob = myObjects[i];
-                gob.PhysicsUpdate();
-            }
-        }
-
-        public void PrePhysicsUpdate()
-        {
-            GameObject gob;
-            for (int i = 0; i < myObjects.Count; i++)
-            {
-                gob = myObjects[i];
-
-                gob.PrePhysicsUpdate();
-            }
-        }
-
         public void Update()
         {
-            List<int> toDestroy = new List<int>();
-            GameObject gob;
-            for (int i = 0; i < myObjects.Count; i++)
+            for (int i = myObjects.Count - 1; i >= 0; i--)
             {
-                gob = myObjects[i];
-
-                gob.Update();
-
-                gob.CheckDestroyMe();
-
-                if (gob.ToBeDestroyed == true)
+                if (myObjects[i].ToBeDestroyed)
                 {
-                    toDestroy.Add(i);
+                    myObjects.RemoveAt(i);
                 }
-            }
 
-            if (toDestroy.Count > 0)
+            }
+            foreach (var gameObject in myObjects)
             {
-                for (int i = toDestroy.Count - 1; i >= 0; i--)
-                {
-                    gob = myObjects[toDestroy[i]];
-                    myObjects[toDestroy[i]].KillMe();
-                    myObjects.RemoveAt(toDestroy[i]);
-
-                }
+                gameObject.Update();
             }
-
-            toDestroy.Clear();
-
-            //            Debug.Log ("NUm Objects is " + myObjects.Count);
         }
 
     }

@@ -32,7 +32,7 @@ public class Grid : GameObject
     /// Width (in pixels) of the tiles present in this grid.
     /// </summary>
     public int TileWidth { get; }
-    
+
     /// <summary>
     /// A dictionary containing coordinates and objects placed on that coordinate of this grid.
     /// </summary>
@@ -62,11 +62,11 @@ public class Grid : GameObject
     /// <exception cref="ArgumentException">Thrown if the path is either not found or not a <c>.tmx</c> file.</exception>
     public Grid(string tmxPath, bool gridVisible = false, Color gridColor = default)
     {
-        if (!Path.Exists(tmxPath)) 
+        if (!Path.Exists(tmxPath))
             throw new ArgumentException("The provided file path does not exist.");
         if (Path.GetExtension(tmxPath) != ".tmx")
             throw new ArgumentException("The provided file path does not correspond to a .tmx file.");
-        
+
         // Construct values and properties.
         var tiledMap = new TiledMap(tmxPath);
         GridWidth = tiledMap.Width;
@@ -83,30 +83,30 @@ public class Grid : GameObject
             // Initialize this key in the Layer dictionary, as wel as Tile array.
             Layers[c] = ParseTiledProperties(tiledLayer, new GridLayer(this, tiledLayer.name));
             for (int y = 0; y < GridHeight; y++)
-            for (int x = 0; x < GridWidth; x++)
-            {
-                var index = y * GridWidth + x;
-                var gid = tiledLayer.data[index];
-                var tileSetIndex = GetTilesetIdFromGid(tiledMap, gid);
-                
-                // Set this tile in the layer dictionary.
-                Layers[c].Tiles[x,y] = new Tile( 
-                    gid - tiledMap.Tilesets[tileSetIndex].firstgid, 
-                    tileSetIndex
-                    );
-            }
+                for (int x = 0; x < GridWidth; x++)
+                {
+                    var index = y * GridWidth + x;
+                    var gid = tiledLayer.data[index];
+                    var tileSetIndex = GetTilesetIdFromGid(tiledMap, gid);
+
+                    // Set this tile in the layer dictionary.
+                    Layers[c].Tiles[x, y] = new Tile(
+                        gid - tiledMap.Tilesets[tileSetIndex].firstgid,
+                        tileSetIndex
+                        );
+                }
             c++;
         }
 
         // Get the source paths for tilesets used by this grid.
         var dir = Path.GetDirectoryName(tmxPath);
-        var tiledSets = tiledMap.GetTiledTilesets(dir+"/");
+        var tiledSets = tiledMap.GetTiledTilesets(dir + "/");
         TileSets = new TileSet[tiledSets.Count];
         c = 0;
         foreach (var image in tiledSets.Select(set => set.Value.Image))
         {
             TileSets[c] = new TileSet(
-                Path.Combine(dir!,image.source),
+                Path.Combine(dir!, image.source),
                 image.width, image.height);
             c++;
         }
@@ -121,7 +121,8 @@ public class Grid : GameObject
             foreach (var prop in tiledLayer.properties)
             {
                 var split = prop.name.Split(':');
-                if (split.Length != 2) {
+                if (split.Length != 2)
+                {
                     continue;
                 }
                 if (split[0].ToLower() == "kintsugi")
@@ -170,7 +171,7 @@ public class Grid : GameObject
     /// <param name="gridVisible"><para><c>false</c></para><c>true</c> if the grid borders are to be displayed as well.</param>
     /// <param name="gridColor">Color of the grid borders if <paramref name="gridVisible"/> is <c>true</c>.</param>
     /// <exception cref="ArgumentException">Thrown if any of the paths are not found.</exception>
-    public Grid(int gridWidth, int gridHeight, int tileWidth, string[] tileSetPaths, 
+    public Grid(int gridWidth, int gridHeight, int tileWidth, string[] tileSetPaths,
         GridLayer[]? layers = null, bool gridVisible = false, Color gridColor = default)
     {
         this.gridVisible = gridVisible;
@@ -196,18 +197,18 @@ public class Grid : GameObject
         {
             for (int i = 0; i <= GridHeight; i++) // Horizontal lines
                 Bootstrap.GetDisplay().DrawLine(
-                    (int)Transform2D.X,
-                    (int)(Transform2D.Y + TileWidth * i),
-                    (int)(Transform2D.X + TileWidth * GridWidth),
-                    (int)(Transform2D.Y + TileWidth * i),
+                    (int)Position.X,
+                    (int)(Position.Y + TileWidth * i),
+                    (int)(Position.X + TileWidth * GridWidth),
+                    (int)(Position.Y + TileWidth * i),
                     gridColor
                 );
             for (int i = 0; i <= GridWidth; i++) // Vertical lines
                 Bootstrap.GetDisplay().DrawLine(
-                    (int)(Transform2D.X + TileWidth * i),
-                    (int)Transform2D.Y,
-                    (int)(Transform2D.X + TileWidth * i),
-                    (int)(Transform2D.Y + TileWidth * GridHeight),
+                    (int)(Position.X + TileWidth * i),
+                    (int)Position.Y,
+                    (int)(Position.X + TileWidth * i),
+                    (int)(Position.Y + TileWidth * GridHeight),
                     gridColor
                 );
         }
@@ -219,7 +220,7 @@ public class Grid : GameObject
     /// </summary>
     public Vec2Int WorldToGridPosition(Vector2 worldPosition)
     {
-        var localPosition = worldPosition - new Vector2(Transform.X, Transform.Y);
+        var localPosition = worldPosition - new Vector2(Position.X, Position.Y);
 
         var localPositionScaled = new Vector2(localPosition.X / TileWidth, localPosition.Y / TileWidth);
         Vec2Int gridPos = new Vec2Int((int)MathF.Floor(localPositionScaled.X), (int)MathF.Floor(localPositionScaled.Y));
@@ -231,7 +232,7 @@ public class Grid : GameObject
     public Vector2 GridToWorldPosition(Vec2Int gridPosition)
     {
         var scaledWorldPosition = gridPosition * TileWidth;
-        return new Vector2(scaledWorldPosition.x, scaledWorldPosition.y) + new Vector2(Transform.X, Transform.Y);
+        return new Vector2(scaledWorldPosition.x, scaledWorldPosition.y) + new Vector2(Position.X, Position.Y);
     }
     /// <summary>
     /// Returns the world position of the center of the cell in the grid.
@@ -239,7 +240,7 @@ public class Grid : GameObject
     public Vector2 GridCenterToWorldPosition(Vec2Int gridPosition)
     {
         var scaledWorldPosition = gridPosition * TileWidth;
-        return new Vector2(scaledWorldPosition.x, scaledWorldPosition.y) + new Vector2(Transform.X, Transform.Y) + Vector2.One * TileWidth / 2f;
+        return new Vector2(scaledWorldPosition.x, scaledWorldPosition.y) + new Vector2(Position.X, Position.Y) + Vector2.One * TileWidth / 2f;
     }
 
 
@@ -252,8 +253,8 @@ public class Grid : GameObject
     /// <exception cref="Exception"></exception>
     private static int GetTilesetIdFromGid(TiledMap map, int gid)
     {
-        for (int i = 0; i < map.Tilesets.Length ; i++)
-            if (i < map.Tilesets.Length-1)
+        for (int i = 0; i < map.Tilesets.Length; i++)
+            if (i < map.Tilesets.Length - 1)
             {
                 int gid1 = map.Tilesets[i + 0].firstgid;
                 int gid2 = map.Tilesets[i + 1].firstgid;

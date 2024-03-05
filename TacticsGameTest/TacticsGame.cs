@@ -22,7 +22,7 @@ namespace TacticsGameTest
             grid = new Grid(GetAssetManager().GetAssetPath("TiledTesting\\forestpath.tmx"),
                 gridVisible: true, gridColor: Color.DarkBlue)
             {
-                Transform =
+                Position =
                 {
                     X = 0,
                     Y = 0
@@ -37,18 +37,18 @@ namespace TacticsGameTest
             //     Vector2.One / 2, new Vector2(6.5f, 8.5f));
 
             var frames = new List<int>();
-            frames.AddRange(Enumerable.Range(00,16));
-            frames.AddRange(Enumerable.Range(20,16));
-            frames.AddRange(Enumerable.Range(40,16));
+            frames.AddRange(Enumerable.Range(00, 16));
+            frames.AddRange(Enumerable.Range(20, 16));
+            frames.AddRange(Enumerable.Range(40, 16));
 
             character.SetAnimation(
                 GetAssetManager().GetAssetPath("bro.png"),
                 32, 32, 4, 3, frames, tilePivot: new Vector2(-0.5f, -0.5f),
                 repeats: 0, bounces: false, autoStart: true
             );
-            
+
             character.SetEasing(Easing.QuadraticEaseOut, 0.5);
-                
+
             scenario = new MovingScenario();
             var group = new MyControlGroup("john's group");
             // var group2 = new MyControlGroup("bob's group");
