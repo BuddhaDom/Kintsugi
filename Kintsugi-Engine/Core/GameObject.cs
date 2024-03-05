@@ -7,9 +7,6 @@
 *   @version 1.0
 *   
 */
-
-using Kintsugi.Physics;
-
 namespace Kintsugi.Core
 {
     public class GameObject
@@ -18,7 +15,6 @@ namespace Kintsugi.Core
         private bool transient;
         private bool toBeDestroyed;
         private bool visible;
-        private PhysicsBody myBody;
         private List<string> tags;
 
         public void AddTag(string str)
@@ -53,22 +49,6 @@ namespace Kintsugi.Core
 
             return str;
         }
-
-        public void SetPhysicsEnabled()
-        {
-            MyBody = new PhysicsBody(this);
-        }
-
-
-        public bool QueryPhysicsEnabled()
-        {
-            if (MyBody == null)
-            {
-                return false;
-            }
-            return true;
-        }
-
         public Transform3D Transform
         {
             get => transform;
@@ -87,7 +67,6 @@ namespace Kintsugi.Core
         }
         public bool Transient { get => transient; set => transient = value; }
         public bool ToBeDestroyed { get => toBeDestroyed; set => toBeDestroyed = value; }
-        public PhysicsBody MyBody { get => myBody; set => myBody = value; }
 
         public virtual void Initialize()
         {
@@ -140,15 +119,6 @@ namespace Kintsugi.Core
             ToBeDestroyed = true;
 
         }
-
-        public virtual void KillMe()
-        {
-            PhysicsManager.GetInstance().RemovePhysicsObject(myBody);
-
-            myBody = null;
-            //transform = null;
-        }
-
 
     }
 }

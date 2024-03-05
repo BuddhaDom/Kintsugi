@@ -86,7 +86,6 @@ namespace Kintsugi.Core
                 for (int i = toDestroy.Count - 1; i >= 0; i--)
                 {
                     gob = myObjects[toDestroy[i]];
-                    myObjects[toDestroy[i]].KillMe();
                     myObjects.RemoveAt(toDestroy[i]);
 
                 }
