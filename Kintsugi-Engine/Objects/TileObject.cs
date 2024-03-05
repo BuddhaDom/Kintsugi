@@ -109,13 +109,21 @@ public class TileObject
     /// <see cref="Grid.TileObjects"/> dictionary.
     /// </summary>
     /// <param name="position">New coordinates of the object.</param>
-    public void SetPosition(Vec2Int position)
+    public void SetPosition(Vec2Int position, bool ease = true)
     {
         if (Transform.Grid != null)
             RemoveFromGridTileObjects(Transform.Grid);
         Transform.Position = position;
-        Easing.BeginTowards(Transform.WorldSpacePosition);
-        if(Transform.Grid != null)
+        if (ease)
+        {
+            Easing.BeginTowards(Transform.WorldSpacePosition);
+        }
+        else
+        {
+            Easing.TargetPosition = Transform.WorldSpacePosition;
+            Easing.End();
+        }
+        if (Transform.Grid != null)
             AddToGridTileObjects(Transform.Grid);
         ResolveTriggerCollisions(position);
     }
@@ -124,8 +132,8 @@ public class TileObject
     /// Move this object towards a target vector.
     /// </summary>
     /// <param name="vector">The direction to move to.</param>
-    public void Move(Vec2Int vector)
-        => SetPosition(Transform.Position + vector);
+    public void Move(Vec2Int vector, bool ease = true)
+        => SetPosition(Transform.Position + vector, ease);
 
     /// <summary>
     /// Remove this objects grid. Does nothing if the grid is already <c>null</c>.
@@ -162,6 +170,7 @@ public class TileObject
         AddToGridTileObjects(grid);
         Transform.Grid = grid;
         Transform.Layer = layer;
+        Easing.StartPosition = Transform.WorldSpacePosition;
     }
 
     /// <summary>

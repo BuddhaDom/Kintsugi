@@ -26,13 +26,13 @@ namespace PuzzleGame.Levels
 
             // TODO: This sucks. Should be attached to grid on the transform itself.
             var character = ActorFactory.Zombie(game, grid);
-            character.SetPosition(new Vec2Int(0, 5));
+            character.SetPosition(new Vec2Int(0, 5), false);
            // scenario = new MovingScenario();
             scenario.goals = new List<Actor>()
             {
                 ActorFactory.Goal(game, grid),
             };
-            scenario.goals[0].SetPosition(new Vec2Int(4, 0));
+            scenario.goals[0].SetPosition(new Vec2Int(4, 0), false);
             group_player.AddActor(character);
             //group.AddActor(character2);
 
@@ -53,10 +53,10 @@ namespace PuzzleGame.Levels
             Bootstrap.GetCameraSystem().Position = new Vector2(50, 50);
 
             var character = ActorFactory.Zombie(game, grid);
-            character.SetPosition(new Vec2Int(0, 4));
+            character.SetPosition(new Vec2Int(0, 4), false);
 
             var character2 = ActorFactory.Zombie(game, grid);
-            character2.SetPosition(new Vec2Int(3, 4));
+            character2.SetPosition(new Vec2Int(3, 4), false);
 
 
             scenario.goals = new List<Actor>()
@@ -86,10 +86,10 @@ namespace PuzzleGame.Levels
             Bootstrap.GetCameraSystem().Position = new Vector2(50, 50);
 
             var character = ActorFactory.Zombie(game, grid);
-            character.SetPosition(new Vec2Int(0, 5));
+            character.SetPosition(new Vec2Int(0, 5), false);
 
             var character2 = ActorFactory.Zombie(game, grid);
-            character2.SetPosition(new Vec2Int(4, 5));
+            character2.SetPosition(new Vec2Int(4, 5), false);
 
             scenario.goals = new List<Actor>()
             {
@@ -118,10 +118,10 @@ namespace PuzzleGame.Levels
             Bootstrap.GetCameraSystem().Position = new Vector2(50, 50);
 
             var character = ActorFactory.Skeleton(game, grid);
-            character.SetPosition(new Vec2Int(0, 1));
+            character.SetPosition(new Vec2Int(0, 1), false);
 
             var character2 = ActorFactory.Zombie(game, grid);
-            character2.SetPosition(new Vec2Int(0, 3));
+            character2.SetPosition(new Vec2Int(0, 3), false);
 
             scenario.goals = new List<Actor>()
             {
@@ -150,13 +150,13 @@ namespace PuzzleGame.Levels
             Bootstrap.GetCameraSystem().Position = new Vector2(50, 50);
 
             var character = ActorFactory.Zombie(game, grid);
-            character.SetPosition(new Vec2Int(0, 0));
+            character.SetPosition(new Vec2Int(0, 0), false);
 
             var character2 = ActorFactory.Zombie(game, grid);
-            character2.SetPosition(new Vec2Int(6, 0));
+            character2.SetPosition(new Vec2Int(6, 0), false);
 
             var character3 = ActorFactory.Ghost(game, grid);
-            character3.SetPosition(new Vec2Int(0, 2));
+            character3.SetPosition(new Vec2Int(0, 2), false);
 
             scenario.goals = new List<Actor>()
             {
@@ -188,10 +188,10 @@ namespace PuzzleGame.Levels
             Bootstrap.GetCameraSystem().Position = new Vector2(50, 50);
 
             var character = ActorFactory.Skeleton(game, grid);
-            character.SetPosition(new Vec2Int(6, 6));
+            character.SetPosition(new Vec2Int(6, 6), false);
 
             var character2 = ActorFactory.Ghost(game, grid);
-            character2.SetPosition(new Vec2Int(3, 3));
+            character2.SetPosition(new Vec2Int(3, 3), false);
 
             scenario.goals = new List<Actor>()
             {
@@ -221,10 +221,10 @@ namespace PuzzleGame.Levels
             Bootstrap.GetCameraSystem().Position = new Vector2(70, 75);
 
             var character = ActorFactory.Zombie(game, grid);
-            character.SetPosition(new Vec2Int(5, 4));
+            character.SetPosition(new Vec2Int(5, 4), false);
 
             var character2 = ActorFactory.Mummy(game, grid);
-            character2.SetPosition(new Vec2Int(3, 4));
+            character2.SetPosition(new Vec2Int(3, 4), false);
 
             scenario.goals = new List<Actor>()
             {
@@ -267,7 +267,7 @@ namespace PuzzleGame.Levels
                 for (var j = 0; j < 50; j++)
                 {
                     character = ActorFactory.Zombie(game, grid);
-                    character.SetPosition(new Vec2Int(i*2, (j*2)));
+                    character.SetPosition(new Vec2Int(i*2, (j*2)), false);
                     group_player.AddActor(character);
                 }
             }

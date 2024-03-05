@@ -16,7 +16,7 @@ namespace PuzzleGame
         public static TileObject Wall(Game game, Grid grid, int layer)
         {
             var character = new TileObject();
-            character.SetSprite(game.GetAssetManager().GetAssetPath("guy.png"), Vector2.One / 2,
+            character.SetSpriteSingle(game.GetAssetManager().GetAssetPath("guy.png"), Vector2.One / 2,
                 new Vector2(6.5f, 8.5f));
             character.AddToGrid(grid, layer);
             return character;

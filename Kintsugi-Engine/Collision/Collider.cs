@@ -41,18 +41,6 @@ namespace Kintsugi.Collision
     {
         internal void Initialize(TileObject t);
     }
-    /// <summary>
-    /// <see cref="Collider"> on a <see cref="TileObject">. 
-    /// </summary>
-    public class TileObjectCollider : Collider, TileObjectColliderInitialize
-    {
-        public TileObject TileObject { get; private set; }
-        void TileObjectColliderInitialize.Initialize(TileObject t)
-        {
-            TileObject = t;
-        }
-    }
-
     public interface GridLayerColliderInitialize
     {
         internal void Initialize(GridLayer t);
@@ -63,10 +51,10 @@ namespace Kintsugi.Collision
     /// </summary>
     public class GridLayerCollider : Collider, GridLayerColliderInitialize
     {
-        public GridLayer GridLayer { get; }
+        public GridLayer GridLayer { get; private set; }
         void GridLayerColliderInitialize.Initialize(GridLayer t)
         {
-            throw new NotImplementedException();
+            GridLayer = t;
         }
     }
 }

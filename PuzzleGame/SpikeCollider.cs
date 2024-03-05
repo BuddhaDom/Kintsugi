@@ -1,6 +1,7 @@
 ﻿using Kintsugi.Audio;
 using Kintsugi.Collision;
 using Kintsugi.Core;
+using Kintsugi.Objects.Properties;
 using PuzzleGame;
 using System;
 using System.Collections.Generic;
