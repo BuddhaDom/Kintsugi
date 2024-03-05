@@ -19,7 +19,7 @@ namespace Kintsugi.Assets
             WalkDirectory("");
         }
 
-        public string GetName(string path)
+        internal string GetName(string path)
         {
             string[] bits = path.Split("\\");
 
@@ -38,7 +38,7 @@ namespace Kintsugi.Assets
             return null;
         }
 
-        public void WalkDirectory(string relativeDir)
+        internal void WalkDirectory(string relativeDir)
         {
             string absoluteDir = AssetPath + relativeDir;
             string[] files = Directory.GetFiles(absoluteDir);

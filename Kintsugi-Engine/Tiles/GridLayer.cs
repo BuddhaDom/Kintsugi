@@ -10,27 +10,29 @@ namespace Kintsugi.Tiles;
 /// </summary>
 public class GridLayer
 {
-    public GridlayerCollider Collider { get; private set; }
+    public GridLayerCollider Collider { get; private set; }
 
     public void SetCollider(HashSet<string> belongLayers, HashSet<string> collideLayers, bool isTrigger = false)
     {
-        Collider ??= new GridlayerCollider();
+        Collider ??= new GridLayerCollider();
         Collider.IsTrigger = isTrigger;
         Collider.BelongLayers = belongLayers;
         Collider.CollideLayers = collideLayers;
     }
     public void SetColliderTyped<T>(HashSet<string> belongLayers, HashSet<string> collideLayers, bool isTrigger = false)
-        where T : GridlayerCollider, TileObjectColliderInitialize, new()
+        where T : GridLayerCollider, GridLayerColliderInitialize, new()
     {
         Collider = new T();
+        ((GridLayerColliderInitialize)Collider).Initialize(this);
         Collider.IsTrigger = isTrigger;
         Collider.BelongLayers = belongLayers;
         Collider.CollideLayers = collideLayers;
     }
     public void SwitchColliderType<T>()
-        where T: GridlayerCollider, new()
+        where T: GridLayerCollider, GridLayerColliderInitialize, new()
     {
         var newCol = new T();
+        ((GridLayerColliderInitialize)Collider).Initialize(this);
         newCol.IsTrigger = Collider.IsTrigger;
         newCol.BelongLayers = Collider.BelongLayers;
         newCol.CollideLayers = Collider.CollideLayers;

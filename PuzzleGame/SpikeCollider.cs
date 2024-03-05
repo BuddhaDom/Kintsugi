@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace PuzzleGame
 {
-    internal class SpikeCollider: GridlayerCollider
+    internal class SpikeCollider: GridLayerCollider
     {
         public override void OnTriggerCollision(Collider other)
         {

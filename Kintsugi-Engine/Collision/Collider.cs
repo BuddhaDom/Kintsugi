@@ -12,34 +12,61 @@ namespace Kintsugi.Collision
 {
     public class Collider
     {
+        /// <summary>
+        /// Layers that this collider belongs to, that others can collide with.
+        /// </summary>
         public HashSet<string> BelongLayers { get; internal set; } = [];
+
+        /// <summary>
+        /// Layers that this collider will collide against.
+        /// </summary>
         public HashSet<string> CollideLayers { get; internal set; } = [];
+
+        /// <summary>
+        /// Whether collider is a trigger.
+        /// Triggers will never cause normal collisions, but will instead cause trigger collisions that activate <see cref="OnTriggerCollision(Collider)">
+        /// </summary>
         public bool IsTrigger { get; internal set; }
 
+        /// <summary>
+        /// Called when a colliding with a trigger, or when this is a trigger that has collided with something. 
+        /// </summary>
         public virtual void OnTriggerCollision(Collider other)
         {
             Console.WriteLine("Trigger collision between " + this + " and " + other);
         }
     }
+
     public interface TileObjectColliderInitialize
     {
-        void Initialize(TileObject t);
+        internal void Initialize(TileObject t);
     }
+    /// <summary>
+    /// <see cref="Collider"> on a <see cref="TileObject">. 
+    /// </summary>
     public class TileObjectCollider : Collider, TileObjectColliderInitialize
     {
         public TileObject TileObject { get; private set; }
-        public void Initialize(TileObject t)
+        void TileObjectColliderInitialize.Initialize(TileObject t)
         {
             TileObject = t;
         }
     }
-    public class GridlayerCollider : Collider
+
+    public interface GridLayerColliderInitialize
     {
-        /*
+        internal void Initialize(GridLayer t);
+    }
+
+    /// <summary>
+    /// <see cref="Collider"> on a <see cref="GridLayer">. 
+    /// </summary>
+    public class GridLayerCollider : Collider, GridLayerColliderInitialize
+    {
         public GridLayer GridLayer { get; }
-        internal GridlayerCollider(GridLayer g)
+        void GridLayerColliderInitialize.Initialize(GridLayer t)
         {
-            GridLayer = g;
-        }*/
+            throw new NotImplementedException();
+        }
     }
 }
