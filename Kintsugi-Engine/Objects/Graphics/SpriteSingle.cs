@@ -15,7 +15,7 @@ public class SpriteSingle(TileObject parent) : ISpriteable
         => new() {
             x = 0,
             y = 0,
-            w = Sprite.SpriteWidth,
-            h = Sprite.SpriteHeight,
+            w = Sprite.Dimensions.x,
+            h = Sprite.Dimensions.y
         };
 }

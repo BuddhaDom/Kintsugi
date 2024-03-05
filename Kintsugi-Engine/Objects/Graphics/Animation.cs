@@ -80,10 +80,10 @@ public class Animation(TileObject parent) : ISpriteable
         
         return new SDL.SDL_Rect
         {
-            h = SpriteSheet.SpriteHeight,
-            w = SpriteSheet.SpriteWidth,
-            x = (int) ((SpriteSheet.SpriteWidth + SpriteSheet.Padding.X) * coordinates.x + SpriteSheet.Margin.X),
-            y = (int) ((SpriteSheet.SpriteHeight + SpriteSheet.Padding.Y) * coordinates.y + SpriteSheet.Margin.Y),
+            w = SpriteSheet.Dimensions.x,
+            h = SpriteSheet.Dimensions.y,
+            x = (int) ((SpriteSheet.Dimensions.x + SpriteSheet.Padding.X) * coordinates.x + SpriteSheet.Margin.X),
+            y = (int) ((SpriteSheet.Dimensions.y + SpriteSheet.Padding.Y) * coordinates.y + SpriteSheet.Margin.Y),
         };
     }
 }

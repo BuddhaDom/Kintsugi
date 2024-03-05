@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Numerics;
 using System.Threading.Tasks.Dataflow;
 using Kintsugi.Objects.Graphics;
+using TweenSharp.Animation;
 
 namespace TacticsGameTest
 {
@@ -46,6 +47,8 @@ namespace TacticsGameTest
                 32, 32, 4, 3, frames, tilePivot: new Vector2(-0.5f, -0.5f),
                 repeats: 0, bounces: false, autoStart: true
             );
+            
+            character.SetEasing(Easing.QuadraticEaseOut, 0.5);
                 
             scenario = new MovingScenario();
             var group = new MyControlGroup("john's group");

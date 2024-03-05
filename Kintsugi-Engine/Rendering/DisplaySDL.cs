@@ -16,6 +16,7 @@ using Kintsugi.Tiles;
 using SDL2;
 using System.Numerics;
 using Kintsugi.Objects;
+using TweenSharp.Animation;
 
 namespace Kintsugi.Rendering
 {
@@ -333,14 +334,15 @@ namespace Kintsugi.Rendering
                             var localTilePivot = tileObject.Graphic.Properties.TilePivot * grid.TileWidth;
                             var pivotOffsets = localTilePivot - tileObject.Graphic.Properties.ImagePivot;
 
-                            var uScreenPos = cam.WorldToScreenSpace(new Vector2(
-                                grid.Transform2D.X + x * grid.TileWidth + pivotOffsets.X,
-                                grid.Transform2D.Y + y * grid.TileWidth + pivotOffsets.Y));
-                            var vScreenPos = cam.WorldToScreenSpace(new Vector2(
-                                grid.Transform2D.X + x * grid.TileWidth + pivotOffsets.X + tileObject.Graphic.Properties.SpriteWidth,
-                                grid.Transform2D.Y + y * grid.TileWidth + pivotOffsets.Y +
-                                tileObject.Graphic.Properties.SpriteHeight));
-
+                            var uScreenPos = cam.WorldToScreenSpace(
+                                tileObject.Easing.CurrentPosition +
+                                pivotOffsets
+                            );
+                            var vScreenPos = cam.WorldToScreenSpace(
+                                tileObject.Easing.CurrentPosition
+                                + pivotOffsets + tileObject.Graphic.Properties.Dimensions
+                            );
+                                
                             int xsize = (int)vScreenPos.X - (int)uScreenPos.X;
                             int ysize = (int)vScreenPos.Y - (int)uScreenPos.Y;
 
