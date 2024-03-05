@@ -204,7 +204,7 @@ public class TileObject
 
     public void SetSpriteSingle(Sprite sprite)
     {
-        Graphic ??= new SpriteSingle(this);
+        Graphic = new SpriteSingle();
         ((SpriteSingle)Graphic).Sprite = sprite;
     }
 
@@ -214,8 +214,8 @@ public class TileObject
     public void SetAnimation(SpriteSheet spriteSheet, double timeLength, IEnumerable<int> frames,
         int repeats = 0, bool bounces = false, bool autoStart = true)
     {
-        var animation = new Animation(this, timeLength, spriteSheet, frames, repeats, bounces);
-        Graphic ??= animation;
+        var animation = new Animation(timeLength, spriteSheet, frames, repeats, bounces);
+        Graphic = animation;
         if (autoStart) ((Animation)Graphic).Start();
     }
         

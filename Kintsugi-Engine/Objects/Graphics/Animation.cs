@@ -3,7 +3,7 @@ using SDL2;
 
 namespace Kintsugi.Objects.Graphics;
 
-public class Animation(TileObject parent) : ISpriteable
+public class Animation : ISpriteable
 {
     public double TimeLength { get; set; }
     /// <summary>
@@ -27,12 +27,11 @@ public class Animation(TileObject parent) : ISpriteable
         }
     }
     
-    public Animation(TileObject parent, double timeLength, SpriteSheet graphic, IEnumerable<int> frames,
-        int repeats = 0, bool bounces = false) : this(parent)
+    public Animation(double timeLength, SpriteSheet graphic, IEnumerable<int> frames,
+        int repeats = 0, bool bounces = false)
     {
         TimeLength = timeLength;
         SpriteSheet = graphic;
-        Parent = parent;
         Repeats = repeats;
         Bounces = bounces;
         FrameIndexes = frames.ToList();
@@ -54,7 +53,6 @@ public class Animation(TileObject parent) : ISpriteable
     // ==========================================
     //         ISpriteable Implementations
     // ==========================================
-    public TileObject Parent { get; set; } = parent;
     public ISpriteProperties Properties => SpriteSheet;
     
     public SDL.SDL_Rect SourceRect()
