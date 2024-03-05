@@ -53,7 +53,6 @@ namespace TacticsGameTest
                                 Move(Vec2Int.Right) 
                                 ));
                         EndTurn();
-
                     }
                     if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_SPACE)
                     {

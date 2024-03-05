@@ -42,6 +42,12 @@ namespace PuzzleGame
             SetUp();
         }
         public abstract void SetUp();
+        private List<IInputListener> levelInputListeners = new();
+        public void AddLevelInputListener(IInputListener listener)
+        {
+            levelInputListeners.Add(listener);
+            Bootstrap.GetInput().AddListener(listener);
+        }
         public void Unload()
         {
             grid.ToBeDestroyed = true;
@@ -49,7 +55,10 @@ namespace PuzzleGame
             scenario.EndScenario();
             scenario = null;
             EventManager.I.ClearQueue();
-            Bootstrap.GetInput().ClearListeners();
+            foreach (var listener in levelInputListeners)
+            {
+                Bootstrap.GetInput().RemoveListener(listener);
+            }
         }
     }
 }

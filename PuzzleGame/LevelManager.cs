@@ -1,4 +1,5 @@
 ﻿using Kintsugi.Core;
+using Kintsugi.Input;
 using PuzzleGame.Levels;
 using System;
 using System.Collections.Generic;
@@ -36,6 +37,12 @@ namespace PuzzleGame
         };
         int currentIndex = -1;
         private Level curLevel;
+
+        private List<IInputListener> levelInputListeners;
+        public void AddLevelListener(IInputListener listener)
+        {
+            curLevel.AddLevelInputListener(listener);
+        }
         public void LoadNext()
         {
             if (curLevel != null)
@@ -54,7 +61,6 @@ namespace PuzzleGame
             {
                 curLevel.Unload();
                 curLevel.Load(Bootstrap.GetRunningGame());
-
             }
         }
 
