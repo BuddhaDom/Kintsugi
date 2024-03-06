@@ -1,0 +1,44 @@
+\doxysection{Kintsugi.\+Tiles Namespace Reference}
+\hypertarget{namespace_kintsugi_1_1_tiles}{}\label{namespace_kintsugi_1_1_tiles}\index{Kintsugi.Tiles@{Kintsugi.Tiles}}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_kintsugi_1_1_tiles_1_1_grid}{Grid}}
+\begin{DoxyCompactList}\small\item\em A Game\+Object containing a set of tiles to be rendered onto the scene through layers. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_kintsugi_1_1_tiles_1_1_grid_layer}{Grid\+Layer}}
+\begin{DoxyCompactList}\small\item\em A layer belonging to a grid, containing tiles. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{namespace_kintsugi_1_1_tiles_abc95fa74bf5b41830e9beec3e767a997}{Tile}} (int tile\+Id=-\/1, int tile\+Set\+Id=-\/1)
+\begin{DoxyCompactList}\small\item\em A representation of a tile within a grid layer. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{namespace_kintsugi_1_1_tiles_ab61ecffec0a071838b153cc0b5ffbb36}{Tile\+Set}} (string source, int width, int height)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{namespace_kintsugi_1_1_tiles_abc95fa74bf5b41830e9beec3e767a997}\label{namespace_kintsugi_1_1_tiles_abc95fa74bf5b41830e9beec3e767a997} 
+\index{Kintsugi.Tiles@{Kintsugi.Tiles}!Tile@{Tile}}
+\index{Tile@{Tile}!Kintsugi.Tiles@{Kintsugi.Tiles}}
+\doxysubsubsection{\texorpdfstring{Tile()}{Tile()}}
+{\footnotesize\ttfamily struct Kintsugi.\+Tiles.\+Tile (\begin{DoxyParamCaption}\item[{int}]{tile\+Id = {\ttfamily -\/1},  }\item[{int}]{tile\+Set\+Id = {\ttfamily -\/1} }\end{DoxyParamCaption})}
+
+
+
+A representation of a tile within a grid layer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em tile\+Id} & Global ID of the tile\textquotesingle{}s graphic.\\
+\hline
+{\em tile\+Set\+Id} & ID of the tile set the graphic belongs to.\\
+\hline
+\end{DoxyParams}
+Local ID of this tile\textquotesingle{}s sprite in its tile set.
+
+ID of the tile set this tile uses.\Hypertarget{namespace_kintsugi_1_1_tiles_ab61ecffec0a071838b153cc0b5ffbb36}\label{namespace_kintsugi_1_1_tiles_ab61ecffec0a071838b153cc0b5ffbb36} 
+\index{Kintsugi.Tiles@{Kintsugi.Tiles}!TileSet@{TileSet}}
+\index{TileSet@{TileSet}!Kintsugi.Tiles@{Kintsugi.Tiles}}
+\doxysubsubsection{\texorpdfstring{TileSet()}{TileSet()}}
+{\footnotesize\ttfamily struct Kintsugi.\+Tiles.\+Tile\+Set (\begin{DoxyParamCaption}\item[{string}]{source,  }\item[{int}]{width,  }\item[{int}]{height }\end{DoxyParamCaption})}
+

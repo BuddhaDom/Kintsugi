@@ -1,0 +1,27 @@
+var searchData=
+[
+  ['mapping_0',['mapping',['../struct_f_m_o_d_1_1_d_s_p___p_a_r_a_m_e_t_e_r___d_e_s_c___f_l_o_a_t.html#aa0b34ab721920f7596d685b00726d1bd',1,'FMOD::DSP_PARAMETER_DESC_FLOAT']]],
+  ['max_1',['max',['../struct_f_m_o_d_1_1_d_s_p___p_a_r_a_m_e_t_e_r___d_e_s_c___f_l_o_a_t.html#a7662a58ff1b6b72e3a13e35c168d34e7',1,'FMOD.DSP_PARAMETER_DESC_FLOAT.max'],['../struct_f_m_o_d_1_1_d_s_p___p_a_r_a_m_e_t_e_r___d_e_s_c___i_n_t.html#a28ad988d078492d5b7e80514ee297023',1,'FMOD.DSP_PARAMETER_DESC_INT.max'],['../struct_f_m_o_d_1_1_d_s_p___p_a_r_a_m_e_t_e_r___a_t_t_e_n_u_a_t_i_o_n___r_a_n_g_e.html#a990c767b5fcd06dc2e115359d5645657',1,'FMOD.DSP_PARAMETER_ATTENUATION_RANGE.max']]],
+  ['max_5fchannel_5fwidth_2',['MAX_CHANNEL_WIDTH',['../class_f_m_o_d_1_1_c_o_n_s_t_a_n_t_s.html#a70c465f447ef0b0e4a677a4501ab14d0',1,'FMOD::CONSTANTS']]],
+  ['max_5flisteners_3',['MAX_LISTENERS',['../class_f_m_o_d_1_1_c_o_n_s_t_a_n_t_s.html#aab9c79951c81cd83f7cf9aa0eaa5b22b',1,'FMOD::CONSTANTS']]],
+  ['max_5fsystems_4',['MAX_SYSTEMS',['../class_f_m_o_d_1_1_c_o_n_s_t_a_n_t_s.html#a97cd6831133f0c17f4a85b7302efd972',1,'FMOD::CONSTANTS']]],
+  ['maxadpcmcodecs_5',['maxADPCMCodecs',['../struct_f_m_o_d_1_1_a_d_v_a_n_c_e_d_s_e_t_t_i_n_g_s.html#aff15035cadb6d2b52f9e97bc7e24e977',1,'FMOD::ADVANCEDSETTINGS']]],
+  ['maxat9codecs_6',['maxAT9Codecs',['../struct_f_m_o_d_1_1_a_d_v_a_n_c_e_d_s_e_t_t_i_n_g_s.html#aa256d4f87b7e8a31ddcce934c6d198ca',1,'FMOD::ADVANCEDSETTINGS']]],
+  ['maxconvolutionthreads_7',['maxConvolutionThreads',['../struct_f_m_o_d_1_1_a_d_v_a_n_c_e_d_s_e_t_t_i_n_g_s.html#aa63133ace9e855c1862f9817a00e79cf',1,'FMOD::ADVANCEDSETTINGS']]],
+  ['maxfadpcmcodecs_8',['maxFADPCMCodecs',['../struct_f_m_o_d_1_1_a_d_v_a_n_c_e_d_s_e_t_t_i_n_g_s.html#a839fd9084454db6b45a52c585e3e4c36',1,'FMOD::ADVANCEDSETTINGS']]],
+  ['maximum_9',['maximum',['../struct_f_m_o_d_1_1_studio_1_1_p_a_r_a_m_e_t_e_r___d_e_s_c_r_i_p_t_i_o_n.html#ab38c19c25fa0f7cac8d4b0be0e5361b9',1,'FMOD::Studio::PARAMETER_DESCRIPTION']]],
+  ['maxmomentaryloudness_10',['maxmomentaryloudness',['../struct_f_m_o_d_1_1_d_s_p___l_o_u_d_n_e_s_s___m_e_t_e_r___i_n_f_o___t_y_p_e.html#ae00f88619211d46a7fc84ba9e33c2085',1,'FMOD::DSP_LOUDNESS_METER_INFO_TYPE']]],
+  ['maxmpegcodecs_11',['maxMPEGCodecs',['../struct_f_m_o_d_1_1_a_d_v_a_n_c_e_d_s_e_t_t_i_n_g_s.html#a478a2c58c0e3eb72d0a551bac6a85165',1,'FMOD::ADVANCEDSETTINGS']]],
+  ['maxopuscodecs_12',['maxOpusCodecs',['../struct_f_m_o_d_1_1_a_d_v_a_n_c_e_d_s_e_t_t_i_n_g_s.html#aed5e84d7cc13647a59b5de42abb74a2e',1,'FMOD::ADVANCEDSETTINGS']]],
+  ['maxpcmcodecs_13',['maxPCMCodecs',['../struct_f_m_o_d_1_1_a_d_v_a_n_c_e_d_s_e_t_t_i_n_g_s.html#a3439447a1350ca4ca445d9f77f09e7f1',1,'FMOD::ADVANCEDSETTINGS']]],
+  ['maxpolyphony_14',['maxpolyphony',['../struct_f_m_o_d_1_1_c_r_e_a_t_e_s_o_u_n_d_e_x_i_n_f_o.html#a8841363d865e5f6e53b32f179d12fc28',1,'FMOD::CREATESOUNDEXINFO']]],
+  ['maxspatialobjects_15',['maxSpatialObjects',['../struct_f_m_o_d_1_1_a_d_v_a_n_c_e_d_s_e_t_t_i_n_g_s.html#aff9cdaf9d18879f0eee6b5d34e364eee',1,'FMOD::ADVANCEDSETTINGS']]],
+  ['maxtruepeak_16',['maxtruepeak',['../struct_f_m_o_d_1_1_d_s_p___l_o_u_d_n_e_s_s___m_e_t_e_r___i_n_f_o___t_y_p_e.html#a7c24fd08e59589474c73c3e31ee90b91',1,'FMOD::DSP_LOUDNESS_METER_INFO_TYPE']]],
+  ['maxvorbiscodecs_17',['maxVorbisCodecs',['../struct_f_m_o_d_1_1_a_d_v_a_n_c_e_d_s_e_t_t_i_n_g_s.html#adb2535af2d16952bbbe4bf750e6377ee',1,'FMOD::ADVANCEDSETTINGS']]],
+  ['maxxmacodecs_18',['maxXMACodecs',['../struct_f_m_o_d_1_1_a_d_v_a_n_c_e_d_s_e_t_t_i_n_g_s.html#a560c781141528c62d86adf857f1c6d5e',1,'FMOD::ADVANCEDSETTINGS']]],
+  ['min_19',['min',['../struct_f_m_o_d_1_1_d_s_p___p_a_r_a_m_e_t_e_r___d_e_s_c___f_l_o_a_t.html#a4cc282249844dbf2fdfda7e5c69c1e73',1,'FMOD.DSP_PARAMETER_DESC_FLOAT.min'],['../struct_f_m_o_d_1_1_d_s_p___p_a_r_a_m_e_t_e_r___d_e_s_c___i_n_t.html#afa72c5f9660c69980371b6c2f09cca7d',1,'FMOD.DSP_PARAMETER_DESC_INT.min'],['../struct_f_m_o_d_1_1_d_s_p___p_a_r_a_m_e_t_e_r___a_t_t_e_n_u_a_t_i_o_n___r_a_n_g_e.html#a13f75467c593deae1689ce1b83faff20',1,'FMOD.DSP_PARAMETER_ATTENUATION_RANGE.min']]],
+  ['minimum_20',['minimum',['../struct_f_m_o_d_1_1_studio_1_1_p_a_r_a_m_e_t_e_r___d_e_s_c_r_i_p_t_i_o_n.html#aed8573ae21652956fb674dac012def48',1,'FMOD::Studio::PARAMETER_DESCRIPTION']]],
+  ['minmidigranularity_21',['minmidigranularity',['../struct_f_m_o_d_1_1_c_r_e_a_t_e_s_o_u_n_d_e_x_i_n_f_o.html#aa9804bbb4953b40dbe7fb17fa7237da1',1,'FMOD::CREATESOUNDEXINFO']]],
+  ['mode_22',['mode',['../struct_f_m_o_d_1_1_studio_1_1_s_o_u_n_d___i_n_f_o.html#a132ae837e6263170b0494daf4705ea12',1,'FMOD::Studio::SOUND_INFO']]],
+  ['momentaryloudness_23',['momentaryloudness',['../struct_f_m_o_d_1_1_d_s_p___l_o_u_d_n_e_s_s___m_e_t_e_r___i_n_f_o___t_y_p_e.html#ae510ea2582a7c013ddf373049ec78cbd',1,'FMOD::DSP_LOUDNESS_METER_INFO_TYPE']]]
+];
