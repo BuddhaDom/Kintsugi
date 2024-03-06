@@ -7,6 +7,9 @@ namespace Kintsugi.Objects.Properties;
 /// </summary>
 public class TileObjectCollider : Collider, TileObjectColliderInitialize
 {
+    /// <summary>
+    /// <see cref="TileObject"/> which this collider affects.
+    /// </summary>
     public TileObject TileObject { get; private set; }
     void TileObjectColliderInitialize.Initialize(TileObject t)
     {
