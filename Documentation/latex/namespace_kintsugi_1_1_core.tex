@@ -1,0 +1,136 @@
+\doxysection{Kintsugi.\+Core Namespace Reference}
+\hypertarget{namespace_kintsugi_1_1_core}{}\label{namespace_kintsugi_1_1_core}\index{Kintsugi.Core@{Kintsugi.Core}}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_kintsugi_1_1_core_1_1_base_functionality}{Base\+Functionality}}
+\begin{DoxyCompactList}\small\item\em Core functions of the \doxylink{namespace_kintsugi}{Kintsugi} game engine. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_kintsugi_1_1_core_1_1_bootstrap}{Bootstrap}}
+\begin{DoxyCompactList}\small\item\em Point of access class for different systems and components of the \doxylink{namespace_kintsugi}{Kintsugi} engine. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_kintsugi_1_1_core_1_1_debug}{Debug}}
+\begin{DoxyCompactList}\small\item\em Methods allowing debugging of the engine. Debug manager. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_kintsugi_1_1_core_1_1_dice}{Dice}}
+\begin{DoxyCompactList}\small\item\em Dice-\/rolling utilities. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_kintsugi_1_1_core_1_1_game}{Game}}
+\begin{DoxyCompactList}\small\item\em The game the engine should run. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_kintsugi_1_1_core_1_1_game_object}{Game\+Object}}
+\begin{DoxyCompactList}\small\item\em The core representation of an "{}object"{} in the \doxylink{namespace_kintsugi}{Kintsugi} engine. Contains properties that allow it to be displayed, moved around, and destroyed. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_kintsugi_1_1_core_1_1_game_object_manager}{Game\+Object\+Manager}}
+\begin{DoxyCompactList}\small\item\em Manages all Game\+Object objects present in the game. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{namespace_kintsugi_1_1_core_a2829508f84b7d8ed8eb42dcfab27e8b4}{Vec2\+Int}} (int x, int y)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{namespace_kintsugi_1_1_core_a2829508f84b7d8ed8eb42dcfab27e8b4}\label{namespace_kintsugi_1_1_core_a2829508f84b7d8ed8eb42dcfab27e8b4} 
+\index{Kintsugi.Core@{Kintsugi.Core}!Vec2Int@{Vec2Int}}
+\index{Vec2Int@{Vec2Int}!Kintsugi.Core@{Kintsugi.Core}}
+\doxysubsubsection{\texorpdfstring{Vec2Int()}{Vec2Int()}}
+{\footnotesize\ttfamily struct Kintsugi.\+Core.\+Vec2\+Int (\begin{DoxyParamCaption}\item[{int}]{x,  }\item[{int}]{y }\end{DoxyParamCaption})}
+
+Square root of the sum of x and y squared.
+
+\begin{DoxyReturn}{Returns}
+Magnitude (Length)
+\end{DoxyReturn}
+
+
+Returns the inverse of this vector. \begin{DoxyReturn}{Returns}
+The vector inverted on both axis.
+\end{DoxyReturn}
+
+
+Calculates the distance between one vector and the other. 
+\begin{DoxyParams}{Parameters}
+{\em start} & Start vector.\\
+\hline
+{\em end} & End vector.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Distance between one vector and another expressed as a vector.
+\end{DoxyReturn}
+
+
+Calculate the distance between this vector and another. 
+\begin{DoxyParams}{Parameters}
+{\em other} & Target vector to measure to.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Difference between this vector and another.
+\end{DoxyReturn}
+
+
+Sum of the multiplications between x and y of two vectors.
+
+\begin{DoxyReturn}{Returns}
+Dot product between both vectors
+\end{DoxyReturn}
+
+
+Sum of the multiplications between this and a target vector.
+
+
+\begin{DoxyParams}{Parameters}
+{\em other} & Target vector.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Dot product between both vectors
+\end{DoxyReturn}
+
+
+Gets the maximum value on each axis between two vectors.
+
+
+\begin{DoxyParams}{Parameters}
+{\em a} & First vector\\
+\hline
+{\em b} & Second vector\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A new vector with the maximum x and maximum y between both values.
+\end{DoxyReturn}
+
+
+Gets the maximum value on each axis between two vectors.
+
+
+\begin{DoxyParams}{Parameters}
+{\em other} & The vector being compared\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A new vector with the maximum x and maximum y between both values.
+\end{DoxyReturn}
+
+
+Gets the minimum value on each axis between two vectors.
+
+
+\begin{DoxyParams}{Parameters}
+{\em a} & First vector\\
+\hline
+{\em b} & Second vector\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A new vector with the minimum x and minimum y between both values.
+\end{DoxyReturn}
+
+
+Gets the minimum value on each axis between two vectors.
+
+
+\begin{DoxyParams}{Parameters}
+{\em other} & The vector being compared\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A new vector with the minimum x and minimum y between both values.
+\end{DoxyReturn}

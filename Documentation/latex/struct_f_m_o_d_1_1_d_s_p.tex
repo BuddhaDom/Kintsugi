@@ -1,0 +1,462 @@
+\doxysection{FMOD.\+DSP Struct Reference}
+\hypertarget{struct_f_m_o_d_1_1_d_s_p}{}\label{struct_f_m_o_d_1_1_d_s_p}\index{FMOD.DSP@{FMOD.DSP}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p_ae40c39c8ab23fe06bdecb96edd8bbe32}{release}} ()
+\item 
+\mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p_a01c133af7873b83bee48889f2f075bf0}{get\+System\+Object}} (out \mbox{\hyperlink{struct_f_m_o_d_1_1_system}{System}} system)
+\item 
+\mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p_a67c5e1faeb2427163a4fc57248c2c178}{add\+Input}} (\mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p}{DSP}} input)
+\item 
+\mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p_a8e98e39c19b50b698a48399c144203b0}{add\+Input}} (\mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p}{DSP}} input, out \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p_connection}{DSPConnection}} connection, \mbox{\hyperlink{namespace_f_m_o_d_abd730a6ff8b969c2f90d4123deb42aca}{DSPCONNECTION\+\_\+\+TYPE}} type=\mbox{\hyperlink{namespace_f_m_o_d_abd730a6ff8b969c2f90d4123deb42acaa94e94133f4bdc1794c6b647b8ea134d0}{DSPCONNECTION\+\_\+\+TYPE.\+STANDARD}})
+\item 
+\mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p_a7de3055ef8036b3c45fe708489fa9091}{disconnect\+From}} (\mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p}{DSP}} target, \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p_connection}{DSPConnection}} connection)
+\item 
+\mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p_a8b07d66e98e0c959763b746df5422fbb}{disconnect\+All}} (bool inputs, bool outputs)
+\item 
+\mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p_af26eb2c452f0ef816a6098395e4f0c6d}{get\+Num\+Inputs}} (out int numinputs)
+\item 
+\mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p_a02296a0f4370041e74d427172750bd76}{get\+Num\+Outputs}} (out int numoutputs)
+\item 
+\mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p_a9cdc8729a61c64aba4c951b4e175358f}{get\+Input}} (int index, out \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p}{DSP}} input, out \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p_connection}{DSPConnection}} inputconnection)
+\item 
+\mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p_ab9a4ff367880a3f11f0d9fd1b13b6471}{get\+Output}} (int index, out \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p}{DSP}} output, out \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p_connection}{DSPConnection}} outputconnection)
+\item 
+\mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p_a4550289d35ae8cbc8705b6336b8f9442}{set\+Active}} (bool active)
+\item 
+\mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p_a23023e1c53c97ab3a1931a4ec5a9ea5c}{get\+Active}} (out bool active)
+\item 
+\mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p_a4168480afea4775637ed9443046de78f}{set\+Bypass}} (bool bypass)
+\item 
+\mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p_a5fd30b33615332c87ed8f19975f910a5}{get\+Bypass}} (out bool bypass)
+\item 
+\mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p_a1e4aa96dc5b5082f506adbb913c1bc6f}{set\+Wet\+Dry\+Mix}} (float prewet, float postwet, float dry)
+\item 
+\mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p_ae5fffc548d67b21ba56c0c678e7d3a78}{get\+Wet\+Dry\+Mix}} (out float prewet, out float postwet, out float dry)
+\item 
+\mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p_a9e209a66e01c2373bc7d93e0a61a3afa}{set\+Channel\+Format}} (\mbox{\hyperlink{namespace_f_m_o_d_ae295945ff00acb5f2e5ef0b3f217f5e2}{CHANNELMASK}} channelmask, int numchannels, \mbox{\hyperlink{namespace_f_m_o_d_aa0732e7e8efd3b96b526a7f2f8479634}{SPEAKERMODE}} source\+\_\+speakermode)
+\item 
+\mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p_afcba15be09b480630d20aa4312918723}{get\+Channel\+Format}} (out \mbox{\hyperlink{namespace_f_m_o_d_ae295945ff00acb5f2e5ef0b3f217f5e2}{CHANNELMASK}} channelmask, out int numchannels, out \mbox{\hyperlink{namespace_f_m_o_d_aa0732e7e8efd3b96b526a7f2f8479634}{SPEAKERMODE}} source\+\_\+speakermode)
+\item 
+\mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p_a14c95c99fc6698bb176a85cb4d380036}{get\+Output\+Channel\+Format}} (\mbox{\hyperlink{namespace_f_m_o_d_ae295945ff00acb5f2e5ef0b3f217f5e2}{CHANNELMASK}} inmask, int inchannels, \mbox{\hyperlink{namespace_f_m_o_d_aa0732e7e8efd3b96b526a7f2f8479634}{SPEAKERMODE}} inspeakermode, out \mbox{\hyperlink{namespace_f_m_o_d_ae295945ff00acb5f2e5ef0b3f217f5e2}{CHANNELMASK}} outmask, out int outchannels, out \mbox{\hyperlink{namespace_f_m_o_d_aa0732e7e8efd3b96b526a7f2f8479634}{SPEAKERMODE}} outspeakermode)
+\item 
+\mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p_a9d60931bf4c560ff79a28e48ff7da66d}{reset}} ()
+\item 
+\mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p_aa6c8fc0256b210f40ba5762e1457f983}{set\+Callback}} (\mbox{\hyperlink{namespace_f_m_o_d_ab0f5874fac86069f57110966b9d34212}{DSP\+\_\+\+CALLBACK}} callback)
+\item 
+\mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p_aaa3b811b9eaf31dad15e695cf2770645}{set\+Parameter\+Float}} (int index, float value)
+\item 
+\mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p_a8d8a5a568001f1df253d1842393187ac}{set\+Parameter\+Int}} (int index, int value)
+\item 
+\mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p_a3a9e7406668ed5b8a6b3d2d402901741}{set\+Parameter\+Bool}} (int index, bool value)
+\item 
+\mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p_aed93a25cbab0c186134d5725e761315b}{set\+Parameter\+Data}} (int index, byte\mbox{[}$\,$\mbox{]} data)
+\item 
+\mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p_a126a21495cfc47d5a7782779f58bf2fd}{get\+Parameter\+Float}} (int index, out float value)
+\item 
+\mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p_a93b5432794048642c905e41eaeb3566c}{get\+Parameter\+Int}} (int index, out int value)
+\item 
+\mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p_acc04bea0fdec2a13b8c2109ab99a9f7e}{get\+Parameter\+Bool}} (int index, out bool value)
+\item 
+\mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p_a228cbd3a8b9104395c749730ca094226}{get\+Parameter\+Data}} (int index, out Int\+Ptr data, out uint length)
+\item 
+\mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p_ae1438b5d53f7c2c6e7ba023c8fd8b06f}{get\+Num\+Parameters}} (out int numparams)
+\item 
+\mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p_a86296128281b8872e1494647f2fa41f0}{get\+Parameter\+Info}} (int index, out \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p___p_a_r_a_m_e_t_e_r___d_e_s_c}{DSP\+\_\+\+PARAMETER\+\_\+\+DESC}} desc)
+\item 
+\mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p_ab68360d5ad1f662b6af4b5d8e5caf80d}{get\+Data\+Parameter\+Index}} (int datatype, out int index)
+\item 
+\mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p_ab7dddd8b248f1b83464cc984094bffb0}{show\+Config\+Dialog}} (Int\+Ptr hwnd, bool show)
+\item 
+\mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p_ae2a8bdce836428f69c32ea99b7c038f8}{get\+Info}} (out string name, out uint version, out int channels, out int configwidth, out int configheight)
+\item 
+\mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p_a30f254fbd4e71c637815c524bcd2c1af}{get\+Info}} (out uint version, out int channels, out int configwidth, out int configheight)
+\item 
+\mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p_a90873e967a2e0bec74828ed1da507cde}{get\+Type}} (out \mbox{\hyperlink{namespace_f_m_o_d_abfbbfe13740257430ae8350c2456b0ff}{DSP\+\_\+\+TYPE}} type)
+\item 
+\mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p_a3f643f98646f1f15c1fc3cf446aa7c25}{get\+Idle}} (out bool idle)
+\item 
+\mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p_a9d1f48a083751c222998aeaaf1ea7c60}{set\+User\+Data}} (Int\+Ptr userdata)
+\item 
+\mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p_ade41e932d36f2075c359f9531215fad5}{get\+User\+Data}} (out Int\+Ptr userdata)
+\item 
+\mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p_ab6bb9f4fa104f2ec9ad8c865901cb58f}{set\+Metering\+Enabled}} (bool input\+Enabled, bool output\+Enabled)
+\item 
+\mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p_a1e6600f84abe122d30f3f708b41dd24e}{get\+Metering\+Enabled}} (out bool input\+Enabled, out bool output\+Enabled)
+\item 
+\mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p_aea1a9c6ca03fdb46a6f3a506e5fe0679}{get\+Metering\+Info}} (Int\+Ptr zero, out \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p___m_e_t_e_r_i_n_g___i_n_f_o}{DSP\+\_\+\+METERING\+\_\+\+INFO}} output\+Info)
+\item 
+\mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p_a20336442c70422c3f0619f32232aee10}{get\+Metering\+Info}} (out \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p___m_e_t_e_r_i_n_g___i_n_f_o}{DSP\+\_\+\+METERING\+\_\+\+INFO}} input\+Info, Int\+Ptr zero)
+\item 
+\mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p_a8586394443e1e5261083fccb2e232bbb}{get\+Metering\+Info}} (out \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p___m_e_t_e_r_i_n_g___i_n_f_o}{DSP\+\_\+\+METERING\+\_\+\+INFO}} input\+Info, out \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p___m_e_t_e_r_i_n_g___i_n_f_o}{DSP\+\_\+\+METERING\+\_\+\+INFO}} output\+Info)
+\item 
+\mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p_a459d1ee7faed4741f967c38d07b87342}{get\+CPUUsage}} (out uint exclusive, out uint inclusive)
+\item 
+static \mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p_a7071044a62721e02e1726275179e9007}{FMOD5\+\_\+\+DSP\+\_\+\+Set\+Metering\+Enabled}} (Int\+Ptr dsp, bool input\+Enabled, bool output\+Enabled)
+\item 
+static \mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p_af8fe580a1e5182a351a3f4b3574eb0bd}{FMOD5\+\_\+\+DSP\+\_\+\+Get\+Metering\+Enabled}} (Int\+Ptr dsp, out bool input\+Enabled, out bool output\+Enabled)
+\item 
+static \mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p_a5c06ec2536f742c22ba98932290ca8f8}{FMOD5\+\_\+\+DSP\+\_\+\+Get\+Metering\+Info}} (Int\+Ptr dsp, Int\+Ptr zero, out \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p___m_e_t_e_r_i_n_g___i_n_f_o}{DSP\+\_\+\+METERING\+\_\+\+INFO}} output\+Info)
+\item 
+static \mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p_a314fb6c21e59de5a124404490feea443}{FMOD5\+\_\+\+DSP\+\_\+\+Get\+Metering\+Info}} (Int\+Ptr dsp, out \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p___m_e_t_e_r_i_n_g___i_n_f_o}{DSP\+\_\+\+METERING\+\_\+\+INFO}} input\+Info, Int\+Ptr zero)
+\item 
+static \mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p_acf96462a4c07e0bd42f1c48fd31d8920}{FMOD5\+\_\+\+DSP\+\_\+\+Get\+Metering\+Info}} (Int\+Ptr dsp, out \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p___m_e_t_e_r_i_n_g___i_n_f_o}{DSP\+\_\+\+METERING\+\_\+\+INFO}} input\+Info, out \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p___m_e_t_e_r_i_n_g___i_n_f_o}{DSP\+\_\+\+METERING\+\_\+\+INFO}} output\+Info)
+\item 
+static \mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p_a42b6d185b5802126b948aa15d77ddd0b}{FMOD5\+\_\+\+DSP\+\_\+\+Get\+CPUUsage}} (Int\+Ptr dsp, out uint exclusive, out uint inclusive)
+\item 
+\mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p_a69ced77fe9ebb0d356d9e2c950e32a1f}{DSP}} (Int\+Ptr ptr)
+\item 
+bool \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p_a856488338ceac3390694db7a3df88d44}{has\+Handle}} ()
+\item 
+void \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p_a17b874f20358839dcbe9f2bd292ee228}{clear\+Handle}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Int\+Ptr \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p_a05cd14b288abd9dea2ca6f08abcd2e41}{handle}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{struct_f_m_o_d_1_1_d_s_p_a69ced77fe9ebb0d356d9e2c950e32a1f}\label{struct_f_m_o_d_1_1_d_s_p_a69ced77fe9ebb0d356d9e2c950e32a1f} 
+\index{FMOD.DSP@{FMOD.DSP}!DSP@{DSP}}
+\index{DSP@{DSP}!FMOD.DSP@{FMOD.DSP}}
+\doxysubsubsection{\texorpdfstring{DSP()}{DSP()}}
+{\footnotesize\ttfamily FMOD.\+DSP.\+DSP (\begin{DoxyParamCaption}\item[{Int\+Ptr}]{ptr }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{struct_f_m_o_d_1_1_d_s_p_a67c5e1faeb2427163a4fc57248c2c178}\label{struct_f_m_o_d_1_1_d_s_p_a67c5e1faeb2427163a4fc57248c2c178} 
+\index{FMOD.DSP@{FMOD.DSP}!addInput@{addInput}}
+\index{addInput@{addInput}!FMOD.DSP@{FMOD.DSP}}
+\doxysubsubsection{\texorpdfstring{addInput()}{addInput()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} FMOD.\+DSP.\+add\+Input (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p}{DSP}}}]{input }\end{DoxyParamCaption})}
+
+\Hypertarget{struct_f_m_o_d_1_1_d_s_p_a8e98e39c19b50b698a48399c144203b0}\label{struct_f_m_o_d_1_1_d_s_p_a8e98e39c19b50b698a48399c144203b0} 
+\index{FMOD.DSP@{FMOD.DSP}!addInput@{addInput}}
+\index{addInput@{addInput}!FMOD.DSP@{FMOD.DSP}}
+\doxysubsubsection{\texorpdfstring{addInput()}{addInput()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} FMOD.\+DSP.\+add\+Input (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p}{DSP}}}]{input,  }\item[{out \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p_connection}{DSPConnection}}}]{connection,  }\item[{\mbox{\hyperlink{namespace_f_m_o_d_abd730a6ff8b969c2f90d4123deb42aca}{DSPCONNECTION\+\_\+\+TYPE}}}]{type = {\ttfamily \mbox{\hyperlink{namespace_f_m_o_d_abd730a6ff8b969c2f90d4123deb42acaa94e94133f4bdc1794c6b647b8ea134d0}{DSPCONNECTION\+\_\+\+TYPE\+::\+STANDARD}}} }\end{DoxyParamCaption})}
+
+\Hypertarget{struct_f_m_o_d_1_1_d_s_p_a17b874f20358839dcbe9f2bd292ee228}\label{struct_f_m_o_d_1_1_d_s_p_a17b874f20358839dcbe9f2bd292ee228} 
+\index{FMOD.DSP@{FMOD.DSP}!clearHandle@{clearHandle}}
+\index{clearHandle@{clearHandle}!FMOD.DSP@{FMOD.DSP}}
+\doxysubsubsection{\texorpdfstring{clearHandle()}{clearHandle()}}
+{\footnotesize\ttfamily void FMOD.\+DSP.\+clear\+Handle (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\Hypertarget{struct_f_m_o_d_1_1_d_s_p_a8b07d66e98e0c959763b746df5422fbb}\label{struct_f_m_o_d_1_1_d_s_p_a8b07d66e98e0c959763b746df5422fbb} 
+\index{FMOD.DSP@{FMOD.DSP}!disconnectAll@{disconnectAll}}
+\index{disconnectAll@{disconnectAll}!FMOD.DSP@{FMOD.DSP}}
+\doxysubsubsection{\texorpdfstring{disconnectAll()}{disconnectAll()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} FMOD.\+DSP.\+disconnect\+All (\begin{DoxyParamCaption}\item[{bool}]{inputs,  }\item[{bool}]{outputs }\end{DoxyParamCaption})}
+
+\Hypertarget{struct_f_m_o_d_1_1_d_s_p_a7de3055ef8036b3c45fe708489fa9091}\label{struct_f_m_o_d_1_1_d_s_p_a7de3055ef8036b3c45fe708489fa9091} 
+\index{FMOD.DSP@{FMOD.DSP}!disconnectFrom@{disconnectFrom}}
+\index{disconnectFrom@{disconnectFrom}!FMOD.DSP@{FMOD.DSP}}
+\doxysubsubsection{\texorpdfstring{disconnectFrom()}{disconnectFrom()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} FMOD.\+DSP.\+disconnect\+From (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p}{DSP}}}]{target,  }\item[{\mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p_connection}{DSPConnection}}}]{connection }\end{DoxyParamCaption})}
+
+\Hypertarget{struct_f_m_o_d_1_1_d_s_p_a42b6d185b5802126b948aa15d77ddd0b}\label{struct_f_m_o_d_1_1_d_s_p_a42b6d185b5802126b948aa15d77ddd0b} 
+\index{FMOD.DSP@{FMOD.DSP}!FMOD5\_DSP\_GetCPUUsage@{FMOD5\_DSP\_GetCPUUsage}}
+\index{FMOD5\_DSP\_GetCPUUsage@{FMOD5\_DSP\_GetCPUUsage}!FMOD.DSP@{FMOD.DSP}}
+\doxysubsubsection{\texorpdfstring{FMOD5\_DSP\_GetCPUUsage()}{FMOD5\_DSP\_GetCPUUsage()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} FMOD.\+DSP.\+FMOD5\+\_\+\+DSP\+\_\+\+Get\+CPUUsage (\begin{DoxyParamCaption}\item[{Int\+Ptr}]{dsp,  }\item[{out uint}]{exclusive,  }\item[{out uint}]{inclusive }\end{DoxyParamCaption})}
+
+\Hypertarget{struct_f_m_o_d_1_1_d_s_p_af8fe580a1e5182a351a3f4b3574eb0bd}\label{struct_f_m_o_d_1_1_d_s_p_af8fe580a1e5182a351a3f4b3574eb0bd} 
+\index{FMOD.DSP@{FMOD.DSP}!FMOD5\_DSP\_GetMeteringEnabled@{FMOD5\_DSP\_GetMeteringEnabled}}
+\index{FMOD5\_DSP\_GetMeteringEnabled@{FMOD5\_DSP\_GetMeteringEnabled}!FMOD.DSP@{FMOD.DSP}}
+\doxysubsubsection{\texorpdfstring{FMOD5\_DSP\_GetMeteringEnabled()}{FMOD5\_DSP\_GetMeteringEnabled()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} FMOD.\+DSP.\+FMOD5\+\_\+\+DSP\+\_\+\+Get\+Metering\+Enabled (\begin{DoxyParamCaption}\item[{Int\+Ptr}]{dsp,  }\item[{out bool}]{input\+Enabled,  }\item[{out bool}]{output\+Enabled }\end{DoxyParamCaption})}
+
+\Hypertarget{struct_f_m_o_d_1_1_d_s_p_a5c06ec2536f742c22ba98932290ca8f8}\label{struct_f_m_o_d_1_1_d_s_p_a5c06ec2536f742c22ba98932290ca8f8} 
+\index{FMOD.DSP@{FMOD.DSP}!FMOD5\_DSP\_GetMeteringInfo@{FMOD5\_DSP\_GetMeteringInfo}}
+\index{FMOD5\_DSP\_GetMeteringInfo@{FMOD5\_DSP\_GetMeteringInfo}!FMOD.DSP@{FMOD.DSP}}
+\doxysubsubsection{\texorpdfstring{FMOD5\_DSP\_GetMeteringInfo()}{FMOD5\_DSP\_GetMeteringInfo()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} FMOD.\+DSP.\+FMOD5\+\_\+\+DSP\+\_\+\+Get\+Metering\+Info (\begin{DoxyParamCaption}\item[{Int\+Ptr}]{dsp,  }\item[{Int\+Ptr}]{zero,  }\item[{out \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p___m_e_t_e_r_i_n_g___i_n_f_o}{DSP\+\_\+\+METERING\+\_\+\+INFO}}}]{output\+Info }\end{DoxyParamCaption})}
+
+\Hypertarget{struct_f_m_o_d_1_1_d_s_p_a314fb6c21e59de5a124404490feea443}\label{struct_f_m_o_d_1_1_d_s_p_a314fb6c21e59de5a124404490feea443} 
+\index{FMOD.DSP@{FMOD.DSP}!FMOD5\_DSP\_GetMeteringInfo@{FMOD5\_DSP\_GetMeteringInfo}}
+\index{FMOD5\_DSP\_GetMeteringInfo@{FMOD5\_DSP\_GetMeteringInfo}!FMOD.DSP@{FMOD.DSP}}
+\doxysubsubsection{\texorpdfstring{FMOD5\_DSP\_GetMeteringInfo()}{FMOD5\_DSP\_GetMeteringInfo()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} FMOD.\+DSP.\+FMOD5\+\_\+\+DSP\+\_\+\+Get\+Metering\+Info (\begin{DoxyParamCaption}\item[{Int\+Ptr}]{dsp,  }\item[{out \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p___m_e_t_e_r_i_n_g___i_n_f_o}{DSP\+\_\+\+METERING\+\_\+\+INFO}}}]{input\+Info,  }\item[{Int\+Ptr}]{zero }\end{DoxyParamCaption})}
+
+\Hypertarget{struct_f_m_o_d_1_1_d_s_p_acf96462a4c07e0bd42f1c48fd31d8920}\label{struct_f_m_o_d_1_1_d_s_p_acf96462a4c07e0bd42f1c48fd31d8920} 
+\index{FMOD.DSP@{FMOD.DSP}!FMOD5\_DSP\_GetMeteringInfo@{FMOD5\_DSP\_GetMeteringInfo}}
+\index{FMOD5\_DSP\_GetMeteringInfo@{FMOD5\_DSP\_GetMeteringInfo}!FMOD.DSP@{FMOD.DSP}}
+\doxysubsubsection{\texorpdfstring{FMOD5\_DSP\_GetMeteringInfo()}{FMOD5\_DSP\_GetMeteringInfo()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} FMOD.\+DSP.\+FMOD5\+\_\+\+DSP\+\_\+\+Get\+Metering\+Info (\begin{DoxyParamCaption}\item[{Int\+Ptr}]{dsp,  }\item[{out \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p___m_e_t_e_r_i_n_g___i_n_f_o}{DSP\+\_\+\+METERING\+\_\+\+INFO}}}]{input\+Info,  }\item[{out \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p___m_e_t_e_r_i_n_g___i_n_f_o}{DSP\+\_\+\+METERING\+\_\+\+INFO}}}]{output\+Info }\end{DoxyParamCaption})}
+
+\Hypertarget{struct_f_m_o_d_1_1_d_s_p_a7071044a62721e02e1726275179e9007}\label{struct_f_m_o_d_1_1_d_s_p_a7071044a62721e02e1726275179e9007} 
+\index{FMOD.DSP@{FMOD.DSP}!FMOD5\_DSP\_SetMeteringEnabled@{FMOD5\_DSP\_SetMeteringEnabled}}
+\index{FMOD5\_DSP\_SetMeteringEnabled@{FMOD5\_DSP\_SetMeteringEnabled}!FMOD.DSP@{FMOD.DSP}}
+\doxysubsubsection{\texorpdfstring{FMOD5\_DSP\_SetMeteringEnabled()}{FMOD5\_DSP\_SetMeteringEnabled()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} FMOD.\+DSP.\+FMOD5\+\_\+\+DSP\+\_\+\+Set\+Metering\+Enabled (\begin{DoxyParamCaption}\item[{Int\+Ptr}]{dsp,  }\item[{bool}]{input\+Enabled,  }\item[{bool}]{output\+Enabled }\end{DoxyParamCaption})}
+
+\Hypertarget{struct_f_m_o_d_1_1_d_s_p_a23023e1c53c97ab3a1931a4ec5a9ea5c}\label{struct_f_m_o_d_1_1_d_s_p_a23023e1c53c97ab3a1931a4ec5a9ea5c} 
+\index{FMOD.DSP@{FMOD.DSP}!getActive@{getActive}}
+\index{getActive@{getActive}!FMOD.DSP@{FMOD.DSP}}
+\doxysubsubsection{\texorpdfstring{getActive()}{getActive()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} FMOD.\+DSP.\+get\+Active (\begin{DoxyParamCaption}\item[{out bool}]{active }\end{DoxyParamCaption})}
+
+\Hypertarget{struct_f_m_o_d_1_1_d_s_p_a5fd30b33615332c87ed8f19975f910a5}\label{struct_f_m_o_d_1_1_d_s_p_a5fd30b33615332c87ed8f19975f910a5} 
+\index{FMOD.DSP@{FMOD.DSP}!getBypass@{getBypass}}
+\index{getBypass@{getBypass}!FMOD.DSP@{FMOD.DSP}}
+\doxysubsubsection{\texorpdfstring{getBypass()}{getBypass()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} FMOD.\+DSP.\+get\+Bypass (\begin{DoxyParamCaption}\item[{out bool}]{bypass }\end{DoxyParamCaption})}
+
+\Hypertarget{struct_f_m_o_d_1_1_d_s_p_afcba15be09b480630d20aa4312918723}\label{struct_f_m_o_d_1_1_d_s_p_afcba15be09b480630d20aa4312918723} 
+\index{FMOD.DSP@{FMOD.DSP}!getChannelFormat@{getChannelFormat}}
+\index{getChannelFormat@{getChannelFormat}!FMOD.DSP@{FMOD.DSP}}
+\doxysubsubsection{\texorpdfstring{getChannelFormat()}{getChannelFormat()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} FMOD.\+DSP.\+get\+Channel\+Format (\begin{DoxyParamCaption}\item[{out \mbox{\hyperlink{namespace_f_m_o_d_ae295945ff00acb5f2e5ef0b3f217f5e2}{CHANNELMASK}}}]{channelmask,  }\item[{out int}]{numchannels,  }\item[{out \mbox{\hyperlink{namespace_f_m_o_d_aa0732e7e8efd3b96b526a7f2f8479634}{SPEAKERMODE}}}]{source\+\_\+speakermode }\end{DoxyParamCaption})}
+
+\Hypertarget{struct_f_m_o_d_1_1_d_s_p_a459d1ee7faed4741f967c38d07b87342}\label{struct_f_m_o_d_1_1_d_s_p_a459d1ee7faed4741f967c38d07b87342} 
+\index{FMOD.DSP@{FMOD.DSP}!getCPUUsage@{getCPUUsage}}
+\index{getCPUUsage@{getCPUUsage}!FMOD.DSP@{FMOD.DSP}}
+\doxysubsubsection{\texorpdfstring{getCPUUsage()}{getCPUUsage()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} FMOD.\+DSP.\+get\+CPUUsage (\begin{DoxyParamCaption}\item[{out uint}]{exclusive,  }\item[{out uint}]{inclusive }\end{DoxyParamCaption})}
+
+\Hypertarget{struct_f_m_o_d_1_1_d_s_p_ab68360d5ad1f662b6af4b5d8e5caf80d}\label{struct_f_m_o_d_1_1_d_s_p_ab68360d5ad1f662b6af4b5d8e5caf80d} 
+\index{FMOD.DSP@{FMOD.DSP}!getDataParameterIndex@{getDataParameterIndex}}
+\index{getDataParameterIndex@{getDataParameterIndex}!FMOD.DSP@{FMOD.DSP}}
+\doxysubsubsection{\texorpdfstring{getDataParameterIndex()}{getDataParameterIndex()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} FMOD.\+DSP.\+get\+Data\+Parameter\+Index (\begin{DoxyParamCaption}\item[{int}]{datatype,  }\item[{out int}]{index }\end{DoxyParamCaption})}
+
+\Hypertarget{struct_f_m_o_d_1_1_d_s_p_a3f643f98646f1f15c1fc3cf446aa7c25}\label{struct_f_m_o_d_1_1_d_s_p_a3f643f98646f1f15c1fc3cf446aa7c25} 
+\index{FMOD.DSP@{FMOD.DSP}!getIdle@{getIdle}}
+\index{getIdle@{getIdle}!FMOD.DSP@{FMOD.DSP}}
+\doxysubsubsection{\texorpdfstring{getIdle()}{getIdle()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} FMOD.\+DSP.\+get\+Idle (\begin{DoxyParamCaption}\item[{out bool}]{idle }\end{DoxyParamCaption})}
+
+\Hypertarget{struct_f_m_o_d_1_1_d_s_p_ae2a8bdce836428f69c32ea99b7c038f8}\label{struct_f_m_o_d_1_1_d_s_p_ae2a8bdce836428f69c32ea99b7c038f8} 
+\index{FMOD.DSP@{FMOD.DSP}!getInfo@{getInfo}}
+\index{getInfo@{getInfo}!FMOD.DSP@{FMOD.DSP}}
+\doxysubsubsection{\texorpdfstring{getInfo()}{getInfo()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} FMOD.\+DSP.\+get\+Info (\begin{DoxyParamCaption}\item[{out string}]{name,  }\item[{out uint}]{version,  }\item[{out int}]{channels,  }\item[{out int}]{configwidth,  }\item[{out int}]{configheight }\end{DoxyParamCaption})}
+
+\Hypertarget{struct_f_m_o_d_1_1_d_s_p_a30f254fbd4e71c637815c524bcd2c1af}\label{struct_f_m_o_d_1_1_d_s_p_a30f254fbd4e71c637815c524bcd2c1af} 
+\index{FMOD.DSP@{FMOD.DSP}!getInfo@{getInfo}}
+\index{getInfo@{getInfo}!FMOD.DSP@{FMOD.DSP}}
+\doxysubsubsection{\texorpdfstring{getInfo()}{getInfo()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} FMOD.\+DSP.\+get\+Info (\begin{DoxyParamCaption}\item[{out uint}]{version,  }\item[{out int}]{channels,  }\item[{out int}]{configwidth,  }\item[{out int}]{configheight }\end{DoxyParamCaption})}
+
+\Hypertarget{struct_f_m_o_d_1_1_d_s_p_a9cdc8729a61c64aba4c951b4e175358f}\label{struct_f_m_o_d_1_1_d_s_p_a9cdc8729a61c64aba4c951b4e175358f} 
+\index{FMOD.DSP@{FMOD.DSP}!getInput@{getInput}}
+\index{getInput@{getInput}!FMOD.DSP@{FMOD.DSP}}
+\doxysubsubsection{\texorpdfstring{getInput()}{getInput()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} FMOD.\+DSP.\+get\+Input (\begin{DoxyParamCaption}\item[{int}]{index,  }\item[{out \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p}{DSP}}}]{input,  }\item[{out \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p_connection}{DSPConnection}}}]{inputconnection }\end{DoxyParamCaption})}
+
+\Hypertarget{struct_f_m_o_d_1_1_d_s_p_a1e6600f84abe122d30f3f708b41dd24e}\label{struct_f_m_o_d_1_1_d_s_p_a1e6600f84abe122d30f3f708b41dd24e} 
+\index{FMOD.DSP@{FMOD.DSP}!getMeteringEnabled@{getMeteringEnabled}}
+\index{getMeteringEnabled@{getMeteringEnabled}!FMOD.DSP@{FMOD.DSP}}
+\doxysubsubsection{\texorpdfstring{getMeteringEnabled()}{getMeteringEnabled()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} FMOD.\+DSP.\+get\+Metering\+Enabled (\begin{DoxyParamCaption}\item[{out bool}]{input\+Enabled,  }\item[{out bool}]{output\+Enabled }\end{DoxyParamCaption})}
+
+\Hypertarget{struct_f_m_o_d_1_1_d_s_p_aea1a9c6ca03fdb46a6f3a506e5fe0679}\label{struct_f_m_o_d_1_1_d_s_p_aea1a9c6ca03fdb46a6f3a506e5fe0679} 
+\index{FMOD.DSP@{FMOD.DSP}!getMeteringInfo@{getMeteringInfo}}
+\index{getMeteringInfo@{getMeteringInfo}!FMOD.DSP@{FMOD.DSP}}
+\doxysubsubsection{\texorpdfstring{getMeteringInfo()}{getMeteringInfo()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} FMOD.\+DSP.\+get\+Metering\+Info (\begin{DoxyParamCaption}\item[{Int\+Ptr}]{zero,  }\item[{out \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p___m_e_t_e_r_i_n_g___i_n_f_o}{DSP\+\_\+\+METERING\+\_\+\+INFO}}}]{output\+Info }\end{DoxyParamCaption})}
+
+\Hypertarget{struct_f_m_o_d_1_1_d_s_p_a20336442c70422c3f0619f32232aee10}\label{struct_f_m_o_d_1_1_d_s_p_a20336442c70422c3f0619f32232aee10} 
+\index{FMOD.DSP@{FMOD.DSP}!getMeteringInfo@{getMeteringInfo}}
+\index{getMeteringInfo@{getMeteringInfo}!FMOD.DSP@{FMOD.DSP}}
+\doxysubsubsection{\texorpdfstring{getMeteringInfo()}{getMeteringInfo()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} FMOD.\+DSP.\+get\+Metering\+Info (\begin{DoxyParamCaption}\item[{out \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p___m_e_t_e_r_i_n_g___i_n_f_o}{DSP\+\_\+\+METERING\+\_\+\+INFO}}}]{input\+Info,  }\item[{Int\+Ptr}]{zero }\end{DoxyParamCaption})}
+
+\Hypertarget{struct_f_m_o_d_1_1_d_s_p_a8586394443e1e5261083fccb2e232bbb}\label{struct_f_m_o_d_1_1_d_s_p_a8586394443e1e5261083fccb2e232bbb} 
+\index{FMOD.DSP@{FMOD.DSP}!getMeteringInfo@{getMeteringInfo}}
+\index{getMeteringInfo@{getMeteringInfo}!FMOD.DSP@{FMOD.DSP}}
+\doxysubsubsection{\texorpdfstring{getMeteringInfo()}{getMeteringInfo()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} FMOD.\+DSP.\+get\+Metering\+Info (\begin{DoxyParamCaption}\item[{out \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p___m_e_t_e_r_i_n_g___i_n_f_o}{DSP\+\_\+\+METERING\+\_\+\+INFO}}}]{input\+Info,  }\item[{out \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p___m_e_t_e_r_i_n_g___i_n_f_o}{DSP\+\_\+\+METERING\+\_\+\+INFO}}}]{output\+Info }\end{DoxyParamCaption})}
+
+\Hypertarget{struct_f_m_o_d_1_1_d_s_p_af26eb2c452f0ef816a6098395e4f0c6d}\label{struct_f_m_o_d_1_1_d_s_p_af26eb2c452f0ef816a6098395e4f0c6d} 
+\index{FMOD.DSP@{FMOD.DSP}!getNumInputs@{getNumInputs}}
+\index{getNumInputs@{getNumInputs}!FMOD.DSP@{FMOD.DSP}}
+\doxysubsubsection{\texorpdfstring{getNumInputs()}{getNumInputs()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} FMOD.\+DSP.\+get\+Num\+Inputs (\begin{DoxyParamCaption}\item[{out int}]{numinputs }\end{DoxyParamCaption})}
+
+\Hypertarget{struct_f_m_o_d_1_1_d_s_p_a02296a0f4370041e74d427172750bd76}\label{struct_f_m_o_d_1_1_d_s_p_a02296a0f4370041e74d427172750bd76} 
+\index{FMOD.DSP@{FMOD.DSP}!getNumOutputs@{getNumOutputs}}
+\index{getNumOutputs@{getNumOutputs}!FMOD.DSP@{FMOD.DSP}}
+\doxysubsubsection{\texorpdfstring{getNumOutputs()}{getNumOutputs()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} FMOD.\+DSP.\+get\+Num\+Outputs (\begin{DoxyParamCaption}\item[{out int}]{numoutputs }\end{DoxyParamCaption})}
+
+\Hypertarget{struct_f_m_o_d_1_1_d_s_p_ae1438b5d53f7c2c6e7ba023c8fd8b06f}\label{struct_f_m_o_d_1_1_d_s_p_ae1438b5d53f7c2c6e7ba023c8fd8b06f} 
+\index{FMOD.DSP@{FMOD.DSP}!getNumParameters@{getNumParameters}}
+\index{getNumParameters@{getNumParameters}!FMOD.DSP@{FMOD.DSP}}
+\doxysubsubsection{\texorpdfstring{getNumParameters()}{getNumParameters()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} FMOD.\+DSP.\+get\+Num\+Parameters (\begin{DoxyParamCaption}\item[{out int}]{numparams }\end{DoxyParamCaption})}
+
+\Hypertarget{struct_f_m_o_d_1_1_d_s_p_ab9a4ff367880a3f11f0d9fd1b13b6471}\label{struct_f_m_o_d_1_1_d_s_p_ab9a4ff367880a3f11f0d9fd1b13b6471} 
+\index{FMOD.DSP@{FMOD.DSP}!getOutput@{getOutput}}
+\index{getOutput@{getOutput}!FMOD.DSP@{FMOD.DSP}}
+\doxysubsubsection{\texorpdfstring{getOutput()}{getOutput()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} FMOD.\+DSP.\+get\+Output (\begin{DoxyParamCaption}\item[{int}]{index,  }\item[{out \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p}{DSP}}}]{output,  }\item[{out \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p_connection}{DSPConnection}}}]{outputconnection }\end{DoxyParamCaption})}
+
+\Hypertarget{struct_f_m_o_d_1_1_d_s_p_a14c95c99fc6698bb176a85cb4d380036}\label{struct_f_m_o_d_1_1_d_s_p_a14c95c99fc6698bb176a85cb4d380036} 
+\index{FMOD.DSP@{FMOD.DSP}!getOutputChannelFormat@{getOutputChannelFormat}}
+\index{getOutputChannelFormat@{getOutputChannelFormat}!FMOD.DSP@{FMOD.DSP}}
+\doxysubsubsection{\texorpdfstring{getOutputChannelFormat()}{getOutputChannelFormat()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} FMOD.\+DSP.\+get\+Output\+Channel\+Format (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_f_m_o_d_ae295945ff00acb5f2e5ef0b3f217f5e2}{CHANNELMASK}}}]{inmask,  }\item[{int}]{inchannels,  }\item[{\mbox{\hyperlink{namespace_f_m_o_d_aa0732e7e8efd3b96b526a7f2f8479634}{SPEAKERMODE}}}]{inspeakermode,  }\item[{out \mbox{\hyperlink{namespace_f_m_o_d_ae295945ff00acb5f2e5ef0b3f217f5e2}{CHANNELMASK}}}]{outmask,  }\item[{out int}]{outchannels,  }\item[{out \mbox{\hyperlink{namespace_f_m_o_d_aa0732e7e8efd3b96b526a7f2f8479634}{SPEAKERMODE}}}]{outspeakermode }\end{DoxyParamCaption})}
+
+\Hypertarget{struct_f_m_o_d_1_1_d_s_p_acc04bea0fdec2a13b8c2109ab99a9f7e}\label{struct_f_m_o_d_1_1_d_s_p_acc04bea0fdec2a13b8c2109ab99a9f7e} 
+\index{FMOD.DSP@{FMOD.DSP}!getParameterBool@{getParameterBool}}
+\index{getParameterBool@{getParameterBool}!FMOD.DSP@{FMOD.DSP}}
+\doxysubsubsection{\texorpdfstring{getParameterBool()}{getParameterBool()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} FMOD.\+DSP.\+get\+Parameter\+Bool (\begin{DoxyParamCaption}\item[{int}]{index,  }\item[{out bool}]{value }\end{DoxyParamCaption})}
+
+\Hypertarget{struct_f_m_o_d_1_1_d_s_p_a228cbd3a8b9104395c749730ca094226}\label{struct_f_m_o_d_1_1_d_s_p_a228cbd3a8b9104395c749730ca094226} 
+\index{FMOD.DSP@{FMOD.DSP}!getParameterData@{getParameterData}}
+\index{getParameterData@{getParameterData}!FMOD.DSP@{FMOD.DSP}}
+\doxysubsubsection{\texorpdfstring{getParameterData()}{getParameterData()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} FMOD.\+DSP.\+get\+Parameter\+Data (\begin{DoxyParamCaption}\item[{int}]{index,  }\item[{out Int\+Ptr}]{data,  }\item[{out uint}]{length }\end{DoxyParamCaption})}
+
+\Hypertarget{struct_f_m_o_d_1_1_d_s_p_a126a21495cfc47d5a7782779f58bf2fd}\label{struct_f_m_o_d_1_1_d_s_p_a126a21495cfc47d5a7782779f58bf2fd} 
+\index{FMOD.DSP@{FMOD.DSP}!getParameterFloat@{getParameterFloat}}
+\index{getParameterFloat@{getParameterFloat}!FMOD.DSP@{FMOD.DSP}}
+\doxysubsubsection{\texorpdfstring{getParameterFloat()}{getParameterFloat()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} FMOD.\+DSP.\+get\+Parameter\+Float (\begin{DoxyParamCaption}\item[{int}]{index,  }\item[{out float}]{value }\end{DoxyParamCaption})}
+
+\Hypertarget{struct_f_m_o_d_1_1_d_s_p_a86296128281b8872e1494647f2fa41f0}\label{struct_f_m_o_d_1_1_d_s_p_a86296128281b8872e1494647f2fa41f0} 
+\index{FMOD.DSP@{FMOD.DSP}!getParameterInfo@{getParameterInfo}}
+\index{getParameterInfo@{getParameterInfo}!FMOD.DSP@{FMOD.DSP}}
+\doxysubsubsection{\texorpdfstring{getParameterInfo()}{getParameterInfo()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} FMOD.\+DSP.\+get\+Parameter\+Info (\begin{DoxyParamCaption}\item[{int}]{index,  }\item[{out \mbox{\hyperlink{struct_f_m_o_d_1_1_d_s_p___p_a_r_a_m_e_t_e_r___d_e_s_c}{DSP\+\_\+\+PARAMETER\+\_\+\+DESC}}}]{desc }\end{DoxyParamCaption})}
+
+\Hypertarget{struct_f_m_o_d_1_1_d_s_p_a93b5432794048642c905e41eaeb3566c}\label{struct_f_m_o_d_1_1_d_s_p_a93b5432794048642c905e41eaeb3566c} 
+\index{FMOD.DSP@{FMOD.DSP}!getParameterInt@{getParameterInt}}
+\index{getParameterInt@{getParameterInt}!FMOD.DSP@{FMOD.DSP}}
+\doxysubsubsection{\texorpdfstring{getParameterInt()}{getParameterInt()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} FMOD.\+DSP.\+get\+Parameter\+Int (\begin{DoxyParamCaption}\item[{int}]{index,  }\item[{out int}]{value }\end{DoxyParamCaption})}
+
+\Hypertarget{struct_f_m_o_d_1_1_d_s_p_a01c133af7873b83bee48889f2f075bf0}\label{struct_f_m_o_d_1_1_d_s_p_a01c133af7873b83bee48889f2f075bf0} 
+\index{FMOD.DSP@{FMOD.DSP}!getSystemObject@{getSystemObject}}
+\index{getSystemObject@{getSystemObject}!FMOD.DSP@{FMOD.DSP}}
+\doxysubsubsection{\texorpdfstring{getSystemObject()}{getSystemObject()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} FMOD.\+DSP.\+get\+System\+Object (\begin{DoxyParamCaption}\item[{out \mbox{\hyperlink{struct_f_m_o_d_1_1_system}{System}}}]{system }\end{DoxyParamCaption})}
+
+\Hypertarget{struct_f_m_o_d_1_1_d_s_p_a90873e967a2e0bec74828ed1da507cde}\label{struct_f_m_o_d_1_1_d_s_p_a90873e967a2e0bec74828ed1da507cde} 
+\index{FMOD.DSP@{FMOD.DSP}!getType@{getType}}
+\index{getType@{getType}!FMOD.DSP@{FMOD.DSP}}
+\doxysubsubsection{\texorpdfstring{getType()}{getType()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} FMOD.\+DSP.\+get\+Type (\begin{DoxyParamCaption}\item[{out \mbox{\hyperlink{namespace_f_m_o_d_abfbbfe13740257430ae8350c2456b0ff}{DSP\+\_\+\+TYPE}}}]{type }\end{DoxyParamCaption})}
+
+\Hypertarget{struct_f_m_o_d_1_1_d_s_p_ade41e932d36f2075c359f9531215fad5}\label{struct_f_m_o_d_1_1_d_s_p_ade41e932d36f2075c359f9531215fad5} 
+\index{FMOD.DSP@{FMOD.DSP}!getUserData@{getUserData}}
+\index{getUserData@{getUserData}!FMOD.DSP@{FMOD.DSP}}
+\doxysubsubsection{\texorpdfstring{getUserData()}{getUserData()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} FMOD.\+DSP.\+get\+User\+Data (\begin{DoxyParamCaption}\item[{out Int\+Ptr}]{userdata }\end{DoxyParamCaption})}
+
+\Hypertarget{struct_f_m_o_d_1_1_d_s_p_ae5fffc548d67b21ba56c0c678e7d3a78}\label{struct_f_m_o_d_1_1_d_s_p_ae5fffc548d67b21ba56c0c678e7d3a78} 
+\index{FMOD.DSP@{FMOD.DSP}!getWetDryMix@{getWetDryMix}}
+\index{getWetDryMix@{getWetDryMix}!FMOD.DSP@{FMOD.DSP}}
+\doxysubsubsection{\texorpdfstring{getWetDryMix()}{getWetDryMix()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} FMOD.\+DSP.\+get\+Wet\+Dry\+Mix (\begin{DoxyParamCaption}\item[{out float}]{prewet,  }\item[{out float}]{postwet,  }\item[{out float}]{dry }\end{DoxyParamCaption})}
+
+\Hypertarget{struct_f_m_o_d_1_1_d_s_p_a856488338ceac3390694db7a3df88d44}\label{struct_f_m_o_d_1_1_d_s_p_a856488338ceac3390694db7a3df88d44} 
+\index{FMOD.DSP@{FMOD.DSP}!hasHandle@{hasHandle}}
+\index{hasHandle@{hasHandle}!FMOD.DSP@{FMOD.DSP}}
+\doxysubsubsection{\texorpdfstring{hasHandle()}{hasHandle()}}
+{\footnotesize\ttfamily bool FMOD.\+DSP.\+has\+Handle (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\Hypertarget{struct_f_m_o_d_1_1_d_s_p_ae40c39c8ab23fe06bdecb96edd8bbe32}\label{struct_f_m_o_d_1_1_d_s_p_ae40c39c8ab23fe06bdecb96edd8bbe32} 
+\index{FMOD.DSP@{FMOD.DSP}!release@{release}}
+\index{release@{release}!FMOD.DSP@{FMOD.DSP}}
+\doxysubsubsection{\texorpdfstring{release()}{release()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} FMOD.\+DSP.\+release (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\Hypertarget{struct_f_m_o_d_1_1_d_s_p_a9d60931bf4c560ff79a28e48ff7da66d}\label{struct_f_m_o_d_1_1_d_s_p_a9d60931bf4c560ff79a28e48ff7da66d} 
+\index{FMOD.DSP@{FMOD.DSP}!reset@{reset}}
+\index{reset@{reset}!FMOD.DSP@{FMOD.DSP}}
+\doxysubsubsection{\texorpdfstring{reset()}{reset()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} FMOD.\+DSP.\+reset (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\Hypertarget{struct_f_m_o_d_1_1_d_s_p_a4550289d35ae8cbc8705b6336b8f9442}\label{struct_f_m_o_d_1_1_d_s_p_a4550289d35ae8cbc8705b6336b8f9442} 
+\index{FMOD.DSP@{FMOD.DSP}!setActive@{setActive}}
+\index{setActive@{setActive}!FMOD.DSP@{FMOD.DSP}}
+\doxysubsubsection{\texorpdfstring{setActive()}{setActive()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} FMOD.\+DSP.\+set\+Active (\begin{DoxyParamCaption}\item[{bool}]{active }\end{DoxyParamCaption})}
+
+\Hypertarget{struct_f_m_o_d_1_1_d_s_p_a4168480afea4775637ed9443046de78f}\label{struct_f_m_o_d_1_1_d_s_p_a4168480afea4775637ed9443046de78f} 
+\index{FMOD.DSP@{FMOD.DSP}!setBypass@{setBypass}}
+\index{setBypass@{setBypass}!FMOD.DSP@{FMOD.DSP}}
+\doxysubsubsection{\texorpdfstring{setBypass()}{setBypass()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} FMOD.\+DSP.\+set\+Bypass (\begin{DoxyParamCaption}\item[{bool}]{bypass }\end{DoxyParamCaption})}
+
+\Hypertarget{struct_f_m_o_d_1_1_d_s_p_aa6c8fc0256b210f40ba5762e1457f983}\label{struct_f_m_o_d_1_1_d_s_p_aa6c8fc0256b210f40ba5762e1457f983} 
+\index{FMOD.DSP@{FMOD.DSP}!setCallback@{setCallback}}
+\index{setCallback@{setCallback}!FMOD.DSP@{FMOD.DSP}}
+\doxysubsubsection{\texorpdfstring{setCallback()}{setCallback()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} FMOD.\+DSP.\+set\+Callback (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_f_m_o_d_ab0f5874fac86069f57110966b9d34212}{DSP\+\_\+\+CALLBACK}}}]{callback }\end{DoxyParamCaption})}
+
+\Hypertarget{struct_f_m_o_d_1_1_d_s_p_a9e209a66e01c2373bc7d93e0a61a3afa}\label{struct_f_m_o_d_1_1_d_s_p_a9e209a66e01c2373bc7d93e0a61a3afa} 
+\index{FMOD.DSP@{FMOD.DSP}!setChannelFormat@{setChannelFormat}}
+\index{setChannelFormat@{setChannelFormat}!FMOD.DSP@{FMOD.DSP}}
+\doxysubsubsection{\texorpdfstring{setChannelFormat()}{setChannelFormat()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} FMOD.\+DSP.\+set\+Channel\+Format (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_f_m_o_d_ae295945ff00acb5f2e5ef0b3f217f5e2}{CHANNELMASK}}}]{channelmask,  }\item[{int}]{numchannels,  }\item[{\mbox{\hyperlink{namespace_f_m_o_d_aa0732e7e8efd3b96b526a7f2f8479634}{SPEAKERMODE}}}]{source\+\_\+speakermode }\end{DoxyParamCaption})}
+
+\Hypertarget{struct_f_m_o_d_1_1_d_s_p_ab6bb9f4fa104f2ec9ad8c865901cb58f}\label{struct_f_m_o_d_1_1_d_s_p_ab6bb9f4fa104f2ec9ad8c865901cb58f} 
+\index{FMOD.DSP@{FMOD.DSP}!setMeteringEnabled@{setMeteringEnabled}}
+\index{setMeteringEnabled@{setMeteringEnabled}!FMOD.DSP@{FMOD.DSP}}
+\doxysubsubsection{\texorpdfstring{setMeteringEnabled()}{setMeteringEnabled()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} FMOD.\+DSP.\+set\+Metering\+Enabled (\begin{DoxyParamCaption}\item[{bool}]{input\+Enabled,  }\item[{bool}]{output\+Enabled }\end{DoxyParamCaption})}
+
+\Hypertarget{struct_f_m_o_d_1_1_d_s_p_a3a9e7406668ed5b8a6b3d2d402901741}\label{struct_f_m_o_d_1_1_d_s_p_a3a9e7406668ed5b8a6b3d2d402901741} 
+\index{FMOD.DSP@{FMOD.DSP}!setParameterBool@{setParameterBool}}
+\index{setParameterBool@{setParameterBool}!FMOD.DSP@{FMOD.DSP}}
+\doxysubsubsection{\texorpdfstring{setParameterBool()}{setParameterBool()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} FMOD.\+DSP.\+set\+Parameter\+Bool (\begin{DoxyParamCaption}\item[{int}]{index,  }\item[{bool}]{value }\end{DoxyParamCaption})}
+
+\Hypertarget{struct_f_m_o_d_1_1_d_s_p_aed93a25cbab0c186134d5725e761315b}\label{struct_f_m_o_d_1_1_d_s_p_aed93a25cbab0c186134d5725e761315b} 
+\index{FMOD.DSP@{FMOD.DSP}!setParameterData@{setParameterData}}
+\index{setParameterData@{setParameterData}!FMOD.DSP@{FMOD.DSP}}
+\doxysubsubsection{\texorpdfstring{setParameterData()}{setParameterData()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} FMOD.\+DSP.\+set\+Parameter\+Data (\begin{DoxyParamCaption}\item[{int}]{index,  }\item[{byte\mbox{[}$\,$\mbox{]}}]{data }\end{DoxyParamCaption})}
+
+\Hypertarget{struct_f_m_o_d_1_1_d_s_p_aaa3b811b9eaf31dad15e695cf2770645}\label{struct_f_m_o_d_1_1_d_s_p_aaa3b811b9eaf31dad15e695cf2770645} 
+\index{FMOD.DSP@{FMOD.DSP}!setParameterFloat@{setParameterFloat}}
+\index{setParameterFloat@{setParameterFloat}!FMOD.DSP@{FMOD.DSP}}
+\doxysubsubsection{\texorpdfstring{setParameterFloat()}{setParameterFloat()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} FMOD.\+DSP.\+set\+Parameter\+Float (\begin{DoxyParamCaption}\item[{int}]{index,  }\item[{float}]{value }\end{DoxyParamCaption})}
+
+\Hypertarget{struct_f_m_o_d_1_1_d_s_p_a8d8a5a568001f1df253d1842393187ac}\label{struct_f_m_o_d_1_1_d_s_p_a8d8a5a568001f1df253d1842393187ac} 
+\index{FMOD.DSP@{FMOD.DSP}!setParameterInt@{setParameterInt}}
+\index{setParameterInt@{setParameterInt}!FMOD.DSP@{FMOD.DSP}}
+\doxysubsubsection{\texorpdfstring{setParameterInt()}{setParameterInt()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} FMOD.\+DSP.\+set\+Parameter\+Int (\begin{DoxyParamCaption}\item[{int}]{index,  }\item[{int}]{value }\end{DoxyParamCaption})}
+
+\Hypertarget{struct_f_m_o_d_1_1_d_s_p_a9d1f48a083751c222998aeaaf1ea7c60}\label{struct_f_m_o_d_1_1_d_s_p_a9d1f48a083751c222998aeaaf1ea7c60} 
+\index{FMOD.DSP@{FMOD.DSP}!setUserData@{setUserData}}
+\index{setUserData@{setUserData}!FMOD.DSP@{FMOD.DSP}}
+\doxysubsubsection{\texorpdfstring{setUserData()}{setUserData()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} FMOD.\+DSP.\+set\+User\+Data (\begin{DoxyParamCaption}\item[{Int\+Ptr}]{userdata }\end{DoxyParamCaption})}
+
+\Hypertarget{struct_f_m_o_d_1_1_d_s_p_a1e4aa96dc5b5082f506adbb913c1bc6f}\label{struct_f_m_o_d_1_1_d_s_p_a1e4aa96dc5b5082f506adbb913c1bc6f} 
+\index{FMOD.DSP@{FMOD.DSP}!setWetDryMix@{setWetDryMix}}
+\index{setWetDryMix@{setWetDryMix}!FMOD.DSP@{FMOD.DSP}}
+\doxysubsubsection{\texorpdfstring{setWetDryMix()}{setWetDryMix()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} FMOD.\+DSP.\+set\+Wet\+Dry\+Mix (\begin{DoxyParamCaption}\item[{float}]{prewet,  }\item[{float}]{postwet,  }\item[{float}]{dry }\end{DoxyParamCaption})}
+
+\Hypertarget{struct_f_m_o_d_1_1_d_s_p_ab7dddd8b248f1b83464cc984094bffb0}\label{struct_f_m_o_d_1_1_d_s_p_ab7dddd8b248f1b83464cc984094bffb0} 
+\index{FMOD.DSP@{FMOD.DSP}!showConfigDialog@{showConfigDialog}}
+\index{showConfigDialog@{showConfigDialog}!FMOD.DSP@{FMOD.DSP}}
+\doxysubsubsection{\texorpdfstring{showConfigDialog()}{showConfigDialog()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespace_f_m_o_d_a305d1176ef3f8c8815861a60407ac33d}{RESULT}} FMOD.\+DSP.\+show\+Config\+Dialog (\begin{DoxyParamCaption}\item[{Int\+Ptr}]{hwnd,  }\item[{bool}]{show }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{struct_f_m_o_d_1_1_d_s_p_a05cd14b288abd9dea2ca6f08abcd2e41}\label{struct_f_m_o_d_1_1_d_s_p_a05cd14b288abd9dea2ca6f08abcd2e41} 
+\index{FMOD.DSP@{FMOD.DSP}!handle@{handle}}
+\index{handle@{handle}!FMOD.DSP@{FMOD.DSP}}
+\doxysubsubsection{\texorpdfstring{handle}{handle}}
+{\footnotesize\ttfamily Int\+Ptr FMOD.\+DSP.\+handle}
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{fmod_8cs}{fmod.\+cs}}\end{DoxyCompactItemize}

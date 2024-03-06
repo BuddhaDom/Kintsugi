@@ -1,0 +1,224 @@
+\doxysection{Kintsugi.\+Objects.\+Properties.\+Tile\+Object\+Easing Class Reference}
+\hypertarget{class_kintsugi_1_1_objects_1_1_properties_1_1_tile_object_easing}{}\label{class_kintsugi_1_1_objects_1_1_properties_1_1_tile_object_easing}\index{Kintsugi.Objects.Properties.TileObjectEasing@{Kintsugi.Objects.Properties.TileObjectEasing}}
+
+
+Easing properties of a Tile\+Object  
+
+
+Inheritance diagram for Kintsugi.\+Objects.\+Properties.\+Tile\+Object\+Easing\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_kintsugi_1_1_objects_1_1_properties_1_1_tile_object_easing}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_kintsugi_1_1_objects_1_1_properties_1_1_tile_object_easing_acd38696bc3d0325197a0b349103f845f}{Is\+Finished}} ()
+\begin{DoxyCompactList}\small\item\em Determines if the easing has finished. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{class_kintsugi_1_1_objects_1_1_properties_1_1_tile_object_easing_aab96ada16acee14cf866b43373d52ef7}{Evaluate}} (double progress)
+\begin{DoxyCompactList}\small\item\em Evaluate easing based on a given progress percentage. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{class_kintsugi_1_1_objects_1_1_properties_1_1_tile_object_easing_a7da6a8a83c7c66adfe6cd19cc17307e6}{Evaluate}} ()
+\begin{DoxyCompactList}\small\item\em Evaluate easing based on existing properties. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_kintsugi_1_1_objects_1_1_properties_1_1_tile_object_easing_ab9c8be376b8c7994e84dde9f227e0f4c}{Begin\+Towards}} (Vector2 target\+Position)
+\begin{DoxyCompactList}\small\item\em Start an easing function towards a target destination. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_kintsugi_1_1_objects_1_1_properties_1_1_tile_object_easing_a3574e487deacbc2b3ed871c33e5b588a}{End}} ()
+\begin{DoxyCompactList}\small\item\em Cut the easing function short abruptly. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+Easing.\+Easing\+Function \mbox{\hyperlink{class_kintsugi_1_1_objects_1_1_properties_1_1_tile_object_easing_a40a83f3ef04505302dc3276acdcab096}{Easing\+Function}} = Easing.\+Constant(1d)\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Function that defines the easing movement of the object. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{class_kintsugi_1_1_objects_1_1_properties_1_1_tile_object_easing_ad1496a04cda57a4af3107f42387fe3b2}{Duration}} = 1d\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em How long the movement easing takes to complete. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{class_kintsugi_1_1_objects_1_1_properties_1_1_tile_object_easing_a8db05b996af555c3338afaf2e3be11c3}{Start\+Time}} = Bootstrap.\+Time\+Elapsed\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Time at which the easing begins. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{class_kintsugi_1_1_objects_1_1_properties_1_1_tile_object_easing_a320502c507da070d072dbc3d83abe250}{Playing\+Time}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Time elapsed in the easing movement. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{class_kintsugi_1_1_objects_1_1_properties_1_1_tile_object_easing_ad84db01139cb085ea245ea3af1754f66}{Progress}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Percentage of progress of the easing movement. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_kintsugi_1_1_objects_1_1_properties_1_1_tile_object_easing_ac627c9de4dbfa21f7a47b6a0867b3d3e}{Playing}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Determines whether the easing is playing. \end{DoxyCompactList}\item 
+Vector2 \mbox{\hyperlink{class_kintsugi_1_1_objects_1_1_properties_1_1_tile_object_easing_aaf22a33b8ab7b8b9dd8e5b4c61ccf975}{Start\+Position}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Position at which the object is on movement start. \end{DoxyCompactList}\item 
+Vector2 \mbox{\hyperlink{class_kintsugi_1_1_objects_1_1_properties_1_1_tile_object_easing_ae544ac39f7fa1c94e144a756fddccd7d}{Target\+Position}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Position towards which the object is headed. \end{DoxyCompactList}\item 
+Vector2 \mbox{\hyperlink{class_kintsugi_1_1_objects_1_1_properties_1_1_tile_object_easing_a7d02dc9170432fa50ec5cd58579fadca}{Current\+Position}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Current position of the object given the easing function. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Easing properties of a Tile\+Object 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_kintsugi_1_1_objects_1_1_properties_1_1_tile_object_easing_ab9c8be376b8c7994e84dde9f227e0f4c}\label{class_kintsugi_1_1_objects_1_1_properties_1_1_tile_object_easing_ab9c8be376b8c7994e84dde9f227e0f4c} 
+\index{Kintsugi.Objects.Properties.TileObjectEasing@{Kintsugi.Objects.Properties.TileObjectEasing}!BeginTowards@{BeginTowards}}
+\index{BeginTowards@{BeginTowards}!Kintsugi.Objects.Properties.TileObjectEasing@{Kintsugi.Objects.Properties.TileObjectEasing}}
+\doxysubsubsection{\texorpdfstring{BeginTowards()}{BeginTowards()}}
+{\footnotesize\ttfamily void Kintsugi.\+Objects.\+Properties.\+Tile\+Object\+Easing.\+Begin\+Towards (\begin{DoxyParamCaption}\item[{Vector2}]{target\+Position }\end{DoxyParamCaption})}
+
+
+
+Start an easing function towards a target destination. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em target\+Position} & Where the object is headed.\\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_kintsugi_1_1_objects_1_1_properties_1_1_tile_object_easing_a3574e487deacbc2b3ed871c33e5b588a}\label{class_kintsugi_1_1_objects_1_1_properties_1_1_tile_object_easing_a3574e487deacbc2b3ed871c33e5b588a} 
+\index{Kintsugi.Objects.Properties.TileObjectEasing@{Kintsugi.Objects.Properties.TileObjectEasing}!End@{End}}
+\index{End@{End}!Kintsugi.Objects.Properties.TileObjectEasing@{Kintsugi.Objects.Properties.TileObjectEasing}}
+\doxysubsubsection{\texorpdfstring{End()}{End()}}
+{\footnotesize\ttfamily void Kintsugi.\+Objects.\+Properties.\+Tile\+Object\+Easing.\+End (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Cut the easing function short abruptly. 
+
+\Hypertarget{class_kintsugi_1_1_objects_1_1_properties_1_1_tile_object_easing_a7da6a8a83c7c66adfe6cd19cc17307e6}\label{class_kintsugi_1_1_objects_1_1_properties_1_1_tile_object_easing_a7da6a8a83c7c66adfe6cd19cc17307e6} 
+\index{Kintsugi.Objects.Properties.TileObjectEasing@{Kintsugi.Objects.Properties.TileObjectEasing}!Evaluate@{Evaluate}}
+\index{Evaluate@{Evaluate}!Kintsugi.Objects.Properties.TileObjectEasing@{Kintsugi.Objects.Properties.TileObjectEasing}}
+\doxysubsubsection{\texorpdfstring{Evaluate()}{Evaluate()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily double Kintsugi.\+Objects.\+Properties.\+Tile\+Object\+Easing.\+Evaluate (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Evaluate easing based on existing properties. 
+
+\begin{DoxyReturn}{Returns}
+The corresponding easing amount at this point in time in respect to the easing function.
+\end{DoxyReturn}
+\Hypertarget{class_kintsugi_1_1_objects_1_1_properties_1_1_tile_object_easing_aab96ada16acee14cf866b43373d52ef7}\label{class_kintsugi_1_1_objects_1_1_properties_1_1_tile_object_easing_aab96ada16acee14cf866b43373d52ef7} 
+\index{Kintsugi.Objects.Properties.TileObjectEasing@{Kintsugi.Objects.Properties.TileObjectEasing}!Evaluate@{Evaluate}}
+\index{Evaluate@{Evaluate}!Kintsugi.Objects.Properties.TileObjectEasing@{Kintsugi.Objects.Properties.TileObjectEasing}}
+\doxysubsubsection{\texorpdfstring{Evaluate()}{Evaluate()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily double Kintsugi.\+Objects.\+Properties.\+Tile\+Object\+Easing.\+Evaluate (\begin{DoxyParamCaption}\item[{double}]{progress }\end{DoxyParamCaption})}
+
+
+
+Evaluate easing based on a given progress percentage. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em progress} & Percentage of progress.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The corresponding value at this point in respect to the easing function.
+\end{DoxyReturn}
+\Hypertarget{class_kintsugi_1_1_objects_1_1_properties_1_1_tile_object_easing_acd38696bc3d0325197a0b349103f845f}\label{class_kintsugi_1_1_objects_1_1_properties_1_1_tile_object_easing_acd38696bc3d0325197a0b349103f845f} 
+\index{Kintsugi.Objects.Properties.TileObjectEasing@{Kintsugi.Objects.Properties.TileObjectEasing}!IsFinished@{IsFinished}}
+\index{IsFinished@{IsFinished}!Kintsugi.Objects.Properties.TileObjectEasing@{Kintsugi.Objects.Properties.TileObjectEasing}}
+\doxysubsubsection{\texorpdfstring{IsFinished()}{IsFinished()}}
+{\footnotesize\ttfamily bool Kintsugi.\+Objects.\+Properties.\+Tile\+Object\+Easing.\+Is\+Finished (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Determines if the easing has finished. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{interface_kintsugi_1_1_event_system_1_1_await_1_1_i_awaitable_a60876dde9253b4ba9af75becbc76ff4f}{Kintsugi.\+Event\+System.\+Await.\+IAwaitable}}.
+
+
+
+\doxysubsection{Property Documentation}
+\Hypertarget{class_kintsugi_1_1_objects_1_1_properties_1_1_tile_object_easing_a7d02dc9170432fa50ec5cd58579fadca}\label{class_kintsugi_1_1_objects_1_1_properties_1_1_tile_object_easing_a7d02dc9170432fa50ec5cd58579fadca} 
+\index{Kintsugi.Objects.Properties.TileObjectEasing@{Kintsugi.Objects.Properties.TileObjectEasing}!CurrentPosition@{CurrentPosition}}
+\index{CurrentPosition@{CurrentPosition}!Kintsugi.Objects.Properties.TileObjectEasing@{Kintsugi.Objects.Properties.TileObjectEasing}}
+\doxysubsubsection{\texorpdfstring{CurrentPosition}{CurrentPosition}}
+{\footnotesize\ttfamily Vector2 Kintsugi.\+Objects.\+Properties.\+Tile\+Object\+Easing.\+Current\+Position\hspace{0.3cm}{\ttfamily [get]}}
+
+
+
+Current position of the object given the easing function. 
+
+\Hypertarget{class_kintsugi_1_1_objects_1_1_properties_1_1_tile_object_easing_ad1496a04cda57a4af3107f42387fe3b2}\label{class_kintsugi_1_1_objects_1_1_properties_1_1_tile_object_easing_ad1496a04cda57a4af3107f42387fe3b2} 
+\index{Kintsugi.Objects.Properties.TileObjectEasing@{Kintsugi.Objects.Properties.TileObjectEasing}!Duration@{Duration}}
+\index{Duration@{Duration}!Kintsugi.Objects.Properties.TileObjectEasing@{Kintsugi.Objects.Properties.TileObjectEasing}}
+\doxysubsubsection{\texorpdfstring{Duration}{Duration}}
+{\footnotesize\ttfamily double Kintsugi.\+Objects.\+Properties.\+Tile\+Object\+Easing.\+Duration = 1d\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+How long the movement easing takes to complete. 
+
+\Hypertarget{class_kintsugi_1_1_objects_1_1_properties_1_1_tile_object_easing_a40a83f3ef04505302dc3276acdcab096}\label{class_kintsugi_1_1_objects_1_1_properties_1_1_tile_object_easing_a40a83f3ef04505302dc3276acdcab096} 
+\index{Kintsugi.Objects.Properties.TileObjectEasing@{Kintsugi.Objects.Properties.TileObjectEasing}!EasingFunction@{EasingFunction}}
+\index{EasingFunction@{EasingFunction}!Kintsugi.Objects.Properties.TileObjectEasing@{Kintsugi.Objects.Properties.TileObjectEasing}}
+\doxysubsubsection{\texorpdfstring{EasingFunction}{EasingFunction}}
+{\footnotesize\ttfamily Easing.\+Easing\+Function Kintsugi.\+Objects.\+Properties.\+Tile\+Object\+Easing.\+Easing\+Function = Easing.\+Constant(1d)\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Function that defines the easing movement of the object. 
+
+\Hypertarget{class_kintsugi_1_1_objects_1_1_properties_1_1_tile_object_easing_ac627c9de4dbfa21f7a47b6a0867b3d3e}\label{class_kintsugi_1_1_objects_1_1_properties_1_1_tile_object_easing_ac627c9de4dbfa21f7a47b6a0867b3d3e} 
+\index{Kintsugi.Objects.Properties.TileObjectEasing@{Kintsugi.Objects.Properties.TileObjectEasing}!Playing@{Playing}}
+\index{Playing@{Playing}!Kintsugi.Objects.Properties.TileObjectEasing@{Kintsugi.Objects.Properties.TileObjectEasing}}
+\doxysubsubsection{\texorpdfstring{Playing}{Playing}}
+{\footnotesize\ttfamily bool Kintsugi.\+Objects.\+Properties.\+Tile\+Object\+Easing.\+Playing\hspace{0.3cm}{\ttfamily [get]}}
+
+
+
+Determines whether the easing is playing. 
+
+\Hypertarget{class_kintsugi_1_1_objects_1_1_properties_1_1_tile_object_easing_a320502c507da070d072dbc3d83abe250}\label{class_kintsugi_1_1_objects_1_1_properties_1_1_tile_object_easing_a320502c507da070d072dbc3d83abe250} 
+\index{Kintsugi.Objects.Properties.TileObjectEasing@{Kintsugi.Objects.Properties.TileObjectEasing}!PlayingTime@{PlayingTime}}
+\index{PlayingTime@{PlayingTime}!Kintsugi.Objects.Properties.TileObjectEasing@{Kintsugi.Objects.Properties.TileObjectEasing}}
+\doxysubsubsection{\texorpdfstring{PlayingTime}{PlayingTime}}
+{\footnotesize\ttfamily double Kintsugi.\+Objects.\+Properties.\+Tile\+Object\+Easing.\+Playing\+Time\hspace{0.3cm}{\ttfamily [get]}}
+
+
+
+Time elapsed in the easing movement. 
+
+\Hypertarget{class_kintsugi_1_1_objects_1_1_properties_1_1_tile_object_easing_ad84db01139cb085ea245ea3af1754f66}\label{class_kintsugi_1_1_objects_1_1_properties_1_1_tile_object_easing_ad84db01139cb085ea245ea3af1754f66} 
+\index{Kintsugi.Objects.Properties.TileObjectEasing@{Kintsugi.Objects.Properties.TileObjectEasing}!Progress@{Progress}}
+\index{Progress@{Progress}!Kintsugi.Objects.Properties.TileObjectEasing@{Kintsugi.Objects.Properties.TileObjectEasing}}
+\doxysubsubsection{\texorpdfstring{Progress}{Progress}}
+{\footnotesize\ttfamily double Kintsugi.\+Objects.\+Properties.\+Tile\+Object\+Easing.\+Progress\hspace{0.3cm}{\ttfamily [get]}}
+
+
+
+Percentage of progress of the easing movement. 
+
+\Hypertarget{class_kintsugi_1_1_objects_1_1_properties_1_1_tile_object_easing_aaf22a33b8ab7b8b9dd8e5b4c61ccf975}\label{class_kintsugi_1_1_objects_1_1_properties_1_1_tile_object_easing_aaf22a33b8ab7b8b9dd8e5b4c61ccf975} 
+\index{Kintsugi.Objects.Properties.TileObjectEasing@{Kintsugi.Objects.Properties.TileObjectEasing}!StartPosition@{StartPosition}}
+\index{StartPosition@{StartPosition}!Kintsugi.Objects.Properties.TileObjectEasing@{Kintsugi.Objects.Properties.TileObjectEasing}}
+\doxysubsubsection{\texorpdfstring{StartPosition}{StartPosition}}
+{\footnotesize\ttfamily Vector2 Kintsugi.\+Objects.\+Properties.\+Tile\+Object\+Easing.\+Start\+Position\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Position at which the object is on movement start. 
+
+\Hypertarget{class_kintsugi_1_1_objects_1_1_properties_1_1_tile_object_easing_a8db05b996af555c3338afaf2e3be11c3}\label{class_kintsugi_1_1_objects_1_1_properties_1_1_tile_object_easing_a8db05b996af555c3338afaf2e3be11c3} 
+\index{Kintsugi.Objects.Properties.TileObjectEasing@{Kintsugi.Objects.Properties.TileObjectEasing}!StartTime@{StartTime}}
+\index{StartTime@{StartTime}!Kintsugi.Objects.Properties.TileObjectEasing@{Kintsugi.Objects.Properties.TileObjectEasing}}
+\doxysubsubsection{\texorpdfstring{StartTime}{StartTime}}
+{\footnotesize\ttfamily double Kintsugi.\+Objects.\+Properties.\+Tile\+Object\+Easing.\+Start\+Time = Bootstrap.\+Time\+Elapsed\hspace{0.3cm}{\ttfamily [get]}}
+
+
+
+Time at which the easing begins. 
+
+\Hypertarget{class_kintsugi_1_1_objects_1_1_properties_1_1_tile_object_easing_ae544ac39f7fa1c94e144a756fddccd7d}\label{class_kintsugi_1_1_objects_1_1_properties_1_1_tile_object_easing_ae544ac39f7fa1c94e144a756fddccd7d} 
+\index{Kintsugi.Objects.Properties.TileObjectEasing@{Kintsugi.Objects.Properties.TileObjectEasing}!TargetPosition@{TargetPosition}}
+\index{TargetPosition@{TargetPosition}!Kintsugi.Objects.Properties.TileObjectEasing@{Kintsugi.Objects.Properties.TileObjectEasing}}
+\doxysubsubsection{\texorpdfstring{TargetPosition}{TargetPosition}}
+{\footnotesize\ttfamily Vector2 Kintsugi.\+Objects.\+Properties.\+Tile\+Object\+Easing.\+Target\+Position\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Position towards which the object is headed. 
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{_tile_object_easing_8cs}{Tile\+Object\+Easing.\+cs}}\end{DoxyCompactItemize}

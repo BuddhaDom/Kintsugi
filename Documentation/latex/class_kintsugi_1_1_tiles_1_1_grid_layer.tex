@@ -1,0 +1,166 @@
+\doxysection{Kintsugi.\+Tiles.\+Grid\+Layer Class Reference}
+\hypertarget{class_kintsugi_1_1_tiles_1_1_grid_layer}{}\label{class_kintsugi_1_1_tiles_1_1_grid_layer}\index{Kintsugi.Tiles.GridLayer@{Kintsugi.Tiles.GridLayer}}
+
+
+A layer belonging to a grid, containing tiles.  
+
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_kintsugi_1_1_tiles_1_1_grid_layer_ad158d161c66ff2648a7208b077cdd10b}{Set\+Collider}} (Hash\+Set$<$ string $>$ belong\+Layers, Hash\+Set$<$ string $>$ collide\+Layers, bool is\+Trigger=false)
+\item 
+void \mbox{\hyperlink{class_kintsugi_1_1_tiles_1_1_grid_layer_afd96adab869404201baf8d9731128ad3}{Set\+Collider\+Typed$<$ T $>$}} (Hash\+Set$<$ string $>$ belong\+Layers, Hash\+Set$<$ string $>$ collide\+Layers, bool is\+Trigger=false)
+\item 
+void \mbox{\hyperlink{class_kintsugi_1_1_tiles_1_1_grid_layer_a24fb5440578301a01c2750eb7d0c9819}{Switch\+Collider\+Type$<$ T $>$}} ()
+\item 
+\mbox{\hyperlink{class_kintsugi_1_1_tiles_1_1_grid_layer_ae2bcd93e91257f7e683aad892e81b768}{Grid\+Layer}} (\mbox{\hyperlink{namespace_kintsugi_1_1_tiles_abc95fa74bf5b41830e9beec3e767a997}{Tile}}\mbox{[},\mbox{]} tiles, string name="{}"{})
+\begin{DoxyCompactList}\small\item\em Create layer from a given Tile array. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_kintsugi_1_1_tiles_1_1_grid_layer_a2fee16b7c57a10bc274129b3ce088499}{Grid\+Layer}} (int width, int height, string name="{}"{})
+\begin{DoxyCompactList}\small\item\em Create an empty layer with a width and a height. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_kintsugi_1_1_tiles_1_1_grid_layer_a8d12ee2ba29535f313e53e90941f0e9c}{Grid\+Layer}} (\mbox{\hyperlink{class_kintsugi_1_1_tiles_1_1_grid}{Grid}} parent, string name="{}"{})
+\begin{DoxyCompactList}\small\item\em Create an empty layer fitted for a specific grid. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_kintsugi_1_1_tiles_1_1_grid_layer_ac50209d90ea86e71a81bd7f155dfeb25}{Is\+Grid\+Position\+Within\+Grid}} (Vec2\+Int grid\+Position)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_kintsugi_1_1_collision_1_1_grid_layer_collider}{Grid\+Layer\+Collider}} \mbox{\hyperlink{class_kintsugi_1_1_tiles_1_1_grid_layer_a986b92343795057416f88126ee24094b}{Collider}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+\mbox{\hyperlink{namespace_kintsugi_1_1_tiles_abc95fa74bf5b41830e9beec3e767a997}{Tile}}\mbox{[},\mbox{]} \mbox{\hyperlink{class_kintsugi_1_1_tiles_1_1_grid_layer_a476e824adaa1d764d5738280c3e95d25}{Tiles}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Array of tiles belonging to this layer. \end{DoxyCompactList}\item 
+string \mbox{\hyperlink{class_kintsugi_1_1_tiles_1_1_grid_layer_aba7178da5a88a05e81fd235582294584}{Name}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Name of this layer. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A layer belonging to a grid, containing tiles. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_kintsugi_1_1_tiles_1_1_grid_layer_ae2bcd93e91257f7e683aad892e81b768}\label{class_kintsugi_1_1_tiles_1_1_grid_layer_ae2bcd93e91257f7e683aad892e81b768} 
+\index{Kintsugi.Tiles.GridLayer@{Kintsugi.Tiles.GridLayer}!GridLayer@{GridLayer}}
+\index{GridLayer@{GridLayer}!Kintsugi.Tiles.GridLayer@{Kintsugi.Tiles.GridLayer}}
+\doxysubsubsection{\texorpdfstring{GridLayer()}{GridLayer()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily Kintsugi.\+Tiles.\+Grid\+Layer.\+Grid\+Layer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_kintsugi_1_1_tiles_abc95fa74bf5b41830e9beec3e767a997}{Tile}}}]{tiles\mbox{[},\mbox{]},  }\item[{string}]{name = {\ttfamily "{}"{}} }\end{DoxyParamCaption})}
+
+
+
+Create layer from a given Tile array. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em tiles} & Two dimensional Tile array.\\
+\hline
+{\em name} & Name of this layer.\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Argument\+Null\+Exception} & If the Tile array is null. \\
+\hline
+\end{DoxyExceptions}
+\Hypertarget{class_kintsugi_1_1_tiles_1_1_grid_layer_a2fee16b7c57a10bc274129b3ce088499}\label{class_kintsugi_1_1_tiles_1_1_grid_layer_a2fee16b7c57a10bc274129b3ce088499} 
+\index{Kintsugi.Tiles.GridLayer@{Kintsugi.Tiles.GridLayer}!GridLayer@{GridLayer}}
+\index{GridLayer@{GridLayer}!Kintsugi.Tiles.GridLayer@{Kintsugi.Tiles.GridLayer}}
+\doxysubsubsection{\texorpdfstring{GridLayer()}{GridLayer()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily Kintsugi.\+Tiles.\+Grid\+Layer.\+Grid\+Layer (\begin{DoxyParamCaption}\item[{int}]{width,  }\item[{int}]{height,  }\item[{string}]{name = {\ttfamily "{}"{}} }\end{DoxyParamCaption})}
+
+
+
+Create an empty layer with a width and a height. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em width} & Width of the grid.\\
+\hline
+{\em height} & Height of the grid.\\
+\hline
+{\em name} & Name of this layer.\\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_kintsugi_1_1_tiles_1_1_grid_layer_a8d12ee2ba29535f313e53e90941f0e9c}\label{class_kintsugi_1_1_tiles_1_1_grid_layer_a8d12ee2ba29535f313e53e90941f0e9c} 
+\index{Kintsugi.Tiles.GridLayer@{Kintsugi.Tiles.GridLayer}!GridLayer@{GridLayer}}
+\index{GridLayer@{GridLayer}!Kintsugi.Tiles.GridLayer@{Kintsugi.Tiles.GridLayer}}
+\doxysubsubsection{\texorpdfstring{GridLayer()}{GridLayer()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily Kintsugi.\+Tiles.\+Grid\+Layer.\+Grid\+Layer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_kintsugi_1_1_tiles_1_1_grid}{Grid}}}]{parent,  }\item[{string}]{name = {\ttfamily "{}"{}} }\end{DoxyParamCaption})}
+
+
+
+Create an empty layer fitted for a specific grid. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em parent} & Grid to which this layer should comply to.\\
+\hline
+{\em name} & Name of this layer.\\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_kintsugi_1_1_tiles_1_1_grid_layer_ac50209d90ea86e71a81bd7f155dfeb25}\label{class_kintsugi_1_1_tiles_1_1_grid_layer_ac50209d90ea86e71a81bd7f155dfeb25} 
+\index{Kintsugi.Tiles.GridLayer@{Kintsugi.Tiles.GridLayer}!IsGridPositionWithinGrid@{IsGridPositionWithinGrid}}
+\index{IsGridPositionWithinGrid@{IsGridPositionWithinGrid}!Kintsugi.Tiles.GridLayer@{Kintsugi.Tiles.GridLayer}}
+\doxysubsubsection{\texorpdfstring{IsGridPositionWithinGrid()}{IsGridPositionWithinGrid()}}
+{\footnotesize\ttfamily bool Kintsugi.\+Tiles.\+Grid\+Layer.\+Is\+Grid\+Position\+Within\+Grid (\begin{DoxyParamCaption}\item[{Vec2\+Int}]{grid\+Position }\end{DoxyParamCaption})}
+
+\Hypertarget{class_kintsugi_1_1_tiles_1_1_grid_layer_ad158d161c66ff2648a7208b077cdd10b}\label{class_kintsugi_1_1_tiles_1_1_grid_layer_ad158d161c66ff2648a7208b077cdd10b} 
+\index{Kintsugi.Tiles.GridLayer@{Kintsugi.Tiles.GridLayer}!SetCollider@{SetCollider}}
+\index{SetCollider@{SetCollider}!Kintsugi.Tiles.GridLayer@{Kintsugi.Tiles.GridLayer}}
+\doxysubsubsection{\texorpdfstring{SetCollider()}{SetCollider()}}
+{\footnotesize\ttfamily void Kintsugi.\+Tiles.\+Grid\+Layer.\+Set\+Collider (\begin{DoxyParamCaption}\item[{Hash\+Set$<$ string $>$}]{belong\+Layers,  }\item[{Hash\+Set$<$ string $>$}]{collide\+Layers,  }\item[{bool}]{is\+Trigger = {\ttfamily false} }\end{DoxyParamCaption})}
+
+\Hypertarget{class_kintsugi_1_1_tiles_1_1_grid_layer_afd96adab869404201baf8d9731128ad3}\label{class_kintsugi_1_1_tiles_1_1_grid_layer_afd96adab869404201baf8d9731128ad3} 
+\index{Kintsugi.Tiles.GridLayer@{Kintsugi.Tiles.GridLayer}!SetColliderTyped$<$ T $>$@{SetColliderTyped$<$ T $>$}}
+\index{SetColliderTyped$<$ T $>$@{SetColliderTyped$<$ T $>$}!Kintsugi.Tiles.GridLayer@{Kintsugi.Tiles.GridLayer}}
+\doxysubsubsection{\texorpdfstring{SetColliderTyped$<$ T $>$()}{SetColliderTyped< T >()}}
+{\footnotesize\ttfamily void Kintsugi.\+Tiles.\+Grid\+Layer.\+Set\+Collider\+Typed$<$ T $>$ (\begin{DoxyParamCaption}\item[{Hash\+Set$<$ string $>$}]{belong\+Layers,  }\item[{Hash\+Set$<$ string $>$}]{collide\+Layers,  }\item[{bool}]{is\+Trigger = {\ttfamily false} }\end{DoxyParamCaption})}
+
+\begin{Desc}
+\item[Type Constraints]\begin{description}
+\item[{\em T} : {\em Grid\+Layer\+Collider}]\item[{\em T} : {\em Grid\+Layer\+Collider\+Initialize}]\item[{\em T} : {\em new()}]\end{description}
+\end{Desc}
+\Hypertarget{class_kintsugi_1_1_tiles_1_1_grid_layer_a24fb5440578301a01c2750eb7d0c9819}\label{class_kintsugi_1_1_tiles_1_1_grid_layer_a24fb5440578301a01c2750eb7d0c9819} 
+\index{Kintsugi.Tiles.GridLayer@{Kintsugi.Tiles.GridLayer}!SwitchColliderType$<$ T $>$@{SwitchColliderType$<$ T $>$}}
+\index{SwitchColliderType$<$ T $>$@{SwitchColliderType$<$ T $>$}!Kintsugi.Tiles.GridLayer@{Kintsugi.Tiles.GridLayer}}
+\doxysubsubsection{\texorpdfstring{SwitchColliderType$<$ T $>$()}{SwitchColliderType< T >()}}
+{\footnotesize\ttfamily void Kintsugi.\+Tiles.\+Grid\+Layer.\+Switch\+Collider\+Type$<$ T $>$ (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\begin{Desc}
+\item[Type Constraints]\begin{description}
+\item[{\em T} : {\em Grid\+Layer\+Collider}]\item[{\em T} : {\em Grid\+Layer\+Collider\+Initialize}]\item[{\em T} : {\em new()}]\end{description}
+\end{Desc}
+
+
+\doxysubsection{Property Documentation}
+\Hypertarget{class_kintsugi_1_1_tiles_1_1_grid_layer_a986b92343795057416f88126ee24094b}\label{class_kintsugi_1_1_tiles_1_1_grid_layer_a986b92343795057416f88126ee24094b} 
+\index{Kintsugi.Tiles.GridLayer@{Kintsugi.Tiles.GridLayer}!Collider@{Collider}}
+\index{Collider@{Collider}!Kintsugi.Tiles.GridLayer@{Kintsugi.Tiles.GridLayer}}
+\doxysubsubsection{\texorpdfstring{Collider}{Collider}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_kintsugi_1_1_collision_1_1_grid_layer_collider}{Grid\+Layer\+Collider}} Kintsugi.\+Tiles.\+Grid\+Layer.\+Collider\hspace{0.3cm}{\ttfamily [get]}}
+
+\Hypertarget{class_kintsugi_1_1_tiles_1_1_grid_layer_aba7178da5a88a05e81fd235582294584}\label{class_kintsugi_1_1_tiles_1_1_grid_layer_aba7178da5a88a05e81fd235582294584} 
+\index{Kintsugi.Tiles.GridLayer@{Kintsugi.Tiles.GridLayer}!Name@{Name}}
+\index{Name@{Name}!Kintsugi.Tiles.GridLayer@{Kintsugi.Tiles.GridLayer}}
+\doxysubsubsection{\texorpdfstring{Name}{Name}}
+{\footnotesize\ttfamily string Kintsugi.\+Tiles.\+Grid\+Layer.\+Name\hspace{0.3cm}{\ttfamily [get]}}
+
+
+
+Name of this layer. 
+
+\Hypertarget{class_kintsugi_1_1_tiles_1_1_grid_layer_a476e824adaa1d764d5738280c3e95d25}\label{class_kintsugi_1_1_tiles_1_1_grid_layer_a476e824adaa1d764d5738280c3e95d25} 
+\index{Kintsugi.Tiles.GridLayer@{Kintsugi.Tiles.GridLayer}!Tiles@{Tiles}}
+\index{Tiles@{Tiles}!Kintsugi.Tiles.GridLayer@{Kintsugi.Tiles.GridLayer}}
+\doxysubsubsection{\texorpdfstring{Tiles}{Tiles}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespace_kintsugi_1_1_tiles_abc95fa74bf5b41830e9beec3e767a997}{Tile}} \mbox{[},\mbox{]} Kintsugi.\+Tiles.\+Grid\+Layer.\+Tiles\hspace{0.3cm}{\ttfamily [get]}}
+
+
+
+Array of tiles belonging to this layer. 
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{_grid_layer_8cs}{Grid\+Layer.\+cs}}\end{DoxyCompactItemize}

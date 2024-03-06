@@ -1,0 +1,175 @@
+\doxysection{Kintsugi.\+Collision.\+Collision\+System Class Reference}
+\hypertarget{class_kintsugi_1_1_collision_1_1_collision_system}{}\label{class_kintsugi_1_1_collision_1_1_collision_system}\index{Kintsugi.Collision.CollisionSystem@{Kintsugi.Collision.CollisionSystem}}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static bool \mbox{\hyperlink{class_kintsugi_1_1_collision_1_1_collision_system_a908de61164ca1256a293d49f072630c2}{Collides\+Collider\+With\+Collider}} (\mbox{\hyperlink{class_kintsugi_1_1_collision_1_1_collider}{Collider}} collider, \mbox{\hyperlink{class_kintsugi_1_1_collision_1_1_collider}{Collider}} other\+Collider)
+\begin{DoxyCompactList}\small\item\em Check if {\itshape collider}  would collide with {\itshape other\+Collider} . Is a one way check, does not check the reverse direction. Will never report collision if any are triggers. \end{DoxyCompactList}\item 
+static bool \mbox{\hyperlink{class_kintsugi_1_1_collision_1_1_collision_system_a0f1abcbd0d51fdfb19d1dfb72aaa35be}{Trigger\+Collides\+Collider\+With\+Collider}} (\mbox{\hyperlink{class_kintsugi_1_1_collision_1_1_collider}{Collider}} collider, \mbox{\hyperlink{class_kintsugi_1_1_collision_1_1_collider}{Collider}} other\+Collider)
+\begin{DoxyCompactList}\small\item\em Check if a trigger collision would occur when collider A would collide with collider B. Is a one way check, does not check the reverse direction. Atleast one of the colliders must be a trigger. \end{DoxyCompactList}\item 
+static bool \mbox{\hyperlink{class_kintsugi_1_1_collision_1_1_collision_system_a69f137063c8ba24acb7ecc52bcc4dbe7}{Collides\+Collider\+With\+Position}} (\mbox{\hyperlink{class_kintsugi_1_1_collision_1_1_collider}{Collider}} collider, \mbox{\hyperlink{class_kintsugi_1_1_tiles_1_1_grid}{Grid}} grid, Vec2\+Int position)
+\begin{DoxyCompactList}\small\item\em Check if a {\itshape collider}  would collide with anything at {\itshape position}  in {\itshape grid} . Checks against all tileobjects at {\itshape position}  on the {\itshape grid}  and all gridlayers on the {\itshape grid} . Is a one way check, does not check the reverse direction. Will never report collision if any are triggers. \end{DoxyCompactList}\item 
+static List$<$ \mbox{\hyperlink{class_kintsugi_1_1_collision_1_1_collider}{Collider}} $>$ \mbox{\hyperlink{class_kintsugi_1_1_collision_1_1_collision_system_af03334f805edb1a30080931b281d6fc1}{Get\+Colliding\+Triggers\+Collider\+With\+Position}} (\mbox{\hyperlink{class_kintsugi_1_1_collision_1_1_collider}{Collider}} collider, \mbox{\hyperlink{class_kintsugi_1_1_tiles_1_1_grid}{Grid}} grid, Vec2\+Int position)
+\begin{DoxyCompactList}\small\item\em Gets all trigger collisions when {\itshape collider}  would collide with anything at {\itshape position}  in {\itshape grid} . Checks against all tileobjects at {\itshape position}  on the {\itshape grid}  and all gridlayers on the {\itshape grid} . Is a one way check, does not check the reverse direction. Atleast one of the colliders must be a trigger in each collision. \end{DoxyCompactList}\item 
+static bool \mbox{\hyperlink{class_kintsugi_1_1_collision_1_1_collision_system_a265fd1cc8d64aefc015c3d30a74a4092}{Collides\+Collider\+With\+Tileobjects\+At\+Position}} (\mbox{\hyperlink{class_kintsugi_1_1_collision_1_1_collider}{Collider}} collider, \mbox{\hyperlink{class_kintsugi_1_1_tiles_1_1_grid}{Grid}} grid, Vec2\+Int position)
+\begin{DoxyCompactList}\small\item\em Check if a {\itshape collider}  would collide with any Tile\+Object at {\itshape position}  in {\itshape grid} . Is a one way check, does not check the reverse direction. Will never report collision if any are triggers. \end{DoxyCompactList}\item 
+static List$<$ \mbox{\hyperlink{class_kintsugi_1_1_collision_1_1_collider}{Collider}} $>$ \mbox{\hyperlink{class_kintsugi_1_1_collision_1_1_collision_system_a01b159e692e8bb43a1b362fbd7696314}{Get\+Colliding\+Triggers\+Collider\+With\+Tileobjects\+At\+Position}} (\mbox{\hyperlink{class_kintsugi_1_1_collision_1_1_collider}{Collider}} collider, \mbox{\hyperlink{class_kintsugi_1_1_tiles_1_1_grid}{Grid}} grid, Vec2\+Int position)
+\begin{DoxyCompactList}\small\item\em Gets all trigger collisions when {\itshape collider}  would collide with any Tile\+Object at {\itshape position}  in {\itshape grid} . Is a one way check, does not check the reverse direction. Atleast one of the colliders must be a trigger in each collision. \end{DoxyCompactList}\item 
+static bool \mbox{\hyperlink{class_kintsugi_1_1_collision_1_1_collision_system_ad3c5da588e20c81dd9d5edb42be9e7ea}{Collides\+Collider\+With\+Grid\+At\+Position}} (\mbox{\hyperlink{class_kintsugi_1_1_collision_1_1_collider}{Collider}} collider, \mbox{\hyperlink{class_kintsugi_1_1_tiles_1_1_grid}{Grid}} grid, Vec2\+Int position)
+\begin{DoxyCompactList}\small\item\em Check if a {\itshape collider}  would collide with any Grid\+Layer at {\itshape position}  in {\itshape grid} . Is a one way check, does not check the reverse direction. Will never report collision if any are triggers. \end{DoxyCompactList}\item 
+static List$<$ \mbox{\hyperlink{class_kintsugi_1_1_collision_1_1_collider}{Collider}} $>$ \mbox{\hyperlink{class_kintsugi_1_1_collision_1_1_collision_system_a4b3455723c448ff7c6f80d4930c9c452}{Get\+Colliding\+Triggers\+Collider\+With\+Grid\+At\+Position}} (\mbox{\hyperlink{class_kintsugi_1_1_collision_1_1_collider}{Collider}} collider, \mbox{\hyperlink{class_kintsugi_1_1_tiles_1_1_grid}{Grid}} grid, Vec2\+Int position)
+\begin{DoxyCompactList}\small\item\em Gets all trigger collisions when a {\itshape collider}  would collide with any Grid\+Layer at {\itshape position}  in {\itshape grid} . Is a one way check, does not check the reverse direction. Atleast one of the colliders must be a trigger in each collision. \end{DoxyCompactList}\item 
+static List$<$ \mbox{\hyperlink{class_kintsugi_1_1_collision_1_1_collider}{Collider}} $>$ \mbox{\hyperlink{class_kintsugi_1_1_collision_1_1_collision_system_a012a04225330d6d98b645880b4df6920}{Get\+Colliding\+Triggers\+Grid\+At\+Position\+With\+Tileobjects\+At\+Position}} (\mbox{\hyperlink{class_kintsugi_1_1_tiles_1_1_grid}{Grid}} grid, Vec2\+Int position)
+\begin{DoxyCompactList}\small\item\em Gets all trigger collisions when {\itshape grid}  collides against all Tile\+Object at {\itshape position} . Is a one way check, does not check the reverse direction. Atleast one of the colliders must be a trigger in each collision. \end{DoxyCompactList}\item 
+static bool \mbox{\hyperlink{class_kintsugi_1_1_collision_1_1_collision_system_ada44ae72676b1999b0b38242f7e983d9}{Collides\+Collider\+With\+Grid\+Layer\+At\+Position}} (\mbox{\hyperlink{class_kintsugi_1_1_collision_1_1_collider}{Collider}} collider, \mbox{\hyperlink{class_kintsugi_1_1_tiles_1_1_grid_layer}{Grid\+Layer}} grid\+Layer, Vec2\+Int position)
+\begin{DoxyCompactList}\small\item\em Check if a {\itshape collider}  would collide with {\itshape grid\+Layer}  at {\itshape position} . Is a one way check, does not check the reverse direction. Will never report collision if any are triggers. \end{DoxyCompactList}\item 
+static List$<$ \mbox{\hyperlink{class_kintsugi_1_1_collision_1_1_collider}{Collider}} $>$ \mbox{\hyperlink{class_kintsugi_1_1_collision_1_1_collision_system_a971b9d96fba3542abd7924c0064476a6}{Get\+Colliding\+Triggers\+Collider\+With\+Gridlayer\+At\+Position}} (\mbox{\hyperlink{class_kintsugi_1_1_collision_1_1_collider}{Collider}} collider, \mbox{\hyperlink{class_kintsugi_1_1_tiles_1_1_grid_layer}{Grid\+Layer}} grid\+Layer, Vec2\+Int position)
+\begin{DoxyCompactList}\small\item\em Gets all trigger collisions when a {\itshape collider}  would collide with {\itshape grid\+Layer}  at {\itshape position} . Is a one way check, does not check the reverse direction. Atleast one of the colliders must be a trigger in each collision. \end{DoxyCompactList}\item 
+static List$<$ \mbox{\hyperlink{class_kintsugi_1_1_collision_1_1_collider}{Collider}} $>$ \mbox{\hyperlink{class_kintsugi_1_1_collision_1_1_collision_system_a0303105f2b53ea620311d70cb5a7a80e}{Get\+Colliding\+Triggers\+Gridlayer\+At\+Position\+With\+Tileobjects\+At\+Position}} (\mbox{\hyperlink{class_kintsugi_1_1_tiles_1_1_grid}{Grid}} grid, \mbox{\hyperlink{class_kintsugi_1_1_tiles_1_1_grid_layer}{Grid\+Layer}} grid\+Layer, Vec2\+Int position)
+\begin{DoxyCompactList}\small\item\em Gets all trigger collisions when {\itshape grid\+Layer}  collides against all Tile\+Object at {\itshape position} . Is a one way check, does not check the reverse direction. Atleast one of the colliders must be a trigger in each collision. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{namespace_kintsugi_1_1_collision_a0ac27e01d98072a5052ffb147ece60de}{Void\+Collide\+Mode}} \mbox{\hyperlink{class_kintsugi_1_1_collision_1_1_collision_system_a018b4c833f78d8f5ae489e208456fe46}{Void\+Collide\+Mode}} = \mbox{\hyperlink{namespace_kintsugi_1_1_collision_a0ac27e01d98072a5052ffb147ece60deaf9f90eeaf400d228facde6bc48da5cfb}{Void\+Collide\+Mode.\+always}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Behavior when checking a collision outside the grid. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_kintsugi_1_1_collision_1_1_collision_system_a908de61164ca1256a293d49f072630c2}\label{class_kintsugi_1_1_collision_1_1_collision_system_a908de61164ca1256a293d49f072630c2} 
+\index{Kintsugi.Collision.CollisionSystem@{Kintsugi.Collision.CollisionSystem}!CollidesColliderWithCollider@{CollidesColliderWithCollider}}
+\index{CollidesColliderWithCollider@{CollidesColliderWithCollider}!Kintsugi.Collision.CollisionSystem@{Kintsugi.Collision.CollisionSystem}}
+\doxysubsubsection{\texorpdfstring{CollidesColliderWithCollider()}{CollidesColliderWithCollider()}}
+{\footnotesize\ttfamily static bool Kintsugi.\+Collision.\+Collision\+System.\+Collides\+Collider\+With\+Collider (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_kintsugi_1_1_collision_1_1_collider}{Collider}}}]{collider,  }\item[{\mbox{\hyperlink{class_kintsugi_1_1_collision_1_1_collider}{Collider}}}]{other\+Collider }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Check if {\itshape collider}  would collide with {\itshape other\+Collider} . Is a one way check, does not check the reverse direction. Will never report collision if any are triggers. 
+
+\Hypertarget{class_kintsugi_1_1_collision_1_1_collision_system_ad3c5da588e20c81dd9d5edb42be9e7ea}\label{class_kintsugi_1_1_collision_1_1_collision_system_ad3c5da588e20c81dd9d5edb42be9e7ea} 
+\index{Kintsugi.Collision.CollisionSystem@{Kintsugi.Collision.CollisionSystem}!CollidesColliderWithGridAtPosition@{CollidesColliderWithGridAtPosition}}
+\index{CollidesColliderWithGridAtPosition@{CollidesColliderWithGridAtPosition}!Kintsugi.Collision.CollisionSystem@{Kintsugi.Collision.CollisionSystem}}
+\doxysubsubsection{\texorpdfstring{CollidesColliderWithGridAtPosition()}{CollidesColliderWithGridAtPosition()}}
+{\footnotesize\ttfamily static bool Kintsugi.\+Collision.\+Collision\+System.\+Collides\+Collider\+With\+Grid\+At\+Position (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_kintsugi_1_1_collision_1_1_collider}{Collider}}}]{collider,  }\item[{\mbox{\hyperlink{class_kintsugi_1_1_tiles_1_1_grid}{Grid}}}]{grid,  }\item[{Vec2\+Int}]{position }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Check if a {\itshape collider}  would collide with any Grid\+Layer at {\itshape position}  in {\itshape grid} . Is a one way check, does not check the reverse direction. Will never report collision if any are triggers. 
+
+\Hypertarget{class_kintsugi_1_1_collision_1_1_collision_system_ada44ae72676b1999b0b38242f7e983d9}\label{class_kintsugi_1_1_collision_1_1_collision_system_ada44ae72676b1999b0b38242f7e983d9} 
+\index{Kintsugi.Collision.CollisionSystem@{Kintsugi.Collision.CollisionSystem}!CollidesColliderWithGridLayerAtPosition@{CollidesColliderWithGridLayerAtPosition}}
+\index{CollidesColliderWithGridLayerAtPosition@{CollidesColliderWithGridLayerAtPosition}!Kintsugi.Collision.CollisionSystem@{Kintsugi.Collision.CollisionSystem}}
+\doxysubsubsection{\texorpdfstring{CollidesColliderWithGridLayerAtPosition()}{CollidesColliderWithGridLayerAtPosition()}}
+{\footnotesize\ttfamily static bool Kintsugi.\+Collision.\+Collision\+System.\+Collides\+Collider\+With\+Grid\+Layer\+At\+Position (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_kintsugi_1_1_collision_1_1_collider}{Collider}}}]{collider,  }\item[{\mbox{\hyperlink{class_kintsugi_1_1_tiles_1_1_grid_layer}{Grid\+Layer}}}]{grid\+Layer,  }\item[{Vec2\+Int}]{position }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Check if a {\itshape collider}  would collide with {\itshape grid\+Layer}  at {\itshape position} . Is a one way check, does not check the reverse direction. Will never report collision if any are triggers. 
+
+\Hypertarget{class_kintsugi_1_1_collision_1_1_collision_system_a69f137063c8ba24acb7ecc52bcc4dbe7}\label{class_kintsugi_1_1_collision_1_1_collision_system_a69f137063c8ba24acb7ecc52bcc4dbe7} 
+\index{Kintsugi.Collision.CollisionSystem@{Kintsugi.Collision.CollisionSystem}!CollidesColliderWithPosition@{CollidesColliderWithPosition}}
+\index{CollidesColliderWithPosition@{CollidesColliderWithPosition}!Kintsugi.Collision.CollisionSystem@{Kintsugi.Collision.CollisionSystem}}
+\doxysubsubsection{\texorpdfstring{CollidesColliderWithPosition()}{CollidesColliderWithPosition()}}
+{\footnotesize\ttfamily static bool Kintsugi.\+Collision.\+Collision\+System.\+Collides\+Collider\+With\+Position (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_kintsugi_1_1_collision_1_1_collider}{Collider}}}]{collider,  }\item[{\mbox{\hyperlink{class_kintsugi_1_1_tiles_1_1_grid}{Grid}}}]{grid,  }\item[{Vec2\+Int}]{position }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Check if a {\itshape collider}  would collide with anything at {\itshape position}  in {\itshape grid} . Checks against all tileobjects at {\itshape position}  on the {\itshape grid}  and all gridlayers on the {\itshape grid} . Is a one way check, does not check the reverse direction. Will never report collision if any are triggers. 
+
+\Hypertarget{class_kintsugi_1_1_collision_1_1_collision_system_a265fd1cc8d64aefc015c3d30a74a4092}\label{class_kintsugi_1_1_collision_1_1_collision_system_a265fd1cc8d64aefc015c3d30a74a4092} 
+\index{Kintsugi.Collision.CollisionSystem@{Kintsugi.Collision.CollisionSystem}!CollidesColliderWithTileobjectsAtPosition@{CollidesColliderWithTileobjectsAtPosition}}
+\index{CollidesColliderWithTileobjectsAtPosition@{CollidesColliderWithTileobjectsAtPosition}!Kintsugi.Collision.CollisionSystem@{Kintsugi.Collision.CollisionSystem}}
+\doxysubsubsection{\texorpdfstring{CollidesColliderWithTileobjectsAtPosition()}{CollidesColliderWithTileobjectsAtPosition()}}
+{\footnotesize\ttfamily static bool Kintsugi.\+Collision.\+Collision\+System.\+Collides\+Collider\+With\+Tileobjects\+At\+Position (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_kintsugi_1_1_collision_1_1_collider}{Collider}}}]{collider,  }\item[{\mbox{\hyperlink{class_kintsugi_1_1_tiles_1_1_grid}{Grid}}}]{grid,  }\item[{Vec2\+Int}]{position }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Check if a {\itshape collider}  would collide with any Tile\+Object at {\itshape position}  in {\itshape grid} . Is a one way check, does not check the reverse direction. Will never report collision if any are triggers. 
+
+\Hypertarget{class_kintsugi_1_1_collision_1_1_collision_system_a4b3455723c448ff7c6f80d4930c9c452}\label{class_kintsugi_1_1_collision_1_1_collision_system_a4b3455723c448ff7c6f80d4930c9c452} 
+\index{Kintsugi.Collision.CollisionSystem@{Kintsugi.Collision.CollisionSystem}!GetCollidingTriggersColliderWithGridAtPosition@{GetCollidingTriggersColliderWithGridAtPosition}}
+\index{GetCollidingTriggersColliderWithGridAtPosition@{GetCollidingTriggersColliderWithGridAtPosition}!Kintsugi.Collision.CollisionSystem@{Kintsugi.Collision.CollisionSystem}}
+\doxysubsubsection{\texorpdfstring{GetCollidingTriggersColliderWithGridAtPosition()}{GetCollidingTriggersColliderWithGridAtPosition()}}
+{\footnotesize\ttfamily static List$<$ \mbox{\hyperlink{class_kintsugi_1_1_collision_1_1_collider}{Collider}} $>$ Kintsugi.\+Collision.\+Collision\+System.\+Get\+Colliding\+Triggers\+Collider\+With\+Grid\+At\+Position (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_kintsugi_1_1_collision_1_1_collider}{Collider}}}]{collider,  }\item[{\mbox{\hyperlink{class_kintsugi_1_1_tiles_1_1_grid}{Grid}}}]{grid,  }\item[{Vec2\+Int}]{position }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Gets all trigger collisions when a {\itshape collider}  would collide with any Grid\+Layer at {\itshape position}  in {\itshape grid} . Is a one way check, does not check the reverse direction. Atleast one of the colliders must be a trigger in each collision. 
+
+\Hypertarget{class_kintsugi_1_1_collision_1_1_collision_system_a971b9d96fba3542abd7924c0064476a6}\label{class_kintsugi_1_1_collision_1_1_collision_system_a971b9d96fba3542abd7924c0064476a6} 
+\index{Kintsugi.Collision.CollisionSystem@{Kintsugi.Collision.CollisionSystem}!GetCollidingTriggersColliderWithGridlayerAtPosition@{GetCollidingTriggersColliderWithGridlayerAtPosition}}
+\index{GetCollidingTriggersColliderWithGridlayerAtPosition@{GetCollidingTriggersColliderWithGridlayerAtPosition}!Kintsugi.Collision.CollisionSystem@{Kintsugi.Collision.CollisionSystem}}
+\doxysubsubsection{\texorpdfstring{GetCollidingTriggersColliderWithGridlayerAtPosition()}{GetCollidingTriggersColliderWithGridlayerAtPosition()}}
+{\footnotesize\ttfamily static List$<$ \mbox{\hyperlink{class_kintsugi_1_1_collision_1_1_collider}{Collider}} $>$ Kintsugi.\+Collision.\+Collision\+System.\+Get\+Colliding\+Triggers\+Collider\+With\+Gridlayer\+At\+Position (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_kintsugi_1_1_collision_1_1_collider}{Collider}}}]{collider,  }\item[{\mbox{\hyperlink{class_kintsugi_1_1_tiles_1_1_grid_layer}{Grid\+Layer}}}]{grid\+Layer,  }\item[{Vec2\+Int}]{position }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Gets all trigger collisions when a {\itshape collider}  would collide with {\itshape grid\+Layer}  at {\itshape position} . Is a one way check, does not check the reverse direction. Atleast one of the colliders must be a trigger in each collision. 
+
+\Hypertarget{class_kintsugi_1_1_collision_1_1_collision_system_af03334f805edb1a30080931b281d6fc1}\label{class_kintsugi_1_1_collision_1_1_collision_system_af03334f805edb1a30080931b281d6fc1} 
+\index{Kintsugi.Collision.CollisionSystem@{Kintsugi.Collision.CollisionSystem}!GetCollidingTriggersColliderWithPosition@{GetCollidingTriggersColliderWithPosition}}
+\index{GetCollidingTriggersColliderWithPosition@{GetCollidingTriggersColliderWithPosition}!Kintsugi.Collision.CollisionSystem@{Kintsugi.Collision.CollisionSystem}}
+\doxysubsubsection{\texorpdfstring{GetCollidingTriggersColliderWithPosition()}{GetCollidingTriggersColliderWithPosition()}}
+{\footnotesize\ttfamily static List$<$ \mbox{\hyperlink{class_kintsugi_1_1_collision_1_1_collider}{Collider}} $>$ Kintsugi.\+Collision.\+Collision\+System.\+Get\+Colliding\+Triggers\+Collider\+With\+Position (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_kintsugi_1_1_collision_1_1_collider}{Collider}}}]{collider,  }\item[{\mbox{\hyperlink{class_kintsugi_1_1_tiles_1_1_grid}{Grid}}}]{grid,  }\item[{Vec2\+Int}]{position }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Gets all trigger collisions when {\itshape collider}  would collide with anything at {\itshape position}  in {\itshape grid} . Checks against all tileobjects at {\itshape position}  on the {\itshape grid}  and all gridlayers on the {\itshape grid} . Is a one way check, does not check the reverse direction. Atleast one of the colliders must be a trigger in each collision. 
+
+\Hypertarget{class_kintsugi_1_1_collision_1_1_collision_system_a01b159e692e8bb43a1b362fbd7696314}\label{class_kintsugi_1_1_collision_1_1_collision_system_a01b159e692e8bb43a1b362fbd7696314} 
+\index{Kintsugi.Collision.CollisionSystem@{Kintsugi.Collision.CollisionSystem}!GetCollidingTriggersColliderWithTileobjectsAtPosition@{GetCollidingTriggersColliderWithTileobjectsAtPosition}}
+\index{GetCollidingTriggersColliderWithTileobjectsAtPosition@{GetCollidingTriggersColliderWithTileobjectsAtPosition}!Kintsugi.Collision.CollisionSystem@{Kintsugi.Collision.CollisionSystem}}
+\doxysubsubsection{\texorpdfstring{GetCollidingTriggersColliderWithTileobjectsAtPosition()}{GetCollidingTriggersColliderWithTileobjectsAtPosition()}}
+{\footnotesize\ttfamily static List$<$ \mbox{\hyperlink{class_kintsugi_1_1_collision_1_1_collider}{Collider}} $>$ Kintsugi.\+Collision.\+Collision\+System.\+Get\+Colliding\+Triggers\+Collider\+With\+Tileobjects\+At\+Position (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_kintsugi_1_1_collision_1_1_collider}{Collider}}}]{collider,  }\item[{\mbox{\hyperlink{class_kintsugi_1_1_tiles_1_1_grid}{Grid}}}]{grid,  }\item[{Vec2\+Int}]{position }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Gets all trigger collisions when {\itshape collider}  would collide with any Tile\+Object at {\itshape position}  in {\itshape grid} . Is a one way check, does not check the reverse direction. Atleast one of the colliders must be a trigger in each collision. 
+
+\Hypertarget{class_kintsugi_1_1_collision_1_1_collision_system_a012a04225330d6d98b645880b4df6920}\label{class_kintsugi_1_1_collision_1_1_collision_system_a012a04225330d6d98b645880b4df6920} 
+\index{Kintsugi.Collision.CollisionSystem@{Kintsugi.Collision.CollisionSystem}!GetCollidingTriggersGridAtPositionWithTileobjectsAtPosition@{GetCollidingTriggersGridAtPositionWithTileobjectsAtPosition}}
+\index{GetCollidingTriggersGridAtPositionWithTileobjectsAtPosition@{GetCollidingTriggersGridAtPositionWithTileobjectsAtPosition}!Kintsugi.Collision.CollisionSystem@{Kintsugi.Collision.CollisionSystem}}
+\doxysubsubsection{\texorpdfstring{GetCollidingTriggersGridAtPositionWithTileobjectsAtPosition()}{GetCollidingTriggersGridAtPositionWithTileobjectsAtPosition()}}
+{\footnotesize\ttfamily static List$<$ \mbox{\hyperlink{class_kintsugi_1_1_collision_1_1_collider}{Collider}} $>$ Kintsugi.\+Collision.\+Collision\+System.\+Get\+Colliding\+Triggers\+Grid\+At\+Position\+With\+Tileobjects\+At\+Position (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_kintsugi_1_1_tiles_1_1_grid}{Grid}}}]{grid,  }\item[{Vec2\+Int}]{position }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Gets all trigger collisions when {\itshape grid}  collides against all Tile\+Object at {\itshape position} . Is a one way check, does not check the reverse direction. Atleast one of the colliders must be a trigger in each collision. 
+
+\Hypertarget{class_kintsugi_1_1_collision_1_1_collision_system_a0303105f2b53ea620311d70cb5a7a80e}\label{class_kintsugi_1_1_collision_1_1_collision_system_a0303105f2b53ea620311d70cb5a7a80e} 
+\index{Kintsugi.Collision.CollisionSystem@{Kintsugi.Collision.CollisionSystem}!GetCollidingTriggersGridlayerAtPositionWithTileobjectsAtPosition@{GetCollidingTriggersGridlayerAtPositionWithTileobjectsAtPosition}}
+\index{GetCollidingTriggersGridlayerAtPositionWithTileobjectsAtPosition@{GetCollidingTriggersGridlayerAtPositionWithTileobjectsAtPosition}!Kintsugi.Collision.CollisionSystem@{Kintsugi.Collision.CollisionSystem}}
+\doxysubsubsection{\texorpdfstring{GetCollidingTriggersGridlayerAtPositionWithTileobjectsAtPosition()}{GetCollidingTriggersGridlayerAtPositionWithTileobjectsAtPosition()}}
+{\footnotesize\ttfamily static List$<$ \mbox{\hyperlink{class_kintsugi_1_1_collision_1_1_collider}{Collider}} $>$ Kintsugi.\+Collision.\+Collision\+System.\+Get\+Colliding\+Triggers\+Gridlayer\+At\+Position\+With\+Tileobjects\+At\+Position (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_kintsugi_1_1_tiles_1_1_grid}{Grid}}}]{grid,  }\item[{\mbox{\hyperlink{class_kintsugi_1_1_tiles_1_1_grid_layer}{Grid\+Layer}}}]{grid\+Layer,  }\item[{Vec2\+Int}]{position }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Gets all trigger collisions when {\itshape grid\+Layer}  collides against all Tile\+Object at {\itshape position} . Is a one way check, does not check the reverse direction. Atleast one of the colliders must be a trigger in each collision. 
+
+\Hypertarget{class_kintsugi_1_1_collision_1_1_collision_system_a0f1abcbd0d51fdfb19d1dfb72aaa35be}\label{class_kintsugi_1_1_collision_1_1_collision_system_a0f1abcbd0d51fdfb19d1dfb72aaa35be} 
+\index{Kintsugi.Collision.CollisionSystem@{Kintsugi.Collision.CollisionSystem}!TriggerCollidesColliderWithCollider@{TriggerCollidesColliderWithCollider}}
+\index{TriggerCollidesColliderWithCollider@{TriggerCollidesColliderWithCollider}!Kintsugi.Collision.CollisionSystem@{Kintsugi.Collision.CollisionSystem}}
+\doxysubsubsection{\texorpdfstring{TriggerCollidesColliderWithCollider()}{TriggerCollidesColliderWithCollider()}}
+{\footnotesize\ttfamily static bool Kintsugi.\+Collision.\+Collision\+System.\+Trigger\+Collides\+Collider\+With\+Collider (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_kintsugi_1_1_collision_1_1_collider}{Collider}}}]{collider,  }\item[{\mbox{\hyperlink{class_kintsugi_1_1_collision_1_1_collider}{Collider}}}]{other\+Collider }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Check if a trigger collision would occur when collider A would collide with collider B. Is a one way check, does not check the reverse direction. Atleast one of the colliders must be a trigger. 
+
+
+
+\doxysubsection{Property Documentation}
+\Hypertarget{class_kintsugi_1_1_collision_1_1_collision_system_a018b4c833f78d8f5ae489e208456fe46}\label{class_kintsugi_1_1_collision_1_1_collision_system_a018b4c833f78d8f5ae489e208456fe46} 
+\index{Kintsugi.Collision.CollisionSystem@{Kintsugi.Collision.CollisionSystem}!VoidCollideMode@{VoidCollideMode}}
+\index{VoidCollideMode@{VoidCollideMode}!Kintsugi.Collision.CollisionSystem@{Kintsugi.Collision.CollisionSystem}}
+\doxysubsubsection{\texorpdfstring{VoidCollideMode}{VoidCollideMode}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespace_kintsugi_1_1_collision_a0ac27e01d98072a5052ffb147ece60de}{Void\+Collide\+Mode}} Kintsugi.\+Collision.\+Collision\+System.\+Void\+Collide\+Mode = \mbox{\hyperlink{namespace_kintsugi_1_1_collision_a0ac27e01d98072a5052ffb147ece60deaf9f90eeaf400d228facde6bc48da5cfb}{Void\+Collide\+Mode.\+always}}\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Behavior when checking a collision outside the grid. 
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{_collision_system_8cs}{Collision\+System.\+cs}}\end{DoxyCompactItemize}

@@ -1,0 +1,50 @@
+\doxysection{Kintsugi.\+Collision Namespace Reference}
+\hypertarget{namespace_kintsugi_1_1_collision}{}\label{namespace_kintsugi_1_1_collision}\index{Kintsugi.Collision@{Kintsugi.Collision}}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_kintsugi_1_1_collision_1_1_collider}{Collider}}
+\begin{DoxyCompactList}\small\item\em Represents collision properties applicable to objects and layers. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_kintsugi_1_1_collision_1_1_collision_system}{Collision\+System}}
+\item 
+class \mbox{\hyperlink{class_kintsugi_1_1_collision_1_1_grid_layer_collider}{Grid\+Layer\+Collider}}
+\begin{DoxyCompactList}\small\item\em Collider on a Grid\+Layer. \end{DoxyCompactList}\item 
+interface \mbox{\hyperlink{interface_kintsugi_1_1_collision_1_1_grid_layer_collider_initialize}{Grid\+Layer\+Collider\+Initialize}}
+\begin{DoxyCompactList}\small\item\em Makes a collider class require initializing a Grid\+Layer \end{DoxyCompactList}\item 
+interface \mbox{\hyperlink{interface_kintsugi_1_1_collision_1_1_tile_object_collider_initialize}{Tile\+Object\+Collider\+Initialize}}
+\begin{DoxyCompactList}\small\item\em Makes a collider class require initializing a Tile\+Object \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{namespace_kintsugi_1_1_collision_a0ac27e01d98072a5052ffb147ece60de}{Void\+Collide\+Mode}} \{ \mbox{\hyperlink{namespace_kintsugi_1_1_collision_a0ac27e01d98072a5052ffb147ece60deaf9f90eeaf400d228facde6bc48da5cfb}{always}}
+, \mbox{\hyperlink{namespace_kintsugi_1_1_collision_a0ac27e01d98072a5052ffb147ece60deac7561db7a418dd39b2201dfe110ab4a4}{never}}
+, \mbox{\hyperlink{namespace_kintsugi_1_1_collision_a0ac27e01d98072a5052ffb147ece60deac5e12f4860a63ead40d0bcea2558f913}{voidlayer}}
+ \}
+\begin{DoxyCompactList}\small\item\em How a collision outside the grid should be handled. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{namespace_kintsugi_1_1_collision_a0ac27e01d98072a5052ffb147ece60de}\label{namespace_kintsugi_1_1_collision_a0ac27e01d98072a5052ffb147ece60de} 
+\index{Kintsugi.Collision@{Kintsugi.Collision}!VoidCollideMode@{VoidCollideMode}}
+\index{VoidCollideMode@{VoidCollideMode}!Kintsugi.Collision@{Kintsugi.Collision}}
+\doxysubsubsection{\texorpdfstring{VoidCollideMode}{VoidCollideMode}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{namespace_kintsugi_1_1_collision_a0ac27e01d98072a5052ffb147ece60de}{Kintsugi.\+Collision.\+Void\+Collide\+Mode}}}
+
+
+
+How a collision outside the grid should be handled. 
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{always@{always}!Kintsugi.Collision@{Kintsugi.Collision}}\index{Kintsugi.Collision@{Kintsugi.Collision}!always@{always}}}\Hypertarget{namespace_kintsugi_1_1_collision_a0ac27e01d98072a5052ffb147ece60deaf9f90eeaf400d228facde6bc48da5cfb}\label{namespace_kintsugi_1_1_collision_a0ac27e01d98072a5052ffb147ece60deaf9f90eeaf400d228facde6bc48da5cfb} 
+always&Checking collisions outside the grid will always report as a collision. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{never@{never}!Kintsugi.Collision@{Kintsugi.Collision}}\index{Kintsugi.Collision@{Kintsugi.Collision}!never@{never}}}\Hypertarget{namespace_kintsugi_1_1_collision_a0ac27e01d98072a5052ffb147ece60deac7561db7a418dd39b2201dfe110ab4a4}\label{namespace_kintsugi_1_1_collision_a0ac27e01d98072a5052ffb147ece60deac7561db7a418dd39b2201dfe110ab4a4} 
+never&Checking collisions outside the grid will never report as a collision. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{voidlayer@{voidlayer}!Kintsugi.Collision@{Kintsugi.Collision}}\index{Kintsugi.Collision@{Kintsugi.Collision}!voidlayer@{voidlayer}}}\Hypertarget{namespace_kintsugi_1_1_collision_a0ac27e01d98072a5052ffb147ece60deac5e12f4860a63ead40d0bcea2558f913}\label{namespace_kintsugi_1_1_collision_a0ac27e01d98072a5052ffb147ece60deac5e12f4860a63ead40d0bcea2558f913} 
+voidlayer&Checking collisions outside the grid will report as a collision if checking against layer "{}void"{}. \\
+\hline
+
+\end{DoxyEnumFields}

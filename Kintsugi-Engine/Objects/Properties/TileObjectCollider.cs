@@ -3,7 +3,7 @@ using Kintsugi.Collision;
 namespace Kintsugi.Objects.Properties;
 
 /// <summary>
-/// <see cref="Collider"> on a <see cref="TileObject">. 
+/// <see cref="Collider"/> on a <see cref="TileObject"/>. 
 /// </summary>
 public class TileObjectCollider : Collider, TileObjectColliderInitialize
 {

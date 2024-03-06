@@ -29,9 +29,9 @@ public class TileObjectTransform(TileObject parent)
     /// The object this property modifies.
     /// </summary>
     public TileObject Parent { get; } = parent;
-
-    public Vector2 WorldSpacePosition => Grid == null ? Vector2.Zero : new Vector2(
-        Grid.Position.X + Position.x * Grid.TileWidth,
-        Grid.Position.Y + Position.y * Grid.TileWidth
-    );
+    /// <summary>
+    /// The object's current world space position.
+    /// </summary>
+    public Vector2 WorldSpacePosition 
+        => Grid == null ? Vector2.Zero : Grid.Position + Position * Grid.TileWidth;
 }
