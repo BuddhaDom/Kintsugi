@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace Kintsugi.Objects
 {
+    /// <summary>
+    /// An abstract controller for rounds.
+    /// </summary>
     public abstract class ControlGroup
     {
         /// <summary>

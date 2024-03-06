@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace Kintsugi.Objects
 {
+    /// <summary>
+    /// A <see cref="TileObject"/> that acts as a member in a control group.
+    /// </summary>
     public abstract class Actor : TileObject
     {
         /// <summary>

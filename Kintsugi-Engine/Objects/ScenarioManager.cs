@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace Kintsugi.Objects
 {
+    /// <summary>
+    /// A manager for a scenario. A collection of control groups.
+    /// </summary>
     public abstract class ScenarioManager
     {
         /// <summary>

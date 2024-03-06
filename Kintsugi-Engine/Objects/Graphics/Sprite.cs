@@ -4,6 +4,9 @@ using SixLabors.ImageSharp;
 
 namespace Kintsugi.Objects.Graphics;
 
+/// <summary>
+/// A single sprite contained within a single image.
+/// </summary>
 public struct Sprite : ISpriteProperties
 {
     public Sprite(string path)
