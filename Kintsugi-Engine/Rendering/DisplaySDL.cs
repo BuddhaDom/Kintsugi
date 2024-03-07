@@ -315,7 +315,7 @@ namespace Kintsugi.Rendering
                                     ref tRect,
                                     0,
                                     nint.Zero,
-                                    SDL.SDL_RendererFlip.SDL_FLIP_NONE);
+                                    tileObject.Graphic.Flipped ? SDL.SDL_RendererFlip.SDL_FLIP_HORIZONTAL : SDL.SDL_RendererFlip.SDL_FLIP_NONE);
                             }
                         }
                     #endregion

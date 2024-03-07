@@ -62,6 +62,7 @@ namespace TacticsGameTest
 
                         EventManager.I.Queue(event1);
                         EventManager.I.Queue(event2);
+                        if (Graphic != null) Graphic.Flipped = true;
                         EndTurn();
                     }
                     if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_D)
@@ -76,6 +77,7 @@ namespace TacticsGameTest
 
                         EventManager.I.Queue(event1);
                         EventManager.I.Queue(event2);
+                        if (Graphic != null) Graphic.Flipped = false;
                         EndTurn();
                     }
                     if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_SPACE)

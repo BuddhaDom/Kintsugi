@@ -117,4 +117,6 @@ public class Animation : ISpriteable, IAwaitable
             y = (int) ((SpriteSheet.Dimensions.y + SpriteSheet.Padding.Y) * coordinates.y + SpriteSheet.Margin.Y),
         };
     }
+
+    public bool Flipped { get; set; }
 }
