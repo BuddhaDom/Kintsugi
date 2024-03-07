@@ -30,25 +30,14 @@ namespace TacticsGameTest
                 }
             };
             Bootstrap.GetCameraSystem().Size = 16 * 10;
-            character = new SelectableActor("Guy Dudelyn from house Brolew");
+            character = new SelectableActor("bro", "bro.png");
             character.AddToGrid(grid, 0);
             character.SetPosition(Vec2Int.One * 3);
             character.SetCollider(["mine"], ["yours"]);
             // character.SetSpriteSingle(GetAssetManager().GetAssetPath("guy.png"), 
             //     Vector2.One / 2, new Vector2(6.5f, 8.5f));
 
-            var frames = new List<int>();
-            frames.AddRange(Enumerable.Range(00, 16));
-            frames.AddRange(Enumerable.Range(20, 16));
-            frames.AddRange(Enumerable.Range(40, 16));
 
-            character.SetAnimation(
-                GetAssetManager().GetAssetPath("bro.png"),
-                32, 32, 4, 3, frames, tilePivot: new Vector2(-0.5f, -0.5f),
-                repeats: 0, bounces: false, autoStart: true
-            );
-
-            character.SetEasing(Easing.QuadraticEaseOut, 0.5);
 
             scenario = new MovingScenario();
             var group = new MyControlGroup("john's group");
@@ -97,15 +86,10 @@ namespace TacticsGameTest
         }
         public override void Update()
         {
+            CameraMovement();
             //Bootstrap.GetDisplay().ShowText("FPS: " + Bootstrap.GetSecondFPS() + " / " + Bootstrap.GetFPS(), 10, 10, 12, 255, 255, 255);
 
 
-
-        }
-
-        private Actor selectedUnit;
-        private void SetSelectedUnit()
-        {
 
         }
 

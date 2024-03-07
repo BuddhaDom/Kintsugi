@@ -13,11 +13,16 @@ namespace TacticsGameTest
 {
     internal class SelectableActor : Actor, IInputListener
     {
-        public string name;
+        public string spritePath;
         private PathfindingResult PathfindingResult;
-        public SelectableActor(string name)
+        public string name;
+        public SelectableActor(string name, string spritePath)
         {
             this.name = name;
+            this.spritePath = spritePath;
+            SetCharacterAnimation(AnimationDirection.right, AnimationType.idle);
+            SetEasing(TweenSharp.Animation.Easing.QuadraticEaseOut, 0.5);
+
             Bootstrap.GetInput().AddListener(this);
         }
         private List<TileObject> walkHighlights = new();
@@ -188,17 +193,92 @@ namespace TacticsGameTest
                     EventManager.I.Queue(curEvent);
                     foreach (var item in path.PathPositions.Skip(1))
                     {
-                        curEvent = new ActionEvent(() => SetPosition(item))
+                        curEvent = new ActionEvent(() => MoveTo(item))
                             .AddFinishAwait(this.Easing)
                             .AddStartAwait(curEvent);
                         EventManager.I.Queue(curEvent);
                     }
+                    EventManager.I.Queue(new ActionEvent(() => SetCharacterAnimation(null, AnimationType.idle))
+                        .AddStartAwait(curEvent));
                     ClearPath();
                     RemoveWalkHighlights();
                     PathfindingResult = null;
                 }
             }
 
+        }
+
+        public void MoveTo(Vec2Int to)
+        {
+            AnimationDirection animDirection;
+            Vec2Int dir = to - Transform.Position;
+            if (Math.Abs(dir.x) > Math.Abs(dir.y))
+            {
+                if (Math.Sign(dir.x) > 0)
+                {
+                    animDirection = AnimationDirection.left;
+                }
+                else
+                {
+                    animDirection = AnimationDirection.right;
+                }
+            }
+            else
+            {
+                if (Math.Sign(dir.y) > 0)
+                {
+                    animDirection = AnimationDirection.down;
+                }
+                else
+                {
+                    animDirection = AnimationDirection.up;
+                }
+            }
+
+            SetCharacterAnimation(animDirection, AnimationType.walk);
+
+
+            SetPosition(to);
+
+        }
+
+        public enum AnimationType { idle, walk, death, attack }
+        public enum AnimationDirection { left, right, up, down }
+        private AnimationType curAnimationType;
+        private AnimationDirection curAnimationDirection;
+
+        public void SetCharacterAnimation(AnimationDirection? dir, AnimationType? type)
+        {
+            if (dir == null) dir = curAnimationDirection;
+            if (type == null) type = curAnimationType;
+
+            var fullPath = Bootstrap.GetRunningGame().GetAssetManager().GetAssetPath(spritePath);
+
+            var directionSection = 0;
+            if (dir == AnimationDirection.down)
+            {
+                directionSection = 1;
+            }
+            if (dir == AnimationDirection.up)
+            {
+                directionSection = 2;
+            }
+            var typeSection = (int)type;
+
+            SetAnimation(
+                fullPath,
+                32,
+                32,
+                4,
+                0.5,
+                Enumerable.Range(0, 4),
+                new Vector2(-0.5f, -0.5f),
+                default,
+                default,
+                new Vector2(0, directionSection * 32 * 5 + typeSection * 32));
+
+            curAnimationDirection = dir.Value;
+            curAnimationType = type.Value;
         }
     }
 }
