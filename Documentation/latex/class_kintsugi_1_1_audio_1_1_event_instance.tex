@@ -1,0 +1,69 @@
+\doxysection{Kintsugi.\+Audio.\+Event\+Instance Class Reference}
+\hypertarget{class_kintsugi_1_1_audio_1_1_event_instance}{}\label{class_kintsugi_1_1_audio_1_1_event_instance}\index{Kintsugi.Audio.EventInstance@{Kintsugi.Audio.EventInstance}}
+
+
+An instance of a single isntance of an event in memory that can be controlled and played.  
+
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_kintsugi_1_1_audio_1_1_event_instance_a3899bb44817b5c67c35c284ab219c653}{Start}} ()
+\begin{DoxyCompactList}\small\item\em Plays and sets the event instance back to start position. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_kintsugi_1_1_audio_1_1_event_instance_a7c5c99e44bf9f9c21375bb1e7709edda}{Release}} ()
+\begin{DoxyCompactList}\small\item\em Mark for release. Will be released as soon as its done playing. This will happen automatically when garbage collected, but if played often, make sure to call release as soon as you are done calling functions on this instance. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_kintsugi_1_1_audio_1_1_event_instance_a4eaea967f28013eaa8e2c53e87de23c9}{Set\+Parameter\+By\+Name}} (string parameter\+Name, float value, bool ignore\+Seek\+Speed=false)
+\begin{DoxyCompactList}\small\item\em Set local parameter of this instance. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_kintsugi_1_1_audio_1_1_event_instance_a1463d90735093f971a357ece53b182e0}{Set\+Parameter\+By\+Name\+With\+Label}} (string parameter\+Name, string label, bool ignore\+Seek\+Speed=false)
+\begin{DoxyCompactList}\small\item\em Set local label parameter of this instance. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+An instance of a single isntance of an event in memory that can be controlled and played. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_kintsugi_1_1_audio_1_1_event_instance_a7c5c99e44bf9f9c21375bb1e7709edda}\label{class_kintsugi_1_1_audio_1_1_event_instance_a7c5c99e44bf9f9c21375bb1e7709edda} 
+\index{Kintsugi.Audio.EventInstance@{Kintsugi.Audio.EventInstance}!Release@{Release}}
+\index{Release@{Release}!Kintsugi.Audio.EventInstance@{Kintsugi.Audio.EventInstance}}
+\doxysubsubsection{\texorpdfstring{Release()}{Release()}}
+{\footnotesize\ttfamily void Kintsugi.\+Audio.\+Event\+Instance.\+Release (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Mark for release. Will be released as soon as its done playing. This will happen automatically when garbage collected, but if played often, make sure to call release as soon as you are done calling functions on this instance. 
+
+\Hypertarget{class_kintsugi_1_1_audio_1_1_event_instance_a4eaea967f28013eaa8e2c53e87de23c9}\label{class_kintsugi_1_1_audio_1_1_event_instance_a4eaea967f28013eaa8e2c53e87de23c9} 
+\index{Kintsugi.Audio.EventInstance@{Kintsugi.Audio.EventInstance}!SetParameterByName@{SetParameterByName}}
+\index{SetParameterByName@{SetParameterByName}!Kintsugi.Audio.EventInstance@{Kintsugi.Audio.EventInstance}}
+\doxysubsubsection{\texorpdfstring{SetParameterByName()}{SetParameterByName()}}
+{\footnotesize\ttfamily void Kintsugi.\+Audio.\+Event\+Instance.\+Set\+Parameter\+By\+Name (\begin{DoxyParamCaption}\item[{string}]{parameter\+Name,  }\item[{float}]{value,  }\item[{bool}]{ignore\+Seek\+Speed = {\ttfamily false} }\end{DoxyParamCaption})}
+
+
+
+Set local parameter of this instance. 
+
+\Hypertarget{class_kintsugi_1_1_audio_1_1_event_instance_a1463d90735093f971a357ece53b182e0}\label{class_kintsugi_1_1_audio_1_1_event_instance_a1463d90735093f971a357ece53b182e0} 
+\index{Kintsugi.Audio.EventInstance@{Kintsugi.Audio.EventInstance}!SetParameterByNameWithLabel@{SetParameterByNameWithLabel}}
+\index{SetParameterByNameWithLabel@{SetParameterByNameWithLabel}!Kintsugi.Audio.EventInstance@{Kintsugi.Audio.EventInstance}}
+\doxysubsubsection{\texorpdfstring{SetParameterByNameWithLabel()}{SetParameterByNameWithLabel()}}
+{\footnotesize\ttfamily void Kintsugi.\+Audio.\+Event\+Instance.\+Set\+Parameter\+By\+Name\+With\+Label (\begin{DoxyParamCaption}\item[{string}]{parameter\+Name,  }\item[{string}]{label,  }\item[{bool}]{ignore\+Seek\+Speed = {\ttfamily false} }\end{DoxyParamCaption})}
+
+
+
+Set local label parameter of this instance. 
+
+\Hypertarget{class_kintsugi_1_1_audio_1_1_event_instance_a3899bb44817b5c67c35c284ab219c653}\label{class_kintsugi_1_1_audio_1_1_event_instance_a3899bb44817b5c67c35c284ab219c653} 
+\index{Kintsugi.Audio.EventInstance@{Kintsugi.Audio.EventInstance}!Start@{Start}}
+\index{Start@{Start}!Kintsugi.Audio.EventInstance@{Kintsugi.Audio.EventInstance}}
+\doxysubsubsection{\texorpdfstring{Start()}{Start()}}
+{\footnotesize\ttfamily void Kintsugi.\+Audio.\+Event\+Instance.\+Start (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Plays and sets the event instance back to start position. 
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{_event_instance_8cs}{Event\+Instance.\+cs}}\end{DoxyCompactItemize}

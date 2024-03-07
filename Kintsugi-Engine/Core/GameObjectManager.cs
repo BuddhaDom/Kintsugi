@@ -10,6 +10,9 @@
 
 namespace Kintsugi.Core
 {
+    /// <summary>
+    /// Manages all <see cref="GameObject"/> objects present in the game.
+    /// </summary>
     public class GameObjectManager
     {
         private static GameObjectManager me;
@@ -20,6 +23,10 @@ namespace Kintsugi.Core
             myObjects = new List<GameObject>();
         }
 
+        /// <summary>
+        /// Get an existing game object manager instance if it exists, or create a new one.
+        /// </summary>
+        /// <returns>The instance of the game object.</returns>
         public static GameObjectManager GetInstance()
         {
             if (me == null)
@@ -30,17 +37,28 @@ namespace Kintsugi.Core
             return me;
         }
 
+        /// <summary>
+        /// Add a game object to this manager.
+        /// </summary>
+        /// <param name="gob">Game object to add.</param>
         public void AddGameObject(GameObject gob)
         {
             myObjects.Add(gob);
 
         }
 
+        /// <summary>
+        /// Remove a game object from this manager.
+        /// </summary>
+        /// <param name="gob">Game object to remove.</param>
         public void RemoveGameObject(GameObject gob)
         {
             myObjects.Remove(gob);
         }
 
+        /// <summary>
+        /// Destroy any objects cue to be destroyed. Run the update function on all game objects. Called every frame.
+        /// </summary>
         public void Update()
         {
             for (int i = myObjects.Count - 1; i >= 0; i--)

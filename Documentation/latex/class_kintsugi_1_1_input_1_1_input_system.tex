@@ -1,0 +1,131 @@
+\doxysection{Kintsugi.\+Input.\+Input\+System Class Reference}
+\hypertarget{class_kintsugi_1_1_input_1_1_input_system}{}\label{class_kintsugi_1_1_input_1_1_input_system}\index{Kintsugi.Input.InputSystem@{Kintsugi.Input.InputSystem}}
+
+
+The input system to be implemented by the engine.  
+
+
+Inheritance diagram for Kintsugi.\+Input.\+Input\+System\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_kintsugi_1_1_input_1_1_input_system}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \mbox{\hyperlink{class_kintsugi_1_1_input_1_1_input_system_a32e34e7be255a2329cf7b99b6fecf361}{Initialize}} ()
+\begin{DoxyCompactList}\small\item\em How to initialize this Input System implementation. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_kintsugi_1_1_input_1_1_input_system_af3bddef410c2e2d33a537293c3c647b6}{Input\+System}} ()
+\item 
+void \mbox{\hyperlink{class_kintsugi_1_1_input_1_1_input_system_a913b17f88c9366962511196ebdb15973}{Add\+Listener}} (\mbox{\hyperlink{interface_kintsugi_1_1_input_1_1_i_input_listener}{IInput\+Listener}} il)
+\begin{DoxyCompactList}\small\item\em Add an input listener to the system. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_kintsugi_1_1_input_1_1_input_system_a47654d40548a69df1f3c6f08ca0a2646}{Clear\+Listeners}} ()
+\begin{DoxyCompactList}\small\item\em Clear input listeners in the collection of existing listeners. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_kintsugi_1_1_input_1_1_input_system_a1cb495046153f08373feb7e84cea681b}{Remove\+Listener}} (\mbox{\hyperlink{interface_kintsugi_1_1_input_1_1_i_input_listener}{IInput\+Listener}} il)
+\begin{DoxyCompactList}\small\item\em Remove an input listener from the collection. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_kintsugi_1_1_input_1_1_input_system_a36e0433e843375daa81b0334da96ec27}{Inform\+Listeners}} (\mbox{\hyperlink{class_kintsugi_1_1_input_1_1_input_event}{Input\+Event}} ie, string event\+Type)
+\begin{DoxyCompactList}\small\item\em Make input listeners handle inputs of this type. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_kintsugi_1_1_input_1_1_input_system_a212b6a1170f19c3d4f75f4d128fbd7b8}{Get\+Input}} ()
+\begin{DoxyCompactList}\small\item\em Method to get the input of this input system implementation. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The input system to be implemented by the engine. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_kintsugi_1_1_input_1_1_input_system_af3bddef410c2e2d33a537293c3c647b6}\label{class_kintsugi_1_1_input_1_1_input_system_af3bddef410c2e2d33a537293c3c647b6} 
+\index{Kintsugi.Input.InputSystem@{Kintsugi.Input.InputSystem}!InputSystem@{InputSystem}}
+\index{InputSystem@{InputSystem}!Kintsugi.Input.InputSystem@{Kintsugi.Input.InputSystem}}
+\doxysubsubsection{\texorpdfstring{InputSystem()}{InputSystem()}}
+{\footnotesize\ttfamily Kintsugi.\+Input.\+Input\+System.\+Input\+System (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_kintsugi_1_1_input_1_1_input_system_a913b17f88c9366962511196ebdb15973}\label{class_kintsugi_1_1_input_1_1_input_system_a913b17f88c9366962511196ebdb15973} 
+\index{Kintsugi.Input.InputSystem@{Kintsugi.Input.InputSystem}!AddListener@{AddListener}}
+\index{AddListener@{AddListener}!Kintsugi.Input.InputSystem@{Kintsugi.Input.InputSystem}}
+\doxysubsubsection{\texorpdfstring{AddListener()}{AddListener()}}
+{\footnotesize\ttfamily void Kintsugi.\+Input.\+Input\+System.\+Add\+Listener (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{interface_kintsugi_1_1_input_1_1_i_input_listener}{IInput\+Listener}}}]{il }\end{DoxyParamCaption})}
+
+
+
+Add an input listener to the system. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em il} & Input listener to add.\\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_kintsugi_1_1_input_1_1_input_system_a47654d40548a69df1f3c6f08ca0a2646}\label{class_kintsugi_1_1_input_1_1_input_system_a47654d40548a69df1f3c6f08ca0a2646} 
+\index{Kintsugi.Input.InputSystem@{Kintsugi.Input.InputSystem}!ClearListeners@{ClearListeners}}
+\index{ClearListeners@{ClearListeners}!Kintsugi.Input.InputSystem@{Kintsugi.Input.InputSystem}}
+\doxysubsubsection{\texorpdfstring{ClearListeners()}{ClearListeners()}}
+{\footnotesize\ttfamily void Kintsugi.\+Input.\+Input\+System.\+Clear\+Listeners (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Clear input listeners in the collection of existing listeners. 
+
+\Hypertarget{class_kintsugi_1_1_input_1_1_input_system_a212b6a1170f19c3d4f75f4d128fbd7b8}\label{class_kintsugi_1_1_input_1_1_input_system_a212b6a1170f19c3d4f75f4d128fbd7b8} 
+\index{Kintsugi.Input.InputSystem@{Kintsugi.Input.InputSystem}!GetInput@{GetInput}}
+\index{GetInput@{GetInput}!Kintsugi.Input.InputSystem@{Kintsugi.Input.InputSystem}}
+\doxysubsubsection{\texorpdfstring{GetInput()}{GetInput()}}
+{\footnotesize\ttfamily void Kintsugi.\+Input.\+Input\+System.\+Get\+Input (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [abstract]}}
+
+
+
+Method to get the input of this input system implementation. 
+
+\Hypertarget{class_kintsugi_1_1_input_1_1_input_system_a36e0433e843375daa81b0334da96ec27}\label{class_kintsugi_1_1_input_1_1_input_system_a36e0433e843375daa81b0334da96ec27} 
+\index{Kintsugi.Input.InputSystem@{Kintsugi.Input.InputSystem}!InformListeners@{InformListeners}}
+\index{InformListeners@{InformListeners}!Kintsugi.Input.InputSystem@{Kintsugi.Input.InputSystem}}
+\doxysubsubsection{\texorpdfstring{InformListeners()}{InformListeners()}}
+{\footnotesize\ttfamily void Kintsugi.\+Input.\+Input\+System.\+Inform\+Listeners (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_kintsugi_1_1_input_1_1_input_event}{Input\+Event}}}]{ie,  }\item[{string}]{event\+Type }\end{DoxyParamCaption})}
+
+
+
+Make input listeners handle inputs of this type. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ie} & The input event.\\
+\hline
+{\em event\+Type} & Its type.\\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_kintsugi_1_1_input_1_1_input_system_a32e34e7be255a2329cf7b99b6fecf361}\label{class_kintsugi_1_1_input_1_1_input_system_a32e34e7be255a2329cf7b99b6fecf361} 
+\index{Kintsugi.Input.InputSystem@{Kintsugi.Input.InputSystem}!Initialize@{Initialize}}
+\index{Initialize@{Initialize}!Kintsugi.Input.InputSystem@{Kintsugi.Input.InputSystem}}
+\doxysubsubsection{\texorpdfstring{Initialize()}{Initialize()}}
+{\footnotesize\ttfamily virtual void Kintsugi.\+Input.\+Input\+System.\+Initialize (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+How to initialize this Input System implementation. 
+
+
+
+Reimplemented in \mbox{\hyperlink{class_kintsugi_1_1_input_1_1_input_framework_a301f9f4691663da87c2f2e3fd5d293f6}{Kintsugi.\+Input.\+Input\+Framework}}.
+
+\Hypertarget{class_kintsugi_1_1_input_1_1_input_system_a1cb495046153f08373feb7e84cea681b}\label{class_kintsugi_1_1_input_1_1_input_system_a1cb495046153f08373feb7e84cea681b} 
+\index{Kintsugi.Input.InputSystem@{Kintsugi.Input.InputSystem}!RemoveListener@{RemoveListener}}
+\index{RemoveListener@{RemoveListener}!Kintsugi.Input.InputSystem@{Kintsugi.Input.InputSystem}}
+\doxysubsubsection{\texorpdfstring{RemoveListener()}{RemoveListener()}}
+{\footnotesize\ttfamily void Kintsugi.\+Input.\+Input\+System.\+Remove\+Listener (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{interface_kintsugi_1_1_input_1_1_i_input_listener}{IInput\+Listener}}}]{il }\end{DoxyParamCaption})}
+
+
+
+Remove an input listener from the collection. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em il} & Which input listener to remove.\\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{_input_system_8cs}{Input\+System.\+cs}}\end{DoxyCompactItemize}

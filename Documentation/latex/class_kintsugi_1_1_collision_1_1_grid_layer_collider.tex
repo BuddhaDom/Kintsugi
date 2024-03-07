@@ -1,0 +1,54 @@
+\doxysection{Kintsugi.\+Collision.\+Grid\+Layer\+Collider Class Reference}
+\hypertarget{class_kintsugi_1_1_collision_1_1_grid_layer_collider}{}\label{class_kintsugi_1_1_collision_1_1_grid_layer_collider}\index{Kintsugi.Collision.GridLayerCollider@{Kintsugi.Collision.GridLayerCollider}}
+
+
+Collider on a Grid\+Layer.  
+
+
+Inheritance diagram for Kintsugi.\+Collision.\+Grid\+Layer\+Collider\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_kintsugi_1_1_collision_1_1_grid_layer_collider}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_kintsugi_1_1_tiles_1_1_grid_layer}{Grid\+Layer}} \mbox{\hyperlink{class_kintsugi_1_1_collision_1_1_grid_layer_collider_a698cc35f7d03fbecbb51e7eff91f8dee}{Grid\+Layer}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Grid\+Layer which this collider affects. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Properties inherited from \mbox{\hyperlink{class_kintsugi_1_1_collision_1_1_collider}{Kintsugi.\+Collision.\+Collider}}}
+\begin{DoxyCompactItemize}
+\item 
+Hash\+Set$<$ string $>$ \mbox{\hyperlink{class_kintsugi_1_1_collision_1_1_collider_a3d210f81a7a740ebf26881033e7ec828}{Belong\+Layers}} = \mbox{[}$\,$\mbox{]}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Layers that this collider belongs to, that others can collide with. \end{DoxyCompactList}\item 
+Hash\+Set$<$ string $>$ \mbox{\hyperlink{class_kintsugi_1_1_collision_1_1_collider_aadf9c968e2f33370b656fcf377417a9a}{Collide\+Layers}} = \mbox{[}$\,$\mbox{]}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Layers that this collider will collide against. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_kintsugi_1_1_collision_1_1_collider_a331dde7481cc10c2063df495fd41c339}{Is\+Trigger}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Whether collider is a trigger. Triggers will never cause normal collisions, but will instead cause trigger collisions that activate On\+Trigger\+Collision(\+Collider) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_kintsugi_1_1_collision_1_1_collider}{Kintsugi.\+Collision.\+Collider}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \mbox{\hyperlink{class_kintsugi_1_1_collision_1_1_collider_a42ef881dce204924efe078a112040ca3}{On\+Trigger\+Collision}} (\mbox{\hyperlink{class_kintsugi_1_1_collision_1_1_collider}{Collider}} other)
+\begin{DoxyCompactList}\small\item\em Called when a colliding with a trigger, or when this is a trigger that has collided with something. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Collider on a Grid\+Layer. 
+
+\doxysubsection{Property Documentation}
+\Hypertarget{class_kintsugi_1_1_collision_1_1_grid_layer_collider_a698cc35f7d03fbecbb51e7eff91f8dee}\label{class_kintsugi_1_1_collision_1_1_grid_layer_collider_a698cc35f7d03fbecbb51e7eff91f8dee} 
+\index{Kintsugi.Collision.GridLayerCollider@{Kintsugi.Collision.GridLayerCollider}!GridLayer@{GridLayer}}
+\index{GridLayer@{GridLayer}!Kintsugi.Collision.GridLayerCollider@{Kintsugi.Collision.GridLayerCollider}}
+\doxysubsubsection{\texorpdfstring{GridLayer}{GridLayer}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_kintsugi_1_1_tiles_1_1_grid_layer}{Grid\+Layer}} Kintsugi.\+Collision.\+Grid\+Layer\+Collider.\+Grid\+Layer\hspace{0.3cm}{\ttfamily [get]}}
+
+
+
+Grid\+Layer which this collider affects. 
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{_collider_8cs}{Collider.\+cs}}\end{DoxyCompactItemize}

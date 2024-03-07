@@ -1,0 +1,137 @@
+\doxysection{Kintsugi.\+Objects.\+Control\+Group Class Reference}
+\hypertarget{class_kintsugi_1_1_objects_1_1_control_group}{}\label{class_kintsugi_1_1_objects_1_1_control_group}\index{Kintsugi.Objects.ControlGroup@{Kintsugi.Objects.ControlGroup}}
+
+
+An abstract controller for rounds.  
+
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+float \mbox{\hyperlink{class_kintsugi_1_1_objects_1_1_control_group_add162829287b2a52938458a306c12b7a}{Calculate\+Initiative}} ()
+\item 
+void \mbox{\hyperlink{class_kintsugi_1_1_objects_1_1_control_group_a729438d153a2ca98d304632462342cf6}{On\+Start\+Round}} ()
+\begin{DoxyCompactList}\small\item\em Called on the start of round, just before this groups actors start round calls. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_kintsugi_1_1_objects_1_1_control_group_a9dffe9e77719fac3c648236828958bd2}{On\+End\+Round}} ()
+\begin{DoxyCompactList}\small\item\em Called on the end of round, just after this groups actors end round calls. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_kintsugi_1_1_objects_1_1_control_group_ad54ecdcecc29da8c26b1b617ea64b9f1}{On\+Start\+Turn}} ()
+\begin{DoxyCompactList}\small\item\em Called once when the control group starts their turn, called just before the groups actors start their turns. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_kintsugi_1_1_objects_1_1_control_group_a21c4a41e4cc8d87c2e3a6213dbdbe3de}{On\+End\+Turn}} ()
+\begin{DoxyCompactList}\small\item\em Called once when the control group ends their turn, called just after the last actor ends their turn. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_kintsugi_1_1_objects_1_1_control_group_ad00dd08ca5d1d69de8f725f08f1ee9bc}{Add\+Actor}} (\mbox{\hyperlink{class_kintsugi_1_1_objects_1_1_actor}{Actor}} actor)
+\item 
+void \mbox{\hyperlink{class_kintsugi_1_1_objects_1_1_control_group_adcf29a3a5cae7c64ff3f26e92c331c85}{Remove\+Actor}} (\mbox{\hyperlink{class_kintsugi_1_1_objects_1_1_actor}{Actor}} actor)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_kintsugi_1_1_objects_1_1_control_group_a7cad1eb987c67e63b492164d28e42964}{Has\+Had\+Turn}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Whether this control group has finished their turn this round . \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{class_kintsugi_1_1_objects_1_1_control_group_afdb1b5fdffb4238822fcad56151bfcca}{Current\+Initiative}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Events}
+\begin{DoxyCompactItemize}
+\item 
+Event\+Handler \mbox{\hyperlink{class_kintsugi_1_1_objects_1_1_control_group_a4a611549d111e9a8360bc0013f8b0670}{Control\+Group\+Turn\+End}}
+\begin{DoxyCompactList}\small\item\em Called when an actor ends their turn, just after control group turn end. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+An abstract controller for rounds. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_kintsugi_1_1_objects_1_1_control_group_ad00dd08ca5d1d69de8f725f08f1ee9bc}\label{class_kintsugi_1_1_objects_1_1_control_group_ad00dd08ca5d1d69de8f725f08f1ee9bc} 
+\index{Kintsugi.Objects.ControlGroup@{Kintsugi.Objects.ControlGroup}!AddActor@{AddActor}}
+\index{AddActor@{AddActor}!Kintsugi.Objects.ControlGroup@{Kintsugi.Objects.ControlGroup}}
+\doxysubsubsection{\texorpdfstring{AddActor()}{AddActor()}}
+{\footnotesize\ttfamily void Kintsugi.\+Objects.\+Control\+Group.\+Add\+Actor (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_kintsugi_1_1_objects_1_1_actor}{Actor}}}]{actor }\end{DoxyParamCaption})}
+
+\Hypertarget{class_kintsugi_1_1_objects_1_1_control_group_add162829287b2a52938458a306c12b7a}\label{class_kintsugi_1_1_objects_1_1_control_group_add162829287b2a52938458a306c12b7a} 
+\index{Kintsugi.Objects.ControlGroup@{Kintsugi.Objects.ControlGroup}!CalculateInitiative@{CalculateInitiative}}
+\index{CalculateInitiative@{CalculateInitiative}!Kintsugi.Objects.ControlGroup@{Kintsugi.Objects.ControlGroup}}
+\doxysubsubsection{\texorpdfstring{CalculateInitiative()}{CalculateInitiative()}}
+{\footnotesize\ttfamily float Kintsugi.\+Objects.\+Control\+Group.\+Calculate\+Initiative (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [abstract]}}
+
+\Hypertarget{class_kintsugi_1_1_objects_1_1_control_group_a9dffe9e77719fac3c648236828958bd2}\label{class_kintsugi_1_1_objects_1_1_control_group_a9dffe9e77719fac3c648236828958bd2} 
+\index{Kintsugi.Objects.ControlGroup@{Kintsugi.Objects.ControlGroup}!OnEndRound@{OnEndRound}}
+\index{OnEndRound@{OnEndRound}!Kintsugi.Objects.ControlGroup@{Kintsugi.Objects.ControlGroup}}
+\doxysubsubsection{\texorpdfstring{OnEndRound()}{OnEndRound()}}
+{\footnotesize\ttfamily void Kintsugi.\+Objects.\+Control\+Group.\+On\+End\+Round (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [abstract]}}
+
+
+
+Called on the end of round, just after this groups actors end round calls. 
+
+\Hypertarget{class_kintsugi_1_1_objects_1_1_control_group_a21c4a41e4cc8d87c2e3a6213dbdbe3de}\label{class_kintsugi_1_1_objects_1_1_control_group_a21c4a41e4cc8d87c2e3a6213dbdbe3de} 
+\index{Kintsugi.Objects.ControlGroup@{Kintsugi.Objects.ControlGroup}!OnEndTurn@{OnEndTurn}}
+\index{OnEndTurn@{OnEndTurn}!Kintsugi.Objects.ControlGroup@{Kintsugi.Objects.ControlGroup}}
+\doxysubsubsection{\texorpdfstring{OnEndTurn()}{OnEndTurn()}}
+{\footnotesize\ttfamily void Kintsugi.\+Objects.\+Control\+Group.\+On\+End\+Turn (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [abstract]}}
+
+
+
+Called once when the control group ends their turn, called just after the last actor ends their turn. 
+
+\Hypertarget{class_kintsugi_1_1_objects_1_1_control_group_a729438d153a2ca98d304632462342cf6}\label{class_kintsugi_1_1_objects_1_1_control_group_a729438d153a2ca98d304632462342cf6} 
+\index{Kintsugi.Objects.ControlGroup@{Kintsugi.Objects.ControlGroup}!OnStartRound@{OnStartRound}}
+\index{OnStartRound@{OnStartRound}!Kintsugi.Objects.ControlGroup@{Kintsugi.Objects.ControlGroup}}
+\doxysubsubsection{\texorpdfstring{OnStartRound()}{OnStartRound()}}
+{\footnotesize\ttfamily void Kintsugi.\+Objects.\+Control\+Group.\+On\+Start\+Round (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [abstract]}}
+
+
+
+Called on the start of round, just before this groups actors start round calls. 
+
+\Hypertarget{class_kintsugi_1_1_objects_1_1_control_group_ad54ecdcecc29da8c26b1b617ea64b9f1}\label{class_kintsugi_1_1_objects_1_1_control_group_ad54ecdcecc29da8c26b1b617ea64b9f1} 
+\index{Kintsugi.Objects.ControlGroup@{Kintsugi.Objects.ControlGroup}!OnStartTurn@{OnStartTurn}}
+\index{OnStartTurn@{OnStartTurn}!Kintsugi.Objects.ControlGroup@{Kintsugi.Objects.ControlGroup}}
+\doxysubsubsection{\texorpdfstring{OnStartTurn()}{OnStartTurn()}}
+{\footnotesize\ttfamily void Kintsugi.\+Objects.\+Control\+Group.\+On\+Start\+Turn (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [abstract]}}
+
+
+
+Called once when the control group starts their turn, called just before the groups actors start their turns. 
+
+\Hypertarget{class_kintsugi_1_1_objects_1_1_control_group_adcf29a3a5cae7c64ff3f26e92c331c85}\label{class_kintsugi_1_1_objects_1_1_control_group_adcf29a3a5cae7c64ff3f26e92c331c85} 
+\index{Kintsugi.Objects.ControlGroup@{Kintsugi.Objects.ControlGroup}!RemoveActor@{RemoveActor}}
+\index{RemoveActor@{RemoveActor}!Kintsugi.Objects.ControlGroup@{Kintsugi.Objects.ControlGroup}}
+\doxysubsubsection{\texorpdfstring{RemoveActor()}{RemoveActor()}}
+{\footnotesize\ttfamily void Kintsugi.\+Objects.\+Control\+Group.\+Remove\+Actor (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_kintsugi_1_1_objects_1_1_actor}{Actor}}}]{actor }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Property Documentation}
+\Hypertarget{class_kintsugi_1_1_objects_1_1_control_group_afdb1b5fdffb4238822fcad56151bfcca}\label{class_kintsugi_1_1_objects_1_1_control_group_afdb1b5fdffb4238822fcad56151bfcca} 
+\index{Kintsugi.Objects.ControlGroup@{Kintsugi.Objects.ControlGroup}!CurrentInitiative@{CurrentInitiative}}
+\index{CurrentInitiative@{CurrentInitiative}!Kintsugi.Objects.ControlGroup@{Kintsugi.Objects.ControlGroup}}
+\doxysubsubsection{\texorpdfstring{CurrentInitiative}{CurrentInitiative}}
+{\footnotesize\ttfamily float Kintsugi.\+Objects.\+Control\+Group.\+Current\+Initiative\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+\Hypertarget{class_kintsugi_1_1_objects_1_1_control_group_a7cad1eb987c67e63b492164d28e42964}\label{class_kintsugi_1_1_objects_1_1_control_group_a7cad1eb987c67e63b492164d28e42964} 
+\index{Kintsugi.Objects.ControlGroup@{Kintsugi.Objects.ControlGroup}!HasHadTurn@{HasHadTurn}}
+\index{HasHadTurn@{HasHadTurn}!Kintsugi.Objects.ControlGroup@{Kintsugi.Objects.ControlGroup}}
+\doxysubsubsection{\texorpdfstring{HasHadTurn}{HasHadTurn}}
+{\footnotesize\ttfamily bool Kintsugi.\+Objects.\+Control\+Group.\+Has\+Had\+Turn\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Whether this control group has finished their turn this round . 
+
+
+
+\doxysubsection{Event Documentation}
+\Hypertarget{class_kintsugi_1_1_objects_1_1_control_group_a4a611549d111e9a8360bc0013f8b0670}\label{class_kintsugi_1_1_objects_1_1_control_group_a4a611549d111e9a8360bc0013f8b0670} 
+\index{Kintsugi.Objects.ControlGroup@{Kintsugi.Objects.ControlGroup}!ControlGroupTurnEnd@{ControlGroupTurnEnd}}
+\index{ControlGroupTurnEnd@{ControlGroupTurnEnd}!Kintsugi.Objects.ControlGroup@{Kintsugi.Objects.ControlGroup}}
+\doxysubsubsection{\texorpdfstring{ControlGroupTurnEnd}{ControlGroupTurnEnd}}
+{\footnotesize\ttfamily Event\+Handler Kintsugi.\+Objects.\+Control\+Group.\+Control\+Group\+Turn\+End}
+
+
+
+Called when an actor ends their turn, just after control group turn end. 
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{_control_group_8cs}{Control\+Group.\+cs}}\end{DoxyCompactItemize}

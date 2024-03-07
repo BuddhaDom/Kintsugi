@@ -11,6 +11,9 @@ using Kintsugi.Core;
 
 namespace Kintsugi.Input
 {
+    /// <summary>
+    /// Basic implementation of the input system.
+    /// </summary>
     public class InputBasic : InputSystem
     {
         public override void GetInput()

@@ -1,13 +1,8 @@
-﻿using Kintsugi.Core;
-using Kintsugi.Objects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Kintsugi.Objects
+﻿namespace Kintsugi.Objects
 {
+    /// <summary>
+    /// A <see cref="TileObject"/> that acts as a member in a control group.
+    /// </summary>
     public abstract class Actor : TileObject
     {
         /// <summary>

@@ -1,11 +1,4 @@
-﻿using Kintsugi.Core;
-using Kintsugi.EventSystem.Await;
-using Kintsugi.Objects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Kintsugi.EventSystem.Await;
 
 namespace Kintsugi.EventSystem.Events
 {

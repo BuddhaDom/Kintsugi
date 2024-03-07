@@ -13,8 +13,10 @@ using SDL2;
 
 namespace Kintsugi.Input
 {
-
     // We'll be using SDL2 here to provide our underlying input system.
+    /// <summary>
+    /// Input framework implementation of the input system.
+    /// </summary>
     public class InputFramework : InputSystem
     {
 

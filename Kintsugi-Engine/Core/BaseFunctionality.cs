@@ -8,6 +8,9 @@
 
 namespace Kintsugi.Core
 {
+    /// <summary>
+    /// Core functions of the Kintsugi game engine.
+    /// </summary>
     public class BaseFunctionality
     {
         private static BaseFunctionality me;
@@ -16,6 +19,10 @@ namespace Kintsugi.Core
         {
         }
 
+        /// <summary>
+        /// Grab the instance of the BaseFunctionality class if it exists.
+        /// </summary>
+        /// <returns>New or existing instance of <see cref="BaseFunctionality"/></returns>
         public static BaseFunctionality GetInstance()
         {
             if (me == null)
@@ -26,6 +33,11 @@ namespace Kintsugi.Core
             return me;
         }
 
+        /// <summary>
+        /// Read the contents of a file as text.
+        /// </summary>
+        /// <param name="file">Path to the file.</param>
+        /// <returns>Text representation of the <paramref name="file"/>.</returns>
         public static string ReadFileAsString(string file)
         {
             string text;
@@ -35,6 +47,11 @@ namespace Kintsugi.Core
             return text;
         }
 
+        /// <summary>
+        /// Reads, processes and stores the specified config file.
+        /// </summary>
+        /// <param name="file">Path to the config file.</param>
+        /// <returns>A dictionary of the config attribute and its corresponding configuration from the <paramref name="file"/></returns>
         public static Dictionary<string, string> ReadConfigFile(string file)
         {
             Dictionary<string, string> configEntries = new Dictionary<string, string>();

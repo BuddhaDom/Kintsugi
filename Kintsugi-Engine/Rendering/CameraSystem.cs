@@ -2,6 +2,9 @@
 
 namespace Kintsugi.Rendering
 {
+    /// <summary>
+    /// Camera system used by the game.
+    /// </summary>
     public class CameraSystem
     {
         /// <summary>

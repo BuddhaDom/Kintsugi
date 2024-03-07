@@ -1,13 +1,8 @@
-﻿using Kintsugi.Objects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Kintsugi.Objects
+﻿namespace Kintsugi.Objects
 {
+    /// <summary>
+    /// A manager for a scenario. A collection of control groups.
+    /// </summary>
     public abstract class ScenarioManager
     {
         /// <summary>

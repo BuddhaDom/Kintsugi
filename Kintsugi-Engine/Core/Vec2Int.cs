@@ -27,27 +27,30 @@ public struct Vec2Int(int x, int y)
     public double Magnitude()
         => Math.Sqrt(x ^ 2 + y ^ 2);
     
+    /// <summary>Returns the inverse of this vector.</summary>
     /// <returns>The vector inverted on both axis.</returns>
     public Vec2Int Inverse()
-        => new Vec2Int(-x, -y);
-    
-    /// <returns>Offset between one vector and another.</returns>
+        => this * -1;
+
+    /// <summary>Calculates the distance between one vector and the other.</summary>
     /// <param name="start">Start vector.</param>
     /// <param name="end">End vector.</param>
+    /// <returns>Distance between one vector and another expressed as a vector.</returns>
     public static Vec2Int Distance(Vec2Int start, Vec2Int end)
-        => new Vec2Int(end.x - start.x, end.y - start.y);
+        => end - start;
 
-    /// <returns>Offset between this vector and another.</returns>
+    /// <summary>Calculate the distance between this vector and another.</summary>
     /// <param name="other">Target vector to measure to.</param>
+    /// <returns>Difference between this vector and another.</returns>
     public Vec2Int Distance(Vec2Int other)
-        => new Vec2Int(other.x - x, other.y - y);
+        => other - this;
 
     /// <summary>
     /// Sum of the multiplications between x and y of two vectors.
     /// </summary>
     /// <returns>Dot product between both vectors</returns>
     public static int DotProduct(Vec2Int a, Vec2Int b)
-        => a.x * b.x + a.y + b.y;
+        => a.x * b.x + a.y * b.y;
     
     /// <summary>
     /// Sum of the multiplications between this and a target vector.
@@ -57,19 +60,37 @@ public struct Vec2Int(int x, int y)
     public int DotProduct(Vec2Int other)
         => other.x * x + other.y + y;
     
-    /// <returns>Maximum X and Y between two vectors.</returns>
+    /// <summary>
+    /// Gets the maximum value on each axis between two vectors.
+    /// </summary>
+    /// <param name="a">First vector</param>
+    /// <param name="b">Second vector</param>
+    /// <returns>A new vector with the maximum x and maximum y between both values.</returns>
     public static Vec2Int Max(Vec2Int a, Vec2Int b)
-        => new Vec2Int(Math.Max(a.x, b.x), Math.Max(a.y, b.y));
+        => new(Math.Max(a.x, b.x), Math.Max(a.y, b.y));
     
-    /// <returns>Maximum X and Y between this and another vector..</returns>
+    /// <summary>
+    /// Gets the maximum value on each axis between two vectors.
+    /// </summary>
+    /// <param name="other">The vector being compared</param>
+    /// <returns>A new vector with the maximum x and maximum y between both values.</returns>
     public Vec2Int Max(Vec2Int other)
-        => new Vec2Int(Math.Max(other.x, x), Math.Max(other.y, y));
+        => new(Math.Max(other.x, x), Math.Max(other.y, y));
     
-    /// <returns>Minimum X and Y between two vectors.</returns>
+    /// <summary>
+    /// Gets the minimum value on each axis between two vectors.
+    /// </summary>
+    /// <param name="a">First vector</param>
+    /// <param name="b">Second vector</param>
+    /// <returns>A new vector with the minimum x and minimum y between both values.</returns>
     public static Vec2Int Min(Vec2Int a, Vec2Int b)
         => new Vec2Int(Math.Min(a.x, b.x), Math.Min(a.y, b.y));
     
-    /// <returns>Minimum X and Y between this and another vector.</returns>
+    /// <summary>
+    /// Gets the minimum value on each axis between two vectors.
+    /// </summary>
+    /// <param name="other">The vector being compared</param>
+    /// <returns>A new vector with the minimum x and minimum y between both values.</returns>
     public Vec2Int Min(Vec2Int other)
         => new Vec2Int(Math.Min(other.x, x), Math.Min(other.y, y));
     
@@ -99,6 +120,12 @@ public struct Vec2Int(int x, int y)
     
     public static Vec2Int operator *(Vec2Int v, int m)
         => new(v.x * m, v.y * m);
+    
+    public static Vector2 operator *(Vec2Int v, float m)
+        => new(v.x * m, v.y * m);
+
+    public static Vec2Int operator ^(Vec2Int v, int m)
+        => new(v.x ^ m, v.y ^ m);
 
     public static bool operator ==(Vec2Int a, Vec2Int b)
         => (a.x == b.x) & (a.y == b.y);
