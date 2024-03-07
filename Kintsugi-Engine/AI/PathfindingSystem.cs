@@ -20,8 +20,9 @@ namespace Kintsugi.AI
     }
     public class PathfindingResult
     {
-        internal PathfindingResult(Dictionary<Vec2Int, Vec2Int> fromDict, Dictionary<Vec2Int, float> costTo)
+        internal PathfindingResult(Vec2Int startPosition, Dictionary<Vec2Int, Vec2Int> fromDict, Dictionary<Vec2Int, float> costTo)
         {
+            StartPosition = startPosition;
             this.fromDict = fromDict;
             this.costTo = costTo;
         }
@@ -60,11 +61,12 @@ namespace Kintsugi.AI
             // If this is reached, we are guaranteed a path exists.
             List<Vec2Int> pathPositions = new();
             Vec2Int curPosition = position;
-            do
+            while (curPosition != StartPosition)
             {
                 pathPositions.Add(curPosition);
                 curPosition = fromDict[curPosition];
-            } while (curPosition != StartPosition);
+            }
+            pathPositions.Add(StartPosition);
             pathPositions.Reverse();
             return new Path(pathPositions, costTo[position]);
         }
@@ -75,7 +77,7 @@ namespace Kintsugi.AI
     }
     public static class PathfindingSystem
     {
-        public static PathfindingResult Dijkstra(Grid grid, Vec2Int startPosition, PathfindingResult pathfindingResult = null)
+        public static PathfindingResult Dijkstra(Grid grid, Vec2Int startPosition, float maxCost, PathfindingSettings pathfindingResult = null)
         {
             Dictionary<Vec2Int, Vec2Int> fromDict = new();
             Dictionary<Vec2Int, float> costDict = new();
@@ -87,6 +89,10 @@ namespace Kintsugi.AI
             {
                 var currentPos = frontier.Dequeue();
                 var newCost = costDict[currentPos] + 1;
+                if (newCost > maxCost)
+                {
+                    break;
+                }
                 VisitNeighbor(currentPos + Vec2Int.Left);
                 VisitNeighbor(currentPos + Vec2Int.Right);
                 VisitNeighbor(currentPos + Vec2Int.Up);
@@ -94,7 +100,7 @@ namespace Kintsugi.AI
 
                 void VisitNeighbor(Vec2Int newPos)
                 {
-                    var explored = costDict.TryGetValue(currentPos, out float oldCost);
+                    var explored = costDict.TryGetValue(newPos, out float oldCost);
                     if (!explored || newCost < oldCost)
                     {
                         frontier.Enqueue(newPos, newCost);
@@ -104,7 +110,7 @@ namespace Kintsugi.AI
                 }
             }
 
-            return new PathfindingResult(fromDict, costDict);
+            return new PathfindingResult(startPosition, fromDict, costDict);
         }
     }
 }

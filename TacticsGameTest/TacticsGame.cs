@@ -7,13 +7,14 @@ using System.Numerics;
 using System.Threading.Tasks.Dataflow;
 using Kintsugi.Objects.Graphics;
 using TweenSharp.Animation;
+using Kintsugi.Objects;
 
 namespace TacticsGameTest
 {
     internal class TacticsGame : Game, IInputListener
     {
         private Grid grid;
-        private MovementActor character;
+        private SelectableActor character;
         private MovementActor character2;
         private MovingScenario scenario;
 
@@ -29,7 +30,7 @@ namespace TacticsGameTest
                 }
             };
             Bootstrap.GetCameraSystem().Size = 16 * 10;
-            character = new MovementActor("Guy Dudelyn from house Brolew");
+            character = new SelectableActor("Guy Dudelyn from house Brolew");
             character.AddToGrid(grid, 0);
             character.SetPosition(Vec2Int.One * 3);
             character.SetCollider(["mine"], ["yours"]);
@@ -64,12 +65,8 @@ namespace TacticsGameTest
             Bootstrap.GetInput().AddListener(this);
         }
 
-        public override void Update()
+        private void CameraMovement()
         {
-
-            //Bootstrap.GetDisplay().ShowText("FPS: " + Bootstrap.GetSecondFPS() + " / " + Bootstrap.GetFPS(), 10, 10, 12, 255, 255, 255);
-
-
             var movement = Vector2.Zero;
             if (up)
             {
@@ -98,15 +95,58 @@ namespace TacticsGameTest
                 Bootstrap.GetCameraSystem().Size *= (1 / (1f + 1f * (float)Bootstrap.GetDeltaTime()));
             }
         }
+        public override void Update()
+        {
+            //Bootstrap.GetDisplay().ShowText("FPS: " + Bootstrap.GetSecondFPS() + " / " + Bootstrap.GetFPS(), 10, 10, 12, 255, 255, 255);
 
+
+
+        }
+
+        private Actor selectedUnit;
+        private void SetSelectedUnit()
+        {
+
+        }
+
+        private SelectableActor selectedActor;
         bool up, down, left, right, zoomIn, zoomOut;
         public void HandleInput(InputEvent inp, string eventType)
         {
+            if (eventType == "MouseMotion")
+            {
+                var gridPos = grid.WorldToGridPosition(Bootstrap.GetCameraSystem().ScreenToWorldSpace(new Vector2(inp.X, inp.Y)));
+                CursorTileObject.Cursor.SetCursor(grid, gridPos, 0);
+            }
             if (eventType == "MouseDown")
             {
                 var gridPos = grid.WorldToGridPosition(Bootstrap.GetCameraSystem().ScreenToWorldSpace(new Vector2(inp.X, inp.Y)));
-                Console.WriteLine(gridPos);
-                Console.WriteLine(grid.GridToWorldPosition(gridPos));
+
+                var objects = grid.GetObjectsAtPosition(gridPos);
+                if (objects != null)
+                {
+                    SelectableActor selectableActor = null;
+                    foreach (var item in objects)
+                    {
+                        if (item is SelectableActor a)
+                        {
+                            selectableActor = a;
+                        }
+                    }
+                    if (selectableActor != null)
+                    {
+                        if (selectedActor != null)
+                        {
+                            selectedActor.Unselect();
+                        }
+                        selectedActor = selectableActor;
+                        selectedActor.Select();
+                        Console.WriteLine(selectableActor.name);
+                    }
+
+                }
+                //Console.WriteLine(gridPos);
+                //Console.WriteLine(grid.GridToWorldPosition(gridPos));
 
             }
 
