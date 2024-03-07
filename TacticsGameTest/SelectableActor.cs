@@ -56,7 +56,7 @@ namespace TacticsGameTest
         {
             pathfinderUIActive = true;
             _isSelected = true;
-            PathfindingResult = PathfindingSystem.ShortestPath(
+            PathfindingResult = PathfindingSystem.Dijkstra(
                 Transform.Grid,
                 Transform.Position,
                 5,
