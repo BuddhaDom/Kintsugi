@@ -6,9 +6,6 @@
 *   
 */
 
-using FMOD;
-using FMOD.Studio;
-
 namespace Kintsugi.Audio
 {
     /**

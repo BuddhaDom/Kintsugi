@@ -1,12 +1,4 @@
-﻿using Kintsugi.Objects;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Kintsugi.Objects
+﻿namespace Kintsugi.Objects
 {
     /// <summary>
     /// A controller for things that happen in a round. A container for control groups.

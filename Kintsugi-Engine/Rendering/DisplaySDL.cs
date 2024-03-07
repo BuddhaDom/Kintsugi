@@ -15,8 +15,6 @@ using Kintsugi.Core;
 using Kintsugi.Tiles;
 using SDL2;
 using System.Numerics;
-using Kintsugi.Objects;
-using TweenSharp.Animation;
 using Kintsugi.Objects.Graphics;
 
 namespace Kintsugi.Rendering

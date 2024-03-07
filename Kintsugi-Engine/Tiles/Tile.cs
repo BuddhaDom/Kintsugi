@@ -1,7 +1,3 @@
-using System.ComponentModel;
-using Kintsugi.Core;
-using TiledCS;
-
 namespace Kintsugi.Tiles;
 
 /// <summary>
