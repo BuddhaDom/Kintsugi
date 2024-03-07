@@ -56,7 +56,10 @@ namespace TacticsGameTest
                 5);
             foreach (var item in PathfindingResult.ReachablePositions())
             {
-                AddWalkHighlight(item);
+                if (item != PathfindingResult.StartPosition)
+                {
+                    AddWalkHighlight(item);
+                }
             }
             Console.WriteLine("im selected!!");
         }
