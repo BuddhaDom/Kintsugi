@@ -400,3 +400,7 @@ FodyWeavers.xsd
 
 # Tiled
 *.tiled-session
+
+# Documentation Build (Doxywizard)
+
+[Dd]ocumentation/*/
