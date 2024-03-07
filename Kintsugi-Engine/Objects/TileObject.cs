@@ -52,7 +52,7 @@ public class TileObject
             List<Collider> selfTriggers = new();
             List<Collider> otherTriggers = new();
 
-            otherTriggers.AddRange(CollisionSystem.GetCollisionsColliderWithPosition(Collider, Transform.Grid, Transform.Position));
+            otherTriggers.AddRange(CollisionSystem.GetCollisionsColliderWithPosition(Collider, Transform.Grid, Transform.Position, true));
             var otherObjects = Transform.Grid.GetObjectsAtPosition(pos);
             if (otherObjects != null)
             {
