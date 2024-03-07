@@ -19,4 +19,6 @@ public class SpriteSingle : ISpriteable
             w = Sprite.Dimensions.x,
             h = Sprite.Dimensions.y
         };
+
+    public bool Flipped { get; set; }
 }

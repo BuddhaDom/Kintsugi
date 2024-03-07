@@ -37,13 +37,14 @@ namespace TacticsGameTest
             //     Vector2.One / 2, new Vector2(6.5f, 8.5f));
 
             var frames = new List<int>();
-            frames.AddRange(Enumerable.Range(00, 16));
-            frames.AddRange(Enumerable.Range(20, 16));
-            frames.AddRange(Enumerable.Range(40, 16));
+            // frames.AddRange(Enumerable.Range(00, 16));
+            // frames.AddRange(Enumerable.Range(20, 16));
+            // frames.AddRange(Enumerable.Range(40, 16));
+            frames.AddRange(Enumerable.Range(04, 04));
 
             character.SetAnimation(
                 GetAssetManager().GetAssetPath("bro.png"),
-                32, 32, 4, 3, frames, tilePivot: new Vector2(-0.5f, -0.5f),
+                32, 32, 4, 1, frames, tilePivot: new Vector2(-0.5f, -0.5f),
                 repeats: 0, bounces: false, autoStart: true
             );
 

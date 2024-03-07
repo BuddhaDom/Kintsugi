@@ -16,4 +16,8 @@ public interface ISpriteable
     /// </summary>
     /// <returns></returns>
     public SDL.SDL_Rect SourceRect();
+    /// <summary>
+    /// Determines if the graphic asset should be flipped horizontally when displayed.
+    /// </summary>
+    public bool Flipped { get; set; }
 }
