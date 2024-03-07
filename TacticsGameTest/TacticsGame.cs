@@ -36,8 +36,6 @@ namespace TacticsGameTest
             // character.SetSpriteSingle(GetAssetManager().GetAssetPath("guy.png"), 
             //     Vector2.One / 2, new Vector2(6.5f, 8.5f));
 
-
-
             scenario = new MovingScenario();
             var group = new MyControlGroup("john's group");
             // var group2 = new MyControlGroup("bob's group");

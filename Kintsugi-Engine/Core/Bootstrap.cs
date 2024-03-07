@@ -14,6 +14,9 @@ using Kintsugi.Rendering;
 
 namespace Kintsugi.Core
 {
+    /// <summary>
+    /// Point of access class for different systems and components of the Kintsugi engine.
+    /// </summary>
     public class Bootstrap
     {
         public static readonly string DEFAULT_CONFIG = "config.cfg";
@@ -36,12 +39,21 @@ namespace Kintsugi.Core
         private static string baseDir;
         private static Dictionary<string, string> enVars;
 
+        /// <summary>
+        /// Check if an environmental variable exists.
+        /// </summary>
+        /// <param name="id">ID of the variable.</param>
+        /// <returns><c>true</c> if the ID exists.</returns>
         public static bool CheckEnvironmentalVariable(string id)
         {
             return enVars.ContainsKey(id);
         }
 
-
+        /// <summary>
+        /// Look up an environmental variable.
+        /// </summary>
+        /// <param name="id">ID of the variable.</param>
+        /// <returns>The value attributed to that variable.</returns>
         public static string GetEnvironmentalVariable(string id)
         {
             if (CheckEnvironmentalVariable(id))
@@ -51,15 +63,24 @@ namespace Kintsugi.Core
 
             return null;
         }
-
-
+        
+        /// <summary>
+        /// Time elapsed since the game launched.
+        /// </summary>
         public static double TimeElapsed { get => timeElapsed; set => timeElapsed = value; }
 
+        /// <summary>
+        /// Gets the base directory of the game.
+        /// </summary>
+        /// <returns>Path of the game's file.</returns>
         public static string GetBaseDir()
         {
             return baseDir;
         }
 
+        /// <summary>
+        /// Prepare the environmental variables and set up the game with them.
+        /// </summary>
         public static void Setup()
         {
             string workDir = Environment.CurrentDirectory;
@@ -69,7 +90,11 @@ namespace Kintsugi.Core
             Setup(baseDir + "\\" + DEFAULT_CONFIG);
 
         }
-
+        
+        /// <summary>
+        /// Prepare environmental variables.
+        /// </summary>
+        /// <param name="path">Path to the config file.</param>
         public static void SetupEnvironmentalVariables(string path)
         {
             Console.WriteLine("Path is " + path);
@@ -83,43 +108,75 @@ namespace Kintsugi.Core
                 enVars[kvp.Key] = kvp.Value;
             }
         }
+        
+        /// <summary>
+        /// Get the time between last frame and this one.
+        /// </summary>
+        /// <returns>Time elapsed since last frame.</returns>
         public static double GetDeltaTime()
         {
 
             return deltaTime;
         }
 
+        /// <summary>
+        /// Fetches the display configured for the engine..
+        /// </summary>
+        /// <returns>The display used by the engine.</returns>
         public static DisplayBase GetDisplay()
         {
             return displayEngine;
         }
 
+        /// <summary>
+        /// Fetches the sound engine configured.
+        /// </summary>
+        /// <returns>The sound engine.</returns>
         public static Sound GetSound()
         {
             return soundEngine;
         }
 
+        /// <summary>
+        /// Fetches the input system configured.
+        /// </summary>
+        /// <returns>The input system.</returns>
         public static InputSystem GetInput()
         {
             return input;
         }
 
+        /// <summary>
+        /// Fetches the asset manager configured.
+        /// </summary>
+        /// <returns>The asset manager.</returns>
         public static AssetManagerBase GetAssetManager()
         {
             return asset;
         }
 
+        /// <summary>
+        /// Fetches the currently running game.
+        /// </summary>
+        /// <returns>The game.</returns>
         public static Game GetRunningGame()
         {
             return runningGame;
         }
 
+        /// <summary>
+        /// Fetches the camera system configured.
+        /// </summary>
+        /// <returns>The camera system.</returns>
         public static CameraSystem GetCameraSystem()
         {
             return cameraSystem;
         }
-
-
+        
+        /// <summary>
+        /// Initial setup resulting from config file parameters.
+        /// </summary>
+        /// <param name="path">Path to the config file.</param>
         public static void Setup(string path)
         {
             Console.WriteLine("Path is " + path);
@@ -192,11 +249,19 @@ namespace Kintsugi.Core
             }
         }
 
+        /// <summary>
+        /// Gets the current system millisecond.
+        /// </summary>
+        /// <returns><see cref="DateTime.Now"/> in milliseconds.</returns>
         public static long GetCurrentMillis()
         {
             return DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
         }
 
+        /// <summary>
+        /// Get frames per second the game is running at.
+        /// </summary>
+        /// <returns>Number of frames being displayed each second.</returns>
         public static int GetFPS()
         {
             int fps;
@@ -209,6 +274,10 @@ namespace Kintsugi.Core
             return fps;
         }
 
+        /// <summary>
+        /// Alternative form of <see cref="GetFPS"/>
+        /// </summary>
+        /// <returns>Number of frames being displayed each second.</returns>
         public static int GetSecondFPS()
         {
             int count = 0;
@@ -240,6 +309,10 @@ namespace Kintsugi.Core
             return count;
         }
 
+        /// <summary>
+        /// Gets the current frame.
+        /// </summary>
+        /// <returns>Number of the frame.</returns>
         public static int GetCurrentFrame()
         {
             return frames;
@@ -265,12 +338,11 @@ namespace Kintsugi.Core
 
             // This is our game loop.
             MainLoop();
-
-
-
-
         }
 
+        /// <summary>
+        /// Main iterative processes of the engine.
+        /// </summary>
         static void MainLoop()
         {
             long timeInMillisecondsStart, lastTick, timeInMillisecondsEnd;

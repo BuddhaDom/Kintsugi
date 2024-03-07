@@ -1,14 +1,11 @@
 ﻿using Kintsugi.EventSystem;
-using Kintsugi.EventSystem.Await;
 using Kintsugi.EventSystem.Events;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Engine.EventSystem
 {
+    /// <summary>
+    /// Manager class for events in the engine.
+    /// </summary>
     public class EventManager
     {
         internal List<Event> EventQueue = new();

@@ -1,0 +1,174 @@
+\doxysection{Kintsugi.\+Objects.\+Graphics.\+Sprite\+Sheet Struct Reference}
+\hypertarget{struct_kintsugi_1_1_objects_1_1_graphics_1_1_sprite_sheet}{}\label{struct_kintsugi_1_1_objects_1_1_graphics_1_1_sprite_sheet}\index{Kintsugi.Objects.Graphics.SpriteSheet@{Kintsugi.Objects.Graphics.SpriteSheet}}
+
+
+A collection of sprites contained within one same image. These sprites should be uniformly spaced.  
+
+
+Inheritance diagram for Kintsugi.\+Objects.\+Graphics.\+Sprite\+Sheet\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{struct_kintsugi_1_1_objects_1_1_graphics_1_1_sprite_sheet}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{struct_kintsugi_1_1_objects_1_1_graphics_1_1_sprite_sheet_ae7d4e26280ddd2084eae9ab9ca885e25}{Sprite\+Sheet}} (string path, int sprite\+Height, int sprite\+Width, int sprites\+Per\+Row, Vector2 tile\+Pivot=default, Vector2 image\+Pivot=default, Vector2 padding=default, Vector2 margin=default)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{struct_kintsugi_1_1_objects_1_1_graphics_1_1_sprite_sheet_a22319f4d5bd5423a7716ea832747014e}{Sprites\+Per\+Row}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em How many sprite units make up a row in this sprite sheet. In case of variable lengths per row, should be the units in the longest row. \end{DoxyCompactList}\item 
+Vector2 \mbox{\hyperlink{struct_kintsugi_1_1_objects_1_1_graphics_1_1_sprite_sheet_a8e23736a0838d08cb5b8c1fc42fe0ea1}{Padding}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Separation between each sprite. \end{DoxyCompactList}\item 
+Vector2 \mbox{\hyperlink{struct_kintsugi_1_1_objects_1_1_graphics_1_1_sprite_sheet_ad89a733d97abcf0ffbfaeccc7d6e8171}{Margin}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Separation between the first sprite unit and the image borders. \end{DoxyCompactList}\item 
+string \mbox{\hyperlink{struct_kintsugi_1_1_objects_1_1_graphics_1_1_sprite_sheet_a7f4b9bef8fcec336a15264316d25d59c}{Path}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Path to the image file. \end{DoxyCompactList}\item 
+Vec2\+Int \mbox{\hyperlink{struct_kintsugi_1_1_objects_1_1_graphics_1_1_sprite_sheet_a2b983fb67f5a3011cdf577e162677b8c}{Dimensions}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Height and width of a sprite. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{struct_kintsugi_1_1_objects_1_1_graphics_1_1_sprite_sheet_aba830d9e2b604c659ea692b621c9b622}{Image\+Width}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Width of the image. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{struct_kintsugi_1_1_objects_1_1_graphics_1_1_sprite_sheet_ada3d30ff9602eccce0f2b51e115d0e8b}{Image\+Height}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Height of the image. \end{DoxyCompactList}\item 
+Vector2 \mbox{\hyperlink{struct_kintsugi_1_1_objects_1_1_graphics_1_1_sprite_sheet_a81bdcb3032c3ef89db050309d79d165d}{Tile\+Pivot}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Position on the tile from which the object is rendered. Defined between Vector2.\+Zero and Vector2.\+One as the upper and lower bounds of the tile width. \end{DoxyCompactList}\item 
+Vector2 \mbox{\hyperlink{struct_kintsugi_1_1_objects_1_1_graphics_1_1_sprite_sheet_aa5037e3d53bebc453f2a0876d1e30db9}{Image\+Pivot}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Position on the sprite which will match positions with the Tile\+Pivot. Defined between Vector2.\+Zero and this sprite\textquotesingle{}s Image\+Width and Image\+Height. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Properties inherited from \mbox{\hyperlink{interface_kintsugi_1_1_objects_1_1_graphics_1_1_i_sprite_properties}{Kintsugi.\+Objects.\+Graphics.\+ISprite\+Properties}}}
+
+
+\doxysubsection{Detailed Description}
+A collection of sprites contained within one same image. These sprites should be uniformly spaced. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{struct_kintsugi_1_1_objects_1_1_graphics_1_1_sprite_sheet_ae7d4e26280ddd2084eae9ab9ca885e25}\label{struct_kintsugi_1_1_objects_1_1_graphics_1_1_sprite_sheet_ae7d4e26280ddd2084eae9ab9ca885e25} 
+\index{Kintsugi.Objects.Graphics.SpriteSheet@{Kintsugi.Objects.Graphics.SpriteSheet}!SpriteSheet@{SpriteSheet}}
+\index{SpriteSheet@{SpriteSheet}!Kintsugi.Objects.Graphics.SpriteSheet@{Kintsugi.Objects.Graphics.SpriteSheet}}
+\doxysubsubsection{\texorpdfstring{SpriteSheet()}{SpriteSheet()}}
+{\footnotesize\ttfamily Kintsugi.\+Objects.\+Graphics.\+Sprite\+Sheet.\+Sprite\+Sheet (\begin{DoxyParamCaption}\item[{string}]{path,  }\item[{int}]{sprite\+Height,  }\item[{int}]{sprite\+Width,  }\item[{int}]{sprites\+Per\+Row,  }\item[{Vector2}]{tile\+Pivot = {\ttfamily default},  }\item[{Vector2}]{image\+Pivot = {\ttfamily default},  }\item[{Vector2}]{padding = {\ttfamily default},  }\item[{Vector2}]{margin = {\ttfamily default} }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Property Documentation}
+\Hypertarget{struct_kintsugi_1_1_objects_1_1_graphics_1_1_sprite_sheet_a2b983fb67f5a3011cdf577e162677b8c}\label{struct_kintsugi_1_1_objects_1_1_graphics_1_1_sprite_sheet_a2b983fb67f5a3011cdf577e162677b8c} 
+\index{Kintsugi.Objects.Graphics.SpriteSheet@{Kintsugi.Objects.Graphics.SpriteSheet}!Dimensions@{Dimensions}}
+\index{Dimensions@{Dimensions}!Kintsugi.Objects.Graphics.SpriteSheet@{Kintsugi.Objects.Graphics.SpriteSheet}}
+\doxysubsubsection{\texorpdfstring{Dimensions}{Dimensions}}
+{\footnotesize\ttfamily Vec2\+Int Kintsugi.\+Objects.\+Graphics.\+Sprite\+Sheet.\+Dimensions\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Height and width of a sprite. 
+
+
+
+Implements \mbox{\hyperlink{interface_kintsugi_1_1_objects_1_1_graphics_1_1_i_sprite_properties_a69a39fb609f9272f48c11987fc4a3b2c}{Kintsugi.\+Objects.\+Graphics.\+ISprite\+Properties}}.
+
+\Hypertarget{struct_kintsugi_1_1_objects_1_1_graphics_1_1_sprite_sheet_ada3d30ff9602eccce0f2b51e115d0e8b}\label{struct_kintsugi_1_1_objects_1_1_graphics_1_1_sprite_sheet_ada3d30ff9602eccce0f2b51e115d0e8b} 
+\index{Kintsugi.Objects.Graphics.SpriteSheet@{Kintsugi.Objects.Graphics.SpriteSheet}!ImageHeight@{ImageHeight}}
+\index{ImageHeight@{ImageHeight}!Kintsugi.Objects.Graphics.SpriteSheet@{Kintsugi.Objects.Graphics.SpriteSheet}}
+\doxysubsubsection{\texorpdfstring{ImageHeight}{ImageHeight}}
+{\footnotesize\ttfamily int Kintsugi.\+Objects.\+Graphics.\+Sprite\+Sheet.\+Image\+Height\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Height of the image. 
+
+
+
+Implements \mbox{\hyperlink{interface_kintsugi_1_1_objects_1_1_graphics_1_1_i_sprite_properties_ad5a50db4cb06deee2543a1ecba63da78}{Kintsugi.\+Objects.\+Graphics.\+ISprite\+Properties}}.
+
+\Hypertarget{struct_kintsugi_1_1_objects_1_1_graphics_1_1_sprite_sheet_aa5037e3d53bebc453f2a0876d1e30db9}\label{struct_kintsugi_1_1_objects_1_1_graphics_1_1_sprite_sheet_aa5037e3d53bebc453f2a0876d1e30db9} 
+\index{Kintsugi.Objects.Graphics.SpriteSheet@{Kintsugi.Objects.Graphics.SpriteSheet}!ImagePivot@{ImagePivot}}
+\index{ImagePivot@{ImagePivot}!Kintsugi.Objects.Graphics.SpriteSheet@{Kintsugi.Objects.Graphics.SpriteSheet}}
+\doxysubsubsection{\texorpdfstring{ImagePivot}{ImagePivot}}
+{\footnotesize\ttfamily Vector2 Kintsugi.\+Objects.\+Graphics.\+Sprite\+Sheet.\+Image\+Pivot\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Position on the sprite which will match positions with the Tile\+Pivot. Defined between Vector2.\+Zero and this sprite\textquotesingle{}s Image\+Width and Image\+Height. 
+
+
+
+Implements \mbox{\hyperlink{interface_kintsugi_1_1_objects_1_1_graphics_1_1_i_sprite_properties_a9eb5bcd81368666aadcad918bf17706b}{Kintsugi.\+Objects.\+Graphics.\+ISprite\+Properties}}.
+
+\Hypertarget{struct_kintsugi_1_1_objects_1_1_graphics_1_1_sprite_sheet_aba830d9e2b604c659ea692b621c9b622}\label{struct_kintsugi_1_1_objects_1_1_graphics_1_1_sprite_sheet_aba830d9e2b604c659ea692b621c9b622} 
+\index{Kintsugi.Objects.Graphics.SpriteSheet@{Kintsugi.Objects.Graphics.SpriteSheet}!ImageWidth@{ImageWidth}}
+\index{ImageWidth@{ImageWidth}!Kintsugi.Objects.Graphics.SpriteSheet@{Kintsugi.Objects.Graphics.SpriteSheet}}
+\doxysubsubsection{\texorpdfstring{ImageWidth}{ImageWidth}}
+{\footnotesize\ttfamily int Kintsugi.\+Objects.\+Graphics.\+Sprite\+Sheet.\+Image\+Width\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Width of the image. 
+
+
+
+Implements \mbox{\hyperlink{interface_kintsugi_1_1_objects_1_1_graphics_1_1_i_sprite_properties_af1961b2a63ddc84efef78ca7739bffb1}{Kintsugi.\+Objects.\+Graphics.\+ISprite\+Properties}}.
+
+\Hypertarget{struct_kintsugi_1_1_objects_1_1_graphics_1_1_sprite_sheet_ad89a733d97abcf0ffbfaeccc7d6e8171}\label{struct_kintsugi_1_1_objects_1_1_graphics_1_1_sprite_sheet_ad89a733d97abcf0ffbfaeccc7d6e8171} 
+\index{Kintsugi.Objects.Graphics.SpriteSheet@{Kintsugi.Objects.Graphics.SpriteSheet}!Margin@{Margin}}
+\index{Margin@{Margin}!Kintsugi.Objects.Graphics.SpriteSheet@{Kintsugi.Objects.Graphics.SpriteSheet}}
+\doxysubsubsection{\texorpdfstring{Margin}{Margin}}
+{\footnotesize\ttfamily Vector2 Kintsugi.\+Objects.\+Graphics.\+Sprite\+Sheet.\+Margin\hspace{0.3cm}{\ttfamily [get]}}
+
+
+
+Separation between the first sprite unit and the image borders. 
+
+\Hypertarget{struct_kintsugi_1_1_objects_1_1_graphics_1_1_sprite_sheet_a8e23736a0838d08cb5b8c1fc42fe0ea1}\label{struct_kintsugi_1_1_objects_1_1_graphics_1_1_sprite_sheet_a8e23736a0838d08cb5b8c1fc42fe0ea1} 
+\index{Kintsugi.Objects.Graphics.SpriteSheet@{Kintsugi.Objects.Graphics.SpriteSheet}!Padding@{Padding}}
+\index{Padding@{Padding}!Kintsugi.Objects.Graphics.SpriteSheet@{Kintsugi.Objects.Graphics.SpriteSheet}}
+\doxysubsubsection{\texorpdfstring{Padding}{Padding}}
+{\footnotesize\ttfamily Vector2 Kintsugi.\+Objects.\+Graphics.\+Sprite\+Sheet.\+Padding\hspace{0.3cm}{\ttfamily [get]}}
+
+
+
+Separation between each sprite. 
+
+\Hypertarget{struct_kintsugi_1_1_objects_1_1_graphics_1_1_sprite_sheet_a7f4b9bef8fcec336a15264316d25d59c}\label{struct_kintsugi_1_1_objects_1_1_graphics_1_1_sprite_sheet_a7f4b9bef8fcec336a15264316d25d59c} 
+\index{Kintsugi.Objects.Graphics.SpriteSheet@{Kintsugi.Objects.Graphics.SpriteSheet}!Path@{Path}}
+\index{Path@{Path}!Kintsugi.Objects.Graphics.SpriteSheet@{Kintsugi.Objects.Graphics.SpriteSheet}}
+\doxysubsubsection{\texorpdfstring{Path}{Path}}
+{\footnotesize\ttfamily string Kintsugi.\+Objects.\+Graphics.\+Sprite\+Sheet.\+Path\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Path to the image file. 
+
+
+
+Implements \mbox{\hyperlink{interface_kintsugi_1_1_objects_1_1_graphics_1_1_i_sprite_properties_a767e8917b4c098a1511ed9432f63169a}{Kintsugi.\+Objects.\+Graphics.\+ISprite\+Properties}}.
+
+\Hypertarget{struct_kintsugi_1_1_objects_1_1_graphics_1_1_sprite_sheet_a22319f4d5bd5423a7716ea832747014e}\label{struct_kintsugi_1_1_objects_1_1_graphics_1_1_sprite_sheet_a22319f4d5bd5423a7716ea832747014e} 
+\index{Kintsugi.Objects.Graphics.SpriteSheet@{Kintsugi.Objects.Graphics.SpriteSheet}!SpritesPerRow@{SpritesPerRow}}
+\index{SpritesPerRow@{SpritesPerRow}!Kintsugi.Objects.Graphics.SpriteSheet@{Kintsugi.Objects.Graphics.SpriteSheet}}
+\doxysubsubsection{\texorpdfstring{SpritesPerRow}{SpritesPerRow}}
+{\footnotesize\ttfamily int Kintsugi.\+Objects.\+Graphics.\+Sprite\+Sheet.\+Sprites\+Per\+Row\hspace{0.3cm}{\ttfamily [get]}}
+
+
+
+How many sprite units make up a row in this sprite sheet. In case of variable lengths per row, should be the units in the longest row. 
+
+\Hypertarget{struct_kintsugi_1_1_objects_1_1_graphics_1_1_sprite_sheet_a81bdcb3032c3ef89db050309d79d165d}\label{struct_kintsugi_1_1_objects_1_1_graphics_1_1_sprite_sheet_a81bdcb3032c3ef89db050309d79d165d} 
+\index{Kintsugi.Objects.Graphics.SpriteSheet@{Kintsugi.Objects.Graphics.SpriteSheet}!TilePivot@{TilePivot}}
+\index{TilePivot@{TilePivot}!Kintsugi.Objects.Graphics.SpriteSheet@{Kintsugi.Objects.Graphics.SpriteSheet}}
+\doxysubsubsection{\texorpdfstring{TilePivot}{TilePivot}}
+{\footnotesize\ttfamily Vector2 Kintsugi.\+Objects.\+Graphics.\+Sprite\+Sheet.\+Tile\+Pivot\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Position on the tile from which the object is rendered. Defined between Vector2.\+Zero and Vector2.\+One as the upper and lower bounds of the tile width. 
+
+
+
+Implements \mbox{\hyperlink{interface_kintsugi_1_1_objects_1_1_graphics_1_1_i_sprite_properties_ae7ad3021e0ea205d93d5681cbe300e4a}{Kintsugi.\+Objects.\+Graphics.\+ISprite\+Properties}}.
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{_sprite_sheet_8cs}{Sprite\+Sheet.\+cs}}\end{DoxyCompactItemize}

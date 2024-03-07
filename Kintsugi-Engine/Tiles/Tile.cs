@@ -1,9 +1,10 @@
-using System.ComponentModel;
-using Kintsugi.Core;
-using TiledCS;
-
 namespace Kintsugi.Tiles;
 
+/// <summary>
+/// A representation of a tile within a grid layer.
+/// </summary>
+/// <param name="tileId">Global ID of the tile's graphic.</param>
+/// <param name="tileSetId">ID of the tile set the graphic belongs to.</param>
 public struct Tile(int tileId = -1, int tileSetId = -1)
 {
     public bool IsEmpty => Id < 0;

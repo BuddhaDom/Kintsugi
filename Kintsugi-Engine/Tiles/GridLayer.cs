@@ -1,7 +1,5 @@
-using System.ComponentModel;
 using Kintsugi.Collision;
 using Kintsugi.Core;
-using Kintsugi.Objects.Properties;
 
 namespace Kintsugi.Tiles;
 

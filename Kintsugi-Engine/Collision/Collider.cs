@@ -1,15 +1,11 @@
 ﻿using Kintsugi.Objects;
-using Kintsugi.Objects.Properties;
 using Kintsugi.Tiles;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static Kintsugi.Collision.Collider;
 
 namespace Kintsugi.Collision
 {
+    /// <summary>
+    /// Represents collision properties applicable to objects and layers.
+    /// </summary>
     public class Collider
     {
         private static Collider _voidCollider;
@@ -36,7 +32,7 @@ namespace Kintsugi.Collision
 
         /// <summary>
         /// Whether collider is a trigger.
-        /// Triggers will never cause normal collisions, but will instead cause trigger collisions that activate <see cref="OnTriggerCollision(Collider)">
+        /// Triggers will never cause normal collisions, but will instead cause trigger collisions that activate <see cref="OnTriggerCollision(Collider)"/>
         /// </summary>
         public bool IsTrigger { get; internal set; }
 
@@ -49,20 +45,37 @@ namespace Kintsugi.Collision
         }
     }
 
+    /// <summary>
+    /// Makes a collider class require initializing a <see cref="TileObject"/>
+    /// </summary>
     public interface TileObjectColliderInitialize
     {
+        /// <summary>
+        /// Initialize a <see cref="TileObject"/> for this collider class.
+        /// </summary>
+        /// <param name="t">The <see cref="TileObject"/> reference to use when initializing.</param>
         internal void Initialize(TileObject t);
     }
+    /// <summary>
+    /// Makes a collider class require initializing a <see cref="GridLayer"/>
+    /// </summary>
     public interface GridLayerColliderInitialize
     {
+        /// <summary>
+        /// Initialize a <see cref="GridLayer"/> for this collider class.
+        /// </summary>
+        /// <param name="t">The <see cref="GridLayer"/> reference to use when initializing.</param>
         internal void Initialize(GridLayer t);
     }
 
     /// <summary>
-    /// <see cref="Collider"> on a <see cref="GridLayer">. 
+    /// <see cref="Collider"/> on a <see cref="GridLayer"/>. 
     /// </summary>
     public class GridLayerCollider : Collider, GridLayerColliderInitialize
     {
+        /// <summary>
+        /// <see cref="GridLayer"/> which this collider affects.
+        /// </summary>
         public GridLayer GridLayer { get; private set; }
         void GridLayerColliderInitialize.Initialize(GridLayer t)
         {

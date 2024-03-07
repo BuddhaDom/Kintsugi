@@ -15,8 +15,6 @@ using Kintsugi.Core;
 using Kintsugi.Tiles;
 using SDL2;
 using System.Numerics;
-using Kintsugi.Objects;
-using TweenSharp.Animation;
 using Kintsugi.Objects.Graphics;
 
 namespace Kintsugi.Rendering
@@ -53,6 +51,9 @@ namespace Kintsugi.Rendering
     }
 
 
+    /// <summary>
+    /// A display using the SDL2.
+    /// </summary>
     public class DisplaySDL : DisplayText
     {
         private List<Line> _linesToDraw;
@@ -71,6 +72,11 @@ namespace Kintsugi.Rendering
 
         }
 
+        /// <summary>
+        /// Load a texture that may be displayed.
+        /// </summary>
+        /// <param name="sprite"><see cref="ISpriteable"/> with a graphic which to copy. </param>
+        /// <returns>The loaded texture reference.</returns>
         public nint LoadTexture(ISpriteable sprite)
         {
             nint ret;
@@ -80,7 +86,11 @@ namespace Kintsugi.Rendering
 
         }
 
-
+        /// <summary>
+        /// Load a texture that may be displayed.
+        /// </summary>
+        /// <param name="path">Path to the image containing the texture.</param>
+        /// <returns>The loaded texture reference</returns>
         public nint LoadTexture(string path)
         {
             nint img;
@@ -112,6 +122,12 @@ namespace Kintsugi.Rendering
         }
 
 
+        /// <summary>
+        /// Render a circle through the SDL display.
+        /// </summary>
+        /// <param name="centreX">X position of its center point.</param>
+        /// <param name="centreY">Y Position of its center point.</param>
+        /// <param name="rad">Radius.</param>
         void RenderCircle(int centreX, int centreY, int rad)
         {
             int dia = rad * 2;
@@ -299,7 +315,7 @@ namespace Kintsugi.Rendering
                                     ref tRect,
                                     0,
                                     nint.Zero,
-                                    SDL.SDL_RendererFlip.SDL_FLIP_NONE);
+                                    tileObject.Graphic.Flipped ? SDL.SDL_RendererFlip.SDL_FLIP_HORIZONTAL : SDL.SDL_RendererFlip.SDL_FLIP_NONE);
                             }
                         }
                     #endregion

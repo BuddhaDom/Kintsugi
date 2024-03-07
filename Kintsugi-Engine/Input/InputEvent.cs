@@ -11,6 +11,9 @@
 
 namespace Kintsugi.Input
 {
+    /// <summary>
+    /// Representation of an input event.
+    /// </summary>
     public class InputEvent
     {
         private int x;
@@ -29,16 +32,25 @@ namespace Kintsugi.Input
             get => y;
             set => y = value;
         }
+        /// <summary>
+        /// The button pressed.
+        /// </summary>
         public int Button
         {
             get => button;
             set => button = value;
         }
+        /// <summary>
+        /// Category of the input.
+        /// </summary>
         public string Classification
         {
             get => classification;
             set => classification = value;
         }
+        /// <summary>
+        /// Key pressed.
+        /// </summary>
         public int Key
         {
             get => key;

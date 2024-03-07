@@ -1,15 +1,13 @@
-﻿using Kintsugi.Objects;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Kintsugi.Objects
+﻿namespace Kintsugi.Objects
 {
+    /// <summary>
+    /// A controller for things that happen in a round. A container for control groups.
+    /// </summary>
     public class RoundManager
     {
+        /// <summary>
+        /// Handler for round events.
+        /// </summary>
         public event EventHandler OnRoundFinished;
 
         /// <summary>
@@ -26,6 +24,10 @@ namespace Kintsugi.Objects
                 return controlGroups[currentControlGroup];
             }
         }
+        /// <summary>
+        /// Create a round instance on a given scenario.
+        /// </summary>
+        /// <param name="scenarioManager">Scenario to which this round belongs to.</param>
         public RoundManager(ScenarioManager scenarioManager) {
             this.scenarioManager = scenarioManager;
         }

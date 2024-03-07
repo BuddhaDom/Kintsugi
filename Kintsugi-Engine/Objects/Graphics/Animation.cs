@@ -4,20 +4,44 @@ using SDL2;
 
 namespace Kintsugi.Objects.Graphics;
 
+/// <summary>
+/// An animation graphic for <see cref="TileObject"/>.
+/// </summary>
 public class Animation : ISpriteable, IAwaitable
 {
+    /// <summary>
+    /// Duration of the animation.
+    /// </summary>
     public double TimeLength { get; set; }
     /// <summary>
     /// Number of times the animation should repeat. Set to <c>0</c> if it repeats indefinitely.
     /// </summary>
     public int Repeats { get; set; }
+    /// <summary>
+    /// Determines if the animation is meant to play backwards once it reaches its last frame.
+    /// </summary>
     public bool Bounces { get; set; }
+    /// <summary>
+    /// Determines if the animation is currently playing.
+    /// </summary>
     public bool Playing { get; private set; }
+    /// <summary>
+    /// Time at which the animation starts.
+    /// </summary>
     public double StartTime { get; private set; }
+    /// <summary>
+    /// How long the animation has played for.
+    /// </summary>
     public double PlayingTime => Playing ? Bootstrap.TimeElapsed - StartTime : 0d;
+    /// <summary>
+    /// Sprite sheet containing the frames relevant to the animation.
+    /// </summary>
     public SpriteSheet SpriteSheet { get; internal set; }
     private IReadOnlyList<int> BounceFrameIndexes { get; set; } = [];
     private IReadOnlyList<int> frameIndexes = [];
+    /// <summary>
+    /// The list of frames that compose the animation.
+    /// </summary>
     public IReadOnlyList<int> FrameIndexes
     {
         get => frameIndexes;
@@ -38,12 +62,18 @@ public class Animation : ISpriteable, IAwaitable
         FrameIndexes = frames.ToList();
     }
 
+    /// <summary>
+    /// Begin the animation.
+    /// </summary>
     public void Start()
     {
         StartTime = Bootstrap.TimeElapsed;
         Playing = true;
     }
 
+    /// <summary>
+    /// End the animation.
+    /// </summary>
     public void Stop()
     {
         Playing = false;
@@ -87,4 +117,6 @@ public class Animation : ISpriteable, IAwaitable
             y = (int) ((SpriteSheet.Dimensions.y + SpriteSheet.Padding.Y) * coordinates.y + SpriteSheet.Margin.Y),
         };
     }
+
+    public bool Flipped { get; set; }
 }

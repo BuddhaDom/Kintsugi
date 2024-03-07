@@ -18,6 +18,9 @@ public class TileObject
     /// Transform properties of this object.
     /// </summary>
     public TileObjectTransform Transform { get; private set; }
+    /// <summary>
+    /// Easing properties of this object.
+    /// </summary>
     public TileObjectEasing Easing { get; private set; }
     /// <summary>
     /// Collision properties of this object.
@@ -38,6 +41,10 @@ public class TileObject
     }
 
 
+    /// <summary>
+    /// Resolve any triggers that have collided at a given position.
+    /// </summary>
+    /// <param name="pos">Position on the grid of the trigger.</param>
     private void ResolveTriggerCollisions(Vec2Int pos)
     {
         if (Transform.Grid != null && Collider != null)
@@ -88,6 +95,13 @@ public class TileObject
         Collider.BelongLayers = belongLayers;
         Collider.CollideLayers = collideLayers;
     }
+    /// <summary>
+    /// Add a collider of type <typeparamref name="T"/> this type to this object with these parameter.
+    /// </summary>
+    /// <param name="belongLayers">The collision layers to which this object belongs to.</param>
+    /// <param name="collideLayers">The collision layers this object should collide with.</param>
+    /// <param name="isTrigger"><c>true</c> if this collider should act as a trigger.</param>
+    /// <typeparam name="T">A type of <see cref="TileObjectCollider"/></typeparam>
     public void SetColliderTyped<T>(HashSet<string> belongLayers, HashSet<string> collideLayers, bool isTrigger = false)
         where T: TileObjectCollider, TileObjectColliderInitialize, new()
     {
@@ -202,15 +216,32 @@ public class TileObject
         Graphic.Properties.ImagePivot = imagePivot;
     }
 
+    /// <summary>
+    /// Set a single sprite graphic to this object.
+    /// </summary>
+    /// <param name="sprite">Image form which to take the sprite.</param>
     public void SetSpriteSingle(Sprite sprite)
     {
         Graphic = new SpriteSingle();
         ((SpriteSingle)Graphic).Sprite = sprite;
     }
 
+    /// <summary>
+    /// Set a single sprite graphic to this object.
+    /// </summary>
+    /// <param name="spriteSingle">Sprite graphic to copy from.</param>
     public void SetSpriteSingle(SpriteSingle spriteSingle)
         => SetSpriteSingle(spriteSingle.Sprite);
 
+    /// <summary>
+    /// Sets an animation graphic for this object.
+    /// </summary>
+    /// <param name="spriteSheet">Sprite sheet from which to take frames.</param>
+    /// <param name="timeLength">Duration of the animation.</param>
+    /// <param name="frames">Frame indexes in the sprite sheet that make up the animation.</param>
+    /// <param name="repeats">Amount of repetitions. Set to 0 if it should loop indefinitely.</param>
+    /// <param name="bounces">Determines if the animation plays front then back once it reaches its last frame.</param>
+    /// <param name="autoStart">Start the animation once this method ends?</param>
     public void SetAnimation(SpriteSheet spriteSheet, double timeLength, IEnumerable<int> frames,
         int repeats = 0, bool bounces = false, bool autoStart = true)
     {
@@ -219,6 +250,22 @@ public class TileObject
         if (autoStart) ((Animation)Graphic).Start();
     }
         
+    /// <summary>
+    /// Sets an animation graphic for this object.
+    /// </summary>
+    /// <param name="path">Location of the image containing a sprite sheet.</param>
+    /// <param name="spriteHeight">Height of a sprite.</param>
+    /// <param name="spriteWidth">Width of a sprite.</param>
+    /// <param name="spritesPerRow">Maximum amount of indexes in one row within sprite sheet.</param>
+    /// <param name="timeLength">Duration of the animation.</param>
+    /// <param name="frames">Frame indexes in the sprite sheet that make up the animation.</param>
+    /// <param name="tilePivot">Pivot of the sprite. relative to its tile.</param>
+    /// <param name="imagePivot">Pivot of the sprites relative to their image.</param>
+    /// <param name="padding">Separation between sprite indexes.</param>
+    /// <param name="margin">Separation between first sprite index and its image borders.</param>
+    /// <param name="repeats">Amount of repetitions. Set to 0 if it should loop indefinitely.</param>
+    /// <param name="bounces">Determines if the animation plays front then back once it reaches its last frame.</param>
+    /// <param name="autoStart">Start the animation once this method ends?</param>
     public void SetAnimation(string path, int spriteHeight, int spriteWidth, int spritesPerRow, double timeLength,
         IEnumerable<int> frames, Vector2 tilePivot = default, Vector2 imagePivot = default,
         Vector2 padding = default, Vector2 margin = default, int repeats = 0, bool bounces = false, 
@@ -228,10 +275,20 @@ public class TileObject
             timeLength, frames, repeats, bounces, autoStart
         );
 
+    /// <summary>
+    /// Sets an animation graphic for this object.
+    /// </summary>
+    /// <param name="animation">Animation from which to copy properties</param>
+    /// <param name="autoStart">Start the animation once this method ends?</param>
     public void SetAnimation(Animation animation, bool autoStart = true)
         => SetAnimation(animation.SpriteSheet, animation.TimeLength, animation.FrameIndexes, animation.Repeats,
             animation.Bounces, autoStart);
 
+    /// <summary>
+    /// Sets the easing properties to this object.
+    /// </summary>
+    /// <param name="function">Easing function.</param>
+    /// <param name="duration">Duration of the interpolation.</param>
     public void SetEasing(Easing.EasingFunction function,[Range(0,double.MaxValue)] double duration)
     {
         Easing.End();

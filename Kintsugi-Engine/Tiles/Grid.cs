@@ -1,6 +1,5 @@
 using System.Drawing;
 using System.Numerics;
-using Kintsugi.Collision;
 using Kintsugi.Core;
 using Kintsugi.Objects;
 using Kintsugi.Rendering;
