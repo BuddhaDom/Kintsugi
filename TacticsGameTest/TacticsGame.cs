@@ -30,7 +30,7 @@ namespace TacticsGameTest
                 }
             };
             Bootstrap.GetCameraSystem().Size = 16 * 10;
-            character = new SelectableActor("bro", "FantasyBattlePack\\Thief\\Blue1.png");
+            character = new SelectableActor("bro", "FantasyBattlePack\\AxeKnight\\Blue.png");
             character.AddToGrid(grid, 3);
             character.SetPosition(Vec2Int.One * 3);
             // character.SetSpriteSingle(GetAssetManager().GetAssetPath("guy.png"), 

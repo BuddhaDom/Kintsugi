@@ -147,7 +147,7 @@ namespace TacticsGameTest
             {
                 chars.Add(DiffToChar(path.PathPositions[index], path.PathPositions[index + 1]));
             }
-            else if (index ==  path.PathPositions.Count - 1)
+            else if (index == path.PathPositions.Count - 1)
             {
                 chars.Add(DiffToChar(path.PathPositions[index], path.PathPositions[index - 1]));
             }
@@ -230,11 +230,11 @@ namespace TacticsGameTest
             {
                 if (Math.Sign(dir.x) > 0)
                 {
-                    animDirection = AnimationDirection.left;
+                    animDirection = AnimationDirection.right;
                 }
                 else
                 {
-                    animDirection = AnimationDirection.right;
+                    animDirection = AnimationDirection.left;
                 }
             }
             else
@@ -294,9 +294,20 @@ namespace TacticsGameTest
                 new Vector2(0, directionSection * 32 * 5 + typeSection * 32));
 
             SetEasing(TweenSharp.Animation.Easing.QuadraticEaseOut, speed * 0.5f);
-            
+
             curAnimationDirection = dir.Value;
             curAnimationType = type.Value;
+
+            if (dir == AnimationDirection.left)
+            {
+                Graphic.Flipped = true;
+            }
+            else
+            {
+                Graphic.Flipped = false;
+            }
+
+
         }
     }
 }
