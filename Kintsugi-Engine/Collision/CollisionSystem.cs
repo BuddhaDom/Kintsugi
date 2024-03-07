@@ -102,10 +102,10 @@ namespace Kintsugi.Collision
         }
 
         /// <summary>
-        /// Gets all trigger collisions when <paramref name="collider"/> would collide with anything at <paramref name="position"/> in <paramref name="grid"/>.
+        /// Gets all collisions when <paramref name="collider"/> would collide with anything at <paramref name="position"/> in <paramref name="grid"/>.
         /// Checks against all tileobjects at <paramref name="position"/> on the <paramref name="grid"/> and all gridlayers on the <paramref name="grid"/>.
         /// Is a one way check, does not check the reverse direction.
-        /// Atleast one of the colliders must be a trigger in each collision. 
+        /// In triggerCollisionMode, atleast one of the colliders must be a trigger in each collision. 
         /// </summary>
         public static List<Collider> GetCollisionsColliderWithPosition(Collider collider, Grid grid, Vec2Int position, bool triggerCollisionMode = false)
         {
@@ -141,9 +141,9 @@ namespace Kintsugi.Collision
         }
 
         /// <summary>
-        /// Gets all trigger collisions when <paramref name="collider"/> would collide with any <see cref="TileObject"/> at <paramref name="position"/> in <paramref name="grid"/>.
+        /// Gets all collisions when <paramref name="collider"/> would collide with any <see cref="TileObject"/> at <paramref name="position"/> in <paramref name="grid"/>.
         /// Is a one way check, does not check the reverse direction.
-        /// Atleast one of the colliders must be a trigger in each collision. 
+        /// In triggerCollisionMode, atleast one of the colliders must be a trigger in each collision. 
         /// </summary>
         public static List<Collider> GetCollisionsColliderWithTileobjectsAtPosition(Collider collider, Grid grid, Vec2Int position, bool triggerCollisionMode = false)
         {
@@ -194,7 +194,7 @@ namespace Kintsugi.Collision
         /// <summary>
         /// Gets all trigger collisions when a <paramref name="collider"/> would collide with any <see cref="GridLayer"/> at <paramref name="position"/> in <paramref name="grid"/>.
         /// Is a one way check, does not check the reverse direction.
-        /// Atleast one of the colliders must be a trigger in each collision. 
+        /// In triggerCollisionMode, atleast one of the colliders must be a trigger in each collision. 
         /// </summary>
         public static List<Collider> GetCollisionsColliderWithGridAtPosition(Collider collider, Grid grid, Vec2Int position, bool triggerCollisionMode = false)
         {
@@ -212,7 +212,7 @@ namespace Kintsugi.Collision
         /// <summary>
         /// Gets all trigger collisions when <paramref name="grid"/> collides against all <see cref="TileObject"/> at <paramref name="position"/>.
         /// Is a one way check, does not check the reverse direction.
-        /// Atleast one of the colliders must be a trigger in each collision. 
+        /// In triggerCollisionMode, atleast one of the colliders must be a trigger in each collision. 
         /// </summary>
         public static List<Collider> GetCollisionsGridAtPositionWithTileobjectsAtPosition(Grid grid, Vec2Int position, bool triggerCollisionMode = false)
         {
@@ -254,7 +254,7 @@ namespace Kintsugi.Collision
         /// <summary>
         /// Gets all trigger collisions when a <paramref name="collider"/> would collide with <paramref name="gridLayer"/> at <paramref name="position"/>.
         /// Is a one way check, does not check the reverse direction.
-        /// Atleast one of the colliders must be a trigger in each collision. 
+        /// In triggerCollisionMode, atleast one of the colliders must be a trigger in each collision. 
         /// </summary>
         public static List<Collider> GetCollisionsColliderWithGridlayerAtPosition(Collider collider, GridLayer gridLayer, Vec2Int position, bool triggerCollisionMode = false)
         {
@@ -281,7 +281,7 @@ namespace Kintsugi.Collision
         /// <summary>
         /// Gets all trigger collisions when <paramref name="gridLayer"/> collides against all <see cref="TileObject"/> at <paramref name="position"/>.
         /// Is a one way check, does not check the reverse direction.
-        /// Atleast one of the colliders must be a trigger in each collision. 
+        /// In triggerCollisionMode, atleast one of the colliders must be a trigger in each collision. 
         /// </summary>
         public static List<Collider> GetCollisionsGridlayerAtPositionWithTileobjectsAtPosition(Grid grid, GridLayer gridLayer, Vec2Int position, bool triggerCollisionMode = false)
         {

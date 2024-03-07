@@ -9,9 +9,13 @@ namespace Kintsugi.Collision
     public class Collider
     {
         private static Collider _voidCollider;
+        /// <summary>
+        /// The collider that the void uses.
+        /// </summary>
         public static Collider VoidCollider
         {
-            get {
+            get
+            {
                 if (_voidCollider == null)
                 {
                     _voidCollider = new();

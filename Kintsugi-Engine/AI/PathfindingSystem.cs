@@ -12,6 +12,15 @@ namespace Kintsugi.AI
 {
     public static class PathfindingSystem
     {
+        /// <summary>
+        /// Calculates a pathfinding result based on Dijkstras algorithm.
+        /// Finds the shortest paths to all reachable positions, with the given max cost.
+        /// </summary>
+        /// <param name="grid">Grid the search will be peformed on.</param>
+        /// <param name="startPosition">Start position of the search.</param>
+        /// <param name="maxCost">Defines the max cost of a path.</param>
+        /// <param name="pathfindingSettings">Settings to use for the algorithm.</param>
+        /// <returns>A pathfinding result, containing all shortest paths and relevant data.</returns>
         public static PathfindingResult Dijkstra(Grid grid, Vec2Int startPosition, float maxCost, PathfindingSettings pathfindingSettings = null)
         {
             Dictionary<Vec2Int, Vec2Int> fromDict = new();
