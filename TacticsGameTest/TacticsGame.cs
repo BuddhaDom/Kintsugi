@@ -9,6 +9,7 @@ using Kintsugi.Objects.Graphics;
 using TweenSharp.Animation;
 using Kintsugi.Objects;
 using Kintsugi.Collision;
+using Engine.EventSystem;
 
 namespace TacticsGameTest
 {
@@ -114,7 +115,7 @@ namespace TacticsGameTest
                             selectableActor = a;
                         }
                     }
-                    if (selectableActor != null)
+                    if (selectableActor != null && selectableActor.InTurn && EventManager.I.IsQueueDone())
                     {
                         if (selectedActor != null)
                         {
