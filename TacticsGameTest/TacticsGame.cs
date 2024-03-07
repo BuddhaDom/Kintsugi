@@ -8,6 +8,7 @@ using System.Threading.Tasks.Dataflow;
 using Kintsugi.Objects.Graphics;
 using TweenSharp.Animation;
 using Kintsugi.Objects;
+using Kintsugi.Collision;
 
 namespace TacticsGameTest
 {
@@ -20,8 +21,7 @@ namespace TacticsGameTest
 
         public override void Initialize()
         {
-            grid = new Grid(GetAssetManager().GetAssetPath("TiledTesting\\forestpath.tmx"),
-                gridVisible: true, gridColor: Color.DarkBlue)
+            grid = new Grid(GetAssetManager().GetAssetPath("Tilemaps\\Levels\\TestLevel.tmx"))
             {
                 Position =
                 {
@@ -31,9 +31,8 @@ namespace TacticsGameTest
             };
             Bootstrap.GetCameraSystem().Size = 16 * 10;
             character = new SelectableActor("bro", "FantasyBattlePack\\Thief\\Blue1.png");
-            character.AddToGrid(grid, 0);
+            character.AddToGrid(grid, 3);
             character.SetPosition(Vec2Int.One * 3);
-            character.SetCollider(["mine"], ["yours"]);
             // character.SetSpriteSingle(GetAssetManager().GetAssetPath("guy.png"), 
             //     Vector2.One / 2, new Vector2(6.5f, 8.5f));
 
@@ -100,7 +99,7 @@ namespace TacticsGameTest
             if (eventType == "MouseMotion")
             {
                 var gridPos = grid.WorldToGridPosition(Bootstrap.GetCameraSystem().ScreenToWorldSpace(new Vector2(inp.X, inp.Y)));
-                CursorTileObject.Cursor.SetCursor(grid, gridPos, 0);
+                CursorTileObject.Cursor.SetCursor(grid, gridPos, 5);
             }
             if (eventType == "MouseDown")
             {

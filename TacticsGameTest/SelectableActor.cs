@@ -13,6 +13,7 @@ namespace TacticsGameTest
 {
     internal class SelectableActor : Actor, IInputListener
     {
+        private PathfindingSettings pathfindingSettings = new();
         public string spritePath;
         private PathfindingResult PathfindingResult;
         public string name;
@@ -20,9 +21,12 @@ namespace TacticsGameTest
         {
             this.name = name;
             this.spritePath = spritePath;
-            SetCharacterAnimation(AnimationDirection.right, AnimationType.idle);
+            SetCharacterAnimation(AnimationDirection.right, AnimationType.idle, 1f);
             SetEasing(TweenSharp.Animation.Easing.QuadraticEaseOut, 0.5);
-
+            SetCollider(["unit"], ["water", "wall"]);
+            pathfindingSettings.AddCollideLayers(Collider.CollideLayers);
+            pathfindingSettings.SetCostLayer("road", 0.5f, 1);
+            pathfindingSettings.SetCostLayer("shrubbery", 2f, 1);
             Bootstrap.GetInput().AddListener(this);
         }
         private List<TileObject> walkHighlights = new();
@@ -39,7 +43,7 @@ namespace TacticsGameTest
         private void AddWalkHighlight(Vec2Int pos)
         {
             var mark = new TileObject();
-            mark.AddToGrid(Transform.Grid, 0);
+            mark.AddToGrid(Transform.Grid, 3);
             mark.SetSpriteSingle(Bootstrap.GetRunningGame().GetAssetManager().GetAssetPath("TinyBattles\\mark.png"));
             mark.SetEasing(TweenSharp.Animation.Easing.BounceEaseOut, 0.5f);
             mark.SetPosition(Transform.Position, false);
@@ -47,13 +51,16 @@ namespace TacticsGameTest
             walkHighlights.Add(mark);
         }
         private bool _isSelected;
+        private bool pathfinderUIActive = false;
         public void Select()
         {
+            pathfinderUIActive = true;
             _isSelected = true;
             PathfindingResult = PathfindingSystem.Dijkstra(
                 Transform.Grid,
                 Transform.Position,
-                5);
+                5,
+                pathfindingSettings);
             foreach (var item in PathfindingResult.ReachablePositions())
             {
                 if (item != PathfindingResult.StartPosition)
@@ -110,7 +117,7 @@ namespace TacticsGameTest
                             continue;
                         }
                         var pathSegment = new TileObject();
-                        pathSegment.AddToGrid(Transform.Grid, 0);
+                        pathSegment.AddToGrid(Transform.Grid, 3);
                         pathSegment.SetSpriteSingle(Bootstrap.GetRunningGame().GetAssetManager().GetAssetPath(PathToSpritePath(i)));
                         pathSegment.SetPosition(path.PathPositions[i]);
                         pathSegments.Add(pathSegment);
@@ -183,30 +190,34 @@ namespace TacticsGameTest
 
         public void HandleInput(InputEvent inp, string eventType)
         {
-            if (eventType == "MouseMotion")
+            if (InTurn && pathfinderUIActive)
             {
-                var gridPos = Transform.Grid.WorldToGridPosition(Bootstrap.GetCameraSystem().ScreenToWorldSpace(new Vector2(inp.X, inp.Y)));
-                SetPath(gridPos);
-            }
-            if (eventType == "MouseDown")
-            {
-                if (path != null)
+                if (eventType == "MouseMotion")
                 {
-                    Event curEvent = new DummyEvent();
-                    EventManager.I.Queue(curEvent);
-                    foreach (var item in path.PathPositions.Skip(1))
-                    {
-                        curEvent = new ActionEvent(() => MoveTo(item))
-                            .AddFinishAwait(this.Easing)
-                            .AddStartAwait(curEvent);
-                        EventManager.I.Queue(curEvent);
-                    }
-                    EventManager.I.Queue(new ActionEvent(() => SetCharacterAnimation(null, AnimationType.idle))
-                        .AddStartAwait(curEvent));
-                    ClearPath();
-                    RemoveWalkHighlights();
-                    PathfindingResult = null;
+                    var gridPos = Transform.Grid.WorldToGridPosition(Bootstrap.GetCameraSystem().ScreenToWorldSpace(new Vector2(inp.X, inp.Y)));
+                    SetPath(gridPos);
                 }
+                if (eventType == "MouseDown")
+                {
+                    if (path != null)
+                    {
+                        Event curEvent = new DummyEvent();
+                        EventManager.I.Queue(curEvent);
+                        foreach (var item in path.PathPositions.Skip(1))
+                        {
+                            curEvent = new ActionEvent(() => MoveTo(item))
+                                .AddFinishAwait(this.Easing)
+                                .AddStartAwait(curEvent);
+                            EventManager.I.Queue(curEvent);
+                        }
+                        EventManager.I.Queue(new ActionEvent(() => SetCharacterAnimation(null, AnimationType.idle, 1f))
+                            .AddStartAwait(curEvent));
+                        ClearPath();
+                        RemoveWalkHighlights();
+                        pathfinderUIActive = false;
+                    }
+                }
+
             }
 
         }
@@ -238,10 +249,12 @@ namespace TacticsGameTest
                 }
             }
 
-            SetCharacterAnimation(animDirection, AnimationType.walk);
+            float speed = MathF.Max(pathfindingSettings.GetCost(to, Transform.Grid), 0.1f);
 
 
+            SetCharacterAnimation(animDirection, AnimationType.walk, speed);
             SetPosition(to);
+
 
         }
 
@@ -250,7 +263,7 @@ namespace TacticsGameTest
         private AnimationType curAnimationType;
         private AnimationDirection curAnimationDirection;
 
-        public void SetCharacterAnimation(AnimationDirection? dir, AnimationType? type)
+        public void SetCharacterAnimation(AnimationDirection? dir, AnimationType? type, float speed)
         {
             if (dir == null) dir = curAnimationDirection;
             if (type == null) type = curAnimationType;
@@ -273,13 +286,15 @@ namespace TacticsGameTest
                 32,
                 32,
                 4,
-                0.5,
+                0.5 * speed,
                 Enumerable.Range(0, 4),
                 new Vector2(-0.5f, -0.5f),
                 default,
                 default,
                 new Vector2(0, directionSection * 32 * 5 + typeSection * 32));
 
+            SetEasing(TweenSharp.Animation.Easing.QuadraticEaseOut, speed * 0.5f);
+            
             curAnimationDirection = dir.Value;
             curAnimationType = type.Value;
         }

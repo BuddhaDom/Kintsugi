@@ -24,8 +24,14 @@ namespace TacticsGameTest
             frames.AddRange(Enumerable.Range(20, 16));
             frames.AddRange(Enumerable.Range(40, 16));
 
-            cursor.SetSpriteSingle(
-                Bootstrap.GetRunningGame().GetAssetManager().GetAssetPath("TinyBattles\\cursor.png")
+            cursor.SetAnimation(
+                Bootstrap.GetRunningGame().GetAssetManager().GetAssetPath("FantasyBattlePack\\SelectionCursor.png"),
+                32,
+                32,
+                2,
+                2f,
+                Enumerable.Range(0, 2),
+                new Vector2(-0.5f, -0.5f)
             );
 
             cursor.SetEasing(TweenSharp.Animation.Easing.QuadraticEaseOut, 0.1);

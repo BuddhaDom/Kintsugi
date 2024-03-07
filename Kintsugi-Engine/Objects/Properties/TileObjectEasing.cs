@@ -18,7 +18,7 @@ public class TileObjectEasing: IAwaitable
     public Vector2 CurrentPosition => 
         (TargetPosition - StartPosition) * (float)Evaluate() + StartPosition;
 
-    public bool IsFinished() => Progress >= 1f;
+    public bool IsFinished() => ((Bootstrap.TimeElapsed - StartTime) / Duration) >= 1;
 
     public double Evaluate(double progress) => EasingFunction(progress);
     public double Evaluate() => EasingFunction(Progress);

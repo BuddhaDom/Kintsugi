@@ -36,7 +36,6 @@ namespace Kintsugi.Collision
         /// Behavior when checking a collision outside the grid.
         /// </summary>
         public static VoidCollideMode VoidCollideMode { get; set; } = VoidCollideMode.always;
-        private static Collider voidCollider;
         private static bool VoidCollision(Collider c)
         {
             switch (VoidCollideMode)
@@ -46,12 +45,7 @@ namespace Kintsugi.Collision
                 case VoidCollideMode.never:
                     return false;
                 case VoidCollideMode.voidlayer:
-                    if (voidCollider == null)
-                    {
-                        voidCollider = new Collider();
-                        voidCollider.BelongLayers.Add("void");
-                    }
-                    return CollidesColliderWithCollider(c, voidCollider);
+                    return CollidesColliderWithCollider(c, Collider.VoidCollider);
                 default:
                     return true;
             }
@@ -74,24 +68,21 @@ namespace Kintsugi.Collision
         /// Is a one way check, does not check the reverse direction.
         /// Will never report collision if any are triggers.
         /// </summary>
-        public static bool CollidesColliderWithCollider(Collider collider, Collider otherCollider)
+        public static bool CollidesColliderWithCollider(Collider collider, Collider otherCollider, bool triggerCollisionMode = false)
         {
-            if (!collider.IsTrigger && !otherCollider.IsTrigger && CollisionLayerOverlaps(collider.CollideLayers, otherCollider.BelongLayers))
+            if (triggerCollisionMode)
             {
-                return true;
+                if ((collider.IsTrigger || otherCollider.IsTrigger) && CollisionLayerOverlaps(collider.CollideLayers, otherCollider.BelongLayers))
+                {
+                    return true;
+                }
             }
-            return false;
-        }
-        /// <summary>
-        /// Check if a trigger collision would occur when collider A would collide with collider B.
-        /// Is a one way check, does not check the reverse direction.
-        /// Atleast one of the colliders must be a trigger. 
-        /// </summary>
-        public static bool TriggerCollidesColliderWithCollider(Collider collider, Collider otherCollider)
-        {
-            if ((collider.IsTrigger || otherCollider.IsTrigger) && CollisionLayerOverlaps(collider.CollideLayers, otherCollider.BelongLayers))
+            else
             {
-                return true;
+                if (!collider.IsTrigger && !otherCollider.IsTrigger && CollisionLayerOverlaps(collider.CollideLayers, otherCollider.BelongLayers))
+                {
+                    return true;
+                }
             }
             return false;
         }
@@ -123,14 +114,14 @@ namespace Kintsugi.Collision
         /// Is a one way check, does not check the reverse direction.
         /// Atleast one of the colliders must be a trigger in each collision. 
         /// </summary>
-        public static List<Collider> GetCollidingTriggersColliderWithPosition(Collider collider, Grid grid, Vec2Int position)
+        public static List<Collider> GetCollisionsColliderWithPosition(Collider collider, Grid grid, Vec2Int position, bool triggerCollisionMode = false)
         {
             List<Collider> colliders = new();
             if (collider == null || grid == null) return colliders;
 
-            colliders.AddRange(GetCollidingTriggersColliderWithTileobjectsAtPosition(collider, grid, position));
+            colliders.AddRange(GetCollisionsColliderWithTileobjectsAtPosition(collider, grid, position, triggerCollisionMode));
 
-            colliders.AddRange(GetCollidingTriggersColliderWithGridAtPosition(collider, grid, position));
+            colliders.AddRange(GetCollisionsColliderWithGridAtPosition(collider, grid, position, triggerCollisionMode));
 
             return colliders;
         }
@@ -161,7 +152,7 @@ namespace Kintsugi.Collision
         /// Is a one way check, does not check the reverse direction.
         /// Atleast one of the colliders must be a trigger in each collision. 
         /// </summary>
-        public static List<Collider> GetCollidingTriggersColliderWithTileobjectsAtPosition(Collider collider, Grid grid, Vec2Int position)
+        public static List<Collider> GetCollisionsColliderWithTileobjectsAtPosition(Collider collider, Grid grid, Vec2Int position, bool triggerCollisionMode = false)
         {
             List<Collider> colliders = new();
             if (collider == null) return colliders;
@@ -171,7 +162,7 @@ namespace Kintsugi.Collision
 
             foreach (var otherObject in otherObjects)
             {
-                if (otherObject.Collider != null && TriggerCollidesColliderWithCollider(collider, otherObject.Collider))
+                if (otherObject.Collider != null && CollidesColliderWithCollider(collider, otherObject.Collider, triggerCollisionMode))
                 {
                     colliders.Add(otherObject.Collider);
                 }
@@ -212,7 +203,7 @@ namespace Kintsugi.Collision
         /// Is a one way check, does not check the reverse direction.
         /// Atleast one of the colliders must be a trigger in each collision. 
         /// </summary>
-        public static List<Collider> GetCollidingTriggersColliderWithGridAtPosition(Collider collider, Grid grid, Vec2Int position)
+        public static List<Collider> GetCollisionsColliderWithGridAtPosition(Collider collider, Grid grid, Vec2Int position, bool triggerCollisionMode = false)
         {
             List<Collider> colliders = new();
 
@@ -220,7 +211,7 @@ namespace Kintsugi.Collision
 
             foreach (var gridLayer in grid.Layers)
             {
-                colliders.AddRange(GetCollidingTriggersColliderWithGridlayerAtPosition(collider, gridLayer, position));
+                colliders.AddRange(GetCollisionsColliderWithGridlayerAtPosition(collider, gridLayer, position, triggerCollisionMode));
             }
             return colliders;
         }
@@ -230,13 +221,13 @@ namespace Kintsugi.Collision
         /// Is a one way check, does not check the reverse direction.
         /// Atleast one of the colliders must be a trigger in each collision. 
         /// </summary>
-        public static List<Collider> GetCollidingTriggersGridAtPositionWithTileobjectsAtPosition(Grid grid, Vec2Int position)
+        public static List<Collider> GetCollisionsGridAtPositionWithTileobjectsAtPosition(Grid grid, Vec2Int position, bool triggerCollisionMode = false)
         {
             List<Collider> colliders = new();
 
             foreach (var gridLayer in grid.Layers)
             {
-                colliders.AddRange(GetCollidingTriggersGridlayerAtPositionWithTileobjectsAtPosition(grid, gridLayer, position));
+                colliders.AddRange(GetCollisionsGridlayerAtPositionWithTileobjectsAtPosition(grid, gridLayer, position, triggerCollisionMode));
             }
             return colliders;
         }
@@ -272,19 +263,20 @@ namespace Kintsugi.Collision
         /// Is a one way check, does not check the reverse direction.
         /// Atleast one of the colliders must be a trigger in each collision. 
         /// </summary>
-        public static List<Collider> GetCollidingTriggersColliderWithGridlayerAtPosition(Collider collider, GridLayer gridLayer, Vec2Int position)
+        public static List<Collider> GetCollisionsColliderWithGridlayerAtPosition(Collider collider, GridLayer gridLayer, Vec2Int position, bool triggerCollisionMode = false)
         {
             List<Collider> colliders = new();
             if (collider == null || gridLayer.Collider == null) return colliders;
 
             if (!gridLayer.IsGridPositionWithinGrid(position))
             {
+                colliders.Add(Collider.VoidCollider);
                 return colliders;
             }
 
             if (!gridLayer.Tiles[position.x, position.y].IsEmpty)
             {
-                if (CollisionSystem.TriggerCollidesColliderWithCollider(collider, gridLayer.Collider))
+                if (CollisionSystem.CollidesColliderWithCollider(collider, gridLayer.Collider, triggerCollisionMode))
                 {
                     colliders.Add(gridLayer.Collider);
                     Console.WriteLine("Trying to get trigger collider on grid layer");
@@ -298,7 +290,7 @@ namespace Kintsugi.Collision
         /// Is a one way check, does not check the reverse direction.
         /// Atleast one of the colliders must be a trigger in each collision. 
         /// </summary>
-        public static List<Collider> GetCollidingTriggersGridlayerAtPositionWithTileobjectsAtPosition(Grid grid, GridLayer gridLayer, Vec2Int position)
+        public static List<Collider> GetCollisionsGridlayerAtPositionWithTileobjectsAtPosition(Grid grid, GridLayer gridLayer, Vec2Int position, bool triggerCollisionMode = false)
         {
             List<Collider> colliders = new();
             if (gridLayer.Collider == null) return colliders;
@@ -315,7 +307,7 @@ namespace Kintsugi.Collision
                 {
                     if (tileObject.Collider == null) continue;
 
-                    if (CollisionSystem.TriggerCollidesColliderWithCollider(gridLayer.Collider, tileObject.Collider))
+                    if (CollisionSystem.CollidesColliderWithCollider(gridLayer.Collider, tileObject.Collider, triggerCollisionMode))
                     {
                         colliders.Add(gridLayer.Collider);
                         Console.WriteLine("Trying to get trigger collider on grid layer");
