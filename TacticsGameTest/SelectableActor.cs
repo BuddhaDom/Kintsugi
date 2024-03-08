@@ -24,10 +24,12 @@ namespace TacticsGameTest
             this.spritePath = spritePath;
             SetCharacterAnimation(AnimationDirection.right, AnimationType.idle, 1f);
             SetEasing(TweenSharp.Animation.Easing.QuadraticEaseOut, 0.5);
-            SetCollider(["unit"], ["water", "wall"]);
+            SetCollider(["unit"], ["water", "wall", "unit"]);
             pathfindingSettings.AddCollideLayers(Collider.CollideLayers);
             pathfindingSettings.SetCostLayer("road", 0.5f, 1);
             pathfindingSettings.SetCostLayer("shrubbery", 2f, 1);
+            pathfindingSettings.SetCostLayer("unit", float.PositiveInfinity, 100);
+
             Bootstrap.GetInput().AddListener(this);
         }
         private List<TileObject> walkHighlights = new();
@@ -76,6 +78,7 @@ namespace TacticsGameTest
             _isSelected = false;
             PathfindingResult = null;
             RemoveWalkHighlights();
+            ClearPath();
             Console.WriteLine("im not selected :(");
         }
         public override void OnEndRound()
@@ -85,6 +88,7 @@ namespace TacticsGameTest
 
         public override void OnEndTurn()
         {
+            Graphic.Modulation = Color.FromArgb(64, 64, 64);
             Console.WriteLine(name + " End Turn");
         }
 
@@ -200,23 +204,37 @@ namespace TacticsGameTest
                 }
                 if (eventType == "MouseDown")
                 {
-                    if (path != null)
+                    if (inp.Button == SDL.SDL_BUTTON_LEFT)
                     {
-                        Event curEvent = new DummyEvent();
-                        EventManager.I.Queue(curEvent);
-                        foreach (var item in path.PathPositions.Skip(1))
+                        if (path != null)
                         {
-                            curEvent = new ActionEvent(() => MoveTo(item))
-                                .AddFinishAwait(this.Easing)
-                                .AddStartAwait(curEvent);
+                            Event curEvent = new DummyEvent();
                             EventManager.I.Queue(curEvent);
+                            foreach (var item in path.PathPositions.Skip(1))
+                            {
+                                curEvent = new ActionEvent(() => MoveTo(item))
+                                    .AddFinishAwait(this.Easing)
+                                    .AddStartAwait(curEvent);
+                                EventManager.I.Queue(curEvent);
+                            }
+                            var lastEvent = new ActionEvent(() => SetCharacterAnimation(null, AnimationType.idle, 1f))
+                                .AddStartAwait(curEvent);
+                            EventManager.I.Queue(lastEvent);
+                            EventManager.I.Queue(new ActionEvent(EndTurn).AddStartAwait(lastEvent));
+                            ClearPath();
+                            RemoveWalkHighlights();
+                            pathfinderUIActive = false;
                         }
-                        EventManager.I.Queue(new ActionEvent(() => SetCharacterAnimation(null, AnimationType.idle, 1f))
-                            .AddStartAwait(curEvent));
-                        ClearPath();
-                        RemoveWalkHighlights();
-                        pathfinderUIActive = false;
+                        else
+                        {
+                            Unselect();
+                        }
                     }
+                    else if(inp.Button == SDL.SDL_BUTTON_RIGHT)
+                    {
+                        Unselect();
+                    }
+                    
                 }
 
             }
@@ -295,7 +313,6 @@ namespace TacticsGameTest
                 new Vector2(0, directionSection * 32 * 5 + typeSection * 32));
 
             SetEasing(TweenSharp.Animation.Easing.QuadraticEaseOut, speed * 0.5f);
-            Graphic.Modulation = Color.FromArgb(128, 20, 160, 20);
             curAnimationDirection = dir.Value;
             curAnimationType = type.Value;
 

@@ -11,8 +11,6 @@ namespace TacticsGameTest
     internal class TacticsGame : Game, IInputListener
     {
         private Grid grid;
-        private SelectableActor character;
-        private MovementActor character2;
         private MovingScenario scenario;
 
         public override void Initialize()
@@ -26,20 +24,32 @@ namespace TacticsGameTest
                 }
             };
             Bootstrap.GetCameraSystem().Size = 16 * 10;
-            character = new SelectableActor("bro", "FantasyBattlePack\\AxeKnight\\Blue.png");
+            var character = new SelectableActor("bro", "FantasyBattlePack\\SwordFighter\\Longhair\\Blue1.png");
             character.AddToGrid(grid, 3);
             character.SetPosition(Vec2Int.One * 3);
+            var character2 = new SelectableActor("bro", "FantasyBattlePack\\Archer\\Blue1.png");
+            character2.AddToGrid(grid, 3);
+            character2.SetPosition(Vec2Int.One * 4);
+            var character3 = new SelectableActor("bro", "FantasyBattlePack\\AxeKnight\\Red.png");
+            character3.AddToGrid(grid, 3);
+            character3.SetPosition(Vec2Int.One * 6);
+
             // character.SetSpriteSingle(GetAssetManager().GetAssetPath("guy.png"), 
             //     Vector2.One / 2, new Vector2(6.5f, 8.5f));
 
             scenario = new MovingScenario();
             var group = new MyControlGroup("john's group");
-            // var group2 = new MyControlGroup("bob's group");
+            var group2 = new MyControlGroup("bob's group");
+            group2.Initiative = -2;
 
             group.AddActor(character);
+            group.AddActor(character2);
+            group2.AddActor(character3);
             //group.AddActor(character2);
 
             scenario.AddControlGroup(group);
+            scenario.AddControlGroup(group2);
+
             // scenario.AddControlGroup(group2);
 
             scenario.BeginScenario();
