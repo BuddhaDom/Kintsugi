@@ -131,5 +131,5 @@ public class Animation : ISpriteable, IAwaitable
     }
 
     public bool Flipped { get; set; }
-    public Color ColorModulation { get; set; } = Color.White;
+    public Color Modulation { get; set; } = Color.White;
 }

@@ -24,5 +24,5 @@ public interface ISpriteable
     /// <summary>
     /// Modulation of the texture color when rendered. Allows transparency.
     /// </summary>
-    public Color ColorModulation { get; set; }
+    public Color Modulation { get; set; }
 }
