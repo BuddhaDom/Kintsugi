@@ -1,6 +1,7 @@
 using Kintsugi.Core;
 using Kintsugi.EventSystem.Await;
 using SDL2;
+using System.Drawing;
 
 namespace Kintsugi.Objects.Graphics;
 
@@ -119,4 +120,5 @@ public class Animation : ISpriteable, IAwaitable
     }
 
     public bool Flipped { get; set; }
+    public Color Modulation { get; set; } = Color.White;
 }

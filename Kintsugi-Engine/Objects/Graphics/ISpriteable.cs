@@ -1,4 +1,5 @@
 using SDL2;
+using System.Drawing;
 
 namespace Kintsugi.Objects.Graphics;
 
@@ -20,4 +21,8 @@ public interface ISpriteable
     /// Determines if the graphic asset should be flipped horizontally when displayed.
     /// </summary>
     public bool Flipped { get; set; }
+    /// <summary>
+    /// Modulation of the texture color when rendered. Allows transparency.
+    /// </summary>
+    public Color Modulation { get; set; }
 }
