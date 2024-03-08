@@ -9,6 +9,8 @@ using Kintsugi.Tiles;
 using System.Numerics;
 using Kintsugi.AI;
 using System.Drawing;
+using Kintsugi.Objects.Graphics;
+using Kintsugi.EventSystem.Await;
 
 namespace TacticsGameTest
 {
@@ -227,7 +229,25 @@ namespace TacticsGameTest
                         }
                         else
                         {
-                            Unselect();
+                            var gridPos = Transform.Grid.WorldToGridPosition(Bootstrap.GetCameraSystem().ScreenToWorldSpace(new Vector2(inp.X, inp.Y)));
+
+                            var targeted = Transform.Grid.GetObjectsAtPosition(gridPos);
+                            SelectableActor selectableActor = null;
+                            foreach (var item in targeted)
+                            {
+                                if (item is SelectableActor a)
+                                {
+                                    selectableActor = a;
+                                }
+                            }
+                            if (selectableActor != null)
+                            {
+                                Attack(selectableActor);
+                            }
+                            else
+                            {
+                                Unselect();
+                            }
                         }
                     }
                     else if(inp.Button == SDL.SDL_BUTTON_RIGHT)
@@ -241,32 +261,40 @@ namespace TacticsGameTest
 
         }
 
-        public void MoveTo(Vec2Int to)
+        private AnimationDirection AnimationDirectionToTarget(Vec2Int from, Vec2Int to)
         {
-            AnimationDirection animDirection;
             Vec2Int dir = to - Transform.Position;
+            AnimationDirection animationDirection;
             if (Math.Abs(dir.x) > Math.Abs(dir.y))
             {
                 if (Math.Sign(dir.x) > 0)
                 {
-                    animDirection = AnimationDirection.right;
+                    animationDirection = AnimationDirection.right;
                 }
                 else
                 {
-                    animDirection = AnimationDirection.left;
+                    animationDirection = AnimationDirection.left;
                 }
             }
             else
             {
                 if (Math.Sign(dir.y) > 0)
                 {
-                    animDirection = AnimationDirection.down;
+                    animationDirection = AnimationDirection.down;
                 }
                 else
                 {
-                    animDirection = AnimationDirection.up;
+                    animationDirection = AnimationDirection.up;
                 }
             }
+
+            return animationDirection;
+        }
+
+        public void MoveTo(Vec2Int to)
+        {
+            AnimationDirection animDirection = AnimationDirectionToTarget(Transform.Position, to);
+            Vec2Int dir = to - Transform.Position;
 
             float speed = MathF.Max(pathfindingSettings.GetCost(to, Transform.Grid), 0.1f);
 
@@ -277,7 +305,7 @@ namespace TacticsGameTest
 
         }
 
-        public enum AnimationType { idle, walk, death, attack }
+        public enum AnimationType { idle, walk, attack, death }
         public enum AnimationDirection { left, right, up, down }
         private AnimationType curAnimationType;
         private AnimationDirection curAnimationDirection;
@@ -310,7 +338,8 @@ namespace TacticsGameTest
                 new Vector2(-0.5f, -0.5f),
                 default,
                 default,
-                new Vector2(0, directionSection * 32 * 5 + typeSection * 32));
+                new Vector2(0, directionSection * 32 * 5 + typeSection * 32),
+                type == AnimationType.attack ? 1 : 0);
 
             SetEasing(TweenSharp.Animation.Easing.QuadraticEaseOut, speed * 0.5f);
             curAnimationDirection = dir.Value;
@@ -326,6 +355,48 @@ namespace TacticsGameTest
             }
 
 
+        }
+
+        public void Attack(SelectableActor target)
+        {
+            var animationDirection = AnimationDirectionToTarget(Transform.Position, target.Transform.Position);
+
+            var beginAttack = new ActionEvent(() =>
+            {
+                SetCharacterAnimation(
+                    AnimationDirectionToTarget(Transform.Position, target.Transform.Position),
+                    AnimationType.attack,
+                    1f);
+            });
+
+            var spawnHitEffect = new ActionEvent(() =>
+            {
+                var hitEffect = new TileObject();
+                hitEffect.AddToGrid(target.Transform.Grid, target.Transform.Layer);
+                hitEffect.SetPosition(target.Transform.Position, false);
+                hitEffect.SetAnimation(
+                    Bootstrap.GetAssetManager().GetAssetPath("FantasyBattlePack\\CriticalHit.png"),
+                    32,
+                    32,
+                    4,
+                    0.5f,
+                    Enumerable.Range(0, 4),
+                    new Vector2(-0.5f, -0.5f),
+                    default,
+                    default,
+                    default,
+                    1);
+
+                var removeEffect = new ActionEvent(() =>
+                {
+                    hitEffect.RemoveFromGrid();
+                }).AddStartAwait(((Animation)hitEffect.Graphic));
+                EventManager.I.Queue(removeEffect);
+
+            }).AddStartAwait(new WaitForSeconds(0.25f));
+
+            EventManager.I.Queue(beginAttack);
+            EventManager.I.Queue(spawnHitEffect);
         }
     }
 }

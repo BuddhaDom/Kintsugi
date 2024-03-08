@@ -87,7 +87,7 @@ public class Animation : ISpriteable, IAwaitable
     // ==========================================
     public ISpriteProperties Properties => SpriteSheet;
 
-    public bool IsFinished() => Playing == false;
+    public bool IsFinished() => (Bootstrap.TimeElapsed - StartTime) > TimeLength;
 
     public SDL.SDL_Rect SourceRect()
     {
