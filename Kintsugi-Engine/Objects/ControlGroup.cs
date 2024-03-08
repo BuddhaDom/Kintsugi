@@ -37,15 +37,31 @@ namespace Kintsugi.Objects
 
 
 
-
+        /// <summary>
+        /// Add an actor to this control group.
+        /// </summary>
+        /// <param name="actor">Actor to be added.</param>
+        /// <exception cref="Exception">If actor is null.</exception>
         public void AddActor(Actor actor)
         {
             if (actor == null) throw new Exception("Cannot add null actor to group");
             actors.Add(actor);
         }
+        /// <summary>
+        /// Remove an actor from the control group.
+        /// </summary>
+        /// <param name="actor">Actor to be removed.</param>
         public void RemoveActor(Actor actor)
         {
             actors.Remove(actor);
+        }
+        /// <summary>
+        /// Get a list of all actors in the control group.
+        /// </summary>
+        /// <param name="actor">Actor to be removed.</param>
+        public IEnumerable<Actor> GetActors() 
+        {
+            return actors;
         }
 
 
