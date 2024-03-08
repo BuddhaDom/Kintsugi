@@ -78,6 +78,7 @@ namespace TacticsGameTest
             _isSelected = false;
             PathfindingResult = null;
             RemoveWalkHighlights();
+            ClearPath();
             Console.WriteLine("im not selected :(");
         }
         public override void OnEndRound()
@@ -203,25 +204,37 @@ namespace TacticsGameTest
                 }
                 if (eventType == "MouseDown")
                 {
-                    if (path != null)
+                    if (inp.Button == SDL.SDL_BUTTON_LEFT)
                     {
-                        Event curEvent = new DummyEvent();
-                        EventManager.I.Queue(curEvent);
-                        foreach (var item in path.PathPositions.Skip(1))
+                        if (path != null)
                         {
-                            curEvent = new ActionEvent(() => MoveTo(item))
-                                .AddFinishAwait(this.Easing)
-                                .AddStartAwait(curEvent);
+                            Event curEvent = new DummyEvent();
                             EventManager.I.Queue(curEvent);
+                            foreach (var item in path.PathPositions.Skip(1))
+                            {
+                                curEvent = new ActionEvent(() => MoveTo(item))
+                                    .AddFinishAwait(this.Easing)
+                                    .AddStartAwait(curEvent);
+                                EventManager.I.Queue(curEvent);
+                            }
+                            var lastEvent = new ActionEvent(() => SetCharacterAnimation(null, AnimationType.idle, 1f))
+                                .AddStartAwait(curEvent);
+                            EventManager.I.Queue(lastEvent);
+                            EventManager.I.Queue(new ActionEvent(EndTurn).AddStartAwait(lastEvent));
+                            ClearPath();
+                            RemoveWalkHighlights();
+                            pathfinderUIActive = false;
                         }
-                        var lastEvent = new ActionEvent(() => SetCharacterAnimation(null, AnimationType.idle, 1f))
-                            .AddStartAwait(curEvent);
-                        EventManager.I.Queue(lastEvent);
-                        EventManager.I.Queue(new ActionEvent(EndTurn).AddStartAwait(lastEvent));
-                        ClearPath();
-                        RemoveWalkHighlights();
-                        pathfinderUIActive = false;
+                        else
+                        {
+                            Unselect();
+                        }
                     }
+                    else if(inp.Button == SDL.SDL_BUTTON_RIGHT)
+                    {
+                        Unselect();
+                    }
+                    
                 }
 
             }
