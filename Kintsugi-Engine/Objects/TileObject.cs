@@ -52,7 +52,7 @@ public class TileObject
             List<Collider> selfTriggers = new();
             List<Collider> otherTriggers = new();
 
-            otherTriggers.AddRange(CollisionSystem.GetCollidingTriggersColliderWithPosition(Collider, Transform.Grid, Transform.Position));
+            otherTriggers.AddRange(CollisionSystem.GetCollisionsColliderWithPosition(Collider, Transform.Grid, Transform.Position, true));
             var otherObjects = Transform.Grid.GetObjectsAtPosition(pos);
             if (otherObjects != null)
             {
@@ -60,13 +60,13 @@ public class TileObject
                 {
                     if (tileObject != this && tileObject.Collider != null)
                     {
-                        if (CollisionSystem.TriggerCollidesColliderWithCollider(tileObject.Collider, Collider))
+                        if (CollisionSystem.CollidesColliderWithCollider(tileObject.Collider, Collider, true))
                         {
                             selfTriggers.Add(tileObject.Collider);
                         }
                     }
                 }
-                selfTriggers.AddRange(CollisionSystem.GetCollidingTriggersGridAtPositionWithTileobjectsAtPosition(Transform.Grid, Transform.Position));
+                selfTriggers.AddRange(CollisionSystem.GetCollisionsGridAtPositionWithTileobjectsAtPosition(Transform.Grid, Transform.Position, true));
             }
             
             foreach (var selfTrigger in selfTriggers)
@@ -290,11 +290,19 @@ public class TileObject
     /// <param name="function">Easing function.</param>
     /// <param name="duration">Duration of the interpolation.</param>
     public void SetEasing(Easing.EasingFunction function,[Range(0,double.MaxValue)] double duration)
+    {
+        Easing.End();
+        Easing.EasingFunction = function;
+        Easing.StartPosition = Transform.WorldSpacePosition;
+        Easing.TargetPosition = Transform.WorldSpacePosition;
+        Easing.Duration = duration;
+    }
+        /*
         => Easing = new TileObjectEasing() 
         {
             EasingFunction = function,
             Duration = duration,
             StartPosition = Transform.WorldSpacePosition,
             TargetPosition = Transform.WorldSpacePosition
-        };
+        };*/
 }

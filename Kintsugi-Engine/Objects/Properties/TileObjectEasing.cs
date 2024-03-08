@@ -52,7 +52,7 @@ public class TileObjectEasing: IAwaitable
     /// Determines if the easing has finished.
     /// </summary>
     /// <returns></returns>
-    public bool IsFinished() => Progress >= 1f;
+    public bool IsFinished() => ((Bootstrap.TimeElapsed - StartTime) / Duration) >= 1;
 
     /// <summary>
     /// Evaluate easing based on a given progress percentage.

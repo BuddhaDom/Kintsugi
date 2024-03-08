@@ -7,20 +7,22 @@ using System.Numerics;
 using System.Threading.Tasks.Dataflow;
 using Kintsugi.Objects.Graphics;
 using TweenSharp.Animation;
+using Kintsugi.Objects;
+using Kintsugi.Collision;
+using Engine.EventSystem;
 
 namespace TacticsGameTest
 {
     internal class TacticsGame : Game, IInputListener
     {
         private Grid grid;
-        private MovementActor character;
+        private SelectableActor character;
         private MovementActor character2;
         private MovingScenario scenario;
 
         public override void Initialize()
         {
-            grid = new Grid(GetAssetManager().GetAssetPath("TiledTesting\\forestpath.tmx"),
-                gridVisible: true, gridColor: Color.DarkBlue)
+            grid = new Grid(GetAssetManager().GetAssetPath("Tilemaps\\Levels\\TestLevel.tmx"))
             {
                 Position =
                 {
@@ -29,26 +31,11 @@ namespace TacticsGameTest
                 }
             };
             Bootstrap.GetCameraSystem().Size = 16 * 10;
-            character = new MovementActor("Guy Dudelyn from house Brolew");
-            character.AddToGrid(grid, 0);
+            character = new SelectableActor("bro", "FantasyBattlePack\\AxeKnight\\Blue.png");
+            character.AddToGrid(grid, 3);
             character.SetPosition(Vec2Int.One * 3);
-            character.SetCollider(["mine"], ["yours"]);
             // character.SetSpriteSingle(GetAssetManager().GetAssetPath("guy.png"), 
             //     Vector2.One / 2, new Vector2(6.5f, 8.5f));
-
-            var frames = new List<int>();
-            // frames.AddRange(Enumerable.Range(00, 16));
-            // frames.AddRange(Enumerable.Range(20, 16));
-            // frames.AddRange(Enumerable.Range(40, 16));
-            frames.AddRange(Enumerable.Range(04, 04));
-
-            character.SetAnimation(
-                GetAssetManager().GetAssetPath("bro.png"),
-                32, 32, 4, 1, frames, tilePivot: new Vector2(-0.5f, -0.5f),
-                repeats: 0, bounces: false, autoStart: true
-            );
-
-            character.SetEasing(Easing.QuadraticEaseOut, 0.5);
 
             scenario = new MovingScenario();
             var group = new MyControlGroup("john's group");
@@ -65,12 +52,8 @@ namespace TacticsGameTest
             Bootstrap.GetInput().AddListener(this);
         }
 
-        public override void Update()
+        private void CameraMovement()
         {
-
-            //Bootstrap.GetDisplay().ShowText("FPS: " + Bootstrap.GetSecondFPS() + " / " + Bootstrap.GetFPS(), 10, 10, 12, 255, 255, 255);
-
-
             var movement = Vector2.Zero;
             if (up)
             {
@@ -99,15 +82,53 @@ namespace TacticsGameTest
                 Bootstrap.GetCameraSystem().Size *= (1 / (1f + 1f * (float)Bootstrap.GetDeltaTime()));
             }
         }
+        public override void Update()
+        {
+            CameraMovement();
+            //Bootstrap.GetDisplay().ShowText("FPS: " + Bootstrap.GetSecondFPS() + " / " + Bootstrap.GetFPS(), 10, 10, 12, 255, 255, 255);
 
+
+
+        }
+
+        private SelectableActor selectedActor;
         bool up, down, left, right, zoomIn, zoomOut;
         public void HandleInput(InputEvent inp, string eventType)
         {
+            if (eventType == "MouseMotion")
+            {
+                var gridPos = grid.WorldToGridPosition(Bootstrap.GetCameraSystem().ScreenToWorldSpace(new Vector2(inp.X, inp.Y)));
+                CursorTileObject.Cursor.SetCursor(grid, gridPos, 5);
+            }
             if (eventType == "MouseDown")
             {
                 var gridPos = grid.WorldToGridPosition(Bootstrap.GetCameraSystem().ScreenToWorldSpace(new Vector2(inp.X, inp.Y)));
-                Console.WriteLine(gridPos);
-                Console.WriteLine(grid.GridToWorldPosition(gridPos));
+
+                var objects = grid.GetObjectsAtPosition(gridPos);
+                if (objects != null)
+                {
+                    SelectableActor selectableActor = null;
+                    foreach (var item in objects)
+                    {
+                        if (item is SelectableActor a)
+                        {
+                            selectableActor = a;
+                        }
+                    }
+                    if (selectableActor != null && selectableActor.InTurn && EventManager.I.IsQueueDone())
+                    {
+                        if (selectedActor != null)
+                        {
+                            selectedActor.Unselect();
+                        }
+                        selectedActor = selectableActor;
+                        selectedActor.Select();
+                        Console.WriteLine(selectableActor.name);
+                    }
+
+                }
+                //Console.WriteLine(gridPos);
+                //Console.WriteLine(grid.GridToWorldPosition(gridPos));
 
             }
 

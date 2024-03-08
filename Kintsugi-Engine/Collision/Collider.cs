@@ -8,6 +8,22 @@ namespace Kintsugi.Collision
     /// </summary>
     public class Collider
     {
+        private static Collider _voidCollider;
+        /// <summary>
+        /// The collider that the void uses.
+        /// </summary>
+        public static Collider VoidCollider
+        {
+            get
+            {
+                if (_voidCollider == null)
+                {
+                    _voidCollider = new();
+                    _voidCollider.BelongLayers.Add("void");
+                }
+                return _voidCollider;
+            }
+        }
         /// <summary>
         /// Layers that this collider belongs to, that others can collide with.
         /// </summary>

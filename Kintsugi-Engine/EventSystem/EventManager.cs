@@ -49,13 +49,20 @@ namespace Engine.EventSystem
         {
             EventQueue.Insert(0, new ActionEvent(action));
         }
+        /// <summary>
+        /// Checks if any event is being processed in the queue.
+        /// </summary>
+        public bool IsQueueDone()
+        {
+            return EventQueue.Count == 0;
+        }
 
         internal void ProcessQueue()
         {
             for (int i = 0; i < EventQueue.Count; i++)
             {
                 var currentEvent = EventQueue[i];
-                
+
                 // This event has already finished, keep going.
                 if (currentEvent.IsFinished())
                 {
