@@ -4,11 +4,6 @@ using Kintsugi.Tiles;
 using SDL2;
 using System.Drawing;
 using System.Numerics;
-using System.Threading.Tasks.Dataflow;
-using Kintsugi.Objects.Graphics;
-using TweenSharp.Animation;
-using Kintsugi.Objects;
-using Kintsugi.Collision;
 using Engine.EventSystem;
 
 namespace TacticsGameTest
@@ -48,6 +43,7 @@ namespace TacticsGameTest
             // scenario.AddControlGroup(group2);
 
             scenario.BeginScenario();
+
 
             Bootstrap.GetInput().AddListener(this);
         }

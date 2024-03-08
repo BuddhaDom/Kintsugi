@@ -1,4 +1,5 @@
 using SDL2;
+using System.Drawing;
 
 namespace Kintsugi.Objects.Graphics;
 
@@ -21,4 +22,5 @@ public class SpriteSingle : ISpriteable
         };
 
     public bool Flipped { get; set; }
+    public Color Modulation { get; set; } = Color.White;
 }
