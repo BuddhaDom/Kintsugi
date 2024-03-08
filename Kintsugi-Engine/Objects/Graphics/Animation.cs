@@ -14,10 +14,20 @@ public class Animation : ISpriteable, IAwaitable
     /// Duration of the animation.
     /// </summary>
     public double TimeLength { get; set; }
+    
+    private int repeats;
     /// <summary>
     /// Number of times the animation should repeat. Set to <c>0</c> if it repeats indefinitely.
     /// </summary>
-    public int Repeats { get; set; }
+    public int Repeats
+    {
+        get => repeats;
+        set
+        {
+            repeats = value;
+            Stop();
+        }
+    }
     /// <summary>
     /// Determines if the animation is meant to play backwards once it reaches its last frame.
     /// </summary>
@@ -37,7 +47,7 @@ public class Animation : ISpriteable, IAwaitable
     /// <summary>
     /// Sprite sheet containing the frames relevant to the animation.
     /// </summary>
-    public SpriteSheet SpriteSheet { get; internal set; }
+    public SpriteSheet SpriteSheet { get; set; }
     private IReadOnlyList<int> BounceFrameIndexes { get; set; } = [];
     private IReadOnlyList<int> frameIndexes = [];
     /// <summary>
@@ -49,7 +59,8 @@ public class Animation : ISpriteable, IAwaitable
         set
         {
             frameIndexes = value;
-            BounceFrameIndexes = new List<int>(value).Concat(value.AsEnumerable().Reverse().Skip(1).SkipLast(1)).ToList();
+            BounceFrameIndexes = new List<int>(value)
+                .Concat(value.AsEnumerable().Reverse().Skip(1).SkipLast(1)).ToList();
         }
     }
     
