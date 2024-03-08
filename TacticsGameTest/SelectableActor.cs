@@ -295,7 +295,7 @@ namespace TacticsGameTest
                 new Vector2(0, directionSection * 32 * 5 + typeSection * 32));
 
             SetEasing(TweenSharp.Animation.Easing.QuadraticEaseOut, speed * 0.5f);
-            Graphic.Modulation = Color.FromArgb(128, 20, 160, 20);
+            Graphic.ColorModulation = Color.FromArgb(128, 20, 160, 20);
             curAnimationDirection = dir.Value;
             curAnimationType = type.Value;
 

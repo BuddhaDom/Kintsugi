@@ -309,7 +309,7 @@ namespace Kintsugi.Rendering
                                 tRect.w = xsize;
                                 tRect.h = ysize;
 
-                                var color = tileObject.Graphic.Modulation;
+                                var color = tileObject.Graphic.ColorModulation;
                                 SDL.SDL_SetTextureColorMod(sprite, color.R, color.G, color.B);
                                 SDL.SDL_SetTextureAlphaMod(sprite, color.A);
 

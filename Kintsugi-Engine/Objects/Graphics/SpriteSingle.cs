@@ -22,5 +22,5 @@ public class SpriteSingle : ISpriteable
         };
 
     public bool Flipped { get; set; }
-    public Color Modulation { get; set; } = Color.White;
+    public Color ColorModulation { get; set; } = Color.White;
 }
