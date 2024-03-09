@@ -20,6 +20,9 @@ namespace TacticsGameTest
         public string spritePath;
         private PathfindingResult PathfindingResult;
         public string name;
+        private int maxMoves = 2;
+        private int movesLeft;
+        public int MovementRange;
         public SelectableActor(string name, string spritePath)
         {
             this.name = name;
@@ -45,7 +48,7 @@ namespace TacticsGameTest
             }
             walkHighlights.Clear();
         }
-        private void AddWalkHighlight(Vec2Int pos)
+        private void AddWalkHighlight(Vec2Int pos, bool sprint)
         {
             var mark = new TileObject();
             mark.AddToGrid(Transform.Grid, 3);
@@ -59,21 +62,35 @@ namespace TacticsGameTest
         private bool pathfinderUIActive = false;
         public void Select()
         {
-            pathfinderUIActive = true;
             _isSelected = true;
+            Console.WriteLine("im selected!!");
+        }
+        public void BeginPathfind()
+        {
+            if (movesLeft == 0)
+            {
+                Console.WriteLine("no moves left but trying to pathfind");
+                return;
+            }
+            pathfinderUIActive = true;
+
             PathfindingResult = PathfindingSystem.Dijkstra(
                 Transform.Grid,
                 Transform.Position,
-                5,
+                MovementRange * movesLeft,
                 pathfindingSettings);
             foreach (var item in PathfindingResult.ReachablePositions())
             {
                 if (item != PathfindingResult.StartPosition)
                 {
-                    AddWalkHighlight(item);
+                    AddWalkHighlight(item, IsSprint(PathfindingResult.GetCost(item)));
                 }
             }
-            Console.WriteLine("im selected!!");
+
+        }
+        private bool IsSprint(float cost)
+        {
+            return cost > MovementRange;
         }
         public void Unselect()
         {
@@ -101,10 +118,16 @@ namespace TacticsGameTest
 
         public override void OnStartTurn()
         {
-
+            movesLeft = maxMoves;
             Console.WriteLine(name + " Start Turn");
         }
-
+        public void CheckEndTurn()
+        {
+            if (movesLeft == 0)
+            {
+                EndTurn();
+            }
+        }
         public void SetPath(Vec2Int pos)
         {
             if (path != null && path.PathPositions.Last() == pos)
@@ -222,7 +245,7 @@ namespace TacticsGameTest
                             var lastEvent = new ActionEvent(() => SetCharacterAnimation(null, AnimationType.idle, 1f))
                                 .AddStartAwait(curEvent);
                             EventManager.I.Queue(lastEvent);
-                            EventManager.I.Queue(new ActionEvent(EndTurn).AddStartAwait(lastEvent));
+                            EventManager.I.Queue(new ActionEvent(CheckEndTurn).AddStartAwait(lastEvent));
                             ClearPath();
                             RemoveWalkHighlights();
                             pathfinderUIActive = false;
@@ -250,11 +273,11 @@ namespace TacticsGameTest
                             }
                         }
                     }
-                    else if(inp.Button == SDL.SDL_BUTTON_RIGHT)
+                    else if (inp.Button == SDL.SDL_BUTTON_RIGHT)
                     {
                         Unselect();
                     }
-                    
+
                 }
 
             }
