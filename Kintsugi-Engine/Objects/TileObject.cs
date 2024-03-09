@@ -245,8 +245,16 @@ public class TileObject
     public void SetAnimation(SpriteSheet spriteSheet, double timeLength, IEnumerable<int> frames,
         int repeats = 0, bool bounces = false, bool autoStart = true)
     {
-        var animation = new Animation(timeLength, spriteSheet, frames, repeats, bounces);
-        Graphic = animation;
+        if (Graphic is Animation animation)
+        {
+            animation.SpriteSheet = spriteSheet;
+            animation.TimeLength = timeLength;
+            animation.FrameIndexes = (IReadOnlyList<int>)frames;
+            animation.Repeats = repeats;
+            animation.Bounces = bounces;
+        }
+        else
+            Graphic = new Animation(timeLength, spriteSheet, frames, repeats, bounces);;
         if (autoStart) ((Animation)Graphic).Start();
     }
         
