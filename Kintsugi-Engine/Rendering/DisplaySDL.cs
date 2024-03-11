@@ -16,6 +16,7 @@ using Kintsugi.Tiles;
 using SDL2;
 using System.Numerics;
 using Kintsugi.Objects.Graphics;
+using Kintsugi.UI;
 
 namespace Kintsugi.Rendering
 {
@@ -59,6 +60,7 @@ namespace Kintsugi.Rendering
         private List<Line> _linesToDraw;
         private List<Circle> _circlesToDraw;
         private List<Grid> _gridsToDraw;
+        private List<Canvas> _canvasesToDraw;
         private Dictionary<string, nint> spriteBuffer;
         public override void Initialize()
         {
@@ -66,10 +68,10 @@ namespace Kintsugi.Rendering
 
             base.Initialize();
 
-            _linesToDraw = new List<Line>();
-            _circlesToDraw = new List<Circle>();
-            _gridsToDraw = new List<Grid>();
-
+            _linesToDraw = [];
+            _circlesToDraw = [];
+            _gridsToDraw = [];
+            _canvasesToDraw = [];
         }
 
         /// <summary>
@@ -285,7 +287,7 @@ namespace Kintsugi.Rendering
                                          o.Graphic != null
                                          ))
                             {
-                                var sprite = ((DisplaySDL)Bootstrap.GetDisplay()).LoadTexture(tileObject.Graphic!.Properties.Path);
+                                var sprite = LoadTexture(tileObject.Graphic!.Properties.Path);
 
                                 sRect = tileObject.Graphic.SourceRect();
 
@@ -339,6 +341,40 @@ namespace Kintsugi.Rendering
                     (int)end.X,
                     (int)end.Y);
             }
+            
+            foreach (var canvas in _canvasesToDraw.Where(c => c.Visible))
+            {
+                foreach (var canvasObject in canvas.Objects)
+                {
+                    if (canvasObject.Graphic is not null && canvasObject.Graphic.Properties.Path != "")
+                    {
+                        sRect = canvasObject.Graphic.SourceRect();
+                        var sprite = LoadTexture(canvasObject.Graphic.Properties.Path);
+                        tRect.x = (int)(canvas.Position.X + canvasObject.Position.X); 
+                        tRect.y = (int)(canvas.Position.Y + canvasObject.Position.Y);
+                        tRect.w = (int)((tRect.x + canvasObject.Graphic.Properties.Dimensions.x) * canvasObject.Graphic.Scale.X);
+                        tRect.h = (int)((tRect.y + canvasObject.Graphic.Properties.Dimensions.y) * canvasObject.Graphic.Scale.Y);
+                        SDL.SDL_RenderCopyEx(_rend,
+                            sprite,
+                            ref sRect,
+                            ref tRect,
+                            0,
+                            nint.Zero,
+                            SDL.SDL_RendererFlip.SDL_FLIP_NONE);
+                    }
+                    if (canvasObject.Text != "")
+                    {
+                        ShowText(
+                            canvasObject.Text,
+                            canvas.Position.X + canvasObject.Position.X + canvasObject.TextPosition.X,
+                            canvas.Position.Y + canvasObject.Position.Y + canvasObject.TextPosition.Y,
+                            canvasObject.FontSize,
+                            canvasObject.TextColor,
+                            canvasObject.FontPath
+                        );
+                    }
+                }
+            }
 
             // Show it off.
             base.Display();
@@ -351,13 +387,15 @@ namespace Kintsugi.Rendering
             _circlesToDraw.Clear();
             _linesToDraw.Clear();
             _gridsToDraw.Clear();
+            _canvasesToDraw.Clear();
 
             base.ClearDisplay();
         }
 
         public override void DrawGrid(Grid grid)
             => _gridsToDraw.Add(grid);
+
+        public override void DrawCanvas(Canvas canvas)
+            => _canvasesToDraw.Add(canvas);
     }
-
-
 }

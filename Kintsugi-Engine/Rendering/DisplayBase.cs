@@ -9,6 +9,7 @@
 using Kintsugi.Core;
 using System.Drawing;
 using Kintsugi.Tiles;
+using Kintsugi.UI;
 
 namespace Kintsugi.Rendering
 {
@@ -112,9 +113,9 @@ namespace Kintsugi.Rendering
         /// <param name="y">Position y</param>
         /// <param name="size">Font size</param>
         /// <param name="col">Color of text.</param>
-        public void ShowText(string text, double x, double y, int size, Color col)
+        public void ShowText(string text, double x, double y, int size, Color col, string fontPath = "Fonts/calibri.ttf")
         {
-            ShowText(text, x, y, size, col.R, col.G, col.B);
+            ShowText(text, x, y, size, col.R, col.G, col.B, fontPath);
         }
 
 
@@ -194,7 +195,9 @@ namespace Kintsugi.Rendering
         /// <param name="r">Red color value</param>
         /// <param name="g">Green color value</param>
         /// <param name="b">Blue color value</param>
-        public abstract void ShowText(string text, double x, double y, int size, int r, int g, int b);
+        /// <param name="fontPath">Path to the font to use.</param>
+        public abstract void ShowText(string text, double x, double y, int size, int r, int g, int b, string fontPath = "Fonts/calibri.ttf");
+
         /// <summary>
         /// Show text onto the display.
         /// </summary>
@@ -204,14 +207,20 @@ namespace Kintsugi.Rendering
         /// <param name="size">Font size</param>
         /// <param name="r">Red color value</param>
         /// <param name="g">Green color value</param>
-        public abstract void ShowText(char[,] text, double x, double y, int size, int r, int g, int b);
-        
+        /// <param name="b">Blue color value</param>
+        /// <param name="fontPath">Path to the font to use.</param>
+        public abstract void ShowText(char[,] text, double x, double y, int size, int r, int g, int b, string fontPath = "Fonts/calibri.ttf");
+
         /// <summary>
         /// Draw a grid into the display.
         /// </summary>
         /// <param name="grid">Grid to display.</param>
-        public virtual void DrawGrid(Grid grid)
-        {
-        }
+        public virtual void DrawGrid(Grid grid) {}
+        
+        /// <summary>
+        /// Draw a canvas onto camera space.
+        /// </summary>
+        /// <param name="canvas">The canvas to display.</param>
+        public virtual void DrawCanvas(Canvas canvas) {}
     }
 }

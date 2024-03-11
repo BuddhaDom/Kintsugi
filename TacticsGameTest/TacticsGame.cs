@@ -5,6 +5,8 @@ using SDL2;
 using System.Drawing;
 using System.Numerics;
 using Engine.EventSystem;
+using Kintsugi.Objects.Graphics;
+using Kintsugi.UI;
 
 namespace TacticsGameTest
 {
@@ -54,6 +56,19 @@ namespace TacticsGameTest
 
             scenario.BeginScenario();
 
+            var canvas = new Canvas();
+            var canvasObject = new CanvasObject
+            {
+                FontPath = "Fonts\\calibri.ttf",
+                Text = "Test",
+                FontSize = 72,
+                Position = Vector2.Zero
+            };
+            
+            canvasObject.SetSpriteSingle(GetAssetManager().GetAssetPath("guy.png"), Vector2.One * 10);
+            
+            canvas.Objects.Add(canvasObject);
+            
 
             Bootstrap.GetInput().AddListener(this);
         }

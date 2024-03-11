@@ -1,5 +1,6 @@
 using SDL2;
 using System.Drawing;
+using System.Numerics;
 
 namespace Kintsugi.Objects.Graphics;
 
@@ -25,4 +26,5 @@ public interface ISpriteable
     /// Modulation of the texture color when rendered. Allows transparency.
     /// </summary>
     public Color Modulation { get; set; }
+    public Vector2 Scale { get; set; }
 }

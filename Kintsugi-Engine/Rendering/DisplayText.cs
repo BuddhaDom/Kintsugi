@@ -169,11 +169,11 @@ namespace Kintsugi.Rendering
 
 
 
-        public override void ShowText(string text, double x, double y, int size, int r, int g, int b)
+        public override void ShowText(string text, double x, double y, int size, int r, int g, int b, string fontPath = "Fonts/calibri.ttf")
         {
             int nx, ny, w = 0, h = 0;
 
-            nint font = LoadFont("Fonts/calibri.ttf", size);
+            nint font = LoadFont(fontPath, size);
             SDL.SDL_Color col = new()
             {
                 r = (byte)r,
@@ -211,7 +211,7 @@ namespace Kintsugi.Rendering
 
 
         }
-        public override void ShowText(char[,] text, double x, double y, int size, int r, int g, int b)
+        public override void ShowText(char[,] text, double x, double y, int size, int r, int g, int b, string fontPath = "Fonts/calibri.ttf")
         {
             string str = "";
             int row = 0;
@@ -225,7 +225,7 @@ namespace Kintsugi.Rendering
                 }
 
 
-                ShowText(str, x, y + row * size, size, r, g, b);
+                ShowText(str, x, y + row * size, size, r, g, b, fontPath);
                 row += 1;
 
             }
