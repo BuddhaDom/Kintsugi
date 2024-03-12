@@ -17,6 +17,7 @@ using SDL2;
 using System.Numerics;
 using Kintsugi.Objects.Graphics;
 using Kintsugi.UI;
+using static SDL2.SDL;
 
 namespace Kintsugi.Rendering
 {
@@ -351,9 +352,28 @@ namespace Kintsugi.Rendering
                         sRect = canvasObject.Graphic.SourceRect();
                         var sprite = LoadTexture(canvasObject.Graphic.Properties.Path);
 
-                        var pivotOffsetPosition = canvasObject.Position - canvasObject.Graphic.Properties.ImagePivot * canvasObject.Graphic.Scale;
-                        tRect.x = (int)(canvas.Position.X + pivotOffsetPosition.X); 
-                        tRect.y = (int)(canvas.Position.Y + pivotOffsetPosition.Y);
+                        var pivotOffsetPosition = Vector2.Zero;
+                        if (canvasObject.FollowedTileobject != null)
+                        {
+                            // follow mode
+                            pivotOffsetPosition = 
+                                cam.WorldToScreenSpace(
+                                    canvasObject.FollowedTileobject.Easing.CurrentPosition
+                                    + canvasObject.TargetPivot * canvasObject.FollowedTileobject.Graphic.Properties.Dimensions) - 
+                                canvasObject.Graphic.Properties.ImagePivot * canvasObject.Graphic.Scale;
+
+                        }
+                        else
+                        {
+                            // canvas mode
+                            
+                            pivotOffsetPosition =
+                                canvas.Position
+                                + new Vector2(Bootstrap.GetDisplay().GetWidth(), Bootstrap.GetDisplay().GetHeight()) * canvasObject.TargetPivot
+                                - canvasObject.Graphic.Properties.ImagePivot * canvasObject.Graphic.Scale;
+                        }
+                        tRect.x = (int)(canvasObject.Position.X + pivotOffsetPosition.X); 
+                        tRect.y = (int)(canvasObject.Position.Y + pivotOffsetPosition.Y);
                         tRect.w = (int)((canvasObject.Graphic.Properties.Dimensions.x) * canvasObject.Graphic.Scale.X);
                         tRect.h = (int)((canvasObject.Graphic.Properties.Dimensions.y) * canvasObject.Graphic.Scale.Y);
                         SDL.SDL_RenderCopyEx(_rend,
@@ -366,10 +386,31 @@ namespace Kintsugi.Rendering
                     }
                     if (canvasObject.Text != "")
                     {
+                        var pivotOffsetPosition = Vector2.Zero;
+                        if (canvasObject.FollowedTileobject != null)
+                        {
+                            // follow mode
+                            pivotOffsetPosition =
+                                cam.WorldToScreenSpace(
+                                    canvasObject.FollowedTileobject.Easing.CurrentPosition
+                                    + canvasObject.TargetPivot * canvasObject.FollowedTileobject.Graphic.Properties.Dimensions);
+
+                        }
+                        else
+                        {
+                            // canvas mode
+
+                            pivotOffsetPosition =
+                                canvas.Position
+                                + new Vector2(Bootstrap.GetDisplay().GetWidth(), Bootstrap.GetDisplay().GetHeight()) * canvasObject.TargetPivot;
+                        }
+                        tRect.x = (int)(canvasObject.Position.X + pivotOffsetPosition.X);
+                        tRect.y = (int)(canvasObject.Position.Y + pivotOffsetPosition.Y);
+
                         ShowText(
                             canvasObject.Text,
-                            canvas.Position.X + canvasObject.Position.X + canvasObject.TextPosition.X,
-                            canvas.Position.Y + canvasObject.Position.Y + canvasObject.TextPosition.Y,
+                            tRect.x + canvasObject.TextPosition.X,
+                            tRect.y + canvasObject.TextPosition.Y,
                             canvasObject.FontSize,
                             canvasObject.TextColor,
                             canvasObject.FontPath

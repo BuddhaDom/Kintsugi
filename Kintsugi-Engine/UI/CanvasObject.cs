@@ -1,6 +1,7 @@
 using System.Drawing;
 using System.Numerics;
 using Kintsugi.Core;
+using Kintsugi.Objects;
 using Kintsugi.Objects.Graphics;
 using SDL2;
 
@@ -35,4 +36,16 @@ public class CanvasObject: GraphicsObject
     /// Position of the CanvasObject in screen space.
     /// </summary>
     public Vector2 Position { get; set; }
+    /// <summary>
+    /// Pivot that object is placed on, (0,0) is top right and (1,1) is bottom left.
+    /// If not following tileobject, this is the pivot of the object relative to the screen.
+    /// If following tileobject, this is the pivot of the object relative to the tileobject.
+    /// </summary>
+    public Vector2 TargetPivot { get; set; }
+    /// <summary>
+    /// Tileobject that this canvas object follows.
+    /// If null, it is positioned on screen space.
+    /// If set, the canvas objects position will be relative to the tile object.
+    /// </summary>
+    public TileObject? FollowedTileobject { get; set; }
 }
