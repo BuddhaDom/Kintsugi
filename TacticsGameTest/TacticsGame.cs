@@ -81,6 +81,8 @@ namespace TacticsGameTest
                 canvas.Objects.Add(obj1);
                 obj1.FollowedTileobject = character;
                 obj1.TargetPivot = new Vector2(0.25f, -0.25f);
+                obj1.TextPivot = new Vector2(0.5f, 0.5f);
+
                 obj1.Text = i.ToString();
                 obj1.FontPath = "Fonts\\calibri.ttf";
                 obj1.FontSize = 40;
@@ -90,6 +92,8 @@ namespace TacticsGameTest
             canvasObject.SetSpriteSingle(GetAssetManager().GetAssetPath("guy.png"), default, new Vector2(8, 8));
             canvasObject.Graphic.Scale = new Vector2(1, 1);
             canvasObject.TargetPivot = new Vector2(0.5f, 0.5f);
+            canvasObject.TextPivot = new Vector2(1f, 1f);
+
             //canvas.Position = Vector2.One * 100;
             canvas.Objects.Add(canvasObject);
             

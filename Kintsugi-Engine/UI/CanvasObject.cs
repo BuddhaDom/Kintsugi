@@ -25,6 +25,10 @@ public class CanvasObject: GraphicsObject
     /// </summary>
     public Vector2 TextPosition { get; set; }
     /// <summary>
+    /// Pivot the text is drawn from.
+    /// </summary>
+    public Vector2 TextPivot { get; set; }
+    /// <summary>
     /// Size of the font to display.
     /// </summary>
     public int FontSize { get; set; }

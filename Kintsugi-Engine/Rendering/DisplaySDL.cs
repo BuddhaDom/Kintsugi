@@ -413,7 +413,8 @@ namespace Kintsugi.Rendering
                             tRect.y + canvasObject.TextPosition.Y,
                             canvasObject.FontSize,
                             canvasObject.TextColor,
-                            canvasObject.FontPath
+                            canvasObject.FontPath,
+                            canvasObject.TextPivot
                         );
                     }
                 }
