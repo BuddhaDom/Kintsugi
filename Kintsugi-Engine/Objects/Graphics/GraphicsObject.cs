@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Kintsugi.Objects.Graphics
 {
-    public class GraphicsObject
+    public abstract class GraphicsObject
     {
         /// <summary>
         /// Graphic properties of this object.
