@@ -292,7 +292,7 @@ namespace Kintsugi.Rendering
                                 sRect = tileObject.Graphic.SourceRect();
 
                                 var localTilePivot = tileObject.Graphic.Properties.TilePivot * grid.TileWidth;
-                                var pivotOffsets = localTilePivot - tileObject.Graphic.Properties.ImagePivot;
+                                var pivotOffsets = (localTilePivot - tileObject.Graphic.Properties.ImagePivot *tileObject.Graphic.Scale);
 
                                 var uScreenPos = cam.WorldToScreenSpace(
                                     tileObject.Easing.CurrentPosition +
@@ -300,7 +300,7 @@ namespace Kintsugi.Rendering
                                 );
                                 var vScreenPos = cam.WorldToScreenSpace(
                                     tileObject.Easing.CurrentPosition
-                                    + pivotOffsets + tileObject.Graphic.Properties.Dimensions
+                                    + pivotOffsets + tileObject.Graphic.Properties.Dimensions * tileObject.Graphic.Scale
                                 );
 
                                 int xsize = (int)vScreenPos.X - (int)uScreenPos.X;
@@ -350,10 +350,12 @@ namespace Kintsugi.Rendering
                     {
                         sRect = canvasObject.Graphic.SourceRect();
                         var sprite = LoadTexture(canvasObject.Graphic.Properties.Path);
-                        tRect.x = (int)(canvas.Position.X + canvasObject.Position.X); 
-                        tRect.y = (int)(canvas.Position.Y + canvasObject.Position.Y);
-                        tRect.w = (int)((tRect.x + canvasObject.Graphic.Properties.Dimensions.x) * canvasObject.Graphic.Scale.X);
-                        tRect.h = (int)((tRect.y + canvasObject.Graphic.Properties.Dimensions.y) * canvasObject.Graphic.Scale.Y);
+
+                        var pivotOffsetPosition = canvasObject.Position - canvasObject.Graphic.Properties.ImagePivot * canvasObject.Graphic.Scale;
+                        tRect.x = (int)(canvas.Position.X + pivotOffsetPosition.X); 
+                        tRect.y = (int)(canvas.Position.Y + pivotOffsetPosition.Y);
+                        tRect.w = (int)((canvasObject.Graphic.Properties.Dimensions.x) * canvasObject.Graphic.Scale.X);
+                        tRect.h = (int)((canvasObject.Graphic.Properties.Dimensions.y) * canvasObject.Graphic.Scale.Y);
                         SDL.SDL_RenderCopyEx(_rend,
                             sprite,
                             ref sRect,

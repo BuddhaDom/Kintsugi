@@ -7,7 +7,7 @@ namespace Kintsugi.Objects.Graphics;
 /// <summary>
 /// A collection of sprites contained within one same image. These sprites should be uniformly spaced. 
 /// </summary>
-public struct SpriteSheet : ISpriteProperties
+public class SpriteSheet : ISpriteProperties
 {
     /// <summary>
     /// How many sprite units make up a row in this sprite sheet. In case of variable lengths per row, should be the

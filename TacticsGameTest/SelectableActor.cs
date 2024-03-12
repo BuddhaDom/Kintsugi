@@ -307,8 +307,8 @@ namespace TacticsGameTest
                 4,
                 0.5 * speed,
                 Enumerable.Range(0, 4),
-                new Vector2(-0.5f, -0.5f),
-                default,
+                new Vector2(0.5f, 0.5f),
+                new Vector2(16, 16),
                 default,
                 new Vector2(0, directionSection * 32 * 5 + typeSection * 32));
 

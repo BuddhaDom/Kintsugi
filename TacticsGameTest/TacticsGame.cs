@@ -7,6 +7,7 @@ using System.Numerics;
 using Engine.EventSystem;
 using Kintsugi.Objects.Graphics;
 using Kintsugi.UI;
+using Kintsugi.Rendering;
 
 namespace TacticsGameTest
 {
@@ -64,10 +65,26 @@ namespace TacticsGameTest
                 FontSize = 72,
                 Position = Vector2.Zero
             };
-            
-            canvasObject.SetSpriteSingle(GetAssetManager().GetAssetPath("guy.png"), Vector2.One * 10);
-            
-            canvas.Objects.Add(canvasObject);
+
+
+            float scale = 4;
+            IntPtr texture = ((DisplaySDL)Bootstrap.GetDisplay()).LoadTexture(GetAssetManager().GetAssetPath("guy.png"));
+
+            for (int i = 0; i < 5; i++)
+            {
+                var obj1 = new CanvasObject();
+                obj1.SetSpriteSingle(GetAssetManager().GetAssetPath("guy.png"), default, default);
+                obj1.Position = new Vector2(i * obj1.Graphic.Properties.Dimensions.x * scale, 0);
+                obj1.Graphic.Scale = Vector2.One * scale;
+                canvas.Objects.Add(obj1);
+
+
+            }
+
+            canvasObject.SetSpriteSingle(GetAssetManager().GetAssetPath("guy.png"), default, new Vector2(8, 8));
+            canvasObject.Graphic.Scale = new Vector2(10, 10);
+            //canvas.Position = Vector2.One * 100;
+            //canvas.Objects.Add(canvasObject);
             
 
             Bootstrap.GetInput().AddListener(this);
