@@ -43,36 +43,46 @@ namespace TacticsGameTest
         }
         public int healthMax = 5;
         public int health = 3;
-        private List<CanvasObject> healthUI = new();
+        public float spacing = 16f;
+        private List<Heart> healthUI = new();
+        public void TakeDamage(int damage)
+        {
+            health -= damage;
+            SetHealthUI();
+        }
+        int prevHealth;
         private void SetHealthUI()
         {
             for (int i = 0; i < healthMax; i++)
             {
                 if (!(i < healthUI.Count))
                 {
-                    var newObject = new CanvasObject();
+                    var newObject = new Heart();
                     newObject.FollowedTileobject = this;
                     ActorUI.Objects.Add(newObject);
                     healthUI.Add(newObject);
-                    newObject.TargetPivot = new Vector2(0.25f, -0.5f);
+                    newObject.TargetPivot = new Vector2(0.25f, -0.25f);
                 }
-                SetHeartAnimation(i);
             }
 
-            void SetHeartAnimation(int index)
+            for (int i = 0; i < healthUI.Count; i++)
             {
+                healthUI[i].Position =
+                    new Vector2((i - (healthUI.Count - 1)/2f) * spacing, 0);
+                if (i < health)
+                {
+                    healthUI[i].SetHeartAnimation(Heart.HeartMode.normal);
+                }
+                else
+                {
+                    healthUI[i].SetHeartAnimation(Heart.HeartMode.gone);
+                }
 
-                healthUI[index].SetAnimation(
-                    Bootstrap.GetAssetManager().GetAssetPath("PixelHearts\\hearts.png"),
-                    16,
-                    16,
-                    13,
-                    1f,
-                    Enumerable.Range(27, 13),
-                    default,
-                    new Vector2(8, 8));
-                healthUI[index].Graphic.Scale = new Vector2(4, 4);
             }
+
+
+
+            prevHealth = health;
         }
 
         private List<TileObject> walkHighlights = new();
@@ -479,6 +489,7 @@ namespace TacticsGameTest
 
             var spawnHitEffect = new ActionEvent(() =>
             {
+                target.TakeDamage(1);
                 var hitEffect = new TileObject();
                 hitEffect.AddToGrid(target.Transform.Grid, target.Transform.Layer);
                 hitEffect.SetPosition(target.Transform.Position, false);

@@ -72,7 +72,7 @@ namespace Kintsugi.Objects.Graphics
             {
                 animation.SpriteSheet = spriteSheet;
                 animation.TimeLength = timeLength;
-                animation.FrameIndexes = (IReadOnlyList<int>)frames;
+                animation.FrameIndexes = (IReadOnlyList<int>)frames.ToList();
                 animation.Repeats = repeats;
                 animation.Bounces = bounces;
             }
