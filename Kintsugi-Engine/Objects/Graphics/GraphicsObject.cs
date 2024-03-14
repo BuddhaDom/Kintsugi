@@ -29,16 +29,13 @@ namespace Kintsugi.Objects.Graphics
             SetSpriteSingle(new Sprite(path));
             Graphic.Properties.TilePivot = tilePivot;
             Graphic.Properties.ImagePivot = imagePivot;
-            Console.WriteLine(Graphic.Properties.TilePivot + "AND" + tilePivot);
-
-            Console.WriteLine(Graphic.Properties.ImagePivot +"AND" + imagePivot);
         }
 
         /// <summary>
         /// Set a single sprite graphic to this object.
         /// </summary>
         /// <param name="sprite">Image form which to take the sprite.</param>
-        public void SetSpriteSingle(Sprite sprite)
+        public virtual void SetSpriteSingle(Sprite sprite)
         {
             if (Graphic is SpriteSingle spriteSingle)
                 spriteSingle.Sprite = sprite;
@@ -65,7 +62,7 @@ namespace Kintsugi.Objects.Graphics
         /// <param name="repeats">Amount of repetitions. Set to 0 if it should loop indefinitely.</param>
         /// <param name="bounces">Determines if the animation plays front then back once it reaches its last frame.</param>
         /// <param name="autoStart">Start the animation once this method ends?</param>
-        public void SetAnimation(SpriteSheet spriteSheet, double timeLength, IEnumerable<int> frames,
+        public virtual void SetAnimation(SpriteSheet spriteSheet, double timeLength, IEnumerable<int> frames,
             int repeats = 0, bool bounces = false, bool autoStart = true)
         {
             if (Graphic is Animation animation)
