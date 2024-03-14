@@ -19,7 +19,7 @@ namespace TacticsGameTest
         public MovingScenario scenario;
 
         public UnitControlGroup group_player;
-        public EnemyControlGroup group_environment;
+        public UnitControlGroup group_environment;
 
         public Game game;
 
@@ -33,12 +33,12 @@ namespace TacticsGameTest
             grid.Position.X = 0;
             grid.Position.Y = 0;
 
-            grid.Layers[2].SwitchColliderType<SpikeCollider>();
+            //grid.Layers[2].SwitchColliderType<SpikeCollider>();
 
             scenario = new MovingScenario();
 
             group_player = new UnitControlGroup("PLAYER");
-            group_environment = new EnemyControlGroup("ENVIRONMENT");
+            group_environment = new UnitControlGroup("ENVIRONMENT");
 
             SetUp();
         }

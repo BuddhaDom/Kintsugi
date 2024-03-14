@@ -12,19 +12,58 @@ using System.Drawing;
 using Kintsugi.Objects.Graphics;
 using Kintsugi.EventSystem.Await;
 using Kintsugi.UI;
+using TacticsGameTest.Abilities;
 
 namespace TacticsGameTest
 {
     internal class SelectableActor : Actor, IInputListener
     {
-        private PathfindingSettings pathfindingSettings = new();
+        public PathfindingSettings pathfindingSettings = new();
         public string spritePath;
-        private PathfindingResult PathfindingResult;
         public string name;
         private int maxMoves = 2;
-        private int movesLeft;
+        public int movesLeft;
         public int MovementRange = 5;
         public Canvas ActorUI = new();
+        public List<Ability> abilities;
+        private Ability selectedAbility;
+        public void SelectAbility(int index)
+        {
+            Ability newAbility = null;
+            if (index < abilities.Count && index >= 0)
+            {
+                newAbility = abilities[index];
+            }
+            else
+            {
+                newAbility = null;
+            }
+            if (newAbility != selectedAbility)
+            {
+                if (selectedAbility != null)
+                {
+                    selectedAbility.OnDeselect();
+                    targetPositions.Clear();
+                    ClearHighlights();
+                }
+                if (newAbility != null)
+                {
+                    newAbility.OnSelect();
+                    targetPositions.Clear();
+                    foreach (var item in newAbility.GetTargets(Transform.Position))
+                    {
+                        AddHighlight(item.Item1, item.Item2);
+                        targetPositions.Add(item.Item1);
+                    }
+                }
+                selectedAbility = newAbility;
+            }
+        }
+        private HashSet<Vec2Int> targetPositions = new();
+        public void DeselectAbility()
+        {
+            SelectAbility(-1);
+        }
         public SelectableActor(string name, string spritePath)
         {
             this.name = name;
@@ -38,7 +77,8 @@ namespace TacticsGameTest
             pathfindingSettings.SetCostLayer("unit", float.PositiveInfinity, 100);
 
             Bootstrap.GetInput().AddListener(this);
-
+            abilities = new();
+            abilities.Add(new Stride(this));
             SetHealthUI();
         }
         public int healthMax = 5;
@@ -97,9 +137,8 @@ namespace TacticsGameTest
         }
 
         private List<TileObject> walkHighlights = new();
-        private List<TileObject> pathSegments = new();
 
-        private void RemoveWalkHighlights()
+        private void ClearHighlights()
         {
             foreach (var item in walkHighlights)
             {
@@ -129,7 +168,8 @@ namespace TacticsGameTest
         public void Select()
         {
             _isSelected = true;
-            BeginPathfind();
+            SelectAbility(0);
+            /*
             foreach (var position in GetAttackPositions())
             {
                 if (GetActorIfAttackable(position) != null)
@@ -137,6 +177,7 @@ namespace TacticsGameTest
                     AddHighlight(position, Color.OrangeRed);
                 }
             }
+            */
             Console.WriteLine("im selected!!");
         }
         public SelectableActor GetActorIfAttackable(Vec2Int position)
@@ -156,55 +197,6 @@ namespace TacticsGameTest
             }
             return null;
         }
-        public void BeginPathfind()
-        {
-            if (movesLeft == 0)
-            {
-                Console.WriteLine("no moves left but trying to pathfind");
-                return;
-            }
-
-            PathfindingResult = PathfindingSystem.Dijkstra(
-                Transform.Grid,
-                Transform.Position,
-                MovementRange * movesLeft,
-                pathfindingSettings);
-            foreach (var item in PathfindingResult.ReachablePositions())
-            {
-                if (item != PathfindingResult.StartPosition)
-                {
-                    AddHighlight(item, IsSprint(PathfindingResult.GetCost(item)) ? Color.NavajoWhite : Color.Aqua);
-                }
-            }
-
-        }
-        private void WalkAlongCurrentPath()
-        {
-            movesLeft--;
-            if (IsSprint(PathfindingResult.GetCost(path.PathPositions.Last())))
-            {
-                movesLeft--;
-            }
-            Event curEvent = new DummyEvent();
-            EventManager.I.Queue(curEvent);
-            foreach (var item in path.PathPositions.Skip(1))
-            {
-                curEvent = new ActionEvent(() => MoveTo(item))
-                    .AddFinishAwait(this.Easing)
-                    .AddStartAwait(curEvent);
-                EventManager.I.Queue(curEvent);
-            }
-            var lastEvent = new ActionEvent(() => SetCharacterAnimation(null, AnimationType.idle, 1f))
-                .AddStartAwait(curEvent);
-            EventManager.I.Queue(lastEvent);
-            EventManager.I.Queue(new ActionEvent(CheckEndTurn).AddStartAwait(lastEvent));
-            Unselect();
-
-        }
-        private bool IsSprint(float cost)
-        {
-            return cost > MovementRange;
-        }
         public bool IsAttackPosition(Vec2Int pos)
         {
             return GetAttackPositions().Contains(pos);
@@ -221,10 +213,9 @@ namespace TacticsGameTest
         }
         public void Unselect()
         {
-            PathfindingResult = null;
             _isSelected = false;
-            RemoveWalkHighlights();
-            ClearPath();
+            ClearHighlights();
+            DeselectAbility();
             Console.WriteLine("im not selected :(");
         }
         public override void OnEndRound()
@@ -262,95 +253,6 @@ namespace TacticsGameTest
                 EndTurn();
             }
         }
-        public void SetPath(Vec2Int pos)
-        {
-            if (path != null && path.PathPositions.Last() == pos)
-            {
-                return;
-            }
-            ClearPath();
-            if (PathfindingResult != null)
-            {
-                path = PathfindingResult.PathTo(pos);
-                if (path != null)
-                {
-                    for (int i = 0; i < path.PathPositions.Count; i++)
-                    {
-                        if (i == 0)
-                        {
-                            continue;
-                        }
-                        var pathSegment = new TileObject();
-                        pathSegment.AddToGrid(Transform.Grid, 3);
-                        pathSegment.SetSpriteSingle(Bootstrap.GetRunningGame().GetAssetManager().GetAssetPath(PathToSpritePath(i)));
-                        pathSegment.SetPosition(path.PathPositions[i]);
-                        pathSegments.Add(pathSegment);
-
-                    }
-                }
-
-
-            }
-        }
-        public void ClearPath()
-        {
-            path = null;
-            foreach (var item in pathSegments)
-            {
-                item.RemoveFromGrid();
-            }
-            pathSegments.Clear();
-
-        }
-        private Kintsugi.AI.Path path;
-        private string PathToSpritePath(int index)
-        {
-            string imagePath = "TinyBattles\\arrow";
-            List<string> chars = new();
-            if (index == 0)
-            {
-                chars.Add(DiffToChar(path.PathPositions[index], path.PathPositions[index + 1]));
-            }
-            else if (index == path.PathPositions.Count - 1)
-            {
-                chars.Add(DiffToChar(path.PathPositions[index], path.PathPositions[index - 1]));
-            }
-            else
-            {
-                chars.Add(DiffToChar(path.PathPositions[index], path.PathPositions[index + 1]));
-                chars.Add(DiffToChar(path.PathPositions[index], path.PathPositions[index - 1]));
-            }
-
-            chars.Sort();
-
-            foreach (var item in chars)
-            {
-                imagePath += item;
-            }
-            return imagePath + ".png";
-
-            string DiffToChar(Vec2Int midPos, Vec2Int otherPos)
-            {
-                var diff = otherPos - midPos;
-                if (diff.x == 1)
-                {
-                    return "L";
-                }
-                if (diff.x == -1)
-                {
-                    return "R";
-                }
-                if (diff.y == 1)
-                {
-                    return "D";
-                }
-                if (diff.y == -1)
-                {
-                    return "U";
-                }
-                return "";
-            }
-        }
 
         public void HandleInput(InputEvent inp, string eventType)
         {
@@ -359,30 +261,24 @@ namespace TacticsGameTest
                 if (eventType == "MouseMotion")
                 {
                     var gridPos = Transform.Grid.WorldToGridPosition(Bootstrap.GetCameraSystem().ScreenToWorldSpace(new Vector2(inp.X, inp.Y)));
-                    SetPath(gridPos);
+                    selectedAbility?.Hover(gridPos);
+                    //SetPath(gridPos);
                 }
                 if (eventType == "MouseDown")
                 {
                     if (inp.Button == SDL.SDL_BUTTON_LEFT)
                     {
                         var gridPos = Transform.Grid.WorldToGridPosition(Bootstrap.GetCameraSystem().ScreenToWorldSpace(new Vector2(inp.X, inp.Y)));
-
-                        if (path != null)
+                        if (targetPositions.Contains(gridPos))
                         {
-                            WalkAlongCurrentPath();
-                        }
-                        else if (IsAttackPosition(gridPos))
-                        {
-                            var target = GetActorIfAttackable(gridPos);
-                            if (target != null)
-                            {
-                                Attack(target);
-                            }
+                            selectedAbility?.DoAction(gridPos);
+                            DeselectAbility();
                         }
                         else
                         {
                             Unselect();
                         }
+
                     }
                     else if (inp.Button == SDL.SDL_BUTTON_RIGHT)
                     {
