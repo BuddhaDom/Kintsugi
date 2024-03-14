@@ -102,9 +102,8 @@ namespace TacticsGameTest
             health -= damage;
             this.poison += poison;
             SetHealthUI();
-            if (health == 0)
+            if (health <= 0)
             {
-                var dieevent = new ActionEvent(() => Die()).AddFinishAwait(((Animation)Graphic));
                 EventManager.I.QueueImmediate(() => Die());
             }
         }
