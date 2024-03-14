@@ -59,6 +59,7 @@ namespace TacticsGameTest
 
             scenario.BeginScenario();
 
+            /*
             var canvas = new Canvas();
             var canvasObject = new CanvasObject
             {
@@ -97,7 +98,7 @@ namespace TacticsGameTest
 
             //canvas.Position = Vector2.One * 100;
             canvas.Objects.Add(canvasObject);
-            
+            */
 
             Bootstrap.GetInput().AddListener(this);
         }
