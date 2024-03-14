@@ -85,10 +85,11 @@ namespace TacticsGameTest
                 new Vec2Int(1, -1),
                 new Vec2Int(1, 0),
                 new Vec2Int(1, 1),
-
             };
 
             abilities.Add(new BasicAttack(this, attackPattern));
+            abilities.Add(new PushAttack(this, attackPattern));
+
             SetHealthUI();
         }
         public int healthMax = 5;
@@ -107,6 +108,8 @@ namespace TacticsGameTest
                 EventManager.I.QueueImmediate(() => Die());
             }
         }
+
+
         int prevHealth;
         private void SetHealthUI()
         {
@@ -248,6 +251,11 @@ namespace TacticsGameTest
                     {
                         SelectAbility(1);
                     }
+                    if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_3)
+                    {
+                        SelectAbility(2);
+                    }
+
 
                 }
                 if (eventType == "MouseMotion")
@@ -315,6 +323,13 @@ namespace TacticsGameTest
             }
 
             return animationDirection;
+        }
+
+        public void PushTo(Vec2Int to)
+        {
+            SetPosition(to);
+
+
         }
 
         public void MoveTo(Vec2Int to)
