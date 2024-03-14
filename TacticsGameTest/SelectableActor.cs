@@ -11,18 +11,55 @@ using Kintsugi.AI;
 using System.Drawing;
 using Kintsugi.Objects.Graphics;
 using Kintsugi.EventSystem.Await;
+using Kintsugi.UI;
+using TacticsGameTest.Abilities;
 
 namespace TacticsGameTest
 {
     internal class SelectableActor : Actor, IInputListener
     {
-        private PathfindingSettings pathfindingSettings = new();
+        public PathfindingSettings pathfindingSettings = new();
         public string spritePath;
-        private PathfindingResult PathfindingResult;
         public string name;
         private int maxMoves = 2;
-        private int movesLeft;
+        public int movesLeft;
         public int MovementRange = 5;
+        public Canvas ActorUI = new();
+        public List<Ability> abilities;
+        private Ability selectedAbility;
+        public void SelectAbility(int index)
+        {
+            Ability newAbility = null;
+            if (index < abilities.Count && index >= 0)
+            {
+                newAbility = abilities[index];
+            }
+            if (newAbility != selectedAbility)
+            {
+                if (selectedAbility != null)
+                {
+                    selectedAbility.OnDeselect();
+                    targetPositions.Clear();
+                    ClearHighlights();
+                }
+                if (newAbility != null)
+                {
+                    newAbility.OnSelect();
+                    targetPositions.Clear();
+                    foreach (var item in newAbility.GetTargets(Transform.Position))
+                    {
+                        AddHighlight(item.Item1, item.Item2);
+                        targetPositions.Add(item.Item1);
+                    }
+                }
+                selectedAbility = newAbility;
+            }
+        }
+        private HashSet<Vec2Int> targetPositions = new();
+        public void DeselectAbility()
+        {
+            SelectAbility(-1);
+        }
         public SelectableActor(string name, string spritePath)
         {
             this.name = name;
@@ -36,17 +73,90 @@ namespace TacticsGameTest
             pathfindingSettings.SetCostLayer("unit", float.PositiveInfinity, 100);
 
             Bootstrap.GetInput().AddListener(this);
-        }
-        private List<TileObject> walkHighlights = new();
-        private List<TileObject> pathSegments = new();
+            abilities = new();
+            abilities.Add(new Stride(this));
+            var attackPattern = new List<Vec2Int>()
+            {
+                new Vec2Int(-1, -1),
+                new Vec2Int(-1, 0),
+                new Vec2Int(-1, 1),
+                new Vec2Int(0, -1),
+                new Vec2Int(0, 1),
+                new Vec2Int(1, -1),
+                new Vec2Int(1, 0),
+                new Vec2Int(1, 1),
+            };
 
-        private void RemoveWalkHighlights()
+            abilities.Add(new BasicAttack(this, attackPattern));
+            abilities.Add(new PushAttack(this, attackPattern));
+
+            SetHealthUI();
+        }
+        public int healthMax = 5;
+        public int health = 3;
+        public int poison;
+        public float spacing = 16f;
+        private List<Heart> healthUI = new();
+        public void TakeDamage(int damage, int poison)
         {
-            foreach (var item in walkHighlights)
+            health -= damage;
+            this.poison += poison;
+            SetHealthUI();
+            if (health <= 0)
+            {
+                EventManager.I.QueueImmediate(() => Die());
+            }
+        }
+
+
+        int prevHealth;
+        private void SetHealthUI()
+        {
+            for (int i = 0; i < healthMax; i++)
+            {
+                if (!(i < healthUI.Count))
+                {
+                    var newObject = new Heart();
+                    newObject.FollowedTileobject = this;
+                    ActorUI.Objects.Add(newObject);
+                    healthUI.Add(newObject);
+                    newObject.TargetPivot = new Vector2(0.25f, -0.25f);
+                }
+            }
+
+            for (int i = 0; i < healthUI.Count; i++)
+            {
+                healthUI[i].Position =
+                    new Vector2((i - (healthUI.Count - 1) / 2f) * spacing, 0);
+                if (i + poison < health)
+                {
+                    healthUI[i].SetHeartAnimation(Heart.HeartMode.normal);
+                }
+                else if (i < health)
+                {
+                    healthUI[i].SetHeartAnimation(Heart.HeartMode.poison);
+                }
+                else
+                {
+                    healthUI[i].SetHeartAnimation(Heart.HeartMode.gone);
+                }
+
+            }
+
+
+
+            prevHealth = health;
+        }
+
+        private List<TileObject> highlights = new();
+
+        private void ClearHighlights()
+        {
+            foreach (var item in highlights)
             {
                 item.RemoveFromGrid();
             }
-            walkHighlights.Clear();
+            highlights.Clear();
         }
         private void AddHighlight(Vec2Int pos, Color color)
         {
@@ -64,13 +174,14 @@ namespace TacticsGameTest
             mark.SetEasing(TweenSharp.Animation.Easing.BounceEaseOut, 0.5f);
             mark.SetPosition(Transform.Position, false);
             mark.SetPosition(pos);
-            walkHighlights.Add(mark);
+            highlights.Add(mark);
         }
         private bool _isSelected;
         public void Select()
         {
             _isSelected = true;
-            BeginPathfind();
+            SelectAbility(0);
+            /*
             foreach (var position in GetAttackPositions())
             {
                 if (GetActorIfAttackable(position) != null)
@@ -78,94 +189,14 @@ namespace TacticsGameTest
                     AddHighlight(position, Color.OrangeRed);
                 }
             }
+            */
             Console.WriteLine("im selected!!");
-        }
-        public SelectableActor GetActorIfAttackable(Vec2Int position)
-        {
-            if (GetAttackPositions().Contains(position))
-            {
-                var targeted = Transform.Grid.GetObjectsAtPosition(position);
-                if (targeted == null) return null;
-                foreach (var item in targeted)
-                {
-                    if (item is SelectableActor a)
-                    {
-                        return a;
-                    }
-                }
-
-            }
-            return null;
-        }
-        public void BeginPathfind()
-        {
-            if (movesLeft == 0)
-            {
-                Console.WriteLine("no moves left but trying to pathfind");
-                return;
-            }
-
-            PathfindingResult = PathfindingSystem.Dijkstra(
-                Transform.Grid,
-                Transform.Position,
-                MovementRange * movesLeft,
-                pathfindingSettings);
-            foreach (var item in PathfindingResult.ReachablePositions())
-            {
-                if (item != PathfindingResult.StartPosition)
-                {
-                    AddHighlight(item, IsSprint(PathfindingResult.GetCost(item)) ? Color.NavajoWhite : Color.Aqua);
-                }
-            }
-
-        }
-        private void WalkAlongCurrentPath()
-        {
-            movesLeft--;
-            if (IsSprint(PathfindingResult.GetCost(path.PathPositions.Last())))
-            {
-                movesLeft--;
-            }
-            Event curEvent = new DummyEvent();
-            EventManager.I.Queue(curEvent);
-            foreach (var item in path.PathPositions.Skip(1))
-            {
-                curEvent = new ActionEvent(() => MoveTo(item))
-                    .AddFinishAwait(this.Easing)
-                    .AddStartAwait(curEvent);
-                EventManager.I.Queue(curEvent);
-            }
-            var lastEvent = new ActionEvent(() => SetCharacterAnimation(null, AnimationType.idle, 1f))
-                .AddStartAwait(curEvent);
-            EventManager.I.Queue(lastEvent);
-            EventManager.I.Queue(new ActionEvent(CheckEndTurn).AddStartAwait(lastEvent));
-            Unselect();
-
-        }
-        private bool IsSprint(float cost)
-        {
-            return cost > MovementRange;
-        }
-        public bool IsAttackPosition(Vec2Int pos)
-        {
-            return GetAttackPositions().Contains(pos);
-        }
-        public List<Vec2Int> GetAttackPositions()
-        {
-            return new List<Vec2Int>()
-            {
-                Transform.Position + Vec2Int.Down,
-                Transform.Position + Vec2Int.Up,
-                Transform.Position + Vec2Int.Left,
-                Transform.Position + Vec2Int.Right
-            };
         }
         public void Unselect()
         {
-            PathfindingResult = null;
             _isSelected = false;
-            RemoveWalkHighlights();
-            ClearPath();
+            ClearHighlights();
+            DeselectAbility();
             Console.WriteLine("im not selected :(");
         }
         public override void OnEndRound()
@@ -176,6 +207,8 @@ namespace TacticsGameTest
         public override void OnEndTurn()
         {
             Graphic.Modulation = Color.FromArgb(64, 64, 64);
+            TakeDamage(poison, 0);
+            SetHealthUI();
             Console.WriteLine(name + " End Turn");
         }
 
@@ -186,6 +219,11 @@ namespace TacticsGameTest
 
         public override void OnStartTurn()
         {
+            if (Dead)
+            {
+                EndTurn();
+                return;
+            }
             movesLeft = maxMoves;
             Console.WriteLine(name + " Start Turn");
         }
@@ -196,127 +234,54 @@ namespace TacticsGameTest
                 EndTurn();
             }
         }
-        public void SetPath(Vec2Int pos)
-        {
-            if (path != null && path.PathPositions.Last() == pos)
-            {
-                return;
-            }
-            ClearPath();
-            if (PathfindingResult != null)
-            {
-                path = PathfindingResult.PathTo(pos);
-                if (path != null)
-                {
-                    for (int i = 0; i < path.PathPositions.Count; i++)
-                    {
-                        if (i == 0)
-                        {
-                            continue;
-                        }
-                        var pathSegment = new TileObject();
-                        pathSegment.AddToGrid(Transform.Grid, 3);
-                        pathSegment.SetSpriteSingle(Bootstrap.GetRunningGame().GetAssetManager().GetAssetPath(PathToSpritePath(i)));
-                        pathSegment.SetPosition(path.PathPositions[i]);
-                        pathSegments.Add(pathSegment);
-
-                    }
-                }
-
-
-            }
-        }
-        public void ClearPath()
-        {
-            path = null;
-            foreach (var item in pathSegments)
-            {
-                item.RemoveFromGrid();
-            }
-            pathSegments.Clear();
-
-        }
-        private Kintsugi.AI.Path path;
-        private string PathToSpritePath(int index)
-        {
-            string imagePath = "TinyBattles\\arrow";
-            List<string> chars = new();
-            if (index == 0)
-            {
-                chars.Add(DiffToChar(path.PathPositions[index], path.PathPositions[index + 1]));
-            }
-            else if (index == path.PathPositions.Count - 1)
-            {
-                chars.Add(DiffToChar(path.PathPositions[index], path.PathPositions[index - 1]));
-            }
-            else
-            {
-                chars.Add(DiffToChar(path.PathPositions[index], path.PathPositions[index + 1]));
-                chars.Add(DiffToChar(path.PathPositions[index], path.PathPositions[index - 1]));
-            }
-
-            chars.Sort();
-
-            foreach (var item in chars)
-            {
-                imagePath += item;
-            }
-            return imagePath + ".png";
-
-            string DiffToChar(Vec2Int midPos, Vec2Int otherPos)
-            {
-                var diff = otherPos - midPos;
-                if (diff.x == 1)
-                {
-                    return "L";
-                }
-                if (diff.x == -1)
-                {
-                    return "R";
-                }
-                if (diff.y == 1)
-                {
-                    return "D";
-                }
-                if (diff.y == -1)
-                {
-                    return "U";
-                }
-                return "";
-            }
-        }
 
         public void HandleInput(InputEvent inp, string eventType)
         {
-            if (InTurn && _isSelected)
+            if (InTurn && _isSelected && !Dead)
             {
+                if (eventType == "KeyDown")
+                {
+
+                    if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_1)
+                    {
+                        SelectAbility(0);
+                    }
+                    if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_2)
+                    {
+                        SelectAbility(1);
+                    }
+                    if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_3)
+                    {
+                        SelectAbility(2);
+                    }
+
+
+                }
                 if (eventType == "MouseMotion")
                 {
                     var gridPos = Transform.Grid.WorldToGridPosition(Bootstrap.GetCameraSystem().ScreenToWorldSpace(new Vector2(inp.X, inp.Y)));
-                    SetPath(gridPos);
+                    selectedAbility?.Hover(gridPos);
+                    //SetPath(gridPos);
                 }
                 if (eventType == "MouseDown")
                 {
                     if (inp.Button == SDL.SDL_BUTTON_LEFT)
                     {
                         var gridPos = Transform.Grid.WorldToGridPosition(Bootstrap.GetCameraSystem().ScreenToWorldSpace(new Vector2(inp.X, inp.Y)));
-
-                        if (path != null)
+                        if (targetPositions.Contains(gridPos))
                         {
-                            WalkAlongCurrentPath();
-                        }
-                        else if (IsAttackPosition(gridPos))
-                        {
-                            var target = GetActorIfAttackable(gridPos);
-                            if (target != null)
+                            selectedAbility?.DoAction(gridPos);
+                            if (movesLeft <= 0)
                             {
-                                Attack(target);
+                                Unselect();
                             }
+                            DeselectAbility();
                         }
                         else
                         {
                             Unselect();
                         }
+
                     }
                     else if (inp.Button == SDL.SDL_BUTTON_RIGHT)
                     {
@@ -329,7 +294,7 @@ namespace TacticsGameTest
 
         }
 
-        private AnimationDirection AnimationDirectionToTarget(Vec2Int from, Vec2Int to)
+        public AnimationDirection AnimationDirectionToTarget(Vec2Int from, Vec2Int to)
         {
             Vec2Int dir = to - Transform.Position;
             AnimationDirection animationDirection;
@@ -357,6 +322,13 @@ namespace TacticsGameTest
             }
 
             return animationDirection;
+        }
+
+        public void PushTo(Vec2Int to)
+        {
+            SetPosition(to);
+
+
         }
 
         public void MoveTo(Vec2Int to)
@@ -407,7 +379,7 @@ namespace TacticsGameTest
                 new Vector2(16, 16),
                 default,
                 new Vector2(0, directionSection * 32 * 5 + typeSection * 32),
-                type == AnimationType.attack ? 1 : 0);
+                type == AnimationType.attack || type == AnimationType.death ? 1 : 0);
 
             SetEasing(TweenSharp.Animation.Easing.QuadraticEaseOut, speed * 0.5f);
             curAnimationDirection = dir.Value;
@@ -424,50 +396,16 @@ namespace TacticsGameTest
 
 
         }
-
-        public void Attack(SelectableActor target)
+        public bool Dead { get; private set; }
+        public void Die()
         {
-            Unselect();
-            movesLeft--;
-            var animationDirection = AnimationDirectionToTarget(Transform.Position, target.Transform.Position);
+            SetCharacterAnimation(null, AnimationType.death, 1f);
+            ActorUI.Visible = false;
+            Dead = true;
+            if (InTurn) EndTurn();
 
-            var beginAttack = new ActionEvent(() =>
-            {
-                SetCharacterAnimation(
-                    AnimationDirectionToTarget(Transform.Position, target.Transform.Position),
-                    AnimationType.attack,
-                    1f);
-            });
-
-            var spawnHitEffect = new ActionEvent(() =>
-            {
-                var hitEffect = new TileObject();
-                hitEffect.AddToGrid(target.Transform.Grid, target.Transform.Layer);
-                hitEffect.SetPosition(target.Transform.Position, false);
-                hitEffect.SetAnimation(
-                    Bootstrap.GetAssetManager().GetAssetPath("FantasyBattlePack\\CriticalHit.png"),
-                    32,
-                    32,
-                    4,
-                    0.5f,
-                    Enumerable.Range(0, 4),
-                    new Vector2(-0.5f, -0.5f),
-                    default,
-                    default,
-                    default,
-                    1);
-
-                var removeEffect = new ActionEvent(() =>
-                {
-                    hitEffect.RemoveFromGrid();
-                }).AddStartAwait(((Animation)hitEffect.Graphic));
-                EventManager.I.Queue(removeEffect);
-
-            }).AddStartAwait(new WaitForSeconds(0.25f));
-
-            EventManager.I.Queue(beginAttack);
-            EventManager.I.Queue(spawnHitEffect);
-            EventManager.I.Queue(new ActionEvent(CheckEndTurn).AddStartAwaits([beginAttack, spawnHitEffect]));
         }
+
+
     }
 }

@@ -99,7 +99,7 @@ public class Animation : ISpriteable, IAwaitable
     // ==========================================
     public ISpriteProperties Properties => SpriteSheet;
 
-    public bool IsFinished() => (Bootstrap.TimeElapsed - StartTime) > TimeLength;
+    public bool IsFinished() => repeats == 0 || (Bootstrap.TimeElapsed - StartTime) > TimeLength;
 
     public SDL.SDL_Rect SourceRect()
     {
