@@ -34,10 +34,6 @@ namespace TacticsGameTest
             {
                 newAbility = abilities[index];
             }
-            else
-            {
-                newAbility = null;
-            }
             if (newAbility != selectedAbility)
             {
                 if (selectedAbility != null)
@@ -79,6 +75,7 @@ namespace TacticsGameTest
             Bootstrap.GetInput().AddListener(this);
             abilities = new();
             abilities.Add(new Stride(this));
+            abilities.Add(new BasicAttack(this));
             SetHealthUI();
         }
         public int healthMax = 5;
@@ -136,15 +133,15 @@ namespace TacticsGameTest
             prevHealth = health;
         }
 
-        private List<TileObject> walkHighlights = new();
+        private List<TileObject> highlights = new();
 
         private void ClearHighlights()
         {
-            foreach (var item in walkHighlights)
+            foreach (var item in highlights)
             {
                 item.RemoveFromGrid();
             }
-            walkHighlights.Clear();
+            highlights.Clear();
         }
         private void AddHighlight(Vec2Int pos, Color color)
         {
@@ -162,7 +159,7 @@ namespace TacticsGameTest
             mark.SetEasing(TweenSharp.Animation.Easing.BounceEaseOut, 0.5f);
             mark.SetPosition(Transform.Position, false);
             mark.SetPosition(pos);
-            walkHighlights.Add(mark);
+            highlights.Add(mark);
         }
         private bool _isSelected;
         public void Select()
@@ -179,37 +176,6 @@ namespace TacticsGameTest
             }
             */
             Console.WriteLine("im selected!!");
-        }
-        public SelectableActor GetActorIfAttackable(Vec2Int position)
-        {
-            if (GetAttackPositions().Contains(position))
-            {
-                var targeted = Transform.Grid.GetObjectsAtPosition(position);
-                if (targeted == null) return null;
-                foreach (var item in targeted)
-                {
-                    if (item is SelectableActor a)
-                    {
-                        return a;
-                    }
-                }
-
-            }
-            return null;
-        }
-        public bool IsAttackPosition(Vec2Int pos)
-        {
-            return GetAttackPositions().Contains(pos);
-        }
-        public List<Vec2Int> GetAttackPositions()
-        {
-            return new List<Vec2Int>()
-            {
-                Transform.Position + Vec2Int.Down,
-                Transform.Position + Vec2Int.Up,
-                Transform.Position + Vec2Int.Left,
-                Transform.Position + Vec2Int.Right
-            };
         }
         public void Unselect()
         {
@@ -258,6 +224,19 @@ namespace TacticsGameTest
         {
             if (InTurn && _isSelected && !Dead)
             {
+                if (eventType == "KeyDown")
+                {
+
+                    if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_1)
+                    {
+                        SelectAbility(0);
+                    }
+                    if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_2)
+                    {
+                        SelectAbility(1);
+                    }
+
+                }
                 if (eventType == "MouseMotion")
                 {
                     var gridPos = Transform.Grid.WorldToGridPosition(Bootstrap.GetCameraSystem().ScreenToWorldSpace(new Vector2(inp.X, inp.Y)));
@@ -291,7 +270,7 @@ namespace TacticsGameTest
 
         }
 
-        private AnimationDirection AnimationDirectionToTarget(Vec2Int from, Vec2Int to)
+        public AnimationDirection AnimationDirectionToTarget(Vec2Int from, Vec2Int to)
         {
             Vec2Int dir = to - Transform.Position;
             AnimationDirection animationDirection;
@@ -396,50 +375,6 @@ namespace TacticsGameTest
 
         }
 
-        public void Attack(SelectableActor target)
-        {
-            Unselect();
-            movesLeft--;
-            var animationDirection = AnimationDirectionToTarget(Transform.Position, target.Transform.Position);
 
-            var beginAttack = new ActionEvent(() =>
-            {
-                SetCharacterAnimation(
-                    AnimationDirectionToTarget(Transform.Position, target.Transform.Position),
-                    AnimationType.attack,
-                    1f);
-            });
-
-            var spawnHitEffect = new ActionEvent(() =>
-            {
-                target.TakeDamage(1, 1);
-                var hitEffect = new TileObject();
-                hitEffect.AddToGrid(target.Transform.Grid, target.Transform.Layer);
-                hitEffect.SetPosition(target.Transform.Position, false);
-                hitEffect.SetAnimation(
-                    Bootstrap.GetAssetManager().GetAssetPath("FantasyBattlePack\\CriticalHit.png"),
-                    32,
-                    32,
-                    4,
-                    0.5f,
-                    Enumerable.Range(0, 4),
-                    new Vector2(-0.5f, -0.5f),
-                    default,
-                    default,
-                    default,
-                    1);
-
-                var removeEffect = new ActionEvent(() =>
-                {
-                    hitEffect.RemoveFromGrid();
-                }).AddStartAwait(((Animation)hitEffect.Graphic));
-                EventManager.I.Queue(removeEffect);
-
-            }).AddStartAwait(new WaitForSeconds(0.25f));
-
-            EventManager.I.Queue(beginAttack);
-            EventManager.I.Queue(spawnHitEffect);
-            EventManager.I.Queue(new ActionEvent(CheckEndTurn).AddStartAwaits([beginAttack, spawnHitEffect]));
-        }
     }
 }
