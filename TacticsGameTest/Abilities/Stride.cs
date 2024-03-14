@@ -53,10 +53,6 @@ namespace TacticsGameTest.Abilities
                 .AddStartAwait(curEvent);
             EventManager.I.Queue(lastEvent);
             EventManager.I.Queue(new ActionEvent(actor.CheckEndTurn).AddStartAwait(lastEvent));
-            if (actor.movesLeft <= 0)
-            {
-                actor.Unselect();
-            }
 
         }
 

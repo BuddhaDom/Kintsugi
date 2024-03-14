@@ -75,7 +75,20 @@ namespace TacticsGameTest
             Bootstrap.GetInput().AddListener(this);
             abilities = new();
             abilities.Add(new Stride(this));
-            abilities.Add(new BasicAttack(this));
+            var attackPattern = new List<Vec2Int>()
+            {
+                new Vec2Int(-1, -1),
+                new Vec2Int(-1, 0),
+                new Vec2Int(-1, 1),
+                new Vec2Int(0, -1),
+                new Vec2Int(0, 1),
+                new Vec2Int(1, -1),
+                new Vec2Int(1, 0),
+                new Vec2Int(1, 1),
+
+            };
+
+            abilities.Add(new BasicAttack(this, attackPattern));
             SetHealthUI();
         }
         public int healthMax = 5;
@@ -251,6 +264,10 @@ namespace TacticsGameTest
                         if (targetPositions.Contains(gridPos))
                         {
                             selectedAbility?.DoAction(gridPos);
+                            if (movesLeft <= 0)
+                            {
+                                Unselect();
+                            }
                             DeselectAbility();
                         }
                         else

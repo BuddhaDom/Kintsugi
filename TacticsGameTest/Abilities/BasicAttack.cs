@@ -17,18 +17,14 @@ namespace TacticsGameTest.Abilities
 {
     internal class BasicAttack : Ability
     {
-        public BasicAttack(SelectableActor actor) : base(actor)
+        public List<Vec2Int> attacks; 
+        public BasicAttack(SelectableActor actor, List<Vec2Int> attacks) : base(actor)
         {
+            this.attacks = attacks;
         }
         public List<Vec2Int> GetAttackPositions()
         {
-            return new List<Vec2Int>()
-            {
-                actor.Transform.Position + Vec2Int.Down,
-                actor.Transform.Position + Vec2Int.Up,
-                actor.Transform.Position + Vec2Int.Left,
-                actor.Transform.Position + Vec2Int.Right
-            };
+            return attacks.Select((a) => a + actor.Transform.Position).ToList();
         }
         public SelectableActor GetActorIfAttackable(Vec2Int position)
         {
@@ -57,7 +53,6 @@ namespace TacticsGameTest.Abilities
         public override void DoAction(Vec2Int target)
         {
             var targetActor = GetActorIfAttackable(target);
-            actor.Unselect();
             actor.movesLeft--;
             var animationDirection = actor.AnimationDirectionToTarget(actor.Transform.Position, targetActor.Transform.Position);
 
