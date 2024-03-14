@@ -47,10 +47,6 @@
             OnStartTurn();
             InTurn = true;
         }
-        internal void Update()
-        {
-
-        }
 
         /// <summary>
         /// End this actors turn. Will automatically end the control groups turn, if all actors have ended their turn.

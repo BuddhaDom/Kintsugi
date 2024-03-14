@@ -26,9 +26,11 @@ namespace TacticsGameTest
         {
 
             Vec2Int to = actor.Transform.Position + direction;
-            var colliders = CollisionSystem.GetCollisionsColliderWithGridAtPosition(actor.Collider, actor.Transform.Grid, to);
+            var colliders = CollisionSystem.GetCollisionsColliderWithPosition(actor.Collider, actor.Transform.Grid, to);
             if (colliders.Count > 0)
             {
+                actor.TakeDamage(1, 0);
+
                 foreach (var col in colliders)
                 {
                     if (col is TileObjectCollider tCol)
@@ -42,7 +44,7 @@ namespace TacticsGameTest
             }
             else
             {
-                EventManager.I.QueueImmediate(() => actor.PushTo(to));
+                actor.PushTo(to);
             }
         }
     }
