@@ -49,6 +49,11 @@ namespace TacticsGameTest
         {
             health -= damage;
             SetHealthUI();
+            if (health == 0)
+            {
+                var dieevent = new ActionEvent(() => Die()).AddFinishAwait(((Animation)Graphic));
+                EventManager.I.QueueImmediate(() => Die());
+            }
         }
         int prevHealth;
         private void SetHealthUI()
@@ -68,7 +73,7 @@ namespace TacticsGameTest
             for (int i = 0; i < healthUI.Count; i++)
             {
                 healthUI[i].Position =
-                    new Vector2((i - (healthUI.Count - 1)/2f) * spacing, 0);
+                    new Vector2((i - (healthUI.Count - 1) / 2f) * spacing, 0);
                 if (i < health)
                 {
                     healthUI[i].SetHeartAnimation(Heart.HeartMode.normal);
@@ -234,6 +239,11 @@ namespace TacticsGameTest
 
         public override void OnStartTurn()
         {
+            if (Dead)
+            {
+                EndTurn();
+                return;
+            }
             movesLeft = maxMoves;
             Console.WriteLine(name + " Start Turn");
         }
@@ -336,7 +346,7 @@ namespace TacticsGameTest
 
         public void HandleInput(InputEvent inp, string eventType)
         {
-            if (InTurn && _isSelected)
+            if (InTurn && _isSelected && !Dead)
             {
                 if (eventType == "MouseMotion")
                 {
@@ -455,7 +465,7 @@ namespace TacticsGameTest
                 new Vector2(16, 16),
                 default,
                 new Vector2(0, directionSection * 32 * 5 + typeSection * 32),
-                type == AnimationType.attack ? 1 : 0);
+                type == AnimationType.attack || type == AnimationType.death ? 1 : 0);
 
             SetEasing(TweenSharp.Animation.Easing.QuadraticEaseOut, speed * 0.5f);
             curAnimationDirection = dir.Value;
@@ -470,6 +480,15 @@ namespace TacticsGameTest
                 Graphic.Flipped = false;
             }
 
+
+        }
+        public bool Dead { get; private set; }
+        public void Die()
+        {
+            SetCharacterAnimation(null, AnimationType.death, 1f);
+            ActorUI.Visible = false;
+            Dead = true;
+            if (InTurn) EndTurn();
 
         }
 

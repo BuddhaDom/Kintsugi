@@ -78,7 +78,7 @@ namespace TacticsGameTest
                     case HeartMode.notinitialized:
                         break;
                 }
-                Graphic.Scale = new Vector2(4, 4);
+                Graphic.Scale = new Vector2(4,4);
                 previousMode = mode;
             }
 
