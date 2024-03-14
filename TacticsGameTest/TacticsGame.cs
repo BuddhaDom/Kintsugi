@@ -68,6 +68,7 @@ namespace TacticsGameTest
                 FontSize = 72,
                 Position = Vector2.Zero
             };
+            Bootstrap.GetInput().AddListener(canvas);
 
 
             float scale = 4;
@@ -83,11 +84,11 @@ namespace TacticsGameTest
                 obj1.FollowedTileobject = character;
                 obj1.TargetPivot = new Vector2(0.25f, -0.25f);
                 obj1.TextPivot = new Vector2(0.5f, 0.5f);
-
+            
                 obj1.Text = i.ToString();
                 obj1.FontPath = "Fonts\\calibri.ttf";
                 obj1.FontSize = 40;
-
+            
             }
 
             canvasObject.SetSpriteSingle(GetAssetManager().GetAssetPath("guy.png"), default, new Vector2(8, 8));

@@ -17,6 +17,8 @@ namespace Kintsugi.Input
     {
         private List<IInputListener> myListeners;
 
+        public bool IsHoveringCanvas { get; internal set; }
+
         /// <summary>
         /// How to initialize this Input System implementation.
         /// </summary>
