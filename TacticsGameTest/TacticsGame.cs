@@ -5,6 +5,11 @@ using SDL2;
 using System.Drawing;
 using System.Numerics;
 using Engine.EventSystem;
+using Kintsugi.Objects.Graphics;
+using Kintsugi.UI;
+using Kintsugi.Rendering;
+using System.Diagnostics.Tracing;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace TacticsGameTest
 {
@@ -54,6 +59,44 @@ namespace TacticsGameTest
 
             scenario.BeginScenario();
 
+            var canvas = new Canvas();
+            var canvasObject = new CanvasObject
+            {
+                FontPath = "Fonts\\calibri.ttf",
+                Text = "Test",
+                FontSize = 72,
+                Position = Vector2.Zero
+            };
+
+
+            float scale = 4;
+            IntPtr texture = ((DisplaySDL)Bootstrap.GetDisplay()).LoadTexture(GetAssetManager().GetAssetPath("guy.png"));
+
+            for (int i = -2; i < 3; i++)
+            {
+                var obj1 = new CanvasObject();
+                obj1.SetSpriteSingle(GetAssetManager().GetAssetPath("guy.png"), default, new Vector2(13/2f, 17/2f));
+                obj1.Position = new Vector2(i * obj1.Graphic.Properties.Dimensions.x * scale, 0);
+                obj1.Graphic.Scale = Vector2.One * scale;
+                canvas.Objects.Add(obj1);
+                obj1.FollowedTileobject = character;
+                obj1.TargetPivot = new Vector2(0.25f, -0.25f);
+                obj1.TextPivot = new Vector2(0.5f, 0.5f);
+
+                obj1.Text = i.ToString();
+                obj1.FontPath = "Fonts\\calibri.ttf";
+                obj1.FontSize = 40;
+
+            }
+
+            canvasObject.SetSpriteSingle(GetAssetManager().GetAssetPath("guy.png"), default, new Vector2(8, 8));
+            canvasObject.Graphic.Scale = new Vector2(1, 1);
+            canvasObject.TargetPivot = new Vector2(0.5f, 0.5f);
+            canvasObject.TextPivot = new Vector2(1f, 1f);
+
+            //canvas.Position = Vector2.One * 100;
+            canvas.Objects.Add(canvasObject);
+            
 
             Bootstrap.GetInput().AddListener(this);
         }

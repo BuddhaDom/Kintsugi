@@ -16,6 +16,8 @@ using Kintsugi.Tiles;
 using SDL2;
 using System.Numerics;
 using Kintsugi.Objects.Graphics;
+using Kintsugi.UI;
+using static SDL2.SDL;
 
 namespace Kintsugi.Rendering
 {
@@ -59,6 +61,7 @@ namespace Kintsugi.Rendering
         private List<Line> _linesToDraw;
         private List<Circle> _circlesToDraw;
         private List<Grid> _gridsToDraw;
+        private List<Canvas> _canvasesToDraw;
         private Dictionary<string, nint> spriteBuffer;
         public override void Initialize()
         {
@@ -66,10 +69,10 @@ namespace Kintsugi.Rendering
 
             base.Initialize();
 
-            _linesToDraw = new List<Line>();
-            _circlesToDraw = new List<Circle>();
-            _gridsToDraw = new List<Grid>();
-
+            _linesToDraw = [];
+            _circlesToDraw = [];
+            _gridsToDraw = [];
+            _canvasesToDraw = [];
         }
 
         /// <summary>
@@ -285,12 +288,12 @@ namespace Kintsugi.Rendering
                                          o.Graphic != null
                                          ))
                             {
-                                var sprite = ((DisplaySDL)Bootstrap.GetDisplay()).LoadTexture(tileObject.Graphic!.Properties.Path);
+                                var sprite = LoadTexture(tileObject.Graphic!.Properties.Path);
 
                                 sRect = tileObject.Graphic.SourceRect();
 
                                 var localTilePivot = tileObject.Graphic.Properties.TilePivot * grid.TileWidth;
-                                var pivotOffsets = localTilePivot - tileObject.Graphic.Properties.ImagePivot;
+                                var pivotOffsets = (localTilePivot - tileObject.Graphic.Properties.ImagePivot *tileObject.Graphic.Scale);
 
                                 var uScreenPos = cam.WorldToScreenSpace(
                                     tileObject.Easing.CurrentPosition +
@@ -298,7 +301,7 @@ namespace Kintsugi.Rendering
                                 );
                                 var vScreenPos = cam.WorldToScreenSpace(
                                     tileObject.Easing.CurrentPosition
-                                    + pivotOffsets + tileObject.Graphic.Properties.Dimensions
+                                    + pivotOffsets + tileObject.Graphic.Properties.Dimensions * tileObject.Graphic.Scale
                                 );
 
                                 int xsize = (int)vScreenPos.X - (int)uScreenPos.X;
@@ -339,6 +342,83 @@ namespace Kintsugi.Rendering
                     (int)end.X,
                     (int)end.Y);
             }
+            
+            foreach (var canvas in _canvasesToDraw.Where(c => c.Visible))
+            {
+                foreach (var canvasObject in canvas.Objects)
+                {
+                    if (canvasObject.Graphic is not null && canvasObject.Graphic.Properties.Path != "")
+                    {
+                        sRect = canvasObject.Graphic.SourceRect();
+                        var sprite = LoadTexture(canvasObject.Graphic.Properties.Path);
+
+                        var pivotOffsetPosition = Vector2.Zero;
+                        if (canvasObject.FollowedTileobject != null)
+                        {
+                            // follow mode
+                            pivotOffsetPosition = 
+                                cam.WorldToScreenSpace(
+                                    canvasObject.FollowedTileobject.Easing.CurrentPosition
+                                    + canvasObject.TargetPivot * canvasObject.FollowedTileobject.Graphic.Properties.Dimensions) - 
+                                canvasObject.Graphic.Properties.ImagePivot * canvasObject.Graphic.Scale;
+
+                        }
+                        else
+                        {
+                            // canvas mode
+                            
+                            pivotOffsetPosition =
+                                canvas.Position
+                                + new Vector2(Bootstrap.GetDisplay().GetWidth(), Bootstrap.GetDisplay().GetHeight()) * canvasObject.TargetPivot
+                                - canvasObject.Graphic.Properties.ImagePivot * canvasObject.Graphic.Scale;
+                        }
+                        tRect.x = (int)(canvasObject.Position.X + pivotOffsetPosition.X); 
+                        tRect.y = (int)(canvasObject.Position.Y + pivotOffsetPosition.Y);
+                        tRect.w = (int)((canvasObject.Graphic.Properties.Dimensions.x) * canvasObject.Graphic.Scale.X);
+                        tRect.h = (int)((canvasObject.Graphic.Properties.Dimensions.y) * canvasObject.Graphic.Scale.Y);
+                        SDL.SDL_RenderCopyEx(_rend,
+                            sprite,
+                            ref sRect,
+                            ref tRect,
+                            0,
+                            nint.Zero,
+                            SDL.SDL_RendererFlip.SDL_FLIP_NONE);
+                    }
+                    if (canvasObject.Text != "")
+                    {
+                        var pivotOffsetPosition = Vector2.Zero;
+                        if (canvasObject.FollowedTileobject != null)
+                        {
+                            // follow mode
+                            pivotOffsetPosition =
+                                cam.WorldToScreenSpace(
+                                    canvasObject.FollowedTileobject.Easing.CurrentPosition
+                                    + canvasObject.TargetPivot * canvasObject.FollowedTileobject.Graphic.Properties.Dimensions);
+
+                        }
+                        else
+                        {
+                            // canvas mode
+
+                            pivotOffsetPosition =
+                                canvas.Position
+                                + new Vector2(Bootstrap.GetDisplay().GetWidth(), Bootstrap.GetDisplay().GetHeight()) * canvasObject.TargetPivot;
+                        }
+                        tRect.x = (int)(canvasObject.Position.X + pivotOffsetPosition.X);
+                        tRect.y = (int)(canvasObject.Position.Y + pivotOffsetPosition.Y);
+
+                        ShowText(
+                            canvasObject.Text,
+                            tRect.x + canvasObject.TextPosition.X,
+                            tRect.y + canvasObject.TextPosition.Y,
+                            canvasObject.FontSize,
+                            canvasObject.TextColor,
+                            canvasObject.FontPath,
+                            canvasObject.TextPivot
+                        );
+                    }
+                }
+            }
 
             // Show it off.
             base.Display();
@@ -351,13 +431,15 @@ namespace Kintsugi.Rendering
             _circlesToDraw.Clear();
             _linesToDraw.Clear();
             _gridsToDraw.Clear();
+            _canvasesToDraw.Clear();
 
             base.ClearDisplay();
         }
 
         public override void DrawGrid(Grid grid)
             => _gridsToDraw.Add(grid);
+
+        public override void DrawCanvas(Canvas canvas)
+            => _canvasesToDraw.Add(canvas);
     }
-
-
 }

@@ -7,7 +7,7 @@ namespace Kintsugi.Objects.Graphics;
 /// <summary>
 /// A single sprite contained within a single image.
 /// </summary>
-public struct Sprite : ISpriteProperties
+public class Sprite : ISpriteProperties
 {
     public Sprite(string path)
     {

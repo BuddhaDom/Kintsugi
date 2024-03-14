@@ -10,6 +10,7 @@
 
 using Kintsugi.Core;
 using SDL2;
+using System.Numerics;
 
 namespace Kintsugi.Rendering
 {
@@ -25,13 +26,14 @@ namespace Kintsugi.Rendering
         nint lblText;
 
 
-        public TextDetails(string text, double x, double y, SDL.SDL_Color col, int spacing)
+        public TextDetails(string text, double x, double y, SDL.SDL_Color col, int spacing, Vector2 pivot)
         {
             this.text = text;
             this.x = x;
             this.y = y;
             this.col = col;
             size = spacing;
+            Pivot = pivot;
         }
 
         public string Text
@@ -61,6 +63,7 @@ namespace Kintsugi.Rendering
         }
         public nint Font { get => font; set => font = value; }
         public nint LblText { get => lblText; set => lblText = value; }
+        public Vector2 Pivot { get; set; }
     }
 
     public class DisplayText : DisplayBase
@@ -117,6 +120,9 @@ namespace Kintsugi.Rendering
 
 
                 SDL_ttf.TTF_SizeText(td.Font, td.Text, out sRect.w, out sRect.h);
+                sRect.x -= (int)(sRect.w * td.Pivot.X);
+                sRect.y -= (int)(sRect.h * td.Pivot.Y);
+
                 SDL.SDL_RenderCopy(_rend, td.LblText, nint.Zero, ref sRect);
 
             }
@@ -169,11 +175,11 @@ namespace Kintsugi.Rendering
 
 
 
-        public override void ShowText(string text, double x, double y, int size, int r, int g, int b)
+        public override void ShowText(string text, double x, double y, int size, int r, int g, int b, string fontPath = "Fonts/calibri.ttf", Vector2 pivot = default)
         {
             int nx, ny, w = 0, h = 0;
 
-            nint font = LoadFont("Fonts/calibri.ttf", size);
+            nint font = LoadFont(fontPath, size);
             SDL.SDL_Color col = new()
             {
                 r = (byte)r,
@@ -187,7 +193,7 @@ namespace Kintsugi.Rendering
                 Debug.Log("TTF_OpenFont: " + SDL.SDL_GetError());
             }
 
-            TextDetails td = new(text, x, y, col, 12)
+            TextDetails td = new(text, x, y, col, 12, pivot)
             {
                 Font = font
             };
@@ -211,7 +217,7 @@ namespace Kintsugi.Rendering
 
 
         }
-        public override void ShowText(char[,] text, double x, double y, int size, int r, int g, int b)
+        public override void ShowText(char[,] text, double x, double y, int size, int r, int g, int b, string fontPath = "Fonts/calibri.ttf", Vector2 pivot = default)
         {
             string str = "";
             int row = 0;
@@ -225,7 +231,7 @@ namespace Kintsugi.Rendering
                 }
 
 
-                ShowText(str, x, y + row * size, size, r, g, b);
+                ShowText(str, x, y + row * size, size, r, g, b, fontPath, pivot);
                 row += 1;
 
             }
