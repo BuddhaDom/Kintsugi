@@ -43,11 +43,13 @@ namespace TacticsGameTest
         }
         public int healthMax = 5;
         public int health = 3;
+        public int poison;
         public float spacing = 16f;
         private List<Heart> healthUI = new();
-        public void TakeDamage(int damage)
+        public void TakeDamage(int damage, int poison)
         {
             health -= damage;
+            this.poison += poison;
             SetHealthUI();
             if (health == 0)
             {
@@ -74,9 +76,13 @@ namespace TacticsGameTest
             {
                 healthUI[i].Position =
                     new Vector2((i - (healthUI.Count - 1) / 2f) * spacing, 0);
-                if (i < health)
+                if (i + poison < health)
                 {
                     healthUI[i].SetHeartAnimation(Heart.HeartMode.normal);
+                }
+                else if (i < health)
+                {
+                    healthUI[i].SetHeartAnimation(Heart.HeartMode.poison);
                 }
                 else
                 {
@@ -229,6 +235,8 @@ namespace TacticsGameTest
         public override void OnEndTurn()
         {
             Graphic.Modulation = Color.FromArgb(64, 64, 64);
+            TakeDamage(poison, 0);
+            SetHealthUI();
             Console.WriteLine(name + " End Turn");
         }
 
@@ -508,7 +516,7 @@ namespace TacticsGameTest
 
             var spawnHitEffect = new ActionEvent(() =>
             {
-                target.TakeDamage(1);
+                target.TakeDamage(1, 1);
                 var hitEffect = new TileObject();
                 hitEffect.AddToGrid(target.Transform.Grid, target.Transform.Layer);
                 hitEffect.SetPosition(target.Transform.Position, false);

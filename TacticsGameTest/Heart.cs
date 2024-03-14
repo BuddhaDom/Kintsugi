@@ -1,4 +1,7 @@
-﻿using Kintsugi.Core;
+﻿using Engine.EventSystem;
+using Kintsugi.Core;
+using Kintsugi.EventSystem.Events;
+using Kintsugi.Objects.Graphics;
 using Kintsugi.UI;
 using System;
 using System.Collections;
@@ -73,7 +76,16 @@ namespace TacticsGameTest
                         }
                         break;
                     case HeartMode.poison:
-                        SetAnimationOverride(Enumerable.Range(columns * 16, 6), 1);
+                        if (previousMode == HeartMode.normal)
+                        {
+                            SetAnimationOverride(Enumerable.Range(columns * 15, 6), 1);
+                            var full = new ActionEvent(() => SetHeartAnimation(HeartMode.poison)).AddStartAwait((Animation)Graphic);
+                            EventManager.I.QueueImmediate(full);
+                        }
+                        else
+                        {
+                            SetAnimationOverride(Enumerable.Range(columns * 16, 6), 0);
+                        }
                         break;
                     case HeartMode.notinitialized:
                         break;
