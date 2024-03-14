@@ -11,6 +11,7 @@ using Kintsugi.AI;
 using System.Drawing;
 using Kintsugi.Objects.Graphics;
 using Kintsugi.EventSystem.Await;
+using Kintsugi.UI;
 
 namespace TacticsGameTest
 {
@@ -23,6 +24,7 @@ namespace TacticsGameTest
         private int maxMoves = 2;
         private int movesLeft;
         public int MovementRange = 5;
+        public Canvas ActorUI = new();
         public SelectableActor(string name, string spritePath)
         {
             this.name = name;
@@ -36,7 +38,43 @@ namespace TacticsGameTest
             pathfindingSettings.SetCostLayer("unit", float.PositiveInfinity, 100);
 
             Bootstrap.GetInput().AddListener(this);
+
+            SetHealthUI();
         }
+        public int healthMax = 5;
+        public int health = 3;
+        private List<CanvasObject> healthUI = new();
+        private void SetHealthUI()
+        {
+            for (int i = 0; i < healthMax; i++)
+            {
+                if (!(i < healthUI.Count))
+                {
+                    var newObject = new CanvasObject();
+                    newObject.FollowedTileobject = this;
+                    ActorUI.Objects.Add(newObject);
+                    healthUI.Add(newObject);
+                    newObject.TargetPivot = new Vector2(0.25f, -0.5f);
+                }
+                SetHeartAnimation(i);
+            }
+
+            void SetHeartAnimation(int index)
+            {
+
+                healthUI[index].SetAnimation(
+                    Bootstrap.GetAssetManager().GetAssetPath("PixelHearts\\hearts.png"),
+                    16,
+                    16,
+                    13,
+                    1f,
+                    Enumerable.Range(27, 13),
+                    default,
+                    new Vector2(8, 8));
+                healthUI[index].Graphic.Scale = new Vector2(4, 4);
+            }
+        }
+
         private List<TileObject> walkHighlights = new();
         private List<TileObject> pathSegments = new();
 
