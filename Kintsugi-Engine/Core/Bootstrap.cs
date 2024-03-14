@@ -84,7 +84,7 @@ namespace Kintsugi.Core
         public static void Setup()
         {
             string workDir = Environment.CurrentDirectory;
-            baseDir = Directory.GetParent(workDir).Parent.Parent.FullName; ;
+            baseDir = workDir;
 
             SetupEnvironmentalVariables(baseDir + "\\" + "envar.cfg");
             Setup(baseDir + "\\" + DEFAULT_CONFIG);

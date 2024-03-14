@@ -5,7 +5,7 @@ namespace Kintsugi.EventSystem.Await
     /// <summary>
     /// Awaitable that will return finished a given amount of seconds after instantiated.
     /// </summary>
-    internal class WaitForSeconds: IAwaitable
+    public class WaitForSeconds: IAwaitable
     {
         private double endTime = double.PositiveInfinity;
         /// <summary>
