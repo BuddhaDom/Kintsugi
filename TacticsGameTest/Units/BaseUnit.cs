@@ -19,9 +19,55 @@ namespace TacticsGameTest.Units
 
         public int Brawn { get; set; } = 1;
 
-        public int DamageMelee { get; set; }
 
-        public int DamageRanged { get; set; }
+        // Amount is the 1 in 1d6
+        private int damagemeleeamount;
+        public int DamageMeleeAmount
+        {
+            get { return damagemeleeamount; }
+            set
+            {
+                if (value < 0)
+                    throw new ArgumentOutOfRangeException("Only positive values are allowed");
+                damagemeleeamount = value;
+            }
+        }
+
+        private int damagerangedamount;
+        public int DamageRangedAmount
+        {
+            get { return damagerangedamount; }
+            set
+            {
+                if (value < 0)
+                    throw new ArgumentOutOfRangeException("Only positive values are allowed");
+                damagerangedamount = value;
+            }
+        }
+
+        // Type is the 6 in 1d6
+        private int damagemeleetype;
+        public int DamageMeleeType
+        {
+            get { return damagemeleetype; }
+            set {
+                if (value < 0) 
+                    throw new ArgumentOutOfRangeException("Only positive values are allowed");
+                damagemeleetype = value; }
+        }
+
+        private int damagerangedtype;
+        public int DamageRangedType
+        {
+            get { return damagerangedtype; }
+            set
+            {
+                if (value < 0)
+                    throw new ArgumentOutOfRangeException("Only positive values are allowed");
+                damagerangedtype = value;
+            }
+        }
+
 
 
         public override void OnEndRound()
