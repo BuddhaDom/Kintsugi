@@ -26,7 +26,6 @@ namespace TacticsGameTest.Units
         public int movesLeft;
         public int MovementRange = 5;
         public Canvas ActorUI = new();
-        public List<Ability> abilities;
         public CombatActor(string name, string spritePath)
         {
             this.name = name;
@@ -39,22 +38,7 @@ namespace TacticsGameTest.Units
             pathfindingSettings.SetCostLayer("shrubbery", 2f, 1);
             pathfindingSettings.SetCostLayer("unit", float.PositiveInfinity, 100);
 
-            abilities = new();
-            abilities.Add(new Stride(this));
-            var attackPattern = new List<Vec2Int>()
-            {
-                new Vec2Int(-1, -1),
-                new Vec2Int(-1, 0),
-                new Vec2Int(-1, 1),
-                new Vec2Int(0, -1),
-                new Vec2Int(0, 1),
-                new Vec2Int(1, -1),
-                new Vec2Int(1, 0),
-                new Vec2Int(1, 1),
-            };
 
-            abilities.Add(new BasicAttack(this, attackPattern));
-            abilities.Add(new PushAttack(this, attackPattern));
 
             SetHealthUI();
         }

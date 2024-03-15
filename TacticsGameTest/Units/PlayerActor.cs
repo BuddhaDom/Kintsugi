@@ -19,7 +19,7 @@ namespace TacticsGameTest.Units
 {
     internal class PlayerActor : CombatActor, IInputListener
     {
-
+        public List<Ability> abilities;
         private Ability selectedAbility;
         public void SelectAbility(int index)
         {
@@ -88,6 +88,22 @@ namespace TacticsGameTest.Units
         public PlayerActor(string name, string spritePath) : base(name, spritePath)
         {
             Bootstrap.GetInput().AddListener(this);
+            abilities = new();
+            abilities.Add(new Stride(this));
+            var attackPattern = new List<Vec2Int>()
+            {
+                new Vec2Int(-1, -1),
+                new Vec2Int(-1, 0),
+                new Vec2Int(-1, 1),
+                new Vec2Int(0, -1),
+                new Vec2Int(0, 1),
+                new Vec2Int(1, -1),
+                new Vec2Int(1, 0),
+                new Vec2Int(1, 1),
+            };
+
+            abilities.Add(new BasicAttack(this, attackPattern));
+            abilities.Add(new PushAttack(this, attackPattern));
         }
 
         public void Select()
