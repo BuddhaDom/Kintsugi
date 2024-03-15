@@ -6,12 +6,21 @@ using SDL2;
 namespace Kintsugi.UI;
 
 /// <summary>
-/// 
+/// A GameObject representing UI elements. The canvas and its <see cref="Objects"/> are rendered onto screen space.
 /// </summary>
 public class Canvas : GameObject, IInputListener
 {
+    /// <summary>
+    /// Objects existing on this canvas.
+    /// </summary>
     public List<CanvasObject> Objects { get; set; } = [];
+    /// <summary>
+    /// The currently hovered object. 
+    /// </summary>
     private CanvasObject? Hovered { get; set; }
+    /// <summary>
+    /// <c>true</c> if this canvas should be rendered.
+    /// </summary>
     public bool Visible { get; set; } = true;
 
     public override void Update()
