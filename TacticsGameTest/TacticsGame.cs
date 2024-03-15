@@ -32,13 +32,13 @@ namespace TacticsGameTest
                 }
             };
             Bootstrap.GetCameraSystem().Size = 16 * 10;
-            var character = new SelectableActor("bro", "FantasyBattlePack\\SwordFighter\\Longhair\\Blue1.png");
+            var character = new PlayerActor("bro", "FantasyBattlePack\\SwordFighter\\Longhair\\Blue1.png");
             character.AddToGrid(grid, 3);
             character.SetPosition(Vec2Int.One * 3);
-            var character2 = new SelectableActor("bro", "FantasyBattlePack\\Archer\\Blue1.png");
+            var character2 = new PlayerActor("bro", "FantasyBattlePack\\Archer\\Blue1.png");
             character2.AddToGrid(grid, 3);
             character2.SetPosition(Vec2Int.One * 4);
-            var character3 = new SelectableActor("bro", "FantasyBattlePack\\AxeKnight\\Red.png");
+            var character3 = new EnemyActor("bro", "FantasyBattlePack\\AxeKnight\\Red.png");
             character3.AddToGrid(grid, 3);
             character3.SetPosition(Vec2Int.One * 6);
 
@@ -144,7 +144,7 @@ namespace TacticsGameTest
 
         }
 
-        private SelectableActor selectedActor;
+        private PlayerActor selectedActor;
         bool up, down, left, right, zoomIn, zoomOut;
         public void HandleInput(InputEvent inp, string eventType)
         {
@@ -160,10 +160,10 @@ namespace TacticsGameTest
                 var objects = grid.GetObjectsAtPosition(gridPos);
                 if (objects != null)
                 {
-                    SelectableActor selectableActor = null;
+                    PlayerActor selectableActor = null;
                     foreach (var item in objects)
                     {
-                        if (item is SelectableActor a)
+                        if (item is PlayerActor a)
                         {
                             selectableActor = a;
                         }

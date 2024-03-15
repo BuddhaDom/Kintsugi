@@ -17,9 +17,9 @@ namespace TacticsGameTest.Events
 {
     internal class PushedEvent : Kintsugi.EventSystem.Event
     {
-        private SelectableActor actor;
+        private CombatActor actor;
         private Vec2Int direction;
-        public PushedEvent(SelectableActor actor, Vec2Int direction)
+        public PushedEvent(CombatActor actor, Vec2Int direction)
         {
             this.direction = direction;
             this.actor = actor;
@@ -37,7 +37,7 @@ namespace TacticsGameTest.Events
                 {
                     if (col is TileObjectCollider tCol)
                     {
-                        if (tCol.TileObject is SelectableActor act)
+                        if (tCol.TileObject is CombatActor act)
                         {
                             act.TakeDamage(1, 0);
                         }

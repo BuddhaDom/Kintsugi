@@ -11,15 +11,15 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
-using static TacticsGameTest.Units.SelectableActor;
 using TacticsGameTest.Units;
+using static TacticsGameTest.Units.CombatActor;
 
 namespace TacticsGameTest.Abilities
 {
     internal class BasicAttack : Ability
     {
         public List<Vec2Int> attacks; 
-        public BasicAttack(SelectableActor actor, List<Vec2Int> attacks) : base(actor)
+        public BasicAttack(CombatActor actor, List<Vec2Int> attacks) : base(actor)
         {
             this.attacks = attacks;
         }
@@ -27,7 +27,7 @@ namespace TacticsGameTest.Abilities
         {
             return attacks.Select((a) => a + actor.Transform.Position).ToList();
         }
-        public SelectableActor GetActorIfAttackable(Vec2Int position)
+        public CombatActor GetActorIfAttackable(Vec2Int position)
         {
             if (GetAttackPositions().Contains(position))
             {
@@ -35,7 +35,7 @@ namespace TacticsGameTest.Abilities
                 if (targeted == null) return null;
                 foreach (var item in targeted)
                 {
-                    if (item is SelectableActor a)
+                    if (item is CombatActor a)
                     {
                         return a;
                     }

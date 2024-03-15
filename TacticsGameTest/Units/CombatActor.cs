@@ -17,7 +17,7 @@ using TacticsGameTest.UI;
 
 namespace TacticsGameTest.Units
 {
-    internal class SelectableActor : BaseUnit, IInputListener
+    internal abstract class CombatActor : BaseUnit
     {
         public PathfindingSettings pathfindingSettings = new();
         public string spritePath;
@@ -27,41 +27,7 @@ namespace TacticsGameTest.Units
         public int MovementRange = 5;
         public Canvas ActorUI = new();
         public List<Ability> abilities;
-        private Ability selectedAbility;
-        public void SelectAbility(int index)
-        {
-            Ability newAbility = null;
-            if (index < abilities.Count && index >= 0)
-            {
-                newAbility = abilities[index];
-            }
-            if (newAbility != selectedAbility)
-            {
-                if (selectedAbility != null)
-                {
-                    selectedAbility.OnDeselect();
-                    targetPositions.Clear();
-                    ClearHighlights();
-                }
-                if (newAbility != null)
-                {
-                    newAbility.OnSelect();
-                    targetPositions.Clear();
-                    foreach (var item in newAbility.GetTargets(Transform.Position))
-                    {
-                        AddHighlight(item.Item1, item.Item2);
-                        targetPositions.Add(item.Item1);
-                    }
-                }
-                selectedAbility = newAbility;
-            }
-        }
-        private HashSet<Vec2Int> targetPositions = new();
-        public void DeselectAbility()
-        {
-            SelectAbility(-1);
-        }
-        public SelectableActor(string name, string spritePath)
+        public CombatActor(string name, string spritePath)
         {
             this.name = name;
             this.spritePath = spritePath;
@@ -73,7 +39,6 @@ namespace TacticsGameTest.Units
             pathfindingSettings.SetCostLayer("shrubbery", 2f, 1);
             pathfindingSettings.SetCostLayer("unit", float.PositiveInfinity, 100);
 
-            Bootstrap.GetInput().AddListener(this);
             abilities = new();
             abilities.Add(new Stride(this));
             var attackPattern = new List<Vec2Int>()
@@ -148,58 +113,6 @@ namespace TacticsGameTest.Units
 
             prevHealth = health;
         }
-
-        private List<TileObject> highlights = new();
-
-        private void ClearHighlights()
-        {
-            foreach (var item in highlights)
-            {
-                item.RemoveFromGrid();
-            }
-            highlights.Clear();
-        }
-        private void AddHighlight(Vec2Int pos, Color color)
-        {
-            color = Color.FromArgb((byte)(0.65 * 256), color);
-            var mark = new TileObject();
-            mark.AddToGrid(Transform.Grid, 3);
-            mark.SetAnimation(
-                Bootstrap.GetRunningGame().GetAssetManager().GetAssetPath("TinyBattles\\mark-sheet.png"),
-                16,
-                16,
-                4,
-                0.5f,
-                Enumerable.Range(0, 4));
-            mark.Graphic.Modulation = color;
-            mark.SetEasing(TweenSharp.Animation.Easing.BounceEaseOut, 0.5f);
-            mark.SetPosition(Transform.Position, false);
-            mark.SetPosition(pos);
-            highlights.Add(mark);
-        }
-        private bool _isSelected;
-        public void Select()
-        {
-            _isSelected = true;
-            SelectAbility(0);
-            /*
-            foreach (var position in GetAttackPositions())
-            {
-                if (GetActorIfAttackable(position) != null)
-                {
-                    AddHighlight(position, Color.OrangeRed);
-                }
-            }
-            */
-            Console.WriteLine("im selected!!");
-        }
-        public void Unselect()
-        {
-            _isSelected = false;
-            ClearHighlights();
-            DeselectAbility();
-            Console.WriteLine("im not selected :(");
-        }
         public override void OnEndRound()
         {
             Console.WriteLine(name + " End Round");
@@ -207,7 +120,6 @@ namespace TacticsGameTest.Units
 
         public override void OnEndTurn()
         {
-            Graphic.Modulation = Color.FromArgb(64, 64, 64);
             TakeDamage(poison, 0);
             SetHealthUI();
             Console.WriteLine(name + " End Turn");
@@ -234,65 +146,6 @@ namespace TacticsGameTest.Units
             {
                 EndTurn();
             }
-        }
-
-        public void HandleInput(InputEvent inp, string eventType)
-        {
-            if (InTurn && _isSelected && !Dead)
-            {
-                if (eventType == "KeyDown")
-                {
-
-                    if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_1)
-                    {
-                        SelectAbility(0);
-                    }
-                    if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_2)
-                    {
-                        SelectAbility(1);
-                    }
-                    if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_3)
-                    {
-                        SelectAbility(2);
-                    }
-
-
-                }
-                if (eventType == "MouseMotion")
-                {
-                    var gridPos = Transform.Grid.WorldToGridPosition(Bootstrap.GetCameraSystem().ScreenToWorldSpace(new Vector2(inp.X, inp.Y)));
-                    selectedAbility?.Hover(gridPos);
-                    //SetPath(gridPos);
-                }
-                if (eventType == "MouseDown")
-                {
-                    if (inp.Button == SDL.SDL_BUTTON_LEFT)
-                    {
-                        var gridPos = Transform.Grid.WorldToGridPosition(Bootstrap.GetCameraSystem().ScreenToWorldSpace(new Vector2(inp.X, inp.Y)));
-                        if (targetPositions.Contains(gridPos))
-                        {
-                            selectedAbility?.DoAction(gridPos);
-                            if (movesLeft <= 0)
-                            {
-                                Unselect();
-                            }
-                            DeselectAbility();
-                        }
-                        else
-                        {
-                            Unselect();
-                        }
-
-                    }
-                    else if (inp.Button == SDL.SDL_BUTTON_RIGHT)
-                    {
-                        Unselect();
-                    }
-
-                }
-
-            }
-
         }
 
         public AnimationDirection AnimationDirectionToTarget(Vec2Int from, Vec2Int to)

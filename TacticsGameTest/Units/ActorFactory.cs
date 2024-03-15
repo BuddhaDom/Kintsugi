@@ -20,7 +20,7 @@ namespace TacticsGameTest
         static Animation skeletonAnim;
         static Animation mummyAnim;
 
-        public static SelectableActor Zombie(Game game, Grid grid)
+        public static CombatActor Zombie(Game game, Grid grid)
         {
             /*
             if (zombieAnim == null)

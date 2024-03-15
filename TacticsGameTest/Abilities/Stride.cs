@@ -27,7 +27,7 @@ namespace TacticsGameTest.Abilities
 
         public override string Tooltip => throw new NotImplementedException();
 
-        public Stride(SelectableActor actor) : base(actor)
+        public Stride(CombatActor actor) : base(actor)
         {
         }
         private bool IsSprint(float cost)
@@ -51,7 +51,7 @@ namespace TacticsGameTest.Abilities
                     .AddStartAwait(curEvent);
                 EventManager.I.Queue(curEvent);
             }
-            var lastEvent = new ActionEvent(() => actor.SetCharacterAnimation(null, SelectableActor.AnimationType.idle, 1f))
+            var lastEvent = new ActionEvent(() => actor.SetCharacterAnimation(null, CombatActor.AnimationType.idle, 1f))
                 .AddStartAwait(curEvent);
             EventManager.I.Queue(lastEvent);
             EventManager.I.Queue(new ActionEvent(actor.CheckEndTurn).AddStartAwait(lastEvent));
