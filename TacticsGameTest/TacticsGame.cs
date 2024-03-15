@@ -38,7 +38,7 @@ namespace TacticsGameTest
             var character2 = new PlayerActor("bro", "FantasyBattlePack\\Archer\\Blue1.png");
             character2.AddToGrid(grid, 3);
             character2.SetPosition(Vec2Int.One * 4);
-            var character3 = new EnemyActor("bro", "FantasyBattlePack\\AxeKnight\\Red.png");
+            var character3 = new BasicMeleeEnemy("bro", "FantasyBattlePack\\AxeKnight\\Red.png");
             character3.AddToGrid(grid, 3);
             character3.SetPosition(Vec2Int.One * 6);
 
@@ -47,7 +47,7 @@ namespace TacticsGameTest
 
             scenario = new CombatScenario();
             var group = new PlayerControlGroup("john's group");
-            var group2 = new PlayerControlGroup("bob's group");
+            var group2 = new EnemyControlGroup("bob's group");
 
             group.AddActor(character);
             group.AddActor(character2);

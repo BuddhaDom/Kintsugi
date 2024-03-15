@@ -87,6 +87,7 @@ namespace TacticsGameTest.Units
 
         public PlayerActor(string name, string spritePath) : base(name, spritePath)
         {
+            team = 0;
             Bootstrap.GetInput().AddListener(this);
             abilities = new();
             abilities.Add(new Stride(this));

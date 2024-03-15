@@ -13,10 +13,11 @@ using System.Text;
 using System.Threading.Tasks;
 using TacticsGameTest.Units;
 using TacticsGameTest.Events;
+using Kintsugi.EventSystem.Await;
 
 namespace TacticsGameTest.Abilities
 {
-    internal class Stride : Ability
+    internal class Stride : Ability, IAwaitable
     {
         public PathfindingResult PathfindingResult;
         private Kintsugi.AI.Path path;
@@ -35,6 +36,11 @@ namespace TacticsGameTest.Abilities
             return cost > actor.MovementRange;
         }
 
+        public bool IsFinished()
+        {
+            return waitingEvent?.IsFinished() ?? true;
+        }
+        private IAwaitable waitingEvent;
         public override void DoAction(Vec2Int target)
         {
             actor.movesLeft--;
@@ -53,6 +59,7 @@ namespace TacticsGameTest.Abilities
             }
             var lastEvent = new ActionEvent(() => actor.SetCharacterAnimation(null, CombatActor.AnimationType.idle, 1f))
                 .AddStartAwait(curEvent);
+            waitingEvent = lastEvent;
             EventManager.I.Queue(lastEvent);
             EventManager.I.Queue(new ActionEvent(actor.CheckEndTurn).AddStartAwait(lastEvent));
 
@@ -190,6 +197,5 @@ namespace TacticsGameTest.Abilities
                 return "";
             }
         }
-
     }
 }

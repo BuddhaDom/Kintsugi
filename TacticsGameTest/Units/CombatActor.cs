@@ -19,6 +19,7 @@ namespace TacticsGameTest.Units
 {
     internal abstract class CombatActor : BaseUnit
     {
+        public int team;
         public PathfindingSettings pathfindingSettings = new();
         public string spritePath;
         public string name;

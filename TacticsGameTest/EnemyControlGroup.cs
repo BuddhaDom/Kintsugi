@@ -10,7 +10,7 @@ namespace TacticsGameTest
         }
         public override float CalculateInitiative()
         {
-            return 0;
+            return 100;
         }
 
         public override void OnEndRound()

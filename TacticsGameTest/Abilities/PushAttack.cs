@@ -25,7 +25,7 @@ namespace TacticsGameTest.Abilities
 
         public override void DoAction(Vec2Int target)
         {
-            var targetActor = GetActorIfAttackable(target);
+            var targetActor = GetActorIfAttackable(actor.Transform.Position, target);
             actor.movesLeft--;
             var animationDirection = actor.AnimationDirectionToTarget(actor.Transform.Position, targetActor.Transform.Position);
 
