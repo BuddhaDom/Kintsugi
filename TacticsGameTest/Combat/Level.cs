@@ -21,12 +21,10 @@ namespace TacticsGameTest.Rooms
         public UnitControlGroup group_player;
         public UnitControlGroup group_environment;
 
-        public Game game;
-
         public abstract string GridPath { get; }
-        public void Load(Game game)
+        public void Load()
         {
-            this.game = game;
+            var game = Bootstrap.GetRunningGame();
 
 
             grid = new Grid(game.GetAssetManager().GetAssetPath(GridPath), gridVisible: true, gridColor: Color.DarkBlue);
