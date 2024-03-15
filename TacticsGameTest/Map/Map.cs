@@ -24,13 +24,15 @@ namespace TacticsGameTest.Map
             var game = Bootstrap.GetRunningGame();
 
 
-            grid = new Grid(game.GetAssetManager().GetAssetPath(GridPath), gridVisible: true, gridColor: Color.DarkBlue);
+            grid = new Grid(game.GetAssetManager().GetAssetPath(GridPath), gridVisible: true, gridColor: Color.Red);
             grid.Position.X = 0;
             grid.Position.Y = 0;
 
             var scenario = new MapScenario();
 
             group_player = new UnitControlGroup("PLAYER");
+            scenario.AddControlGroup(group_player);
+
             
         }
     }
