@@ -10,7 +10,7 @@ using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TacticsGameTest.Levels
+namespace TacticsGameTest.Rooms
 {
     internal class Levels : Level
     {

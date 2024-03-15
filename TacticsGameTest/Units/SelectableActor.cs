@@ -13,10 +13,11 @@ using Kintsugi.Objects.Graphics;
 using Kintsugi.EventSystem.Await;
 using Kintsugi.UI;
 using TacticsGameTest.Abilities;
+using TacticsGameTest.UI;
 
-namespace TacticsGameTest
+namespace TacticsGameTest.Units
 {
-    internal class SelectableActor : Actor, IInputListener
+    internal class SelectableActor : BaseUnit, IInputListener
     {
         public PathfindingSettings pathfindingSettings = new();
         public string spritePath;

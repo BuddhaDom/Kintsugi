@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TacticsGameTest
+namespace TacticsGameTest.Events
 {
-    internal class DummyEvent : Event
+    internal class DummyEvent : Kintsugi.EventSystem.Event
     {
         public override void OnExecute()
         {

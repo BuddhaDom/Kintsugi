@@ -10,6 +10,7 @@ using System.Numerics;
 using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
+using TacticsGameTest.Units;
 
 namespace TacticsGameTest
 {
@@ -21,6 +22,7 @@ namespace TacticsGameTest
 
         public static SelectableActor Zombie(Game game, Grid grid)
         {
+            /*
             if (zombieAnim == null)
             {
                 var spritesheet = new SpriteSheet(
@@ -47,6 +49,9 @@ namespace TacticsGameTest
             character.SetEasing(TweenSharp.Animation.Easing.QuadraticEaseOut, 0.2f);
             character.speed = 1;
             return character;
+            */
+            return null;
+
         }
 
     }

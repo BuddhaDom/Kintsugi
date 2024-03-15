@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TweenSharp.Animation;
 
-namespace TacticsGameTest
+namespace TacticsGameTest.UI
 {
     internal class CursorTileObject : TileObject
     {
@@ -38,13 +38,17 @@ namespace TacticsGameTest
             _cursor = cursor;
         }
         private static CursorTileObject _cursor;
-        public static CursorTileObject Cursor { get {
+        public static CursorTileObject Cursor
+        {
+            get
+            {
                 if (_cursor == null)
                 {
                     Initialize();
                 }
                 return _cursor;
-            } }
+            }
+        }
         public void SetCursor(Grid grid, Vec2Int position, int layer)
         {
             if (grid != Transform.Grid)

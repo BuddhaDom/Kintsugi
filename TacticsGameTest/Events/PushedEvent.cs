@@ -10,10 +10,12 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TacticsGameTest.Units;
 
-namespace TacticsGameTest
+
+namespace TacticsGameTest.Events
 {
-    internal class PushedEvent : Event
+    internal class PushedEvent : Kintsugi.EventSystem.Event
     {
         private SelectableActor actor;
         private Vec2Int direction;

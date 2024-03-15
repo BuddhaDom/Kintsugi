@@ -9,14 +9,14 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TacticsGameTest;
+using TacticsGameTest.Combat;
 
-namespace TacticsGameTest
+namespace TacticsGameTest.Rooms
 {
     internal abstract class Level
     {
         public Grid grid;
-        public MovingScenario scenario;
+        public CombatScenario scenario;
 
         public UnitControlGroup group_player;
         public UnitControlGroup group_environment;
@@ -35,7 +35,7 @@ namespace TacticsGameTest
 
             //grid.Layers[2].SwitchColliderType<SpikeCollider>();
 
-            scenario = new MovingScenario();
+            scenario = new CombatScenario();
 
             group_player = new UnitControlGroup("PLAYER");
             group_environment = new UnitControlGroup("ENVIRONMENT");

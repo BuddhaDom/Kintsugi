@@ -11,7 +11,9 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
-using static TacticsGameTest.SelectableActor;
+using static TacticsGameTest.Units.SelectableActor;
+using TacticsGameTest.Units;
+using TacticsGameTest.Events;
 
 namespace TacticsGameTest.Abilities
 {

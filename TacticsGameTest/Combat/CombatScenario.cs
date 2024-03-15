@@ -1,8 +1,13 @@
 ﻿using Kintsugi.Objects;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace TacticsGameTest
+namespace TacticsGameTest.Combat
 {
-    internal class MovingScenario : ScenarioManager
+    internal class CombatScenario : ScenarioManager
     {
         public override void OnBeginRound()
         {
@@ -10,8 +15,6 @@ namespace TacticsGameTest
 
         public override void OnBeginScenario()
         {
-            RecalculateInitiativeOnNewRound = true;
-            Console.WriteLine("Scenario begun!");
         }
 
         public override void OnBeginTurn()
@@ -24,12 +27,10 @@ namespace TacticsGameTest
 
         public override void OnEndScenario()
         {
-            Console.WriteLine("Scenario end!");
         }
 
         public override void OnEndTurn()
         {
         }
     }
-
 }

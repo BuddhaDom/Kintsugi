@@ -12,9 +12,9 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TacticsGameTest
+namespace TacticsGameTest.UI
 {
-    internal class Heart: CanvasObject
+    internal class Heart : CanvasObject
     {
         public enum HeartMode { normal, gone, poisonbegin, poison, notinitialized }
         private HeartMode previousMode;
@@ -90,7 +90,7 @@ namespace TacticsGameTest
                     case HeartMode.notinitialized:
                         break;
                 }
-                Graphic.Scale = new Vector2(4,4);
+                Graphic.Scale = new Vector2(4, 4);
                 previousMode = mode;
             }
 

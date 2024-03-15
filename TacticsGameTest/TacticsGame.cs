@@ -10,13 +10,16 @@ using Kintsugi.UI;
 using Kintsugi.Rendering;
 using System.Diagnostics.Tracing;
 using static System.Net.Mime.MediaTypeNames;
+using TacticsGameTest.UI;
+using TacticsGameTest.Units;
+using TacticsGameTest.Combat;
 
 namespace TacticsGameTest
 {
     internal class TacticsGame : Game, IInputListener
     {
         private Grid grid;
-        private MovingScenario scenario;
+        private CombatScenario scenario;
 
         public override void Initialize()
         {
@@ -42,10 +45,9 @@ namespace TacticsGameTest
             // character.SetSpriteSingle(GetAssetManager().GetAssetPath("guy.png"), 
             //     Vector2.One / 2, new Vector2(6.5f, 8.5f));
 
-            scenario = new MovingScenario();
-            var group = new MyControlGroup("john's group");
-            var group2 = new MyControlGroup("bob's group");
-            group2.Initiative = -2;
+            scenario = new CombatScenario();
+            var group = new PlayerControlGroup("john's group");
+            var group2 = new PlayerControlGroup("bob's group");
 
             group.AddActor(character);
             group.AddActor(character2);
