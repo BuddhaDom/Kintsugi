@@ -27,7 +27,7 @@ namespace Kintsugi.Objects.Graphics
         public void SetSpriteSingle(string path, Vector2 tilePivot = default, Vector2 imagePivot = default)
         {
             SetSpriteSingle(new Sprite(path));
-            Graphic.Properties.TilePivot = tilePivot;
+            Graphic!.Properties.TilePivot = tilePivot;
             Graphic.Properties.ImagePivot = imagePivot;
         }
 

@@ -64,6 +64,8 @@ public class CanvasObject : GraphicsObject
     /// </summary>
     public Vector2 Dimensions { get; set; }
 
+    public bool Visible { get; set; }= true;
+
     public CanvasObject()
     {
         if (Graphic != null) Dimensions = Graphic.Properties.Dimensions;

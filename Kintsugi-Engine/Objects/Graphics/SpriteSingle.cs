@@ -7,12 +7,18 @@ namespace Kintsugi.Objects.Graphics;
 /// <summary>
 /// A single image graphic for for <see cref="TileObject"/> 
 /// </summary>
-public class SpriteSingle : ISpriteable
+public class SpriteSingle() : ISpriteable
 {
     /// <summary>
     /// Image containing the sprite relevant to this graphic.
     /// </summary>
     public Sprite Sprite { get; internal set; }
+
+    public SpriteSingle(string path) : this()
+    {
+        Sprite = new Sprite(path);
+    }
+    
     public ISpriteProperties Properties => Sprite;
     public SDL.SDL_Rect SourceRect()
         => new() {

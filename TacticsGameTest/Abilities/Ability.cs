@@ -12,7 +12,7 @@ namespace TacticsGameTest.Abilities
 {
     internal abstract class Ability
     {
-        protected SelectableActor actor;
+        public SelectableActor actor;
         public Ability(SelectableActor actor)
         {
             this.actor = actor;
