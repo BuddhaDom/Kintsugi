@@ -19,7 +19,7 @@ namespace TacticsGameTest.Rooms
         public CombatScenario scenario;
 
         public UnitControlGroup group_player;
-        public UnitControlGroup group_environment;
+        public UnitControlGroup group_enemy;
 
         public abstract string GridPath { get; }
         public void Load()
@@ -30,13 +30,14 @@ namespace TacticsGameTest.Rooms
             grid = new Grid(game.GetAssetManager().GetAssetPath(GridPath), gridVisible: true, gridColor: Color.DarkBlue);
             grid.Position.X = 0;
             grid.Position.Y = 0;
-
-            //grid.Layers[2].SwitchColliderType<SpikeCollider>();
-
+           
             scenario = new CombatScenario();
 
             group_player = new UnitControlGroup("PLAYER");
-            group_environment = new UnitControlGroup("ENVIRONMENT");
+            group_enemy = new UnitControlGroup("ENEMY");
+
+            scenario.AddControlGroup(group_player);
+            scenario.AddControlGroup(group_enemy);
 
             SetUp();
         }

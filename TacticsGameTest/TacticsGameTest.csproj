@@ -294,6 +294,9 @@
     <None Update="Assets\Tilemaps\Levels\dungeon_tilemap_packed.tsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Assets\Tilemaps\Levels\map.tmx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Assets\Tilemaps\Levels\room1.tmx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -454,10 +457,6 @@
 
   <ItemGroup>
     <PackageReference Include="TweenSharp" Version="1.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Map\" />
   </ItemGroup>
 
 </Project>
