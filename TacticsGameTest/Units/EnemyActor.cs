@@ -1,5 +1,6 @@
 ﻿using Engine.EventSystem;
 using FMOD;
+using Kintsugi.AI;
 using Kintsugi.Core;
 using Kintsugi.EventSystem.Await;
 using Kintsugi.EventSystem.Events;
@@ -92,13 +93,57 @@ namespace TacticsGameTest.Units
                     }
                     else
                     {
-                        return false;
+
+                        MoveTowardsClosest();
+
+                        return true;
                     }
                     return true;
                 }
             }
 
             return false;
+
+        }
+
+        public void MoveTowardsClosest()
+        {
+            PathfindingResult longLook = PathfindingSystem.Dijkstra(
+                Transform.Grid,
+                Transform.Position,
+                100,
+                pathfindingSettings);
+
+            Vec2Int ClosestDesired = Vec2Int.Zero;
+            float closestCost = float.PositiveInfinity;
+            foreach (var item in longLook.ReachablePositions())
+            {
+                if (CanAttackAt(item))
+                {
+                    var cost = longLook.GetCost(item);
+                    if (cost < closestCost)
+                    {
+                        ClosestDesired = item;
+                        closestCost = cost;
+
+                    }
+
+                }
+            }
+
+            var pathToDesired = longLook.PathTo(ClosestDesired);
+
+            for (int i = pathToDesired.PathPositions.Count - 1; i >= 0; i--)
+            {
+                var target = pathToDesired.PathPositions[i];
+                if (longLook.GetCost(target) <= Swift)
+                {
+                    Move.Hover(target);
+                    Move.DoAction(target);
+                    Move.OnDeselect();
+                    return;
+                }
+            }
 
         }
 
