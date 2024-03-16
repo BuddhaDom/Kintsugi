@@ -2,20 +2,10 @@
 using Kintsugi.Input;
 using Kintsugi.Tiles;
 using SDL2;
-using System.Drawing;
 using System.Numerics;
-using Engine.EventSystem;
-using Kintsugi.Objects.Graphics;
-using Kintsugi.UI;
-using Kintsugi.Rendering;
-using System.Diagnostics.Tracing;
-using static System.Net.Mime.MediaTypeNames;
-using TacticsGameTest.UI;
 using TacticsGameTest.Units;
 using TacticsGameTest.Combat;
-using TacticsGameTest.Rooms;
 using Kintsugi.Audio;
-using TacticsGameTest.Map;
 
 namespace TacticsGameTest
 {

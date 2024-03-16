@@ -1,17 +1,8 @@
 ﻿using Kintsugi.Core;
 using Kintsugi.Input;
-using Kintsugi.Objects;
-using Kintsugi.Rendering;
 using Kintsugi.Tiles;
 using SDL2;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
 using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
-using PuzzleGame.Levels;
 using Kintsugi.Audio;
 
 namespace PuzzleGame

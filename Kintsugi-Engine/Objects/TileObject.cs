@@ -1,4 +1,3 @@
-using System.Numerics;
 using Kintsugi.Collision;
 using System.ComponentModel.DataAnnotations;
 using Kintsugi.Core;

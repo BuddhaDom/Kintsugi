@@ -1,13 +1,8 @@
 ﻿using Kintsugi.Core;
 using Kintsugi.Input;
 using Kintsugi.Objects;
-using Kintsugi.EventSystem;
 using SDL2;
 using Engine.EventSystem;
-using Kintsugi.EventSystem.Events;
-using Kintsugi.Collision;
-using Kintsugi.Objects.Properties;
-using FMOD;
 
 namespace PuzzleGame
 {

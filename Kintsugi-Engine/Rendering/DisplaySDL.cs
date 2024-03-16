@@ -17,7 +17,6 @@ using SDL2;
 using System.Numerics;
 using Kintsugi.Objects.Graphics;
 using Kintsugi.UI;
-using static SDL2.SDL;
 
 namespace Kintsugi.Rendering
 {

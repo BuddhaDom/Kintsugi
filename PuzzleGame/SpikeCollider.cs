@@ -4,12 +4,6 @@ using Kintsugi.Collision;
 using Kintsugi.Core;
 using Kintsugi.EventSystem.Events;
 using Kintsugi.Objects.Properties;
-using PuzzleGame;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PuzzleGame
 {
