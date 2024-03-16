@@ -4,7 +4,7 @@ using Kintsugi.UI;
 
 namespace TacticsGameTest.UI;
 
-public class FramedIcon : CanvasObject
+public class FramedIcon : CanvasObject, IHUDObject
 {
     internal CanvasObject Icon { get; } = new();
 
@@ -18,9 +18,8 @@ public class FramedIcon : CanvasObject
         
         Position = position;
         if (Graphic != null && Icon.Graphic != null)
-            Icon.Position = position + 
-                            (Dimensions * Graphic.Scale -
-                             Icon.Dimensions * Icon.Graphic.Scale) / 2;
+            Icon.Position = 
+                position + (Dimensions * Graphic.Scale - Icon.Dimensions * Icon.Graphic.Scale) / 2;
     }
 
     private static void SetAsType(ISpriteable input, GraphicsObject target)
@@ -34,5 +33,11 @@ public class FramedIcon : CanvasObject
                 target.SetAnimation(animation);
                 break;
         }
+    }
+
+    public void AddToCanvas(Canvas canvas)
+    {
+        canvas.Objects.Add(Icon);
+        canvas.Objects.Add(this);
     }
 }

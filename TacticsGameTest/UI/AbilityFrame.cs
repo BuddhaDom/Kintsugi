@@ -1,11 +1,12 @@
 using System.Numerics;
 using Kintsugi.Core;
 using Kintsugi.Objects.Graphics;
+using Kintsugi.UI;
 using TacticsGameTest.Abilities;
 
 namespace TacticsGameTest.UI;
 
-internal class AbilityFrame(Ability ability, int index)
+internal class AbilityFrame(Ability ability, int index) : IHUDObject
 {
     public Ability AbilityData { get; set; } = ability;
 
@@ -32,5 +33,10 @@ internal class AbilityFrame(Ability ability, int index)
             base.OnClick();
             ability.actor.SelectAbility(index);
         }
+    }
+
+    public void AddToCanvas(Canvas canvas)
+    {
+        throw new NotImplementedException();
     }
 }
