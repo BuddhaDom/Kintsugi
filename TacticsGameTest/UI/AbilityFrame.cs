@@ -3,6 +3,7 @@ using Kintsugi.Core;
 using Kintsugi.Objects.Graphics;
 using Kintsugi.UI;
 using TacticsGameTest.Abilities;
+using TacticsGameTest.Units;
 
 namespace TacticsGameTest.UI;
 
@@ -64,7 +65,7 @@ internal class AbilityFrame : IHUDObject
         public override void OnClick()
         {
             base.OnClick();
-            Ability.actor.SelectAbility(Index);
+            ((PlayerActor)Ability.actor).SelectAbility(Index);
         }
 
         public override void OnHoverStart()

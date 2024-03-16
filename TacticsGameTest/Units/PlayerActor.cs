@@ -122,6 +122,7 @@ namespace TacticsGameTest.Units
             }
             */
             Console.WriteLine("im selected!!");
+            HUD.Instance.DisplayActor(this);
         }
         public void Unselect()
         {
@@ -129,6 +130,7 @@ namespace TacticsGameTest.Units
             ClearHighlights();
             DeselectAbility();
             Console.WriteLine("im not selected :(");
+            HUD.Instance.Clear();
         }
         public override void OnEndRound()
         {

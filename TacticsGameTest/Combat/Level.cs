@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TacticsGameTest.Combat;
+using TacticsGameTest.UI;
 using TacticsGameTest.Units;
 
 namespace TacticsGameTest.Rooms
@@ -81,7 +82,7 @@ namespace TacticsGameTest.Rooms
                 Bootstrap.GetInput().RemoveListener(listener);
             }
             Audio.I.music.Stop();
-
+            HUD.Instance.Clear();
         }
     }
 }

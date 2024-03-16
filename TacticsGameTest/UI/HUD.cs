@@ -22,7 +22,7 @@ internal class HUD : Canvas
     /// Display information and buttons relevant to an actor.
     /// </summary>
     /// <param name="actor">Actor holding data relevant to the HUD.</param>
-    public void DisplayActor(SelectableActor actor)
+    public void DisplayActor(PlayerActor actor)
     {
         new FramedIcon(
             new Vector2(10f, 10f),
