@@ -32,6 +32,7 @@ namespace TacticsGameTest
             unit.DamageRangedType = 4;
 
             unit.MaxHp = 15;
+            unit.Hp = unit.MaxHp;
             unit.AddToGrid(grid, 2);
 
             return unit;

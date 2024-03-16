@@ -76,13 +76,16 @@ namespace TacticsGameTest.Abilities
                     curAwaitEvent = pushEvent;
                     EventManager.I.Queue(pushEvent);
                 }
-                
+                var endturnCheck = new ActionEvent(actor.CheckEndTurn).AddStartAwaits([curAwaitEvent]);
+                EventManager.I.Queue(endturnCheck);
+
+
+
 
             }).AddStartAwait(new WaitForSeconds(0.25f));
 
             EventManager.I.Queue(beginAttack);
             EventManager.I.Queue(spawnHitEffect);
-            EventManager.I.Queue(new ActionEvent(actor.CheckEndTurn).AddStartAwaits([beginAttack, spawnHitEffect]));
         }
     }
 }

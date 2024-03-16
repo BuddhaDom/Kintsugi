@@ -88,7 +88,6 @@ namespace TacticsGameTest.Units
         public PlayerActor(string name, string spritePath) : base(name, spritePath)
         {
             team = 0;
-            Bootstrap.GetInput().AddListener(this);
             abilities = new();
             abilities.Add(new Stride(this));
             var attackPattern = new List<Vec2Int>()
@@ -107,9 +106,11 @@ namespace TacticsGameTest.Units
             abilities.Add(new PushAttack(this, attackPattern));
         }
 
+        private bool justSelected = false;
         public void Select()
         {
             _isSelected = true;
+            justSelected = true;
             SelectAbility(0);
             /*
             foreach (var position in GetAttackPositions())
@@ -152,6 +153,11 @@ namespace TacticsGameTest.Units
 
         public void HandleInput(InputEvent inp, string eventType)
         {
+            if (justSelected)
+            {
+                justSelected = false;
+                return;
+            }
             if (InTurn && _isSelected && !Dead)
             {
                 if (eventType == "KeyDown")

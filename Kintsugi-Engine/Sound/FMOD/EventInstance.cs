@@ -34,6 +34,16 @@ namespace Kintsugi.Audio
 
         /**
          * <summary>
+         * Stops the event instance.
+         * </summary>
+         */
+        public void Stop()
+        {
+            SoundFMOD.ErrorCheck(eventInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT));
+        }
+
+        /**
+         * <summary>
          * Mark for release. Will be released as soon as its done playing.
          * This will happen automatically when garbage collected, but if played often,
          * make sure to call release as soon as you are done calling functions on this instance.

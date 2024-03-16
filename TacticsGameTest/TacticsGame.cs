@@ -36,7 +36,7 @@ namespace TacticsGameTest
             Audio.I.bgfx.Start();
             //music.Start();
 
-            
+
             /*
             // Levels
             var testlevel = new Room1();
@@ -51,26 +51,12 @@ namespace TacticsGameTest
             */
 
 
-            var testMap = new Map.Map();
-            testMap.Load();
 
-            var party = new PartyActor("FantasyBattlePack\\SwordFighter\\Longhair\\Blue1.png");
-            party.AddToGrid(testMap.grid, 4);
-            party.SetPosition(new Vec2Int(5, 9));
-            grid = testMap.grid;
-
-            var mapscenario = new MapScenario();
-
-            var testControlGroup =new MapControlGroup();
-
-            mapscenario.AddControlGroup(testControlGroup);
-
-            testControlGroup.AddActor(party);
-            mapscenario.BeginScenario();
             //var testlevel = new Room1();
             //testlevel.Load();
             //grid = testlevel.grid;
-           
+
+            MapManagement.I.LoadOverworld();
 
             Bootstrap.GetInput().AddListener(this);
         }
@@ -119,42 +105,6 @@ namespace TacticsGameTest
         bool up, down, left, right, zoomIn, zoomOut;
         public void HandleInput(InputEvent inp, string eventType)
         {
-            if (eventType == "MouseMotion" && grid != null)
-            {
-                var gridPos = grid.WorldToGridPosition(Bootstrap.GetCameraSystem().ScreenToWorldSpace(new Vector2(inp.X, inp.Y)));
-                CursorTileObject.Cursor.SetCursor(grid, gridPos, 4);
-            }
-            if (eventType == "MouseDown" && grid != null)
-            {
-                var gridPos = grid.WorldToGridPosition(Bootstrap.GetCameraSystem().ScreenToWorldSpace(new Vector2(inp.X, inp.Y)));
-
-                var objects = grid.GetObjectsAtPosition(gridPos);
-                if (objects != null)
-                {
-                    PlayerActor selectableActor = null;
-                    foreach (var item in objects)
-                    {
-                        if (item is PlayerActor a)
-                        {
-                            selectableActor = a;
-                        }
-                    }
-                    if (selectableActor != null && selectableActor.InTurn && EventManager.I.IsQueueDone())
-                    {
-                        if (selectedActor != null)
-                        {
-                            selectedActor.Unselect();
-                        }
-                        selectedActor = selectableActor;
-                        selectedActor.Select();
-                        Console.WriteLine(selectableActor.name);
-                    }
-
-                }
-                //Console.WriteLine(gridPos);
-                //Console.WriteLine(grid.GridToWorldPosition(gridPos));
-
-            }
 
             if (eventType == "KeyDown")
             {
