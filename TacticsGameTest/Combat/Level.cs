@@ -10,12 +10,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TacticsGameTest.Combat;
+using TacticsGameTest.Units;
 
 namespace TacticsGameTest.Rooms
 {
     internal abstract class Level
     {
-        public Grid grid;
+        public GridBase grid;
         public CombatScenario scenario;
 
         public PlayerControlGroup group_player;
@@ -29,7 +30,9 @@ namespace TacticsGameTest.Rooms
             Audio.I.music.Start();
 
 
-            grid = new Grid(game.GetAssetManager().GetAssetPath(GridPath), gridVisible: true, gridColor: Color.DarkBlue);
+            grid = new GridBase(game.GetAssetManager().GetAssetPath(GridPath), gridVisible: true, gridColor: Color.DarkBlue);
+
+            Bootstrap.GetInput().AddListener(grid);
             grid.Position.X = 0;
             grid.Position.Y = 0;
            
@@ -42,6 +45,15 @@ namespace TacticsGameTest.Rooms
             scenario.AddControlGroup(group_enemy);
 
             SetUp();
+            foreach (var item in group_player.GetActors())
+            {
+                scenario.players.Add((CombatActor)item);
+                AddLevelInputListener((IInputListener)item);
+            }
+            foreach (var item in group_enemy.GetActors())
+            {
+                scenario.enemies.Add((CombatActor)item);
+            }
         }
         public abstract void SetUp();
         private List<IInputListener> levelInputListeners = new();
@@ -52,6 +64,13 @@ namespace TacticsGameTest.Rooms
         }
         public void Unload()
         {
+            foreach (var item in group_player.GetActors())
+            {
+                ((PlayerActor)item).ActorUI.Destroy();
+
+                ((PlayerActor)item).ActorUI = null;
+            }
+            Bootstrap.GetInput().RemoveListener(grid);
             grid.Destroy();
             grid = null;
             scenario.EndScenario();
@@ -61,6 +80,8 @@ namespace TacticsGameTest.Rooms
             {
                 Bootstrap.GetInput().RemoveListener(listener);
             }
+            Audio.I.music.Stop();
+
         }
     }
 }

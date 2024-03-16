@@ -4,11 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TacticsGameTest.Units;
 
 namespace TacticsGameTest.Combat
 {
     internal class CombatScenario : ScenarioManager
     {
+        public List<CombatActor> players = new();
+        public List<CombatActor> enemies = new();
         public override void OnBeginRound()
         {
         }
@@ -23,14 +26,27 @@ namespace TacticsGameTest.Combat
 
         public override void OnEndRound()
         {
+            
         }
 
         public override void OnEndScenario()
         {
+
         }
 
         public override void OnEndTurn()
         {
+            if (players.All((p) => p.Dead))
+            {
+                EndScenario();
+                Console.WriteLine("you lost :(");
+
+            }
+            else if (enemies.All((e) => e.Dead))
+            {
+                EndScenario();
+                MapManagement.I.LoadOverworld();
+            }
         }
     }
 }

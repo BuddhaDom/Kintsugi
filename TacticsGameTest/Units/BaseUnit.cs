@@ -20,11 +20,6 @@ namespace TacticsGameTest.Units
             {
                 if (value < 1)
                     throw new ArgumentOutOfRangeException("Only positive values are allowed");
-                if (!HealthInitialized)
-                {
-                    Hp = value;
-                    HealthInitialized = true;
-                }
                 if (Hp > maxhp)
                 {
                     Hp = maxhp;

@@ -72,6 +72,7 @@ namespace TacticsGameTest.Map
         }
         public void CheckEndTurn()
         {
+            MapManagement.I.EnterRoom(Transform.Position);
             EndTurn();
         }
         public PathfindingSettings pathfindingSettings;
@@ -207,7 +208,7 @@ namespace TacticsGameTest.Map
                     if (inp.Button == SDL.SDL_BUTTON_LEFT)
                     {
                         var gridPos = Transform.Grid.WorldToGridPosition(Bootstrap.GetCameraSystem().ScreenToWorldSpace(new Vector2(inp.X, inp.Y)));
-                        if (PathfindingResult!= null && PathfindingResult.ReachablePositions().Contains(gridPos))
+                        if (path != null && PathfindingResult!= null && PathfindingResult.ReachablePositions().Contains(gridPos))
                         {
                             Move();
                         }

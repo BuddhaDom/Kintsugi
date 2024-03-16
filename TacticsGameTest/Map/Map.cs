@@ -13,7 +13,7 @@ namespace TacticsGameTest.Map
 {
     internal class Map
     {
-        public Grid grid;
+        public GridBase grid;
 
         public MapScenario scenario;
 
@@ -24,7 +24,7 @@ namespace TacticsGameTest.Map
             var game = Bootstrap.GetRunningGame();
 
 
-            grid = new Grid(game.GetAssetManager().GetAssetPath(GridPath), gridVisible: true, gridColor: Color.Red);
+            grid = new GridBase(game.GetAssetManager().GetAssetPath(GridPath), gridVisible: true, gridColor: Color.Red);
             grid.Position.X = 0;
             grid.Position.Y = 0;
 
@@ -34,6 +34,9 @@ namespace TacticsGameTest.Map
             scenario.AddControlGroup(group_player);
 
             
+        }
+        public void Unload()
+        {
         }
     }
 }
