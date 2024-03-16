@@ -17,7 +17,7 @@ public class Canvas : GameObject, IInputListener
     /// <summary>
     /// The currently hovered object. 
     /// </summary>
-    private CanvasObject? Hovered { get; set; }
+    public CanvasObject? Hovered { get; set; }
     /// <summary>
     /// <c>true</c> if this canvas should be rendered.
     /// </summary>
