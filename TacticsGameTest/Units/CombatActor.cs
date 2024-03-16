@@ -1,0 +1,156 @@
+﻿using Kintsugi.Core;
+using Kintsugi.Input;
+using Kintsugi.Objects;
+using Kintsugi.EventSystem;
+using SDL2;
+using Engine.EventSystem;
+using Kintsugi.EventSystem.Events;
+using Kintsugi.Tiles;
+using System.Numerics;
+using Kintsugi.AI;
+using System.Drawing;
+using Kintsugi.Objects.Graphics;
+using Kintsugi.EventSystem.Await;
+using Kintsugi.UI;
+using TacticsGameTest.Abilities;
+using TacticsGameTest.UI;
+
+namespace TacticsGameTest.Units
+{
+    internal abstract class CombatActor : BaseUnit
+    {
+        public int team;
+        public PathfindingSettings pathfindingSettings = new();
+        public string spritePath;
+        public string name;
+        private int maxMoves = 2;
+        public int movesLeft;
+        public Canvas ActorUI = new();
+        public CombatActor(string name, string spritePath): base(spritePath)
+        {
+            this.name = name;
+            SetCollider(["unit"], ["water", "wall", "unit"]);
+            pathfindingSettings.AddCollideLayers(Collider.CollideLayers);
+            pathfindingSettings.SetCostLayer("road", 0.5f, 1);
+            pathfindingSettings.SetCostLayer("shrubbery", 2f, 1);
+            pathfindingSettings.SetCostLayer("unit", float.PositiveInfinity, 100);
+
+
+
+            SetHealthUI();
+        }
+        public int poison;
+        public float spacing = 16f;
+        private List<Heart> healthUI = new();
+        public void TakeDamage(int damage, int poison)
+        {
+            Hp -= damage;
+            this.poison += poison;
+            SetHealthUI();
+            if (Hp <= 0)
+            {
+                EventManager.I.QueueImmediate(() => Die());
+            }
+        }
+
+
+        int prevHealth;
+        private void SetHealthUI()
+        {
+            for (int i = 0; i < MaxHp; i++)
+            {
+                if (!(i < healthUI.Count))
+                {
+                    var newObject = new Heart();
+                    newObject.FollowedTileobject = this;
+                    ActorUI.Objects.Add(newObject);
+                    healthUI.Add(newObject);
+                    newObject.TargetPivot = new Vector2(0.25f, -0.25f);
+                }
+            }
+
+            for (int i = 0; i < healthUI.Count; i++)
+            {
+                healthUI[i].Position =
+                    new Vector2((i - (healthUI.Count - 1) / 2f) * spacing, 0);
+                if (i + poison < Hp)
+                {
+                    healthUI[i].SetHeartAnimation(Heart.HeartMode.normal);
+                }
+                else if (i < Hp)
+                {
+                    healthUI[i].SetHeartAnimation(Heart.HeartMode.poison);
+                }
+                else
+                {
+                    healthUI[i].SetHeartAnimation(Heart.HeartMode.gone);
+                }
+
+            }
+
+
+
+            prevHealth = Hp;
+        }
+        public override void OnEndRound()
+        {
+            Console.WriteLine(name + " End Round");
+        }
+
+        public override void OnEndTurn()
+        {
+            TakeDamage(poison, 0);
+            SetHealthUI();
+            Console.WriteLine(name + " End Turn");
+        }
+
+        public override void OnStartRound()
+        {
+            Console.WriteLine(name + " Start Round");
+        }
+
+        public override void OnStartTurn()
+        {
+            if (Dead)
+            {
+                EndTurn();
+                return;
+            }
+            movesLeft = maxMoves;
+            Console.WriteLine(name + " Start Turn");
+        }
+        public void CheckEndTurn()
+        {
+            if (InTurn && movesLeft == 0)
+            {
+                EndTurn();
+            }
+        }
+
+
+        public void PushTo(Vec2Int to)
+        {
+            SetPosition(to);
+
+
+        }
+        public override float GetMoveSpeed(Vec2Int to)
+        {
+            return MathF.Max(pathfindingSettings.GetCost(to, Transform.Grid), 0.1f);
+
+        }
+
+        public bool Dead { get; private set; }
+        public void Die()
+        {
+            Audio.I.PlayAudio("Death");
+            SetCharacterAnimation(null, AnimatableActor.AnimationType.death, 1f);
+            ActorUI.Visible = false;
+            Dead = true;
+            if (InTurn) EndTurn();
+
+        }
+
+
+    }
+}

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.5" tiledversion="1.5.0" orientation="orthogonal" renderorder="right-down" width="11" height="10" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="3">
+ <tileset firstgid="1" source="dungeon_tilemap_packed.tsx"/>
+ <layer id="1" name="connectors" width="11" height="10" opacity="0.99">
+  <properties>
+   <property name="kintsugi:collisionlayerbelong" value="ground"/>
+  </properties>
+  <data encoding="csv">
+0,0,0,0,0,1,0,0,0,0,0,
+0,0,1,1,1,1,1,1,1,0,0,
+0,0,0,0,0,1,0,0,1,0,0,
+0,0,0,0,0,1,0,0,1,0,0,
+0,0,1,0,0,1,0,0,1,1,1,
+0,0,1,0,0,1,0,0,1,0,1,
+1,1,1,0,0,0,0,0,1,0,1,
+0,0,1,0,0,0,1,1,1,0,1,
+0,0,1,1,1,1,1,0,0,0,1,
+0,0,0,0,0,1,0,0,0,0,0
+</data>
+ </layer>
+ <layer id="2" name="connectors_secret" width="11" height="10">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,84,0,0,0,0,0,0,0,
+0,0,0,84,0,0,0,0,0,0,0,
+0,0,0,96,0,0,71,71,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,82,0,0,0,0,0,
+82,0,0,0,0,94,0,0,0,0,0,
+82,0,0,0,0,0,0,71,71,71,0,
+94,95,95,95,95,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer id="5" name="walls" width="11" height="10">
+  <properties>
+   <property name="kintsugi:collisionlayerbelong" value="wall"/>
+  </properties>
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer id="6" name="rooms" width="11" height="10">
+  <properties>
+   <property name="kintsugi:collisionlayerbelong" value="room"/>
+  </properties>
+  <data encoding="csv">
+0,0,0,0,0,46,0,0,0,0,0,
+0,0,61,0,0,0,0,0,61,0,0,
+0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,61,0,0,
+0,0,0,0,0,61,0,0,0,0,0,
+61,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,61,0,0,0,0,
+0,0,61,0,0,0,0,0,0,0,61,
+0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer id="8" name="icons" width="11" height="10" visible="0" locked="1">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+</map>

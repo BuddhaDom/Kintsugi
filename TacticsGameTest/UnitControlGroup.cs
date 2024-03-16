@@ -17,7 +17,6 @@ namespace TacticsGameTest
         public override void OnEndRound()
         {
             //Console.WriteLine("CG End Round");
-            CurrentInitiative = 0;
         }
 
         public override void OnEndTurn()

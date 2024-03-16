@@ -10,37 +10,50 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TacticsGameTest.Combat;
+using TacticsGameTest.Units;
 
 namespace TacticsGameTest.Rooms
 {
     internal abstract class Level
     {
-        public Grid grid;
+        public GridBase grid;
         public CombatScenario scenario;
 
-        public UnitControlGroup group_player;
-        public UnitControlGroup group_environment;
-
-        public Game game;
+        public PlayerControlGroup group_player;
+        public EnemyControlGroup group_enemy;
 
         public abstract string GridPath { get; }
-        public void Load(Game game)
+        public void Load()
         {
-            this.game = game;
+            var game = Bootstrap.GetRunningGame();
+
+            Audio.I.music.Start();
 
 
-            grid = new Grid(game.GetAssetManager().GetAssetPath(GridPath), gridVisible: true, gridColor: Color.DarkBlue);
+            grid = new GridBase(game.GetAssetManager().GetAssetPath(GridPath), gridVisible: true, gridColor: Color.DarkBlue);
+
+            Bootstrap.GetInput().AddListener(grid);
             grid.Position.X = 0;
             grid.Position.Y = 0;
-
-            //grid.Layers[2].SwitchColliderType<SpikeCollider>();
-
+           
             scenario = new CombatScenario();
 
-            group_player = new UnitControlGroup("PLAYER");
-            group_environment = new UnitControlGroup("ENVIRONMENT");
+            group_player = new PlayerControlGroup("PLAYER");
+            group_enemy = new EnemyControlGroup("ENEMY");
+
+            scenario.AddControlGroup(group_player);
+            scenario.AddControlGroup(group_enemy);
 
             SetUp();
+            foreach (var item in group_player.GetActors())
+            {
+                scenario.players.Add((CombatActor)item);
+                AddLevelInputListener((IInputListener)item);
+            }
+            foreach (var item in group_enemy.GetActors())
+            {
+                scenario.enemies.Add((CombatActor)item);
+            }
         }
         public abstract void SetUp();
         private List<IInputListener> levelInputListeners = new();
@@ -51,6 +64,13 @@ namespace TacticsGameTest.Rooms
         }
         public void Unload()
         {
+            foreach (var item in group_player.GetActors())
+            {
+                ((PlayerActor)item).ActorUI.Destroy();
+
+                ((PlayerActor)item).ActorUI = null;
+            }
+            Bootstrap.GetInput().RemoveListener(grid);
             grid.Destroy();
             grid = null;
             scenario.EndScenario();
@@ -60,6 +80,8 @@ namespace TacticsGameTest.Rooms
             {
                 Bootstrap.GetInput().RemoveListener(listener);
             }
+            Audio.I.music.Stop();
+
         }
     }
 }

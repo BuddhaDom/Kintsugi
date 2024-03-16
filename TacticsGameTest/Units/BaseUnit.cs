@@ -8,16 +8,63 @@ using System.Threading.Tasks;
 namespace TacticsGameTest.Units
 {
     internal class BaseUnit :
-        Actor
+        AnimatableActor
     {
-        public int Hp { get; set; }
-        public int MaxHp { get; set; }
+        public int Hp { get; set; } = 10;
 
-        public int Swift { get; set; } = 1;
+        private int maxhp = 10; // Default value might be changed?
+        public int MaxHp
+        {
+            get { return maxhp; }
+            set
+            {
+                if (value < 1)
+                    throw new ArgumentOutOfRangeException("Only positive values are allowed");
+                if (Hp > maxhp)
+                {
+                    Hp = maxhp;
+                }
+                maxhp = value;
+            }
+        }
+        private bool HealthInitialized = false;
 
-        public int Intuition { get; set; } = 1;
 
-        public int Brawn { get; set; } = 1;
+        private int swift = 1;
+        public int Swift
+        {
+            get { return swift; }
+            set
+            {
+                if (value < 1)
+                    throw new ArgumentOutOfRangeException("Only positive values are allowed");
+                swift = value;
+            }
+        }
+
+        private int intuition = 1;
+        public int Intuition
+        {
+            get { return intuition; }
+            set
+            {
+                if (value < 1)
+                    throw new ArgumentOutOfRangeException("Only positive values are allowed");
+                intuition = value;
+            }
+        }
+
+        private int brawn = 1;
+        public int Brawn
+        {
+            get { return brawn; }
+            set
+            {
+                if (value < 1)
+                    throw new ArgumentOutOfRangeException("Only positive values are allowed");
+                brawn = value;
+            }
+        }
 
 
         // Amount is the 1 in 1d6
@@ -27,7 +74,7 @@ namespace TacticsGameTest.Units
             get { return damagemeleeamount; }
             set
             {
-                if (value < 0)
+                if (value < 1)
                     throw new ArgumentOutOfRangeException("Only positive values are allowed");
                 damagemeleeamount = value;
             }
@@ -39,7 +86,7 @@ namespace TacticsGameTest.Units
             get { return damagerangedamount; }
             set
             {
-                if (value < 0)
+                if (value < 1)
                     throw new ArgumentOutOfRangeException("Only positive values are allowed");
                 damagerangedamount = value;
             }
@@ -51,18 +98,23 @@ namespace TacticsGameTest.Units
         {
             get { return damagemeleetype; }
             set {
-                if (value < 0) 
+                if (value < 1) 
                     throw new ArgumentOutOfRangeException("Only positive values are allowed");
                 damagemeleetype = value; }
         }
 
         private int damagerangedtype;
+
+        public BaseUnit(string path) : base(path)
+        {
+        }
+
         public int DamageRangedType
         {
             get { return damagerangedtype; }
             set
             {
-                if (value < 0)
+                if (value < 1)
                     throw new ArgumentOutOfRangeException("Only positive values are allowed");
                 damagerangedtype = value;
             }
@@ -72,22 +124,22 @@ namespace TacticsGameTest.Units
 
         public override void OnEndRound()
         {
-            throw new NotImplementedException();
+            
         }
 
         public override void OnEndTurn()
         {
-            throw new NotImplementedException();
+            
         }
 
         public override void OnStartRound()
         {
-            throw new NotImplementedException();
+
         }
 
         public override void OnStartTurn()
         {
-            throw new NotImplementedException();
+            
         }
     }
 }

@@ -13,14 +13,15 @@ using System.Text;
 using System.Threading.Tasks;
 using TacticsGameTest.Units;
 using TacticsGameTest.Events;
-using TacticsGameTest.UI;
+using Kintsugi.EventSystem.Await;
 
 namespace TacticsGameTest.Abilities
 {
-    internal class Stride : Ability
+    internal class Stride : Ability, IAwaitable
     {
         public PathfindingResult PathfindingResult;
         private Kintsugi.AI.Path path;
+        public bool AllowOnlySingleMove;
 
         public override string Path => UIHelper.Get(19);
 
@@ -28,14 +29,19 @@ namespace TacticsGameTest.Abilities
 
         public override string Tooltip => "Move up to your SPEED!";
 
-        public Stride(SelectableActor actor) : base(actor)
+        public Stride(CombatActor actor) : base(actor)
         {
         }
         private bool IsSprint(float cost)
         {
-            return cost > actor.MovementRange;
+            return cost > actor.Swift;
         }
 
+        public bool IsFinished()
+        {
+            return waitingEvent?.IsFinished() ?? true;
+        }
+        private IAwaitable waitingEvent;
         public override void DoAction(Vec2Int target)
         {
             actor.movesLeft--;
@@ -52,8 +58,9 @@ namespace TacticsGameTest.Abilities
                     .AddStartAwait(curEvent);
                 EventManager.I.Queue(curEvent);
             }
-            var lastEvent = new ActionEvent(() => actor.SetCharacterAnimation(null, SelectableActor.AnimationType.idle, 1f))
+            var lastEvent = new ActionEvent(() => actor.SetCharacterAnimation(null, CombatActor.AnimationType.idle, 1f))
                 .AddStartAwait(curEvent);
+            waitingEvent = lastEvent;
             EventManager.I.Queue(lastEvent);
             EventManager.I.Queue(new ActionEvent(actor.CheckEndTurn).AddStartAwait(lastEvent));
 
@@ -70,7 +77,7 @@ namespace TacticsGameTest.Abilities
             PathfindingResult = PathfindingSystem.Dijkstra(
                 actor.Transform.Grid,
                 actor.Transform.Position,
-                actor.MovementRange * actor.movesLeft,
+                AllowOnlySingleMove ? actor.Swift : actor.Swift * actor.movesLeft,
                 actor.pathfindingSettings);
 
 
@@ -80,7 +87,7 @@ namespace TacticsGameTest.Abilities
             {
                 if (item != PathfindingResult.StartPosition)
                 {
-                    highlights.Add((item, PathfindingResult.GetCost(item) > actor.MovementRange ? Color.NavajoWhite : Color.Aqua));
+                    highlights.Add((item, PathfindingResult.GetCost(item) > actor.Swift ? Color.NavajoWhite : Color.Aqua));
                 }
             }
 
@@ -191,6 +198,5 @@ namespace TacticsGameTest.Abilities
                 return "";
             }
         }
-
     }
 }

@@ -11,7 +11,7 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
-using static TacticsGameTest.Units.SelectableActor;
+using static TacticsGameTest.Units.CombatActor;
 using TacticsGameTest.Units;
 using TacticsGameTest.Events;
 using TacticsGameTest.UI;
@@ -20,7 +20,7 @@ namespace TacticsGameTest.Abilities
 {
     internal class PushAttack : BasicAttack
     {
-        public PushAttack(SelectableActor actor, List<Vec2Int> attacks) : base(actor, attacks)
+        public PushAttack(CombatActor actor, List<Vec2Int> attacks) : base(actor, attacks)
         {
         }
 
@@ -30,7 +30,7 @@ namespace TacticsGameTest.Abilities
 
         public override void DoAction(Vec2Int target)
         {
-            var targetActor = GetActorIfAttackable(target);
+            var targetActor = GetActorIfAttackable(actor.Transform.Position, target);
             actor.movesLeft--;
             var animationDirection = actor.AnimationDirectionToTarget(actor.Transform.Position, targetActor.Transform.Position);
 
@@ -38,7 +38,7 @@ namespace TacticsGameTest.Abilities
             {
                 actor.SetCharacterAnimation(
                     actor.AnimationDirectionToTarget(actor.Transform.Position, targetActor.Transform.Position),
-                    AnimationType.attack,
+                    AnimatableActor.AnimationType.attack,
                     1f);
             });
 
@@ -46,6 +46,7 @@ namespace TacticsGameTest.Abilities
 
             var spawnHitEffect = new ActionEvent(() =>
             {
+                Audio.I.PlayAudio("Shove");
                 var hitEffect = new TileObject();
                 hitEffect.AddToGrid(targetActor.Transform.Grid, targetActor.Transform.Layer);
                 hitEffect.SetPosition(targetActor.Transform.Position, false);
@@ -80,13 +81,16 @@ namespace TacticsGameTest.Abilities
                     curAwaitEvent = pushEvent;
                     EventManager.I.Queue(pushEvent);
                 }
-                
+                var endturnCheck = new ActionEvent(actor.CheckEndTurn).AddStartAwaits([curAwaitEvent]);
+                EventManager.I.Queue(endturnCheck);
+
+
+
 
             }).AddStartAwait(new WaitForSeconds(0.25f));
 
             EventManager.I.Queue(beginAttack);
             EventManager.I.Queue(spawnHitEffect);
-            EventManager.I.Queue(new ActionEvent(actor.CheckEndTurn).AddStartAwaits([beginAttack, spawnHitEffect]));
         }
     }
 }

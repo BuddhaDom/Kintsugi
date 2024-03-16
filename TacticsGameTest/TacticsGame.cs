@@ -13,6 +13,9 @@ using static System.Net.Mime.MediaTypeNames;
 using TacticsGameTest.UI;
 using TacticsGameTest.Units;
 using TacticsGameTest.Combat;
+using TacticsGameTest.Rooms;
+using Kintsugi.Audio;
+using TacticsGameTest.Map;
 
 namespace TacticsGameTest
 {
@@ -23,88 +26,42 @@ namespace TacticsGameTest
 
         public override void Initialize()
         {
-            grid = new Grid(GetAssetManager().GetAssetPath("Tilemaps\\Levels\\TestLevel.tmx"))
-            {
-                Position =
-                {
-                    X = 0,
-                    Y = 0
-                }
-            };
-            Bootstrap.GetCameraSystem().Size = 16 * 10;
-            var character = new SelectableActor("bro", "FantasyBattlePack\\SwordFighter\\Longhair\\Blue1.png");
-            character.AddToGrid(grid, 3);
-            character.SetPosition(Vec2Int.One * 3);
-            var character2 = new SelectableActor("bro", "FantasyBattlePack\\Archer\\Blue1.png");
-            character2.AddToGrid(grid, 3);
-            character2.SetPosition(Vec2Int.One * 4);
-            var character3 = new SelectableActor("bro", "FantasyBattlePack\\AxeKnight\\Red.png");
-            character3.AddToGrid(grid, 3);
-            character3.SetPosition(Vec2Int.One * 6);
+            // Audio
+            var master_bank = ((SoundFMOD)Bootstrap.GetSound()).LoadBank(Bootstrap.GetAssetManager().GetAssetPath("fmod_project\\Build\\Desktop\\Master.bank"));
+            ((SoundFMOD)Bootstrap.GetSound()).LoadBank(Bootstrap.GetAssetManager().GetAssetPath("fmod_project\\Build\\Desktop\\Master.strings.bank"));
+            master_bank.PreloadSamples();
 
-            // character.SetSpriteSingle(GetAssetManager().GetAssetPath("guy.png"), 
-            //     Vector2.One / 2, new Vector2(6.5f, 8.5f));
 
-            scenario = new CombatScenario();
-            var group = new PlayerControlGroup("john's group");
-            var group2 = new PlayerControlGroup("bob's group");
 
-            group.AddActor(character);
-            group.AddActor(character2);
-            group2.AddActor(character3);
-            //group.AddActor(character2);
+            Audio.I.bgfx.Start();
+            //music.Start();
 
+
+            /*
+            // Levels
+            var testlevel = new Room1();
+            testlevel.Load();
+            grid = testlevel.grid;
             scenario.AddControlGroup(group);
             scenario.AddControlGroup(group2);
 
             // scenario.AddControlGroup(group2);
 
             scenario.BeginScenario();
-
-            /*
-            var canvas = new Canvas();
-            var canvasObject = new CanvasObject
-            {
-                FontPath = "Fonts\\calibri.ttf",
-                Text = "Test",
-                FontSize = 72,
-                Position = Vector2.Zero
-            };
-            Bootstrap.GetInput().AddListener(canvas);
-
-
-            float scale = 4;
-            IntPtr texture = ((DisplaySDL)Bootstrap.GetDisplay()).LoadTexture(GetAssetManager().GetAssetPath("guy.png"));
-
-            for (int i = -2; i < 3; i++)
-            {
-                var obj1 = new CanvasObject();
-                obj1.SetSpriteSingle(GetAssetManager().GetAssetPath("guy.png"), default, new Vector2(13/2f, 17/2f));
-                obj1.Position = new Vector2(i * obj1.Graphic.Properties.Dimensions.x * scale, 0);
-                obj1.Graphic.Scale = Vector2.One * scale;
-                canvas.Objects.Add(obj1);
-                obj1.FollowedTileobject = character;
-                obj1.TargetPivot = new Vector2(0.25f, -0.25f);
-                obj1.TextPivot = new Vector2(0.5f, 0.5f);
-            
-                obj1.Text = i.ToString();
-                obj1.FontPath = "Fonts\\calibri.ttf";
-                obj1.FontSize = 40;
-            
-            }
-
-            canvasObject.SetSpriteSingle(GetAssetManager().GetAssetPath("guy.png"), default, new Vector2(8, 8));
-            canvasObject.Graphic.Scale = new Vector2(1, 1);
-            canvasObject.TargetPivot = new Vector2(0.5f, 0.5f);
-            canvasObject.TextPivot = new Vector2(1f, 1f);
-
-            //canvas.Position = Vector2.One * 100;
-            canvas.Objects.Add(canvasObject);
             */
+
+
+
+            //var testlevel = new Room1();
+            //testlevel.Load();
+            //grid = testlevel.grid;
+
+            MapManagement.I.LoadOverworld();
 
             Bootstrap.GetInput().AddListener(this);
         }
 
+        
         private void CameraMovement()
         {
             var movement = Vector2.Zero;
@@ -144,46 +101,10 @@ namespace TacticsGameTest
 
         }
 
-        private SelectableActor selectedActor;
+        private PlayerActor selectedActor;
         bool up, down, left, right, zoomIn, zoomOut;
         public void HandleInput(InputEvent inp, string eventType)
         {
-            if (eventType == "MouseMotion")
-            {
-                var gridPos = grid.WorldToGridPosition(Bootstrap.GetCameraSystem().ScreenToWorldSpace(new Vector2(inp.X, inp.Y)));
-                CursorTileObject.Cursor.SetCursor(grid, gridPos, 5);
-            }
-            if (eventType == "MouseDown")
-            {
-                var gridPos = grid.WorldToGridPosition(Bootstrap.GetCameraSystem().ScreenToWorldSpace(new Vector2(inp.X, inp.Y)));
-
-                var objects = grid.GetObjectsAtPosition(gridPos);
-                if (objects != null)
-                {
-                    SelectableActor selectableActor = null;
-                    foreach (var item in objects)
-                    {
-                        if (item is SelectableActor a)
-                        {
-                            selectableActor = a;
-                        }
-                    }
-                    if (selectableActor != null && selectableActor.InTurn && EventManager.I.IsQueueDone())
-                    {
-                        if (selectedActor != null)
-                        {
-                            selectedActor.Unselect();
-                        }
-                        selectedActor = selectableActor;
-                        selectedActor.Select();
-                        Console.WriteLine(selectableActor.name);
-                    }
-
-                }
-                //Console.WriteLine(gridPos);
-                //Console.WriteLine(grid.GridToWorldPosition(gridPos));
-
-            }
 
             if (eventType == "KeyDown")
             {

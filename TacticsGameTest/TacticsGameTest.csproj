@@ -282,6 +282,12 @@
     <None Update="Assets\FantasyBattlePack\Wizard\Red3.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Assets\fmod_project\Build\Desktop\Master.bank">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\fmod_project\Build\Desktop\Master.strings.bank">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Assets\guy.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -292,6 +298,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Assets\Tilemaps\Levels\dungeon_tilemap_packed.tsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\Tilemaps\Levels\map.tmx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Assets\Tilemaps\Levels\room1.tmx">
@@ -772,10 +781,6 @@
 
   <ItemGroup>
     <PackageReference Include="TweenSharp" Version="1.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Map\" />
   </ItemGroup>
 
 </Project>
