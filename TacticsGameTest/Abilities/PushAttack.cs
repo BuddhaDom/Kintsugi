@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using static TacticsGameTest.Units.CombatActor;
 using TacticsGameTest.Units;
 using TacticsGameTest.Events;
+using TacticsGameTest.UI;
 
 namespace TacticsGameTest.Abilities
 {
@@ -22,6 +23,10 @@ namespace TacticsGameTest.Abilities
         public PushAttack(CombatActor actor, List<Vec2Int> attacks) : base(actor, attacks)
         {
         }
+
+        public override string Path => UIHelper.Get(56);
+        public override string Title => "Bash";
+        public override string Tooltip => "Push an enemy with BRAWN!";
 
         public override void DoAction(Vec2Int target)
         {

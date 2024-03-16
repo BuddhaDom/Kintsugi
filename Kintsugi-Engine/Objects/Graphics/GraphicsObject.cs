@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Numerics;
 
 namespace Kintsugi.Objects.Graphics
 {
@@ -12,7 +7,7 @@ namespace Kintsugi.Objects.Graphics
         /// <summary>
         /// Graphic properties of this object.
         /// </summary>
-        public ISpriteable? Graphic { get; protected set; }
+        public ISpriteable? Graphic { get; private set; }
 
         /// <summary>
         /// Set the sprite properties for this object.
@@ -27,7 +22,7 @@ namespace Kintsugi.Objects.Graphics
         public void SetSpriteSingle(string path, Vector2 tilePivot = default, Vector2 imagePivot = default)
         {
             SetSpriteSingle(new Sprite(path));
-            Graphic.Properties.TilePivot = tilePivot;
+            Graphic!.Properties.TilePivot = tilePivot;
             Graphic.Properties.ImagePivot = imagePivot;
         }
 

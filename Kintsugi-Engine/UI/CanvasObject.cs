@@ -64,6 +64,10 @@ public class CanvasObject : GraphicsObject
     /// </summary>
     public Vector2 Dimensions { get; set; }
 
+    public bool Visible { get; set; }= true;
+
+    public bool IsButton { get; set; } = false;
+
     public CanvasObject()
     {
         if (Graphic != null) Dimensions = Graphic.Properties.Dimensions;
@@ -74,6 +78,7 @@ public class CanvasObject : GraphicsObject
     /// </summary>
     public virtual void OnHoverStart()
     {
+        Console.WriteLine(this+" hovered");
     }
     
     /// <summary>
@@ -81,6 +86,8 @@ public class CanvasObject : GraphicsObject
     /// </summary>
     public virtual void OnHoverEnd()
     {
+        Console.WriteLine(this+" unhovered");
+
     }
 
     /// <summary>
@@ -88,6 +95,7 @@ public class CanvasObject : GraphicsObject
     /// </summary>
     public virtual void OnClick()
     {
+        Console.WriteLine(this+" clicked");
     }
 
     public override void SetSpriteSingle(Sprite sprite)

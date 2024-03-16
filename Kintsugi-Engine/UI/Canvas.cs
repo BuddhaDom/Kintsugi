@@ -5,20 +5,23 @@ using SDL2;
 
 namespace Kintsugi.UI;
 
+/// <summary>
+/// A GameObject representing UI elements. The canvas and its <see cref="Objects"/> are rendered onto screen space.
+/// </summary>
 public class Canvas : GameObject, IInputListener
 {
+    /// <summary>
+    /// Objects existing on this canvas.
+    /// </summary>
     public List<CanvasObject> Objects { get; set; } = [];
-    public int CurrentIndex { get; private set; }
-    public CanvasObject CurrentObject => Objects[CurrentIndex];
-    public bool Focused { get; set; }
-    private CanvasObject? CurrentHovered { get; set; }
+    /// <summary>
+    /// The currently hovered object. 
+    /// </summary>
+    public CanvasObject? Hovered { get; set; }
+    /// <summary>
+    /// <c>true</c> if this canvas should be rendered.
+    /// </summary>
     public bool Visible { get; set; } = true;
-
-    public int MoveIndex(int units)
-    {
-        CurrentIndex = (CurrentIndex + units) % Objects.Count;
-        return CurrentIndex;
-    }
 
     public override void Update()
     {
@@ -31,14 +34,14 @@ public class Canvas : GameObject, IInputListener
         {
             case "MouseMotion":
             {
-                CanvasObject? localCurrentHovered = null;
-                foreach (var canvasObject in Objects)
+                CanvasObject? localFocused = null;
+                foreach (var canvasObject in Objects.Where(o => o is { IsButton: true, Visible: true }))
                 {
                     Vector2 pivotOffsetPosition;
                     if (canvasObject.FollowedTileobject is not null)
                     {
+                        // Following an object
                         var cam = Bootstrap.GetCameraSystem();
-                        // follow mode
                         pivotOffsetPosition = 
                             cam.WorldToScreenSpace(
                                 canvasObject.FollowedTileobject.Easing.CurrentPosition + 
@@ -50,6 +53,7 @@ public class Canvas : GameObject, IInputListener
                     }
                     else
                     {
+                        // Static on screen
                         pivotOffsetPosition =
                             Position
                             + new Vector2(Bootstrap.GetDisplay().GetWidth(), Bootstrap.GetDisplay().GetHeight()) * canvasObject.TargetPivot
@@ -57,32 +61,30 @@ public class Canvas : GameObject, IInputListener
                                 canvasObject.Graphic.Properties.ImagePivot * canvasObject.Graphic.Scale);
                     }
 
-                    if (!WithinBounds(
-                            new Vector2(inp.X, inp.Y),
+                    if (!WithinBounds(new Vector2(inp.X, inp.Y),
                             pivotOffsetPosition + canvasObject.Position,
                             canvasObject.Dimensions * (canvasObject.Graphic?.Scale ?? Vector2.One)
                         )) continue;
-                    localCurrentHovered = canvasObject;
+                    localFocused = canvasObject;
                     break;
                 }
-                if (localCurrentHovered != CurrentHovered)
+                if (localFocused != Hovered)
                 {
-                    CurrentHovered?.OnHoverEnd();
-                    localCurrentHovered?.OnHoverStart();
-                    CurrentHovered = localCurrentHovered;
+                    Hovered?.OnHoverEnd();
+                    localFocused?.OnHoverStart();
+                    Hovered = localFocused;
                 }
-
-                break;
+                return;
             }
             case "MouseDown" when inp.Button == SDL.SDL_BUTTON_LEFT:
-                CurrentHovered?.OnClick();
-                break;
+                Hovered?.OnClick();
+                return;
         }
     }
 
     private static bool WithinBounds(Vector2 vector, Vector2 start, Vector2 span)
         => start.X < vector.X && 
            vector.X < start.X + span.X && 
-           start.Y < vector.Y && 
+           start.Y < vector.Y &&    
            vector.Y < start.Y + span.Y;
 }

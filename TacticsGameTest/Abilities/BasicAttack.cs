@@ -15,6 +15,7 @@ using TacticsGameTest.Units;
 using static TacticsGameTest.Units.CombatActor;
 using System.Threading.Tasks.Dataflow;
 using Kintsugi.EventSystem;
+using TacticsGameTest.UI;
 
 namespace TacticsGameTest.Abilities
 {
@@ -47,11 +48,11 @@ namespace TacticsGameTest.Abilities
             return null;
         }
 
-        public override string Path => throw new NotImplementedException();
+        public override string Path => UIHelper.Get(29);
 
-        public override string Title => throw new NotImplementedException();
+        public override string Title => "Attack";
 
-        public override string Tooltip => throw new NotImplementedException();
+        public override string Tooltip => "Damage with your WEAPON dice!";
 
         public override void DoAction(Vec2Int target)
         {

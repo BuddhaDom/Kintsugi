@@ -122,6 +122,7 @@ namespace TacticsGameTest.Units
             }
             */
             Console.WriteLine("im selected!!");
+            HUD.Instance.DisplayActor(this);
         }
         public void Unselect()
         {
@@ -129,6 +130,7 @@ namespace TacticsGameTest.Units
             ClearHighlights();
             DeselectAbility();
             Console.WriteLine("im not selected :(");
+            HUD.Instance.Clear();
         }
         public override void OnEndRound()
         {
@@ -176,13 +178,13 @@ namespace TacticsGameTest.Units
                         SelectAbility(2);
                     }
                 }
-                if (eventType == "MouseMotion")
+                if (eventType == "MouseMotion" && HUD.Instance.Hovered is null)
                 {
                     var gridPos = Transform.Grid.WorldToGridPosition(Bootstrap.GetCameraSystem().ScreenToWorldSpace(new Vector2(inp.X, inp.Y)));
                     selectedAbility?.Hover(gridPos);
                     //SetPath(gridPos);
                 }
-                if (eventType == "MouseDown")
+                if (eventType == "MouseDown" && HUD.Instance.Hovered is null)
                 {
                     if (inp.Button == SDL.SDL_BUTTON_LEFT)
                     {
