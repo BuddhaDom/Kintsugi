@@ -32,13 +32,13 @@ namespace TacticsGameTest
                 }
             };
             Bootstrap.GetCameraSystem().Size = 16 * 10;
-            var character = new PlayerActor("bro", "FantasyBattlePack\\SwordFighter\\Longhair\\Blue1.png");
+            var character = new PlayerActor("bro1", "FantasyBattlePack\\SwordFighter\\Longhair\\Blue1.png");
             character.AddToGrid(grid, 3);
             character.SetPosition(Vec2Int.One * 3);
-            var character2 = new PlayerActor("bro", "FantasyBattlePack\\Archer\\Blue1.png");
+            var character2 = new PlayerActor("bro2", "FantasyBattlePack\\Archer\\Blue1.png");
             character2.AddToGrid(grid, 3);
             character2.SetPosition(Vec2Int.One * 4);
-            var character3 = new BasicMeleeEnemy("bro", "FantasyBattlePack\\AxeKnight\\Red.png");
+            var character3 = new BasicMeleeEnemy("enemy1", "FantasyBattlePack\\AxeKnight\\Red.png");
             character3.AddToGrid(grid, 3);
             character3.SetPosition(Vec2Int.One * 6);
 

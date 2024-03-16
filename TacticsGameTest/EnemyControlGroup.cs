@@ -5,7 +5,7 @@ namespace TacticsGameTest
     internal class EnemyControlGroup : UnitControlGroup
     {
         private string name;
-        public EnemyControlGroup(string name): base(name)
+        public EnemyControlGroup(string name) : base(name)
         {
         }
         public override float CalculateInitiative()
@@ -16,7 +16,6 @@ namespace TacticsGameTest
         public override void OnEndRound()
         {
             //Console.WriteLine("CG End Round");
-            CurrentInitiative = 0;
         }
 
         public override void OnEndTurn()
