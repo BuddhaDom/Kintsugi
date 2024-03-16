@@ -63,7 +63,7 @@ namespace TacticsGameTest.Abilities
             {
                 actor.SetCharacterAnimation(
                     actor.AnimationDirectionToTarget(actor.Transform.Position, targetActor.Transform.Position),
-                    AnimationType.attack,
+                    AnimatableActor.AnimationType.attack,
                     1f);
             });
 
