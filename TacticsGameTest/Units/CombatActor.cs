@@ -143,6 +143,7 @@ namespace TacticsGameTest.Units
         public bool Dead { get; private set; }
         public void Die()
         {
+            Audio.I.PlayAudio("Death");
             SetCharacterAnimation(null, AnimatableActor.AnimationType.death, 1f);
             ActorUI.Visible = false;
             Dead = true;
