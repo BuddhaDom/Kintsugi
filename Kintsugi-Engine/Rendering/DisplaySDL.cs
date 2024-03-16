@@ -345,7 +345,7 @@ namespace Kintsugi.Rendering
             
             foreach (var canvas in _canvasesToDraw.Where(c => c.Visible))
             {
-                foreach (var canvasObject in canvas.Objects)
+                foreach (var canvasObject in canvas.Objects.Where(o=> o.Visible))
                 {
                     if (canvasObject.Graphic is not null && canvasObject.Graphic.Properties.Path != "")
                     {

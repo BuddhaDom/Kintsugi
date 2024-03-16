@@ -3,14 +3,7 @@ using Kintsugi.Core;
 using Kintsugi.EventSystem.Events;
 using Kintsugi.Objects.Graphics;
 using Kintsugi.UI;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using System.Numerics;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TacticsGameTest.UI
 {

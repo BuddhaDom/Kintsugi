@@ -24,7 +24,7 @@ namespace TacticsGameTest.Abilities
         {
         }
 
-        public override string Path => IconsHelper.Get(56);
+        public override string Path => UIHelper.Get(56);
         public override string Title => "Bash";
         public override string Tooltip => "Push an enemy with BRAWN!";
 

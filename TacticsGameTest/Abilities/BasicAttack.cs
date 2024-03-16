@@ -46,7 +46,7 @@ namespace TacticsGameTest.Abilities
             return null;
         }
 
-        public override string Path => IconsHelper.Get(29);
+        public override string Path => UIHelper.Get(29);
 
         public override string Title => "Attack";
 

@@ -7,7 +7,7 @@ namespace Kintsugi.Objects.Graphics
         /// <summary>
         /// Graphic properties of this object.
         /// </summary>
-        public ISpriteable? Graphic { get; protected set; }
+        public ISpriteable? Graphic { get; private set; }
 
         /// <summary>
         /// Set the sprite properties for this object.

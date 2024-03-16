@@ -22,7 +22,7 @@ namespace TacticsGameTest.Abilities
         public PathfindingResult PathfindingResult;
         private Kintsugi.AI.Path path;
 
-        public override string Path => IconsHelper.Get(19);
+        public override string Path => UIHelper.Get(19);
 
         public override string Title => "Stride";
 

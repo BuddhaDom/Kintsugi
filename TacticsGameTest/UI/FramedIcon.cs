@@ -10,8 +10,8 @@ public class FramedIcon : CanvasObject, IHUDObject
 
     public FramedIcon(Vector2 position, ISpriteable frame, ISpriteable icon, Vector2 frameScale, Vector2 iconScale)
     {
-        SetAsType(frame, this);
-        SetAsType(icon, Icon);
+        UIHelper.SetGraphic(frame, this);
+        UIHelper.SetGraphic(icon, Icon);
         
         Graphic!.Scale = frameScale;
         Icon.Graphic!.Scale = iconScale;
@@ -26,18 +26,5 @@ public class FramedIcon : CanvasObject, IHUDObject
     {
         canvas.Objects.Add(Icon);
         canvas.Objects.Add(this);
-    }
-    
-    private static void SetAsType(ISpriteable input, GraphicsObject target)
-    {
-        switch (input)
-        {
-            case SpriteSingle sprite:
-                target.SetSpriteSingle(sprite);
-                break;
-            case Animation animation:
-                target.SetAnimation(animation);
-                break;
-        }
     }
 }
