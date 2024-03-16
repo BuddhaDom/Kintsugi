@@ -29,8 +29,6 @@ namespace TacticsGameTest.Units
         public CombatActor(string name, string spritePath): base(spritePath)
         {
             this.name = name;
-            SetCharacterAnimation(AnimationDirection.right, AnimationType.idle, 1f);
-            SetEasing(TweenSharp.Animation.Easing.QuadraticEaseOut, 0.5);
             SetCollider(["unit"], ["water", "wall", "unit"]);
             pathfindingSettings.AddCollideLayers(Collider.CollideLayers);
             pathfindingSettings.SetCostLayer("road", 0.5f, 1);

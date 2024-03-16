@@ -20,6 +20,8 @@ namespace TacticsGameTest.Units
         public AnimatableActor(string path)
         {
             spritePath = path;
+            SetCharacterAnimation(AnimationDirection.right, AnimationType.idle, 1f);
+            SetEasing(TweenSharp.Animation.Easing.QuadraticEaseOut, 0.5);
         }
         public string spritePath;
         public override void OnEndRound()
@@ -54,7 +56,7 @@ namespace TacticsGameTest.Units
         }
         public virtual float GetMoveSpeed(Vec2Int pos)
         {
-            return 0.1f;
+            return 0.5f;
         }
         public AnimationDirection AnimationDirectionToTarget(Vec2Int from, Vec2Int to)
         {

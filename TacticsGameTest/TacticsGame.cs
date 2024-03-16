@@ -15,6 +15,7 @@ using TacticsGameTest.Units;
 using TacticsGameTest.Combat;
 using TacticsGameTest.Rooms;
 using Kintsugi.Audio;
+using TacticsGameTest.Map;
 
 namespace TacticsGameTest
 {
@@ -36,11 +37,39 @@ namespace TacticsGameTest
             //music.Start();
 
             
-            
+            /*
             // Levels
             var testlevel = new Room1();
             testlevel.Load();
             grid = testlevel.grid;
+            scenario.AddControlGroup(group);
+            scenario.AddControlGroup(group2);
+
+            // scenario.AddControlGroup(group2);
+
+            scenario.BeginScenario();
+            */
+
+
+            var testMap = new Map.Map();
+            testMap.Load();
+
+            var party = new PartyActor("FantasyBattlePack\\SwordFighter\\Longhair\\Blue1.png");
+            party.AddToGrid(testMap.grid, 4);
+            party.SetPosition(new Vec2Int(5, 9));
+            grid = testMap.grid;
+
+            var mapscenario = new MapScenario();
+
+            var testControlGroup =new MapControlGroup();
+
+            mapscenario.AddControlGroup(testControlGroup);
+
+            testControlGroup.AddActor(party);
+            mapscenario.BeginScenario();
+            //var testlevel = new Room1();
+            //testlevel.Load();
+            //grid = testlevel.grid;
            
 
             Bootstrap.GetInput().AddListener(this);
@@ -90,12 +119,12 @@ namespace TacticsGameTest
         bool up, down, left, right, zoomIn, zoomOut;
         public void HandleInput(InputEvent inp, string eventType)
         {
-            if (eventType == "MouseMotion")
+            if (eventType == "MouseMotion" && grid != null)
             {
                 var gridPos = grid.WorldToGridPosition(Bootstrap.GetCameraSystem().ScreenToWorldSpace(new Vector2(inp.X, inp.Y)));
-                CursorTileObject.Cursor.SetCursor(grid, gridPos, 5);
+                CursorTileObject.Cursor.SetCursor(grid, gridPos, 4);
             }
-            if (eventType == "MouseDown")
+            if (eventType == "MouseDown" && grid != null)
             {
                 var gridPos = grid.WorldToGridPosition(Bootstrap.GetCameraSystem().ScreenToWorldSpace(new Vector2(inp.X, inp.Y)));
 
