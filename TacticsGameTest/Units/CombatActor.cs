@@ -127,7 +127,7 @@ namespace TacticsGameTest.Units
         }
         public void CheckEndTurn()
         {
-            if (movesLeft == 0)
+            if (InTurn && movesLeft == 0)
             {
                 EndTurn();
             }

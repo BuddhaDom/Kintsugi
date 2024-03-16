@@ -21,6 +21,7 @@ namespace TacticsGameTest.Abilities
     {
         public PathfindingResult PathfindingResult;
         private Kintsugi.AI.Path path;
+        public bool AllowOnlySingleMove;
 
         public override string Path => throw new NotImplementedException();
 
@@ -76,7 +77,7 @@ namespace TacticsGameTest.Abilities
             PathfindingResult = PathfindingSystem.Dijkstra(
                 actor.Transform.Grid,
                 actor.Transform.Position,
-                actor.MovementRange * actor.movesLeft,
+                AllowOnlySingleMove ? actor.MovementRange : actor.MovementRange * actor.movesLeft,
                 actor.pathfindingSettings);
 
 

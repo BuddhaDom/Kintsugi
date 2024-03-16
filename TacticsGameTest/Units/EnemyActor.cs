@@ -38,6 +38,7 @@ namespace TacticsGameTest.Units
 
             MeleeAttack = new BasicAttack(this, attackPattern);
             Move = new Stride(this);
+            ((Stride)Move).AllowOnlySingleMove = true;
         }
         Ability MeleeAttack;
         Ability Move;
