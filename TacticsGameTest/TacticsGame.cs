@@ -24,6 +24,7 @@ namespace TacticsGameTest
 
         public override void Initialize()
         {
+            /*
             grid = new Grid(GetAssetManager().GetAssetPath("Tilemaps\\Levels\\TestLevel.tmx"))
             {
                 Position =
@@ -61,11 +62,11 @@ namespace TacticsGameTest
             // scenario.AddControlGroup(group2);
 
             scenario.BeginScenario();
-
+            */
             
-            //var testlevel = new Room1();
-            //testlevel.Load();
-            //grid = testlevel.grid;
+            var testlevel = new Room1();
+            testlevel.Load();
+            grid = testlevel.grid;
            
 
             Bootstrap.GetInput().AddListener(this);

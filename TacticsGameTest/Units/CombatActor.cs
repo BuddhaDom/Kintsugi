@@ -25,7 +25,6 @@ namespace TacticsGameTest.Units
         public string name;
         private int maxMoves = 2;
         public int movesLeft;
-        public int MovementRange = 5;
         public Canvas ActorUI = new();
         public CombatActor(string name, string spritePath)
         {
@@ -43,17 +42,15 @@ namespace TacticsGameTest.Units
 
             SetHealthUI();
         }
-        public int healthMax = 5;
-        public int health = 3;
         public int poison;
         public float spacing = 16f;
         private List<Heart> healthUI = new();
         public void TakeDamage(int damage, int poison)
         {
-            health -= damage;
+            Hp -= damage;
             this.poison += poison;
             SetHealthUI();
-            if (health <= 0)
+            if (Hp <= 0)
             {
                 EventManager.I.QueueImmediate(() => Die());
             }
@@ -63,7 +60,7 @@ namespace TacticsGameTest.Units
         int prevHealth;
         private void SetHealthUI()
         {
-            for (int i = 0; i < healthMax; i++)
+            for (int i = 0; i < MaxHp; i++)
             {
                 if (!(i < healthUI.Count))
                 {
@@ -79,11 +76,11 @@ namespace TacticsGameTest.Units
             {
                 healthUI[i].Position =
                     new Vector2((i - (healthUI.Count - 1) / 2f) * spacing, 0);
-                if (i + poison < health)
+                if (i + poison < Hp)
                 {
                     healthUI[i].SetHeartAnimation(Heart.HeartMode.normal);
                 }
-                else if (i < health)
+                else if (i < Hp)
                 {
                     healthUI[i].SetHeartAnimation(Heart.HeartMode.poison);
                 }
@@ -96,7 +93,7 @@ namespace TacticsGameTest.Units
 
 
 
-            prevHealth = health;
+            prevHealth = Hp;
         }
         public override void OnEndRound()
         {
