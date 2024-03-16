@@ -18,8 +18,8 @@ namespace TacticsGameTest.Rooms
         public Grid grid;
         public CombatScenario scenario;
 
-        public UnitControlGroup group_player;
-        public UnitControlGroup group_enemy;
+        public PlayerControlGroup group_player;
+        public EnemyControlGroup group_enemy;
 
         public abstract string GridPath { get; }
         public void Load()
@@ -33,8 +33,8 @@ namespace TacticsGameTest.Rooms
            
             scenario = new CombatScenario();
 
-            group_player = new UnitControlGroup("PLAYER");
-            group_enemy = new UnitControlGroup("ENEMY");
+            group_player = new PlayerControlGroup("PLAYER");
+            group_enemy = new EnemyControlGroup("ENEMY");
 
             scenario.AddControlGroup(group_player);
             scenario.AddControlGroup(group_enemy);

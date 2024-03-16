@@ -1,37 +1,36 @@
 ﻿using Kintsugi.Objects;
 
-namespace PuzzleGame
+namespace TacticsGameTest
 {
-    internal class EnvironmentControlGroup : ControlGroup
+    internal class EnemyControlGroup : UnitControlGroup
     {
         private string name;
-        public EnvironmentControlGroup(string name)
+        public EnemyControlGroup(string name) : base(name)
         {
-            this.name = name;
         }
         public override float CalculateInitiative()
         {
-            return 1;
+            return 100;
         }
 
         public override void OnEndRound()
         {
-            Console.WriteLine("CG End Round");
+            //Console.WriteLine("CG End Round");
         }
 
         public override void OnEndTurn()
         {
-            Console.WriteLine("CG End Turn");
+            //Console.WriteLine("CG End Turn");
         }
 
         public override void OnStartRound()
         {
-            Console.WriteLine("CG Start Round");
+            //Console.WriteLine("CG Start Round");
         }
 
         public override void OnStartTurn()
         {
-            Console.WriteLine("CG Start Turn");
+            //Console.WriteLine("CG Start Turn");
         }
 
     }

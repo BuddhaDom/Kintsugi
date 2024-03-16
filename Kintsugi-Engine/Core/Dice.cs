@@ -36,6 +36,17 @@
             //Console.WriteLine("\nTotal roll is {0}", result);
             return result;
         }
+
+        /// <summary>
+        /// Returns random integer between two numbers
+        /// </summary>
+        /// <param name="min"></param>
+        /// <param name="maxExcl"></param>
+        /// <returns></returns>
+        public static int RandomRange(int min, int maxExcl)
+        {
+            return rand.Next(min, maxExcl);
+        }
         // Skewed Dice Results
         // Random float value
         // Return all the dice used

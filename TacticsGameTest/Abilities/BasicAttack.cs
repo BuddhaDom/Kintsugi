@@ -11,31 +11,33 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
-using static TacticsGameTest.Units.SelectableActor;
 using TacticsGameTest.Units;
+using static TacticsGameTest.Units.CombatActor;
+using System.Threading.Tasks.Dataflow;
+using Kintsugi.EventSystem;
 
 namespace TacticsGameTest.Abilities
 {
-    internal class BasicAttack : Ability
+    internal class BasicAttack : Ability, IAwaitable
     {
         public List<Vec2Int> attacks; 
-        public BasicAttack(SelectableActor actor, List<Vec2Int> attacks) : base(actor)
+        public BasicAttack(CombatActor actor, List<Vec2Int> attacks) : base(actor)
         {
             this.attacks = attacks;
         }
-        public List<Vec2Int> GetAttackPositions()
+        public List<Vec2Int> GetAttackPositions(Vec2Int position)
         {
-            return attacks.Select((a) => a + actor.Transform.Position).ToList();
+            return attacks.Select((a) => a + position).ToList();
         }
-        public SelectableActor GetActorIfAttackable(Vec2Int position)
+        public CombatActor GetActorIfAttackable(Vec2Int from, Vec2Int to)
         {
-            if (GetAttackPositions().Contains(position))
+            if (GetAttackPositions(from).Contains(to))
             {
-                var targeted = actor.Transform.Grid.GetObjectsAtPosition(position);
+                var targeted = actor.Transform.Grid.GetObjectsAtPosition(to);
                 if (targeted == null) return null;
                 foreach (var item in targeted)
                 {
-                    if (item is SelectableActor a)
+                    if (item is CombatActor a && a.team != actor.team)
                     {
                         return a;
                     }
@@ -53,7 +55,7 @@ namespace TacticsGameTest.Abilities
 
         public override void DoAction(Vec2Int target)
         {
-            var targetActor = GetActorIfAttackable(target);
+            var targetActor = GetActorIfAttackable(actor.Transform.Position, target);
             actor.movesLeft--;
             var animationDirection = actor.AnimationDirectionToTarget(actor.Transform.Position, targetActor.Transform.Position);
 
@@ -94,15 +96,21 @@ namespace TacticsGameTest.Abilities
 
             EventManager.I.Queue(beginAttack);
             EventManager.I.Queue(spawnHitEffect);
-            EventManager.I.Queue(new ActionEvent(actor.CheckEndTurn).AddStartAwaits([beginAttack, spawnHitEffect]));
+            lastevent = new ActionEvent(actor.CheckEndTurn).AddStartAwaits([beginAttack, spawnHitEffect]);
+            EventManager.I.Queue(lastevent);
+        }
+        private Event lastevent;
+        public bool IsFinished()
+        {
+            return lastevent?.IsFinished() ?? true;
         }
 
         public override IEnumerable<(Vec2Int, Color)> GetTargets(Vec2Int from)
         {
             List<(Vec2Int, Color)> targets = new();
-            foreach (var attackPos in GetAttackPositions())
+            foreach (var attackPos in GetAttackPositions(from))
             {
-                if (GetActorIfAttackable(attackPos) != null)
+                if (GetActorIfAttackable(from, attackPos) != null)
                 {
                     targets.Add((attackPos, Color.OrangeRed));
                 }

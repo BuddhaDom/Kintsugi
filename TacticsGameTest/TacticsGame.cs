@@ -24,6 +24,46 @@ namespace TacticsGameTest
 
         public override void Initialize()
         {
+            /*
+            grid = new Grid(GetAssetManager().GetAssetPath("Tilemaps\\Levels\\TestLevel.tmx"))
+            {
+                Position =
+                {
+                    X = 0,
+                    Y = 0
+                }
+            };
+            Bootstrap.GetCameraSystem().Size = 16 * 10;
+            var character = new PlayerActor("bro1", "FantasyBattlePack\\SwordFighter\\Longhair\\Blue1.png");
+            character.AddToGrid(grid, 3);
+            character.SetPosition(Vec2Int.One * 3);
+            var character2 = new PlayerActor("bro2", "FantasyBattlePack\\Archer\\Blue1.png");
+            character2.AddToGrid(grid, 3);
+            character2.SetPosition(Vec2Int.One * 4);
+            var character3 = new BasicMeleeEnemy("enemy1", "FantasyBattlePack\\AxeKnight\\Red.png");
+            character3.AddToGrid(grid, 3);
+            character3.SetPosition(Vec2Int.One * 6);
+
+            // character.SetSpriteSingle(GetAssetManager().GetAssetPath("guy.png"), 
+            //     Vector2.One / 2, new Vector2(6.5f, 8.5f));
+
+            scenario = new CombatScenario();
+            var group = new PlayerControlGroup("john's group");
+            var group2 = new EnemyControlGroup("bob's group");
+
+            group.AddActor(character);
+            group.AddActor(character2);
+            group2.AddActor(character3);
+            //group.AddActor(character2);
+
+            scenario.AddControlGroup(group);
+            scenario.AddControlGroup(group2);
+
+            // scenario.AddControlGroup(group2);
+
+            scenario.BeginScenario();
+            */
+            
             var testlevel = new Room1();
             testlevel.Load();
             grid = testlevel.grid;
@@ -71,7 +111,7 @@ namespace TacticsGameTest
 
         }
 
-        private SelectableActor selectedActor;
+        private PlayerActor selectedActor;
         bool up, down, left, right, zoomIn, zoomOut;
         public void HandleInput(InputEvent inp, string eventType)
         {
@@ -87,10 +127,10 @@ namespace TacticsGameTest
                 var objects = grid.GetObjectsAtPosition(gridPos);
                 if (objects != null)
                 {
-                    SelectableActor selectableActor = null;
+                    PlayerActor selectableActor = null;
                     foreach (var item in objects)
                     {
-                        if (item is SelectableActor a)
+                        if (item is PlayerActor a)
                         {
                             selectableActor = a;
                         }

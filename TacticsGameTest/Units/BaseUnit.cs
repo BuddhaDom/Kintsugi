@@ -10,7 +10,7 @@ namespace TacticsGameTest.Units
     internal class BaseUnit :
         Actor
     {
-        public int Hp { get; set; }
+        public int Hp { get; set; } = 10;
 
         private int maxhp = 10; // Default value might be changed?
         public int MaxHp
@@ -20,9 +20,20 @@ namespace TacticsGameTest.Units
             {
                 if (value < 1)
                     throw new ArgumentOutOfRangeException("Only positive values are allowed");
+                if (!HealthInitialized)
+                {
+                    Hp = value;
+                    HealthInitialized = true;
+                }
+                if (Hp > maxhp)
+                {
+                    Hp = maxhp;
+                }
                 maxhp = value;
             }
         }
+        private bool HealthInitialized = false;
+
 
         private int swift = 1;
         public int Swift

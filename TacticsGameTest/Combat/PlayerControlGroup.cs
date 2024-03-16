@@ -1,6 +1,7 @@
 ﻿using Kintsugi.Objects;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,6 +26,10 @@ namespace TacticsGameTest.Combat
 
         public override void OnEndTurn()
         {
+            foreach (var act in GetActors())
+            {
+                act.Graphic.Modulation = Color.White;
+            }
         }
 
         public override void OnStartRound()

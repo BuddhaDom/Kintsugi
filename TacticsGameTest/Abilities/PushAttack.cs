@@ -11,7 +11,7 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
-using static TacticsGameTest.Units.SelectableActor;
+using static TacticsGameTest.Units.CombatActor;
 using TacticsGameTest.Units;
 using TacticsGameTest.Events;
 
@@ -19,13 +19,13 @@ namespace TacticsGameTest.Abilities
 {
     internal class PushAttack : BasicAttack
     {
-        public PushAttack(SelectableActor actor, List<Vec2Int> attacks) : base(actor, attacks)
+        public PushAttack(CombatActor actor, List<Vec2Int> attacks) : base(actor, attacks)
         {
         }
 
         public override void DoAction(Vec2Int target)
         {
-            var targetActor = GetActorIfAttackable(target);
+            var targetActor = GetActorIfAttackable(actor.Transform.Position, target);
             actor.movesLeft--;
             var animationDirection = actor.AnimationDirectionToTarget(actor.Transform.Position, targetActor.Transform.Position);
 

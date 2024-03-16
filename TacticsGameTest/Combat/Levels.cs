@@ -24,7 +24,9 @@ namespace TacticsGameTest.Rooms
 
             var character = ActorFactory.Grunt(grid);
             character.SetPosition(new Vec2Int(1, 3), false);
+            var playerchar = ActorFactory.PlayerCharacter(grid);
 
+            group_player.AddActor(playerchar);
             group_enemy.AddActor(character);
 
 
