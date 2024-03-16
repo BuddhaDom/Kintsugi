@@ -35,7 +35,7 @@ public class Canvas : GameObject, IInputListener
             case "MouseMotion":
             {
                 CanvasObject? localFocused = null;
-                foreach (var canvasObject in Objects.Where(o => o.Visible))
+                foreach (var canvasObject in Objects.Where(o => o is { IsButton: true, Visible: true }))
                 {
                     Vector2 pivotOffsetPosition;
                     if (canvasObject.FollowedTileobject is not null)

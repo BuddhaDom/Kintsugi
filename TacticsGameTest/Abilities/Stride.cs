@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TacticsGameTest.Units;
 using TacticsGameTest.Events;
+using TacticsGameTest.UI;
 
 namespace TacticsGameTest.Abilities
 {
@@ -21,11 +22,11 @@ namespace TacticsGameTest.Abilities
         public PathfindingResult PathfindingResult;
         private Kintsugi.AI.Path path;
 
-        public override string Path => throw new NotImplementedException();
+        public override string Path => IconsHelper.Get(19);
 
-        public override string Title => throw new NotImplementedException();
+        public override string Title => "Stride";
 
-        public override string Tooltip => throw new NotImplementedException();
+        public override string Tooltip => "Move up to your SPEED!";
 
         public Stride(SelectableActor actor) : base(actor)
         {

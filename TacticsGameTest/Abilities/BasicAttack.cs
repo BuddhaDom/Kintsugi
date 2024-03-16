@@ -11,6 +11,7 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using TacticsGameTest.UI;
 using static TacticsGameTest.Units.SelectableActor;
 using TacticsGameTest.Units;
 
@@ -45,11 +46,11 @@ namespace TacticsGameTest.Abilities
             return null;
         }
 
-        public override string Path => throw new NotImplementedException();
+        public override string Path => IconsHelper.Get(29);
 
-        public override string Title => throw new NotImplementedException();
+        public override string Title => "Attack";
 
-        public override string Tooltip => throw new NotImplementedException();
+        public override string Tooltip => "Damage with your WEAPON dice!";
 
         public override void DoAction(Vec2Int target)
         {

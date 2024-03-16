@@ -6,37 +6,36 @@ using TacticsGameTest.Abilities;
 
 namespace TacticsGameTest.UI;
 
-internal class AbilityFrame(Ability ability, int index) : IHUDObject
+internal class AbilityFrame(Ability ability, int index, Vector2 position) : IHUDObject
 {
-    public Ability AbilityData { get; set; } = ability;
-
-    public AbilityFramedIcon Icon { get; set; } = new(
-        ability, index,
-        new Vector2(20f, 50f),
+    private FramedIcon Icon { get; } = new AbilityFramedIcon(
+        ability, index, position,
         new SpriteSingle(Bootstrap.GetAssetManager().GetAssetPath("GUI\\abilityFrame.png")),
         new SpriteSingle(ability.Path),
-        Vector2.One, Vector2.One
+        Vector2.One * 5, Vector2.One * 2.25f
     );
-
-    internal class AbilityFramedIcon(
-        Ability ability,
-        int index,
-        Vector2 position,
-        ISpriteable frame,
-        ISpriteable icon,
-        Vector2 frameScale,
-        Vector2 iconScale)
-        : FramedIcon(position, frame, icon, frameScale, iconScale)
-    {
-        public override void OnClick()
-        {
-            base.OnClick();
-            ability.actor.SelectAbility(index);
-        }
-    }
 
     public void AddToCanvas(Canvas canvas)
     {
-        throw new NotImplementedException();
+        Icon.AddToCanvas(canvas);
+    }
+
+    private class AbilityFramedIcon : FramedIcon
+    {
+        private Ability Ability { get; }
+        private int Index { get; }
+        
+        public AbilityFramedIcon(Ability ability, int index, Vector2 position, ISpriteable frame, ISpriteable icon, Vector2 frameScale, Vector2 iconScale) : base(position, frame, icon, frameScale, iconScale)
+        {
+            Ability = ability;
+            Index = index;
+            IsButton = true;
+        }
+
+        public override void OnClick()
+        {
+            base.OnClick();
+            Ability.actor.SelectAbility(Index);
+        }
     }
 }

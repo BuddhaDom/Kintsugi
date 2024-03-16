@@ -16,29 +16,36 @@ internal class HUD : Canvas
     /// <returns>The existing or new HUD instance.</returns>
     public static HUD Instance => _hud ??= new HUD();
 
-    public FramedIcon Portrait { get; set; }
-    public List<AbilityFrame> Abilities { get; set; } = [];
-    public List<Heart> Health { get; set; }
-    public SelectableActor SelectedActor { get; set; }
-
-    public void UpdateFrom(SelectableActor actor)
+    private HUD() => Bootstrap.GetInput().AddListener(this);
+    
+    /// <summary>
+    /// Display information and buttons relevant to an actor.
+    /// </summary>
+    /// <param name="actor">Actor holding data relevant to the HUD.</param>
+    public void DisplayActor(SelectableActor actor)
     {
-        SelectedActor = actor;
-        Portrait = new FramedIcon(
+        new FramedIcon(
             new Vector2(10f, 10f),
-            new SpriteSingle(Bootstrap.GetAssetManager().GetAssetPath("characterFrame.png")),
-            actor.Graphic ?? new SpriteSingle(Bootstrap.GetAssetManager().GetAssetPath("guy.png")),
-            Vector2.One, Vector2.One
-        );
-        
-        Portrait.AddToCanvas(this);
+            new SpriteSingle(Bootstrap.GetAssetManager().GetAssetPath("GUI\\characterFrame.png")),
+            actor.Graphic is Animation a ? new Animation(a.TimeLength, 
+                new SpriteSheet(
+                    a.SpriteSheet.Path, 
+                    a.SpriteSheet.Dimensions.x, 
+                    a.SpriteSheet.Dimensions.y, 
+                    a.SpriteSheet.SpritesPerRow
+                    ), 
+                new []{0,1,2,3}) : new SpriteSingle(Bootstrap.GetAssetManager().GetAssetPath("guy.png")),
+            Vector2.One * 3, Vector2.One * 5
+        ).AddToCanvas(this);
 
-        for (int i = 0; i < Abilities.Count; i++)
-        {
-            
-        }
-        
-        //TODO: Populate the GUI.
+        for (int i = 0; i < actor.abilities.Count; i++)
+            new AbilityFrame(actor.abilities[i], i, new Vector2(
+                40, // Left margin
+                175 // Top margin
+                + 100 // Spacing
+                * i)).AddToCanvas(this);
+
+        //TODO: Health, statuses.
     }
 
     public void Clear() => Objects.Clear();

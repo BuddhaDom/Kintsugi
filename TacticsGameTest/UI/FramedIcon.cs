@@ -6,13 +6,13 @@ namespace TacticsGameTest.UI;
 
 public class FramedIcon : CanvasObject, IHUDObject
 {
-    internal CanvasObject Icon { get; } = new();
+    private CanvasObject Icon { get; } = new();
 
     public FramedIcon(Vector2 position, ISpriteable frame, ISpriteable icon, Vector2 frameScale, Vector2 iconScale)
     {
         SetAsType(frame, this);
         SetAsType(icon, Icon);
-
+        
         Graphic!.Scale = frameScale;
         Icon.Graphic!.Scale = iconScale;
         
@@ -22,6 +22,12 @@ public class FramedIcon : CanvasObject, IHUDObject
                 position + (Dimensions * Graphic.Scale - Icon.Dimensions * Icon.Graphic.Scale) / 2;
     }
 
+    public void AddToCanvas(Canvas canvas)
+    {
+        canvas.Objects.Add(Icon);
+        canvas.Objects.Add(this);
+    }
+    
     private static void SetAsType(ISpriteable input, GraphicsObject target)
     {
         switch (input)
@@ -33,11 +39,5 @@ public class FramedIcon : CanvasObject, IHUDObject
                 target.SetAnimation(animation);
                 break;
         }
-    }
-
-    public void AddToCanvas(Canvas canvas)
-    {
-        canvas.Objects.Add(Icon);
-        canvas.Objects.Add(this);
     }
 }
