@@ -26,6 +26,8 @@ namespace TacticsGameTest.Rooms
         {
             var game = Bootstrap.GetRunningGame();
 
+            Audio.I.music.Start();
+
 
             grid = new Grid(game.GetAssetManager().GetAssetPath(GridPath), gridVisible: true, gridColor: Color.DarkBlue);
             grid.Position.X = 0;

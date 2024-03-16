@@ -41,6 +41,8 @@ namespace TacticsGameTest.Units
         AnimationType curAnimationType;
         public void MoveTo(Vec2Int to)
         {
+            Audio.I.PlayAudio("Step");
+
             AnimationDirection animDirection = AnimationDirectionToTarget(Transform.Position, to);
             Vec2Int dir = to - Transform.Position;
 

@@ -69,6 +69,7 @@ namespace TacticsGameTest.Abilities
 
             var spawnHitEffect = new ActionEvent(() =>
             {
+                Audio.I.PlayAudio("MeleeAttack");
                 targetActor.TakeDamage(1, 1);
                 var hitEffect = new TileObject();
                 hitEffect.AddToGrid(targetActor.Transform.Grid, targetActor.Transform.Layer);
