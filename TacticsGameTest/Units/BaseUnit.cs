@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace TacticsGameTest.Units
 {
     internal class BaseUnit :
-        Actor
+        AnimatableActor
     {
         public int Hp { get; set; } = 10;
 
@@ -109,6 +109,11 @@ namespace TacticsGameTest.Units
         }
 
         private int damagerangedtype;
+
+        public BaseUnit(string path) : base(path)
+        {
+        }
+
         public int DamageRangedType
         {
             get { return damagerangedtype; }

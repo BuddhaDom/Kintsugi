@@ -26,10 +26,9 @@ namespace TacticsGameTest.Units
         private int maxMoves = 2;
         public int movesLeft;
         public Canvas ActorUI = new();
-        public CombatActor(string name, string spritePath)
+        public CombatActor(string name, string spritePath): base(spritePath)
         {
             this.name = name;
-            this.spritePath = spritePath;
             SetCharacterAnimation(AnimationDirection.right, AnimationType.idle, 1f);
             SetEasing(TweenSharp.Animation.Easing.QuadraticEaseOut, 0.5);
             SetCollider(["unit"], ["water", "wall", "unit"]);
@@ -130,35 +129,6 @@ namespace TacticsGameTest.Units
             }
         }
 
-        public AnimationDirection AnimationDirectionToTarget(Vec2Int from, Vec2Int to)
-        {
-            Vec2Int dir = to - Transform.Position;
-            AnimationDirection animationDirection;
-            if (Math.Abs(dir.x) > Math.Abs(dir.y))
-            {
-                if (Math.Sign(dir.x) > 0)
-                {
-                    animationDirection = AnimationDirection.right;
-                }
-                else
-                {
-                    animationDirection = AnimationDirection.left;
-                }
-            }
-            else
-            {
-                if (Math.Sign(dir.y) > 0)
-                {
-                    animationDirection = AnimationDirection.down;
-                }
-                else
-                {
-                    animationDirection = AnimationDirection.up;
-                }
-            }
-
-            return animationDirection;
-        }
 
         public void PushTo(Vec2Int to)
         {
@@ -166,76 +136,16 @@ namespace TacticsGameTest.Units
 
 
         }
-
-        public void MoveTo(Vec2Int to)
+        public override float GetMoveSpeed(Vec2Int to)
         {
-            AnimationDirection animDirection = AnimationDirectionToTarget(Transform.Position, to);
-            Vec2Int dir = to - Transform.Position;
-
-            float speed = MathF.Max(pathfindingSettings.GetCost(to, Transform.Grid), 0.1f);
-
-
-            SetCharacterAnimation(animDirection, AnimationType.walk, speed);
-            SetPosition(to);
-
+            return MathF.Max(pathfindingSettings.GetCost(to, Transform.Grid), 0.1f);
 
         }
 
-        public enum AnimationType { idle, walk, attack, death }
-        public enum AnimationDirection { left, right, up, down }
-        private AnimationType curAnimationType;
-        private AnimationDirection curAnimationDirection;
-
-        public void SetCharacterAnimation(AnimationDirection? dir, AnimationType? type, float speed)
-        {
-            if (dir == null) dir = curAnimationDirection;
-            if (type == null) type = curAnimationType;
-
-            var fullPath = Bootstrap.GetRunningGame().GetAssetManager().GetAssetPath(spritePath);
-
-            var directionSection = 0;
-            if (dir == AnimationDirection.down)
-            {
-                directionSection = 1;
-            }
-            if (dir == AnimationDirection.up)
-            {
-                directionSection = 2;
-            }
-            var typeSection = (int)type;
-
-            SetAnimation(
-                fullPath,
-                32,
-                32,
-                4,
-                0.5 * speed,
-                Enumerable.Range(0, 4),
-                new Vector2(0.5f, 0.5f),
-                new Vector2(16, 16),
-                default,
-                new Vector2(0, directionSection * 32 * 5 + typeSection * 32),
-                type == AnimationType.attack || type == AnimationType.death ? 1 : 0);
-
-            SetEasing(TweenSharp.Animation.Easing.QuadraticEaseOut, speed * 0.5f);
-            curAnimationDirection = dir.Value;
-            curAnimationType = type.Value;
-
-            if (dir == AnimationDirection.left)
-            {
-                Graphic.Flipped = true;
-            }
-            else
-            {
-                Graphic.Flipped = false;
-            }
-
-
-        }
         public bool Dead { get; private set; }
         public void Die()
         {
-            SetCharacterAnimation(null, AnimationType.death, 1f);
+            SetCharacterAnimation(null, AnimatableActor.AnimationType.death, 1f);
             ActorUI.Visible = false;
             Dead = true;
             if (InTurn) EndTurn();
