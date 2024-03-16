@@ -15,6 +15,7 @@ using TacticsGameTest.Units;
 using TacticsGameTest.Combat;
 using TacticsGameTest.Rooms;
 using Kintsugi.Audio;
+using TacticsGameTest.Map;
 
 namespace TacticsGameTest
 {
