@@ -16,43 +16,91 @@ namespace TacticsGameTest
 {
     static class ActorFactory
     {
-        static Animation zombieAnim ;
-        static Animation skeletonAnim;
-        static Animation mummyAnim;
 
-        public static CombatActor Zombie(Game game, Grid grid)
+        public static SelectableActor Grunt(Grid grid)
         {
-            /*
-            if (zombieAnim == null)
-            {
-                var spritesheet = new SpriteSheet(
-                    game.GetAssetManager().GetAssetPath("MutilatedStumbler.png"),
-                    16,
-                    16,
-                    4,
-                    Vector2.One / 2,
-                    new Vector2(8f, 8f)
-                    );
+            var unit = new SelectableActor("grunt", "FantasyBattlePack\\SwordFighter\\Longhair\\Red1.png");
 
-                zombieAnim = new Animation(
-                    1f,
-                    spritesheet,
-                    Enumerable.Range(0, 4));
-            }
+            unit.Brawn = 2;
+            unit.Intuition = 1;
+            unit.Swift = 2;
 
+            unit.DamageMeleeAmount = 1;
+            unit.DamageMeleeType = 8;
 
-            var character = new MovementActor("Zombie");
+            unit.DamageRangedAmount = 1;
+            unit.DamageRangedType = 4;
 
-            character.SetAnimation(zombieAnim);
-            character.SetCollider(["unit"], ["unit", "flying_unit", "wall", "spikes"], false);
-            character.AddToGrid(grid, 2); // this should be inherited from a generic unit
-            character.SetEasing(TweenSharp.Animation.Easing.QuadraticEaseOut, 0.2f);
-            character.speed = 1;
-            return character;
-            */
-            return null;
+            unit.MaxHp = 15;
+            unit.AddToGrid(grid, 2);
+
+            return unit;
 
         }
+        public static SelectableActor Archer(Grid grid)
+        {
+            var unit = new SelectableActor("archer", "FantasyBattlePack\\Archer\\Red1.png");
+            unit.Brawn = 1;
+            unit.Intuition = 1;
+            unit.Swift = 2;
+
+            unit.DamageMeleeAmount = 1;
+            unit.DamageMeleeType = 4;
+
+            unit.DamageRangedAmount = 1;
+            unit.DamageRangedType = 6;
+
+            unit.MaxHp = 10;
+            unit.AddToGrid(grid, 2);
+
+            return unit;
+
+        }
+
+        public static SelectableActor Ninja(Grid grid)
+        {
+            var unit = new SelectableActor("ninja", "FantasyBattlePack\\Thief\\Red1.png");
+            unit.Brawn = 1;
+            unit.Intuition = 1;
+            unit.Swift = 5;
+
+            unit.MaxHp = 16;
+
+            unit.DamageMeleeAmount = 1;
+            unit.DamageMeleeType = 10;
+
+            unit.DamageRangedAmount = 1;
+            unit.DamageRangedType = 8;
+
+
+            unit.AddToGrid(grid, 2);
+
+            return unit;
+
+        }
+
+        public static SelectableActor Executioner(Grid grid)
+        {
+            var unit = new SelectableActor("executioner", "FantasyBattlePack\\AxeFighter\\ShortHair\\Red2.png");
+            unit.Brawn = 5;
+            unit.Intuition = 2;
+            unit.Swift = 1;
+
+            unit.MaxHp = 24;
+
+            unit.DamageMeleeAmount = 3;
+            unit.DamageMeleeType = 12;
+
+            unit.DamageRangedAmount = 1;
+            unit.DamageRangedType = 4;
+
+
+            unit.AddToGrid(grid, 2);
+
+            return unit;
+
+        }
+
 
     }
 }

@@ -113,22 +113,22 @@ namespace TacticsGameTest.Units
 
         public override void OnEndRound()
         {
-            throw new NotImplementedException();
+            
         }
 
         public override void OnEndTurn()
         {
-            throw new NotImplementedException();
+            
         }
 
         public override void OnStartRound()
         {
-            throw new NotImplementedException();
+
         }
 
         public override void OnStartTurn()
         {
-            throw new NotImplementedException();
+            
         }
     }
 }
