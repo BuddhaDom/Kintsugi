@@ -40,6 +40,12 @@ namespace Kintsugi.AI
                 void VisitNeighbor(Vec2Int newPos)
                 {
                     var explored = costDict.TryGetValue(newPos, out float oldCost);
+                    var cost = costDict[currentPos];
+                    if (cost >= maxCost)
+                    {
+                        // early return to avoid continuing to move in a 0 after reaching max cost
+                        return;
+                    }
                     var newCost = costDict[currentPos] +
                         (pathfindingSettings != null ?
                         pathfindingSettings.GetCost(newPos, grid)

@@ -18,7 +18,7 @@ namespace TacticsGameTest.Map
         public MapScenario scenario;
 
         public UnitControlGroup group_player;
-        public string GridPath => "Assets\\Tilemaps\\Levels\\map.tmx";
+        public string GridPath => "Tilemaps\\Levels\\map.tmx";
         public void Load()
         {
             var game = Bootstrap.GetRunningGame();

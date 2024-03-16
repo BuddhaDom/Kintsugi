@@ -16,10 +16,11 @@ using TacticsGameTest.Abilities;
 using TacticsGameTest.Events;
 using TacticsGameTest.Units;
 using System.Drawing;
+using Kintsugi.Collision;
 
 namespace TacticsGameTest.Map
 {
-    internal class PartyActor : AnimatableActor
+    internal class PartyActor : AnimatableActor, IInputListener
     {
         public override void OnEndRound()
         {
@@ -35,11 +36,18 @@ namespace TacticsGameTest.Map
 
         public override void OnStartTurn()
         {
+            StartPathing();
         }
         private Kintsugi.AI.Path path;
 
         public PartyActor(string path) : base(path)
         {
+            pathfindingSettings = new();
+            pathfindingSettings.SetDefaultCost(float.PositiveInfinity);
+            pathfindingSettings.SetCostLayer("ground", 0, -100);
+            pathfindingSettings.SetCostLayer("room", 1);
+
+            Bootstrap.GetInput().AddListener(this);
         }
 
         public void Move()
@@ -48,7 +56,7 @@ namespace TacticsGameTest.Map
             EventManager.I.Queue(curEvent);
             foreach (var item in path.PathPositions.Skip(1))
             {
-                curEvent = new ActionEvent(() => SetPosition(item))
+                curEvent = new ActionEvent(() => MoveTo(item))
                     .AddFinishAwait(Easing)
                     .AddStartAwait(curEvent);
                 EventManager.I.Queue(curEvent);
@@ -56,17 +64,22 @@ namespace TacticsGameTest.Map
             var lastEvent = new ActionEvent(() => SetCharacterAnimation(null, CombatActor.AnimationType.idle, 1f))
                 .AddStartAwait(curEvent);
             EventManager.I.Queue(lastEvent);
+            var startNewPath = new ActionEvent(() => StartPathing()).AddStartAwait(lastEvent);
+            EventManager.I.Queue(startNewPath);
+
             EventManager.I.Queue(new ActionEvent(CheckEndTurn).AddStartAwait(lastEvent));
 
         }
         public void CheckEndTurn()
         {
-
+            EndTurn();
         }
         public PathfindingSettings pathfindingSettings;
         public PathfindingResult PathfindingResult;
         public void StartPathing()
         {
+            ClearHighlights();
+            ClearPath();
             PathfindingResult = PathfindingSystem.Dijkstra(
                 Transform.Grid,
                 Transform.Position,
@@ -76,7 +89,7 @@ namespace TacticsGameTest.Map
 
             List<Vec2Int> highlights = new();
 
-            foreach (var item in PathfindingResult.ReachablePositions())
+            foreach (var item in GetReachableRooms())
             {
                 if (item != PathfindingResult.StartPosition)
                 {
@@ -84,6 +97,20 @@ namespace TacticsGameTest.Map
                 }
             }
 
+        }
+        public List<Vec2Int> GetReachableRooms()
+        {
+            var collider = new Collider();
+            collider.CollideLayers.Add("room");
+            var reachable = new List<Vec2Int>();
+            foreach (var item in PathfindingResult.ReachablePositions())
+            {
+                if (CollisionSystem.CollidesColliderWithGridAtPosition(collider, Transform.Grid, item))
+                {
+                    reachable.Add(item);
+                }
+            }
+            return reachable;
         }
         private void ClearHighlights()
         {
@@ -94,7 +121,7 @@ namespace TacticsGameTest.Map
             highlights.Clear();
         }
 
-        private List<TileObject> highlights;
+        private List<TileObject> highlights = new();
         private void AddHighlight(Vec2Int pos)
         {
             var color = Color.FromArgb((byte)(0.65 * 256), Color.White);
@@ -127,8 +154,18 @@ namespace TacticsGameTest.Map
 
         public void PathTo(Vec2Int target)
         {
-            if (path != null && path.PathPositions.Last() == target)
+            if (path != null)
             {
+                if (path.PathPositions.Last() == target)
+                {
+                    return;
+
+                }
+
+            }
+            if (!GetReachableRooms().Contains(target))
+            {
+                ClearPath();
                 return;
             }
             ClearPath();
@@ -144,7 +181,7 @@ namespace TacticsGameTest.Map
                             continue;
                         }
                         var pathSegment = new TileObject();
-                        pathSegment.AddToGrid(Transform.Grid, 3);
+                        pathSegment.AddToGrid(Transform.Grid, 4);
                         pathSegment.SetSpriteSingle(Bootstrap.GetRunningGame().GetAssetManager().GetAssetPath(PathToSpritePath(i)));
                         pathSegment.SetPosition(path.PathPositions[i]);
                         pathSegments.Add(pathSegment);
@@ -157,7 +194,7 @@ namespace TacticsGameTest.Map
         }
         public void HandleInput(InputEvent inp, string eventType)
         {
-            if (InTurn)
+            if (InTurn && EventManager.I.IsQueueDone())
             {
                 if (eventType == "MouseMotion")
                 {
