@@ -1,4 +1,17 @@
-﻿/*
+﻿/*! \mainpage Overview
+ *
+ * \section intro_sec Introduction
+ *
+ * Kintsugi is a game engine based on Shard Engine (Michael Heron).
+ *
+ * \section install_sec Installation
+ *
+ * 1. To make use of Kintsugi, import the Kintsugi library to your project.
+ * 2. Create a `Game` object.
+ * 3. Start your executable with `YourGameClass.Run();`
+ */
+
+/*
 *
 *   Generally useful functions that might be useful everywhere
 *   @author Michael Heron

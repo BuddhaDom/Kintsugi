@@ -3,6 +3,9 @@ using Kintsugi.Tiles;
 
 namespace Kintsugi.AI
 {
+    /// <summary>
+    /// Pathfinding functions and utilities. 
+    /// </summary>
     public static class PathfindingSystem
     {
         /// <summary>

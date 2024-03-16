@@ -23,6 +23,9 @@ namespace Kintsugi.Collision
         voidlayer
     };
 
+    /// <summary>
+    /// System for handling tile-based collisions.
+    /// </summary>
     public static class CollisionSystem
     {
         /// <summary>
