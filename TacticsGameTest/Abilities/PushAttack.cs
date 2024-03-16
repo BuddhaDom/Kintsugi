@@ -41,6 +41,7 @@ namespace TacticsGameTest.Abilities
 
             var spawnHitEffect = new ActionEvent(() =>
             {
+                Audio.I.PlayAudio("Shove");
                 var hitEffect = new TileObject();
                 hitEffect.AddToGrid(targetActor.Transform.Grid, targetActor.Transform.Layer);
                 hitEffect.SetPosition(targetActor.Transform.Position, false);
