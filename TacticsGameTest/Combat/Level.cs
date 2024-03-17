@@ -26,15 +26,6 @@ namespace TacticsGameTest.Rooms
 
 
         public abstract string GridPath { get; }
-        public void AddEnemy(Actor actor)
-        {
-            var group_enemy = new EnemyControlGroup("ENEMY");
-            group_enemy.AddActor(actor);
-            scenario.AddControlGroup(group_enemy);
-            enemyGroups.Add(group_enemy);
-
-
-        }
         public void Load()
         {
             var game = Bootstrap.GetRunningGame();
@@ -116,7 +107,11 @@ namespace TacticsGameTest.Rooms
         {
             var character = factoryMethod(grid);
             character.SetPosition(position, false);
+            var group_enemy = new EnemyControlGroup("ENEMY");
             group_enemy.AddActor(character);
+            scenario.AddControlGroup(group_enemy);
+            enemyGroups.Add(group_enemy);
+
         }
 
         protected void InitEnemy(Func<Grid, CombatActor> factoryMethod, int x, int y)

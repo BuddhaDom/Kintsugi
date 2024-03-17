@@ -91,6 +91,9 @@ namespace TacticsGameTest.Units
                 new Vec2Int(1, 0),
                 new Vec2Int(1, 1),
             };
+            pathfindingSettings.SetDefaultCost(0.99f);
+            pathfindingSettings.SetCostLayer("spike", 1f, 1);
+            pathfindingSettings.CheckAgainstTriggers = true;
 
             //abilities.Add(new BasicAttack(this, attackPattern));
             //abilities.Add(new PushAttack(this, attackPattern));
