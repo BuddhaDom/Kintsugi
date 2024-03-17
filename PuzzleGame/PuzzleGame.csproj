@@ -5,6 +5,9 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <Company>Kintsugi</Company>
+    <Product>Synchronecronomicous</Product>
+    <AssemblyName>Synchronecronomicous</AssemblyName>
   </PropertyGroup>
   
   <PropertyGroup>
