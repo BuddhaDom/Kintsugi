@@ -35,7 +35,7 @@ namespace TacticsGameTest
                 }
             }
             unit.abilities.Add(new BasicBuff(unit, basicBuffRange));
-            unit.AddToGrid(grid, 2);
+            unit.AddToGrid(grid, 5);
             return unit;
         }
         public static PlayerActor TankPlayer(Grid grid)
@@ -60,7 +60,7 @@ namespace TacticsGameTest
             unit.abilities.Add(new PushAttack(unit, basicMeleeRange));
             unit.abilities.Add(new Guard(unit));
 
-            unit.AddToGrid(grid, 2);
+            unit.AddToGrid(grid, 5);
             return unit;
         }
         public static PlayerActor RoguePlayer(Grid grid)
@@ -72,7 +72,7 @@ namespace TacticsGameTest
             unit.abilities.Add(new PoisonDagger(unit));
             unit.abilities.Add(new DaggerThrow(unit));
 
-            unit.AddToGrid(grid, 2);
+            unit.AddToGrid(grid, 5);
             return unit;
         }
 
@@ -93,7 +93,7 @@ namespace TacticsGameTest
             stats.MaxHp = 15;
 
             var unit = new BasicMeleeEnemy("grunt", "FantasyBattlePack\\SwordFighter\\LongHair\\Red1.png", stats);
-            unit.AddToGrid(grid, 2);
+            unit.AddToGrid(grid, 5);
 
             return unit;
 
@@ -112,8 +112,8 @@ namespace TacticsGameTest
             stats.DamageRangedType = 6;
 
             stats.MaxHp = 10;
-            var unit = new BasicMeleeEnemy("archer", "FantasyBattlePack\\Archer\\Red1.png", stats);
-            unit.AddToGrid(grid, 2);
+            var unit = new BasicRangedEnemy("archer", "FantasyBattlePack\\Archer\\Red1.png", stats);
+            unit.AddToGrid(grid, 5);
 
             return unit;
 
@@ -136,7 +136,7 @@ namespace TacticsGameTest
 
 
             var unit = new BasicMeleeEnemy("ninja", "FantasyBattlePack\\Thief\\Red1.png", stats);
-            unit.AddToGrid(grid, 2);
+            unit.AddToGrid(grid, 5);
 
             return unit;
 
@@ -159,7 +159,7 @@ namespace TacticsGameTest
 
             var unit = new BasicMeleeEnemy("executioner", "FantasyBattlePack\\AxeFighter\\ShortHair\\Red2.png", stats);
 
-            unit.AddToGrid(grid, 2);
+            unit.AddToGrid(grid, 5);
 
             return unit;
 
