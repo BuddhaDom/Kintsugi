@@ -778,6 +778,8 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Assets\Tilemaps\Levels\room2.tmx">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Assets\GUI\statFrame.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
