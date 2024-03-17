@@ -144,6 +144,7 @@ namespace TacticsGameTest.Units
         {
             if (Dead)
             {
+                EndTurn();
                 return;
             }
             base.OnStartTurn();

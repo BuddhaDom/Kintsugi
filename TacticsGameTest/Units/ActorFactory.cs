@@ -90,7 +90,8 @@ namespace TacticsGameTest
             stats.DamageRangedAmount = 1;
             stats.DamageRangedType = 4;
 
-            stats.MaxHp = 15;
+            stats.MaxHp = 5;
+            stats.MaxHp = 5;
 
             var unit = new BasicMeleeEnemy("grunt", "FantasyBattlePack\\SwordFighter\\LongHair\\Red1.png", stats);
             unit.AddToGrid(grid, 5);
@@ -111,7 +112,8 @@ namespace TacticsGameTest
             stats.DamageRangedAmount = 1;
             stats.DamageRangedType = 6;
 
-            stats.MaxHp = 10;
+            stats.MaxHp = 5;
+            stats.MaxHp = 5;
             var unit = new BasicRangedEnemy("archer", "FantasyBattlePack\\Archer\\Red1.png", stats);
             unit.AddToGrid(grid, 5);
 
@@ -126,7 +128,8 @@ namespace TacticsGameTest
             stats.Intuition = 1;
             stats.Swift = 5;
 
-            stats.MaxHp = 16;
+            stats.MaxHp = 5;
+            stats.MaxHp = 5;
 
             stats.DamageMeleeAmount = 1;
             stats.DamageMeleeType = 10;
@@ -149,7 +152,8 @@ namespace TacticsGameTest
             stats.Intuition = 2;
             stats.Swift = 1;
 
-            stats.MaxHp = 24;
+            stats.MaxHp = 5;
+            stats.MaxHp = 5;
 
             stats.DamageMeleeAmount = 3;
             stats.DamageMeleeType = 12;
