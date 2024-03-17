@@ -34,7 +34,7 @@ namespace TacticsGameTest.Units
         }
         AnimationDirection curAnimationDirection;
         AnimationType curAnimationType;
-        public void MoveTo(Vec2Int to)
+        public virtual void MoveTo(Vec2Int to)
         {
             Audio.I.PlayAudio("Step");
 

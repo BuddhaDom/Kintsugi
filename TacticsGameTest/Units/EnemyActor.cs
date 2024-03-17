@@ -12,27 +12,17 @@ namespace TacticsGameTest.Units
         public EnemyActor(string name, string spritePath, CharacterStats stats) : base(name, spritePath, stats)
         {
             team = 1;
+            pathfindingSettings.SetCostLayer("constraint", float.PositiveInfinity, 10000);
         }
     }
-    internal class BasicMeleeEnemy : EnemyActor
+    internal class BasicAttackEnemy : EnemyActor
     {
-        public BasicMeleeEnemy(string name, string spritePath, CharacterStats stats) : base(name, spritePath, stats)
+        public BasicAttackEnemy(string name, string spritePath, CharacterStats stats, List<Vec2Int> attackPattern) : base(name, spritePath, stats)
         {
-            var attackPattern = new List<Vec2Int>()
-            {
-                new Vec2Int(-1, -1),
-                new Vec2Int(-1, 0),
-                new Vec2Int(-1, 1),
-                new Vec2Int(0, -1),
-                new Vec2Int(0, 1),
-                new Vec2Int(1, -1),
-                new Vec2Int(1, 0),
-                new Vec2Int(1, 1),
-            };
-
             MeleeAttack = new BasicAttack(this, attackPattern);
             Move = new Stride(this);
             ((Stride)Move).AllowOnlySingleMove = true;
+
         }
         Ability MeleeAttack;
         Ability Move;
@@ -125,7 +115,12 @@ namespace TacticsGameTest.Units
             }
 
             var pathToDesired = longLook.PathTo(ClosestDesired);
-
+            if (pathToDesired == null)
+            {
+                movesLeft = 0;
+                EventManager.I.Queue(CheckEndTurn);
+                return;
+            }
             for (int i = pathToDesired.PathPositions.Count - 1; i >= 0; i--)
             {
                 var target = pathToDesired.PathPositions[i];
@@ -172,6 +167,50 @@ namespace TacticsGameTest.Units
 
 
         }
+    }
+    internal class BasicRangedEnemy : BasicAttackEnemy
+    {
+        public static List<Vec2Int> GetAttackRange()
+        {
+            var list = new List<Vec2Int>();
+            for (int x = -4; x <= 4; x++)
+            {
+                for (int y = -4; y <= 4; y++)
+                {
+                    if (!(x >= -1 && x <= 1 && y >= -1 && y <= 1))
+                    {
+                        list.Add(new Vec2Int(x, y));
+                    }
+                }
+            }
+            return list;
+        }
+        public BasicRangedEnemy(string name, string spritePath, CharacterStats stats) : base(name, spritePath, stats, GetAttackRange())
+        {
+        }
+
+    }
+    internal class BasicMeleeEnemy : BasicAttackEnemy
+    {
+        public static List<Vec2Int> GetAttackRange()
+        {
+            return new List<Vec2Int>()
+            {
+                new Vec2Int(-1, -1),
+                new Vec2Int(-1, 0),
+                new Vec2Int(-1, 1),
+                new Vec2Int(0, -1),
+                new Vec2Int(0, 1),
+                new Vec2Int(1, -1),
+                new Vec2Int(1, 0),
+                new Vec2Int(1, 1),
+            };
+        }
+
+        public BasicMeleeEnemy(string name, string spritePath, CharacterStats stats) : base(name, spritePath, stats, GetAttackRange())
+        {
+        }
+
 
     }
 
