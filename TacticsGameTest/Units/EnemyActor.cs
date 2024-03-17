@@ -66,7 +66,7 @@ namespace TacticsGameTest.Units
                 {
                     if (obj is PlayerActor act)
                     {
-                        minHealth = act.Hp;
+                        minHealth = act.stats.Hp;
                         minTarget = item;
                         break;
                     }
