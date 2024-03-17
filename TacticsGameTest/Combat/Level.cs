@@ -7,6 +7,7 @@ using Kintsugi.Tiles;
 using TacticsGameTest.Combat;
 using TacticsGameTest.UI;
 using TacticsGameTest.Units;
+using PuzzleGame;
 
 namespace TacticsGameTest.Rooms
 {
@@ -48,6 +49,8 @@ namespace TacticsGameTest.Rooms
             spearCharacter = ActorFactory.SpearPlayer(grid);
             tankCharacter = ActorFactory.TankPlayer(grid);
             rogueCharacter = ActorFactory.RoguePlayer(grid);
+
+            grid.Layers[3].SwitchColliderType<SpikeCollider>();
 
             group_player.AddActor(spearCharacter);
             group_player.AddActor(tankCharacter);

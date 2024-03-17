@@ -21,6 +21,8 @@ namespace TacticsGameTest.Map
 
         public override void OnEndTurn()
         {
+
+            MapManagement.I.EnterArea(Transform.Position);
         }
 
         public override void OnStartRound()
@@ -60,14 +62,10 @@ namespace TacticsGameTest.Map
             var startNewPath = new ActionEvent(() => StartPathing()).AddStartAwait(lastEvent);
             EventManager.I.Queue(startNewPath);
 
-            EventManager.I.Queue(new ActionEvent(CheckEndTurn).AddStartAwait(lastEvent));
+            EventManager.I.Queue(new ActionEvent(EndTurn).AddStartAwait(lastEvent));
 
         }
-        public void CheckEndTurn()
-        {
-            MapManagement.I.EnterRoom(Transform.Position);
-            EndTurn();
-        }
+      
         public PathfindingSettings pathfindingSettings;
         public PathfindingResult PathfindingResult;
         public void StartPathing()

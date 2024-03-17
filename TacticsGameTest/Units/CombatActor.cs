@@ -19,7 +19,7 @@ namespace TacticsGameTest.Units
         {
             this.stats = stats;
             this.name = name;
-            SetCollider(["unit"], ["water", "wall", "unit"]);
+            SetCollider(["unit"], ["spike", "wall", "unit"]);
             pathfindingSettings.AddCollideLayers(Collider.CollideLayers);
             pathfindingSettings.SetCostLayer("road", 0.5f, 1);
             pathfindingSettings.SetCostLayer("shrubbery", 2f, 1);
@@ -190,6 +190,13 @@ namespace TacticsGameTest.Units
             Dead = true;
             if (InTurn) EndTurn();
 
+        }
+        public override void MoveTo(Vec2Int to)
+        {
+            if (!Dead)
+            {
+                base.MoveTo(to);
+            }
         }
 
 

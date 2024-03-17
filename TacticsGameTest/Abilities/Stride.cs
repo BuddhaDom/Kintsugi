@@ -52,7 +52,12 @@ namespace TacticsGameTest.Abilities
                     .AddStartAwait(curEvent);
                 EventManager.I.Queue(curEvent);
             }
-            var lastEvent = new ActionEvent(() => actor.SetCharacterAnimation(null, CombatActor.AnimationType.idle, 1f))
+            var lastEvent = new ActionEvent(() => { 
+                if (!actor.Dead) 
+                {
+                    actor.SetCharacterAnimation(null, CombatActor.AnimationType.idle, 1f);
+                } 
+            })
                 .AddStartAwait(curEvent);
             waitingEvent = lastEvent;
             EventManager.I.Queue(lastEvent);
