@@ -26,7 +26,7 @@ namespace TacticsGameTest.Units
                 CharacterStats stats = new CharacterStats();
                 stats.Brawn = 5;
                 stats.Intuition = 2;
-                stats.Swift = 1;
+                stats.Swift = 3;
 
                 stats.MaxHp = 5;
                 stats.Hp = 5;
@@ -53,10 +53,10 @@ namespace TacticsGameTest.Units
                 CharacterStats stats = new CharacterStats();
                 stats.Brawn = 5;
                 stats.Intuition = 2;
-                stats.Swift = 1;
+                stats.Swift = 2;
 
-                stats.MaxHp = 5;
-                stats.Hp = 5;
+                stats.MaxHp = 6;
+                stats.Hp = 6;
 
                 stats.DamageMeleeAmount = 3;
                 stats.DamageMeleeType = 12;
@@ -78,10 +78,11 @@ namespace TacticsGameTest.Units
                 CharacterStats stats = new CharacterStats();
                 stats.Brawn = 5;
                 stats.Intuition = 2;
-                stats.Swift = 1;
+                stats.Swift = 3;
+                stats.MaxMoves = 3;
 
-                stats.MaxHp = 5;
-                stats.Hp = 5;
+                stats.MaxHp = 3;
+                stats.Hp = 3;
 
                 stats.DamageMeleeAmount = 3;
                 stats.DamageMeleeType = 12;

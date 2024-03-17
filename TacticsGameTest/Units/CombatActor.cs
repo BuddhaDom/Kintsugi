@@ -13,7 +13,6 @@ namespace TacticsGameTest.Units
         public int team;
         public PathfindingSettings pathfindingSettings = new();
         public string name;
-        private int maxMoves = 2;
         public int movesLeft;
         public Canvas ActorUI = new();
         public CombatActor(string name, string spritePath, CharacterStats stats): base(spritePath)
@@ -158,7 +157,7 @@ namespace TacticsGameTest.Units
                 EndTurn();
                 return;
             }
-            movesLeft = maxMoves;
+            movesLeft = stats.MaxMoves;
             Console.WriteLine(name + " Start Turn");
         }
         public void CheckEndTurn()
