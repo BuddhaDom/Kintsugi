@@ -1,4 +1,4 @@
-﻿using Engine.EventSystem;
+﻿using Kintsugi.EventSystem;
 using Kintsugi.EventSystem.Events;
 
 namespace Kintsugi.Objects

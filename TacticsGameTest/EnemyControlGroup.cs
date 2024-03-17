@@ -1,6 +1,4 @@
-﻿using Kintsugi.Objects;
-
-namespace TacticsGameTest
+﻿namespace TacticsGameTest
 {
     internal class EnemyControlGroup : UnitControlGroup
     {

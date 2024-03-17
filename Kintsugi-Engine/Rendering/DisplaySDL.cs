@@ -17,11 +17,13 @@ using SDL2;
 using System.Numerics;
 using Kintsugi.Objects.Graphics;
 using Kintsugi.UI;
-using static SDL2.SDL;
 
 namespace Kintsugi.Rendering
 {
 
+    /// <summary>
+    /// A straight, monochromatic line.
+    /// </summary>
     public class Line
     {
         private int sx, sy;
@@ -38,6 +40,9 @@ namespace Kintsugi.Rendering
         public int A { get => a; set => a = value; }
     }
 
+    /// <summary>
+    /// A monochromatic circle.
+    /// </summary>
     public class Circle
     {
         int x, y, rad;
@@ -54,7 +59,7 @@ namespace Kintsugi.Rendering
 
 
     /// <summary>
-    /// A display using the SDL2.
+    /// <a href="https://www.libsdl.org/">SDL2</a>-based display engine.
     /// </summary>
     public class DisplaySDL : DisplayText
     {
@@ -126,7 +131,7 @@ namespace Kintsugi.Rendering
 
 
         /// <summary>
-        /// Render a circle through the SDL display.
+        /// Render a circle through the display engine.
         /// </summary>
         /// <param name="centreX">X position of its center point.</param>
         /// <param name="centreY">Y Position of its center point.</param>
