@@ -259,6 +259,7 @@ namespace TacticsGameTest.Abilities
                     hitEffect.RemoveFromGrid();
                 }).AddStartAwait(((Animation)hitEffect.Graphic));
                 EventManager.I.Queue(removeEffect);
+                hitEffect.Graphic.Modulation = Color.Red;
 
             }).AddStartAwait(new WaitForSeconds(0.25f));
             spawnHitEffect.SetAsQueueBlocker();

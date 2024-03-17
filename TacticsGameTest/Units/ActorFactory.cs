@@ -25,6 +25,15 @@ namespace TacticsGameTest
             unit.abilities = new();
             unit.abilities.Add(new Stride(unit));
             unit.abilities.Add(new SpearStab(unit));
+            var basicBuffRange = new List<Vec2Int>() { };
+            for (int x = -10; x < 10; x++)
+            {
+                for (int y = -10; y < 10; y++)
+                {
+                    basicBuffRange.Add(new Vec2Int(x, y));
+                }
+            }
+            unit.abilities.Add(new BasicBuff(unit, basicBuffRange));
             unit.AddToGrid(grid, 2);
             return unit;
         }
