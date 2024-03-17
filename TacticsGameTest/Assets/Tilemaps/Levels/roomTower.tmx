@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="10" height="10" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="3">
+ <properties>
+  <property name="kintsugi:collisionlayerbelong" value="constraint"/>
+ </properties>
  <tileset firstgid="1" source="dungeon_tilemap_packed.tsx"/>
  <layer id="8" name="constraint" width="10" height="10">
   <properties>
