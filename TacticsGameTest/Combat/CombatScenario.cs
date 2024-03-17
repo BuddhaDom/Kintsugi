@@ -41,6 +41,10 @@ namespace TacticsGameTest.Combat
             else if (enemies.All((e) => e.Dead))
             {
                 EndScenario();
+                if(PlayerCharacterData.entered_boss) // Beat boss room
+                {
+                    Audio.I.music.Stop();
+                }
                 MapManagement.I.LoadOverworld();
             }
         }

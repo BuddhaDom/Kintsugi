@@ -8,7 +8,7 @@
         }
         public override float CalculateInitiative()
         {
-            return 100;
+            return 1;
         }
 
         public override void OnEndRound()

@@ -155,6 +155,7 @@ namespace TacticsGameTest
                 if (PlayerCharacterData.keys >= 2)
                 {
                     Audio.I.PlayAudio("DoorOpen");
+                    PlayerCharacterData.entered_boss = true; // Boss is true
                     return false;
                 }
                 else
