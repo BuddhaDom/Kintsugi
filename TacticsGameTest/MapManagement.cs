@@ -103,6 +103,8 @@ namespace TacticsGameTest
             {
                 SetupOverworld();
             }
+            Bootstrap.GetCameraSystem().Size = 4 * 24;
+            Bootstrap.GetCameraSystem().Position = new Vector2(85, 75);
             currentRoom?.Unload();
             currentRoom = null;
 
