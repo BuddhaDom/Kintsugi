@@ -6,6 +6,10 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
+  
+  <PropertyGroup>
+    <ApplicationIcon>ghost.ico</ApplicationIcon>
+  </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Kintsugi-Engine\Kintsugi-Engine.csproj" />
@@ -106,6 +110,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Fonts\OpenSans-Regular.woff">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="ghost.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
