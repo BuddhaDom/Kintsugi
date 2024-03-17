@@ -29,8 +29,62 @@ namespace TacticsGameTest.Units
 
         }
         Ability MeleeAttack;
-        Ability Move;
+        Stride Move;
         public PlayerActor SelectTarget;
+
+        public Vec2Int ChooseMoveTarget(List<Vec2Int> targets)
+        {
+            float min = float.PositiveInfinity;
+            Vec2Int minTarget = Vec2Int.Zero;
+            foreach (var item in targets)
+            {
+                var newCost = Move.PathfindingResult.GetCost(item);
+                if (newCost < min)
+                {
+                    minTarget = item;
+                    min = newCost;
+                }
+            }
+            if (min == float.PositiveInfinity)
+            {
+                Console.WriteLine("Failed to find a min target???? taking random.");
+                return ChooseTarget(targets);
+            }
+            else
+            {
+                return minTarget;
+            }
+        }
+        public Vec2Int ChooseAttackTarget(List<Vec2Int> targets)
+        {
+            float minHealth = int.MaxValue;
+            Vec2Int minTarget = Vec2Int.Zero;
+            foreach (var item in targets)
+            {
+                var objects = Transform.Grid.GetObjectsAtPosition(item);
+                foreach (var obj in objects)
+                {
+                    if (obj is PlayerActor act)
+                    {
+                        if (minHealth > act.stats.Hp)
+                        {
+                            minHealth = act.stats.Hp;
+                            minTarget = item;
+                        }
+                        break;
+                    }
+                }
+            }
+            if (minHealth == int.MaxValue)
+            {
+                Console.WriteLine("Failed to find a min target???? taking random.");
+                return ChooseTarget(targets);
+            }
+            else
+            {
+                return minTarget;
+            }
+        }
         public Vec2Int ChooseTarget(List<Vec2Int> targets)
         {
 
@@ -42,7 +96,7 @@ namespace TacticsGameTest.Units
             var targets = MeleeAttack.GetTargets(Transform.Position).Select((a) => a.Item1).ToList();
             if (targets.Count() > 0)
             {
-                MeleeAttack.DoAction(ChooseTarget(targets));
+                MeleeAttack.DoAction(ChooseAttackTarget(targets));
                 return true;
             }
             return false;
@@ -74,7 +128,7 @@ namespace TacticsGameTest.Units
                     }
                     if (validMoves.Count > 0)
                     {
-                        var chosenMove = ChooseTarget(validMoves);
+                        var chosenMove = ChooseMoveTarget(validMoves);
                         Move.Hover(chosenMove);
                         Move.DoAction(chosenMove);
                         Move.OnDeselect();
