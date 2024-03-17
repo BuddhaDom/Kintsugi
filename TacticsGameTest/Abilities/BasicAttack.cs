@@ -196,7 +196,7 @@ namespace TacticsGameTest.Abilities
                 if (targeted == null) return null;
                 foreach (var item in targeted)
                 {
-                    if (item is CombatActor a && a.team != actor.team && !actor.Dead)
+                    if (item is CombatActor a && a.team != actor.team && !a.Dead)
                     {
                         return a;
                     }

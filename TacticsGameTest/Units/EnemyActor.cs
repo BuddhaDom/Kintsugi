@@ -202,7 +202,7 @@ namespace TacticsGameTest.Units
             };
         }
 
-        public BasicMeleeEnemy(string name, string spritePath, CharacterStats stats) : base(name, spritePath, stats)
+        public BasicMeleeEnemy(string name, string spritePath, CharacterStats stats) : base(name, spritePath, stats, GetAttackRange())
         {
         }
 
