@@ -31,7 +31,7 @@ public class TileObject: GraphicsObject
     /// </summary>
     public TileObject()
     {
-        Transform = new TileObjectTransform(this);
+        Transform = new TileObjectTransform();
         Easing = new TileObjectEasing();
     }
 
