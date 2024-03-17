@@ -1,5 +1,6 @@
 ﻿using Kintsugi.Core;
 using System.Drawing;
+using System.Numerics;
 
 namespace TacticsGameTest.Map
 {
@@ -14,6 +15,10 @@ namespace TacticsGameTest.Map
         public void Load()
         {
             var game = Bootstrap.GetRunningGame();
+
+            
+            Bootstrap.GetCameraSystem().Size = 4 * 24;
+            Bootstrap.GetCameraSystem().Position = new Vector2(85, 75);
 
 
             grid = new GridBase(game.GetAssetManager().GetAssetPath(GridPath), gridVisible: false, gridColor: Color.Red);
