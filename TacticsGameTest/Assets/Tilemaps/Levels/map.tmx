@@ -1,6 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="12" height="10" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="3">
  <tileset firstgid="1" source="dungeon_tilemap_packed.tsx"/>
+ <layer id="6" name="areas" width="12" height="10">
+  <properties>
+   <property name="kintsugi:collisionlayerbelong" value="room"/>
+  </properties>
+  <data encoding="csv">
+0,0,0,0,0,46,0,0,0,0,0,0,
+0,0,61,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,104,0,0,0,0,0,0,0,0,
+0,0,62,0,0,0,0,62,0,0,0,0,
+0,0,0,0,0,61,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,61,0,0,0,0,0,
+0,0,61,0,62,0,0,0,0,0,61,104,
+0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
  <layer id="1" name="connectors" width="12" height="10" opacity="0.99">
   <properties>
    <property name="kintsugi:collisionlayerbelong" value="ground"/>
@@ -37,6 +54,7 @@
    <property name="kintsugi:collisionlayerbelong" value="wall"/>
   </properties>
   <data encoding="csv">
+0,0,0,58,20,0,20,60,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,
@@ -45,24 +63,6 @@
 0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0
-</data>
- </layer>
- <layer id="6" name="areas" width="12" height="10">
-  <properties>
-   <property name="kintsugi:collisionlayerbelong" value="room"/>
-  </properties>
-  <data encoding="csv">
-0,0,0,0,0,46,0,0,0,0,0,0,
-0,0,61,0,0,0,0,0,61,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,104,0,0,0,0,0,0,0,0,
-0,0,62,0,0,0,0,62,0,0,0,0,
-0,0,0,0,0,61,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,61,0,0,0,0,0,
-0,0,61,0,62,0,0,0,0,0,61,104,
 0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>

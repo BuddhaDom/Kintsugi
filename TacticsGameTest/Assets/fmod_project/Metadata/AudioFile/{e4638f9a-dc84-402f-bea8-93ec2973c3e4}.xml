@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{e4638f9a-dc84-402f-bea8-93ec2973c3e4}">
+		<property name="assetPath">
+			<value>door_locked.mp3</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>1</value>
+		</property>
+		<property name="length">
+			<value>0.52244897959183678</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{adcbc68a-1a94-4221-9114-06e59f5558e6}</destination>
+		</relationship>
+	</object>
+</objects>

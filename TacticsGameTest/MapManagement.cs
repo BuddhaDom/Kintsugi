@@ -1,7 +1,9 @@
 ﻿using Kintsugi.Core;
+using Kintsugi.Objects;
 using System.Numerics;
 using TacticsGameTest.Map;
 using TacticsGameTest.Rooms;
+using TacticsGameTest.Units;
 
 namespace TacticsGameTest
 {
@@ -9,10 +11,22 @@ namespace TacticsGameTest
     {
         static MapManagement _instance;
 
-        private Dictionary<Vector2, Level> rooms = new Dictionary<Vector2, Level>()
+        private Dictionary<Vec2Int, (Level, TileObject)> rooms = new Dictionary<Vec2Int, (Level, TileObject)>()
             {
-                {new Vec2Int(2,8), new RoomMine() },
-                {new Vec2Int(6,7), new RoomTower() }
+                {new Vec2Int(2,8), (new Room2(), null) },
+                {new Vec2Int(6,7), (new Room2(), null) },
+                {new Vec2Int(5,0), (new Room2(), null) } // Boss Room
+            };
+        private Dictionary<Vec2Int, TileObject> heals = new Dictionary<Vec2Int, TileObject>
+            {
+                {new Vec2Int(4,8), null },
+                {new Vec2Int(7,4), null },
+                {new Vec2Int(2,4), null }
+            };
+        private Dictionary<Vec2Int, TileObject> unlockers = new Dictionary<Vec2Int, TileObject>
+            {
+                {new Vec2Int(11,8), null },
+                {new Vec2Int(3,3), null }
             };
         public static MapManagement I
             {
@@ -35,7 +49,7 @@ namespace TacticsGameTest
 
             var party = new PartyActor("FantasyBattlePack\\SwordFighter\\LongHair\\Blue1.png");
             party.AddToGrid(OverworldMap.grid, 4);
-            party.SetPosition(new Vec2Int(5, 9));
+            party.SetPosition(new Vec2Int(0, 6));
 
 
 
@@ -47,6 +61,38 @@ namespace TacticsGameTest
 
             testControlGroup.AddActor(party);
             OverworldScenario.BeginScenario();
+            SetUpSprites();
+        }
+
+        private void SetUpSprites()
+        {
+            foreach (var item in unlockers.Keys)
+            {
+                unlockers[item] = new TileObject();
+                unlockers[item].AddToGrid(OverworldMap.grid, 2);
+                unlockers[item].SetPosition(item, false);
+                unlockers[item].SetSpriteSingle(Bootstrap.GetAssetManager().GetAssetPath("key.png"));
+            }
+            foreach (var item in heals.Keys)
+            {
+                heals[item] = new TileObject();
+                heals[item].AddToGrid(OverworldMap.grid, 2);
+                heals[item].SetPosition(item, false);
+                heals[item].SetSpriteSingle(Bootstrap.GetAssetManager().GetAssetPath("health.png"));
+            }
+            foreach (var item in rooms.Keys)
+            {
+                var room_sprite = new TileObject();
+                rooms[item] = (rooms[item].Item1, room_sprite);
+                room_sprite.AddToGrid(OverworldMap.grid, 2);
+                room_sprite.SetPosition(item, false);
+                if (item.x == 5 && item.y == 0)
+                {
+                    room_sprite.SetSpriteSingle(Bootstrap.GetAssetManager().GetAssetPath("door_closed.png"));
+                }
+                else room_sprite.SetSpriteSingle(Bootstrap.GetAssetManager().GetAssetPath("room_marker.png"));
+            }
+
         }
         public void LoadOverworld()
         {
@@ -72,10 +118,53 @@ namespace TacticsGameTest
             // dont touch
         public void EnterArea(Vec2Int pos)
         {
-            if (rooms.TryGetValue(pos, out var room))
+            if (rooms.TryGetValue(pos, out var values))
             {
-                LoadRoom(room);
+                if (CheckBossRoom(pos)) return;
+                LoadRoom(values.Item1);
             }
+            if (heals.ContainsKey(pos))
+            {
+                PlayerCharacterData.TankPlayer().stats.Hp = PlayerCharacterData.TankPlayer().stats.MaxHp;
+                PlayerCharacterData.RoguePlayer().stats.Hp = PlayerCharacterData.RoguePlayer().stats.MaxHp;
+                PlayerCharacterData.SpearPlayer().stats.Hp = PlayerCharacterData.SpearPlayer().stats.MaxHp;
+
+                Audio.I.PlayAudio("ConfirmJingle");
+                heals[pos].RemoveFromGrid();
+                heals.Remove(pos);
+            }
+            if (unlockers.ContainsKey(pos))
+            {
+                PlayerCharacterData.keys += 1;
+                if(PlayerCharacterData.keys >= 2) {
+                    // Set door sprite to open
+                    rooms[new Vec2Int(5,0)].Item2.SetSpriteSingle(Bootstrap.GetAssetManager().GetAssetPath("door_open.png"));
+                }
+                unlockers[pos].RemoveFromGrid();
+                unlockers.Remove(pos);
+
+                Audio.I.PlayAudio("KeysJingle");
+            }
+
+        }
+
+        private bool CheckBossRoom(Vec2Int pos) // Check if locked when on it
+        {
+            if (pos.x == 5 && pos.y == 0) // boss room coordinates
+            {
+                if (PlayerCharacterData.keys >= 2)
+                {
+                    Audio.I.PlayAudio("DoorOpen");
+                    PlayerCharacterData.entered_boss = true; // Boss is true
+                    return false;
+                }
+                else
+                {
+                    Audio.I.PlayAudio("DoorLocked");
+                    return true;
+                }
+            }
+            return false;
 
         }
         private void LoadRoom(Level level)

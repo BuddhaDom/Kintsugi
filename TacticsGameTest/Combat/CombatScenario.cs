@@ -34,12 +34,17 @@ namespace TacticsGameTest.Combat
             if (players.All((p) => p.Dead))
             {
                 EndScenario();
+                Audio.I.music.Stop();
                 Console.WriteLine("you lost :(");
 
             }
             else if (enemies.All((e) => e.Dead))
             {
                 EndScenario();
+                if(PlayerCharacterData.entered_boss) // Beat boss room
+                {
+                    Audio.I.music.Stop();
+                }
                 MapManagement.I.LoadOverworld();
             }
         }

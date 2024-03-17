@@ -49,6 +49,8 @@ namespace TacticsGameTest.Abilities
         public virtual void OnHit(CombatActor targetActor)
         {
             Audio.I.PlayAudio("Inspire");
+            targetActor.GainShield(actor.stats.Intuition);
+            
             //targetActor.TakeDamage(1, 0);
 
         }

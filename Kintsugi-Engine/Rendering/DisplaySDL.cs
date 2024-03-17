@@ -302,11 +302,13 @@ namespace Kintsugi.Rendering
 
                                 var uScreenPos = cam.WorldToScreenSpace(
                                     tileObject.Easing.CurrentPosition +
+                                    tileObject.Transform.Grid!.Position +
                                     pivotOffsets
                                 );
                                 var vScreenPos = cam.WorldToScreenSpace(
-                                    tileObject.Easing.CurrentPosition
-                                    + pivotOffsets + tileObject.Graphic.Properties.Dimensions * tileObject.Graphic.Scale
+                                    tileObject.Easing.CurrentPosition +
+                                    tileObject.Transform.Grid!.Position +
+                                    pivotOffsets + tileObject.Graphic.Properties.Dimensions * tileObject.Graphic.Scale
                                 );
 
                                 int xsize = (int)vScreenPos.X - (int)uScreenPos.X;

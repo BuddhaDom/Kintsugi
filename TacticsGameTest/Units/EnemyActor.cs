@@ -13,10 +13,14 @@ namespace TacticsGameTest.Units
         {
             team = 1;
             pathfindingSettings.SetCostLayer("constraint", float.PositiveInfinity, 10000);
+            pathfindingSettings.SetCostLayer("spike", float.PositiveInfinity, 10000);
+            pathfindingSettings.CheckAgainstTriggers = true;
+
         }
     }
     internal class BasicAttackEnemy : EnemyActor
     {
+        public bool isRanged;
         public BasicAttackEnemy(string name, string spritePath, CharacterStats stats, List<Vec2Int> attackPattern) : base(name, spritePath, stats)
         {
             MeleeAttack = new BasicAttack(this, attackPattern);
@@ -34,6 +38,7 @@ namespace TacticsGameTest.Units
         }
         public bool TryAttack()
         {
+            ((BasicAttack)MeleeAttack).RangedSound = isRanged;
             var targets = MeleeAttack.GetTargets(Transform.Position).Select((a) => a.Item1).ToList();
             if (targets.Count() > 0)
             {
@@ -139,6 +144,7 @@ namespace TacticsGameTest.Units
         {
             if (Dead)
             {
+                EndTurn();
                 return;
             }
             base.OnStartTurn();
@@ -187,6 +193,7 @@ namespace TacticsGameTest.Units
         }
         public BasicRangedEnemy(string name, string spritePath, CharacterStats stats) : base(name, spritePath, stats, GetAttackRange())
         {
+            isRanged = true;
         }
 
     }
