@@ -127,6 +127,8 @@ namespace TacticsGameTest
             {
                 if (CheckBossRoom(pos)) return;
                 LoadRoom(values.Item1);
+                rooms[pos].Item2.RemoveFromGrid();
+                rooms.Remove(pos);
             }
             if (heals.ContainsKey(pos))
             {
