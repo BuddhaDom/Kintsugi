@@ -13,6 +13,11 @@ namespace TacticsGameTest.Combat
 
         public override void OnBeginScenario()
         {
+            if (PlayerCharacterData.entered_boss) // Beat boss room
+            {
+                Audio.I.music.Stop();
+                Audio.I.musicBoss.Start();
+            }
         }
 
         public override void OnBeginTurn()
@@ -41,6 +46,11 @@ namespace TacticsGameTest.Combat
             else if (enemies.All((e) => e.Dead))
             {
                 EndScenario();
+                if(PlayerCharacterData.entered_boss) // Beat boss room
+                {
+                    Audio.I.musicBoss.Stop();
+                    Audio.I.PlayAudio("WinTune");
+                }
                 MapManagement.I.LoadOverworld();
             }
         }

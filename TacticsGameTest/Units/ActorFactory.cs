@@ -159,13 +159,37 @@ namespace TacticsGameTest
             stats.MaxHp = 5;
             stats.MaxHp = 5;
 
-            stats.DamageMeleeAmount = 1;
-            stats.DamageMeleeType = 1;
+            stats.DamageMeleeAmount = 2;
+            stats.DamageMeleeType = 6;
 
             stats.DamageRangedAmount = 1;
             stats.DamageRangedType = 1;
 
             var unit = new BasicMeleeEnemy("executioner", "FantasyBattlePack\\AxeFighter\\ShortHair\\Red2.png", stats);
+
+            unit.AddToGrid(grid, 5);
+
+            return unit;
+
+        }
+
+        public static CombatActor Necromancer(Grid grid)
+        {
+            var stats = new CharacterStats();
+            stats.Brawn = 2;
+            stats.Intuition = 2;
+            stats.Swift = 2;
+
+            stats.MaxHp = 16;
+            stats.MaxHp = 16;
+
+            stats.DamageMeleeAmount = 1;
+            stats.DamageMeleeType = 1;
+
+            stats.DamageRangedAmount = 2;
+            stats.DamageRangedType = 1; // 2d1
+
+            var unit = new BasicMeleeEnemy("necromancer", "FantasyBattlePack\\Wizard\\Red2.png", stats);
 
             unit.AddToGrid(grid, 5);
 

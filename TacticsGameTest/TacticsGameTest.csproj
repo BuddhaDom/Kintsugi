@@ -318,7 +318,7 @@
     <None Update="Assets\Tilemaps\Levels\map.tmx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Assets\Tilemaps\Levels\room1.tmx">
+    <None Update="Assets\Tilemaps\Levels\roomMine.tmx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Assets\Tilemaps\Levels\TestLevel.tmx">
@@ -792,7 +792,7 @@
     <None Update="Assets\RPGIcons\ico (100).png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Assets\Tilemaps\Levels\room2.tmx">
+    <None Update="Assets\Tilemaps\Levels\roomTower.tmx">
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Assets\GUI\statFrame.png">
@@ -801,7 +801,13 @@
     <None Update="Assets\GUI\statName.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Assets\Tilemaps\Levels\room0.tmx">
+    <None Update="Assets\Tilemaps\Levels\roomIntro.tmx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\Tilemaps\Levels\roomAmbush.tmx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\Tilemaps\Levels\roomBoss.tmx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

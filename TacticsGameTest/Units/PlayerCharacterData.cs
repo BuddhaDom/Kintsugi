@@ -15,6 +15,7 @@ namespace TacticsGameTest.Units
         public List<Ability> abilities;
 
         public static int keys = 0;
+        public static bool entered_boss = false;
 
         static PlayerCharacterData _player1;
         public static PlayerCharacterData SpearPlayer()  // spear guy

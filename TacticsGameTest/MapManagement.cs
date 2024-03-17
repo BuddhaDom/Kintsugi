@@ -13,9 +13,12 @@ namespace TacticsGameTest
 
         private Dictionary<Vec2Int, (Level, TileObject)> rooms = new Dictionary<Vec2Int, (Level, TileObject)>()
             {
-                {new Vec2Int(2,8), (new Room2(), null) },
-                {new Vec2Int(6,7), (new Room2(), null) },
-                {new Vec2Int(5,0), (new Room2(), null) } // Boss Room
+                {new Vec2Int(2,8), (new RoomIntro(), null) },
+                {new Vec2Int(6,7), (new RoomTower(), null) },
+                {new Vec2Int(2,1), (new RoomTower(), null) }, //TODO: Change this level
+                {new Vec2Int(10,8), (new RoomMine(), null)},
+                {new Vec2Int(5,5), (new RoomAmbush(), null)},
+                {new Vec2Int(5,0), (new RoomBoss(), null) } // Boss Room
             };
         private Dictionary<Vec2Int, TileObject> heals = new Dictionary<Vec2Int, TileObject>
             {
@@ -100,6 +103,8 @@ namespace TacticsGameTest
             {
                 SetupOverworld();
             }
+            Bootstrap.GetCameraSystem().Size = 4 * 24;
+            Bootstrap.GetCameraSystem().Position = new Vector2(85, 75);
             currentRoom?.Unload();
             currentRoom = null;
 
@@ -155,6 +160,7 @@ namespace TacticsGameTest
                 if (PlayerCharacterData.keys >= 2)
                 {
                     Audio.I.PlayAudio("DoorOpen");
+                    PlayerCharacterData.entered_boss = true; // Boss is true
                     return false;
                 }
                 else

@@ -3,9 +3,9 @@ using System.Numerics;
 
 namespace TacticsGameTest.Rooms
 {
-    internal class Room0 : Level
+    internal class RoomIntro : Level
     {
-        public override string GridPath => @"Tilemaps\Levels\room0.tmx";
+        public override string GridPath => @"Tilemaps\Levels\roomIntro.tmx";
         
         public override void SetUp()
         {
@@ -15,22 +15,10 @@ namespace TacticsGameTest.Rooms
             InitPlayerCharacters(5,7,6,8,4,9);
         }
     }
-    
-    internal class Room1 : Level
+
+    internal class RoomTower : Level
     {
-        public override string GridPath => @"Tilemaps\Levels\room1.tmx";
-
-        public override void SetUp()
-        {
-            InitEnemy(ActorFactory.Grunt, 1, 3);
-
-            InitPlayerCharacters(2,0,0,0,4,0);
-        }
-    }
-
-    internal class Room2 : Level
-    {
-        public override string GridPath => @"Tilemaps\Levels\room2.tmx";
+        public override string GridPath => @"Tilemaps\Levels\roomTower.tmx";
 
         public override void SetUp()
         {
@@ -39,6 +27,55 @@ namespace TacticsGameTest.Rooms
             InitEnemy(ActorFactory.Grunt, 0, 2);
 
             InitPlayerCharacters(6, 9, 3, 9, 5, 9);
+        }
+    }
+    
+    internal class RoomMine : Level
+    {
+        public override string GridPath => @"Tilemaps\Levels\roomMine.tmx";
+
+        public override void SetUp()
+        {
+            InitEnemy(ActorFactory.Executioner, 3,1);
+            InitEnemy(ActorFactory.Executioner, 4,2);
+            InitEnemy(ActorFactory.Executioner, 5,1);
+
+            InitPlayerCharacters(5,7,6,8,4,9);
+        }
+    }
+
+    internal class RoomAmbush : Level
+    {
+        public override string GridPath => @"Tilemaps\Levels\roomAmbush.tmx";
+
+        public override void SetUp()
+        {
+            InitEnemy(ActorFactory.Ninja, 2,2);
+            InitEnemy(ActorFactory.Ninja, 14,2);
+            InitEnemy(ActorFactory.Ninja, 2,14);
+            InitEnemy(ActorFactory.Ninja, 14,14);
+            InitEnemy(ActorFactory.Grunt, 1,8);
+            InitEnemy(ActorFactory.Grunt, 15,8);
+            
+            InitPlayerCharacters(7,8,9,8,8,8);
+        }
+    }
+
+    internal class RoomBoss : Level
+    {
+        public override string GridPath => @"Tilemaps\Levels\roomBoss.tmx";
+
+        public override void SetUp()
+        {
+            InitEnemy(ActorFactory.Executioner, 0, 8);
+            InitEnemy(ActorFactory.Ninja,9,8);
+            InitEnemy(ActorFactory.Grunt,0,12);
+            InitEnemy(ActorFactory.Archer, 9,12);
+            
+            InitEnemy(ActorFactory.Necromancer,4,1);
+            
+            
+            InitPlayerCharacters(5,13,4,14,5,14);
         }
     }
 }
