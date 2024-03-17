@@ -34,6 +34,7 @@ namespace TacticsGameTest.Combat
             if (players.All((p) => p.Dead))
             {
                 EndScenario();
+                Audio.I.music.Stop();
                 Console.WriteLine("you lost :(");
 
             }

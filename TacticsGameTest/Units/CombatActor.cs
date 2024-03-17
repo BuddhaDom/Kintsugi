@@ -10,6 +10,7 @@ namespace TacticsGameTest.Units
     internal abstract class CombatActor : BaseUnit
     {
         public int tempHealth;
+        public int attackbonus;
         public int team;
         public PathfindingSettings pathfindingSettings = new();
         public string name;
@@ -30,7 +31,7 @@ namespace TacticsGameTest.Units
             SetHealthUI();
         }
         public int poison;
-        public float spacing = 16f;
+        public float spacing = 13f;
         private List<Heart> healthUI = new();
         public void ApplyPoison()
         {

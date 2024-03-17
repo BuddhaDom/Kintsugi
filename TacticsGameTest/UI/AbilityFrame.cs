@@ -66,6 +66,7 @@ internal class AbilityFrame : IHUDObject
         {
             base.OnClick();
             ((PlayerActor)Ability.actor).SelectAbility(Index);
+            Audio.I.PlayAudio("UI_Click");
         }
 
         public override void OnHoverStart()

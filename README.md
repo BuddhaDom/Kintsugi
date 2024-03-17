@@ -1,4 +1,4 @@
-# [Link to drive](https://drive.google.com/drive/folders/1Ab6uy5bG-EBQ9u3ssz8egTduC7V7eEMt)
+# [Documentation](https://kin.gautama.casa/)
 
 # Points
 

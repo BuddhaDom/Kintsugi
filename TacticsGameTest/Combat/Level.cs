@@ -1,11 +1,14 @@
 ﻿using Kintsugi.Core;
 using Kintsugi.Input;
 using System.Drawing;
+using System.Numerics;
 using Kintsugi.EventSystem;
+using Kintsugi.Tiles;
 using TacticsGameTest.Combat;
 using TacticsGameTest.UI;
 using TacticsGameTest.Units;
 using PuzzleGame;
+using Kintsugi.Objects;
 
 namespace TacticsGameTest.Rooms
 {
@@ -15,7 +18,7 @@ namespace TacticsGameTest.Rooms
         public CombatScenario scenario;
 
         public PlayerControlGroup group_player;
-        public EnemyControlGroup group_enemy;
+        public List<EnemyControlGroup> enemyGroups = new();
 
         public PlayerActor spearCharacter;
         public PlayerActor tankCharacter;
@@ -39,10 +42,8 @@ namespace TacticsGameTest.Rooms
             scenario = new CombatScenario();
 
             group_player = new PlayerControlGroup("PLAYER");
-            group_enemy = new EnemyControlGroup("ENEMY");
 
             scenario.AddControlGroup(group_player);
-            scenario.AddControlGroup(group_enemy);
 
             spearCharacter = ActorFactory.SpearPlayer(grid);
             tankCharacter = ActorFactory.TankPlayer(grid);
@@ -54,6 +55,8 @@ namespace TacticsGameTest.Rooms
             group_player.AddActor(tankCharacter);
             group_player.AddActor(rogueCharacter);
 
+            Bootstrap.GetCameraSystem().Size = 4 * 24;
+            Bootstrap.GetCameraSystem().Position = new Vector2(85, 75);
 
             SetUp();
             scenario.BeginScenario();
@@ -63,9 +66,12 @@ namespace TacticsGameTest.Rooms
                 scenario.players.Add((CombatActor)item);
                 AddLevelInputListener((IInputListener)item);
             }
-            foreach (var item in group_enemy.GetActors())
+            foreach (var group in enemyGroups)
             {
-                scenario.enemies.Add((CombatActor)item);
+                foreach (var actor in group.GetActors())
+                {
+                    scenario.enemies.Add((CombatActor)actor);
+                }
             }
         }
         public abstract void SetUp();
@@ -96,5 +102,37 @@ namespace TacticsGameTest.Rooms
             Audio.I.music.Stop();
             HUD.Instance.Clear();
         }
+        
+        protected void InitEnemy(Func<Grid, CombatActor> factoryMethod, Vec2Int position)
+        {
+            var character = factoryMethod(grid);
+            character.SetPosition(position, false);
+            var group_enemy = new EnemyControlGroup("ENEMY");
+            group_enemy.AddActor(character);
+            scenario.AddControlGroup(group_enemy);
+            enemyGroups.Add(group_enemy);
+
+        }
+
+        protected void InitEnemy(Func<Grid, CombatActor> factoryMethod, int x, int y)
+            => InitEnemy(factoryMethod, new Vec2Int(x, y));
+
+        protected void InitPlayerCharacters(Vec2Int tankPos, Vec2Int spearPos, Vec2Int roguePos)
+        {
+            tankCharacter.SetPosition(tankPos, false);
+            spearCharacter.SetPosition(spearPos, false);
+            rogueCharacter.SetPosition(roguePos, false);
+        }
+
+        protected void InitPlayerCharacters(int tankPosX,
+            int tankPosY,
+            int spearPosX,
+            int spearPosY,
+            int roguePosX,
+            int roguePosY)
+            => InitPlayerCharacters(
+                new Vec2Int(tankPosX, tankPosY), 
+                new Vec2Int(spearPosX, spearPosY),
+                new Vec2Int(roguePosX, roguePosY));
     }
 }

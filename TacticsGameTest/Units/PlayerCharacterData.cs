@@ -32,8 +32,8 @@ namespace TacticsGameTest.Units
                 stats.MaxHp = 5;
                 stats.Hp = 5;
 
-                stats.DamageMeleeAmount = 3;
-                stats.DamageMeleeType = 12;
+                stats.DamageMeleeAmount = 1;
+                stats.DamageMeleeType = 4;
 
                 stats.DamageRangedAmount = 1;
                 stats.DamageRangedType = 4;
@@ -52,18 +52,18 @@ namespace TacticsGameTest.Units
                 _player2.SpritePath = "FantasyBattlePack\\AxeKnight\\Blue.png";
 
                 CharacterStats stats = new CharacterStats();
-                stats.Brawn = 5;
+                stats.Brawn = 3;
                 stats.Intuition = 2;
                 stats.Swift = 2;
 
                 stats.MaxHp = 6;
                 stats.Hp = 6;
 
-                stats.DamageMeleeAmount = 3;
-                stats.DamageMeleeType = 12;
+                stats.DamageMeleeAmount = 1;
+                stats.DamageMeleeType = 2;
 
                 stats.DamageRangedAmount = 1;
-                stats.DamageRangedType = 4;
+                stats.DamageRangedType = 2;
                 _player2.stats = stats;
             }
             return _player2;
@@ -85,11 +85,11 @@ namespace TacticsGameTest.Units
                 stats.MaxHp = 3;
                 stats.Hp = 3;
 
-                stats.DamageMeleeAmount = 3;
-                stats.DamageMeleeType = 12;
+                stats.DamageMeleeAmount = 1;
+                stats.DamageMeleeType = 2;
 
                 stats.DamageRangedAmount = 1;
-                stats.DamageRangedType = 4;
+                stats.DamageRangedType = 2;
                 _player3.stats = stats;
             }
             return _player3;
