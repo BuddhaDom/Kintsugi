@@ -16,11 +16,177 @@ using static TacticsGameTest.Units.CombatActor;
 using System.Threading.Tasks.Dataflow;
 using Kintsugi.EventSystem;
 using TacticsGameTest.UI;
+using System.Runtime.InteropServices.Marshalling;
 
 namespace TacticsGameTest.Abilities
 {
+    internal class DaggerThrow : BasicAttack
+    {
+        public override string Path => UIHelper.Get(16);
+        public override string Title => "Throwing dagger";
+        public override string Tooltip => "Damage with your WEAPON dice with a range of 3!";
+
+        private static List<Vec2Int> GetAttacks()
+        {
+            return new List<Vec2Int>()
+            {
+                new Vec2Int(0, 3),
+
+                new Vec2Int(-1, 2),
+                new Vec2Int(0,  2),
+                new Vec2Int(1,  2),
+
+                new Vec2Int(-2, 1),
+                new Vec2Int(-1, 1),
+                new Vec2Int(0,  1),
+                new Vec2Int(1,  1),
+                new Vec2Int(2,  1),
+
+                new Vec2Int(-3, 0),
+                new Vec2Int(-2, 0),
+                new Vec2Int(-1, 0),
+                new Vec2Int(0,  0),
+                new Vec2Int(1,  0),
+                new Vec2Int(2,  0),
+                new Vec2Int(3, 0),
+
+                new Vec2Int(-2, -1),
+                new Vec2Int(-1, -1),
+                new Vec2Int(0,  -1),
+                new Vec2Int(1,  -1),
+                new Vec2Int(2,  -1),
+
+                new Vec2Int(-1, -2),
+                new Vec2Int(0,  -2),
+                new Vec2Int(1,  -2),
+
+                new Vec2Int(0, -3),
+            };
+
+        }
+        public DaggerThrow(CombatActor actor) : base(actor, GetAttacks())
+        {
+        }
+        public override void OnHit(CombatActor targetActor)
+        {
+            Audio.I.PlayAudio("RangedAttack");
+            targetActor.TakeDamage(1, 0);
+        }
+    }
+    internal class PoisonDagger : BasicAttack
+    {
+        public override string Path => UIHelper.Get(3);
+        public override string Title => "Poisonous Stab";
+        public override string Tooltip => "Damage with your WEAPON dice and deal poison damage!";
+
+        private static List<Vec2Int> GetAttacks()
+        {
+            return new List<Vec2Int>()
+            {
+                new Vec2Int(-1, -1),
+                new Vec2Int(-1, 0),
+                new Vec2Int(-1, 1),
+                new Vec2Int(0, -1),
+                new Vec2Int(0, 1),
+                new Vec2Int(1, -1),
+                new Vec2Int(1, 0),
+                new Vec2Int(1, 1),
+            };
+
+        }
+        public PoisonDagger(CombatActor actor) : base(actor, GetAttacks())
+        {
+        }
+        public override void OnHit(CombatActor targetActor)
+        {
+            base.OnHit(targetActor);
+            targetActor.TakeDamage(0, 1);
+        }
+    }
+    internal class SpearStab : BasicAttack
+    {
+        public override string Path => UIHelper.Get(23);
+        public override string Title => "Spear Stab";
+        public override string Tooltip => "Range of two. Hits two enemies in a line!";
+
+        private static List<Vec2Int> GetAttacks()
+        {
+            return new List<Vec2Int>()
+            {
+                new Vec2Int(-1, -1),
+                new Vec2Int(-1, -1) * 2,
+
+                new Vec2Int(-1, 0),
+                new Vec2Int(-1, 0) * 2,
+
+                new Vec2Int(-1, 1),
+                new Vec2Int(-1, 1) * 2,
+
+                new Vec2Int(0, -1),
+                new Vec2Int(0, -1) * 2,
+
+                new Vec2Int(0, 1),
+                new Vec2Int(0, 1) * 2,
+
+                new Vec2Int(1, -1),
+                new Vec2Int(1, -1) * 2,
+
+                new Vec2Int(1, 0),
+                new Vec2Int(1, 0) * 2,
+
+                new Vec2Int(1, 1),
+                new Vec2Int(1, 1) * 2,
+
+            };
+
+        }
+        public SpearStab(CombatActor actor) : base(actor, GetAttacks())
+        {
+        }
+        public override void OnHit(CombatActor targetActor)
+        {
+            base.OnHit(targetActor);
+        }
+    }
+
+    internal class AxeSwing : BasicAttack
+    {
+        public override string Path => base.Path;
+        public override string Title => base.Title;
+        public override string Tooltip => base.Tooltip;
+
+        private static List<Vec2Int> GetAttacks()
+        {
+            return new List<Vec2Int>()
+            {
+                new Vec2Int(-1, -1),
+                new Vec2Int(-1, 0),
+                new Vec2Int(-1, 1),
+                new Vec2Int(0, -1),
+                new Vec2Int(0, 1),
+                new Vec2Int(1, -1),
+                new Vec2Int(1, 0),
+                new Vec2Int(1, 1),
+            };
+
+        }
+        public AxeSwing(CombatActor actor) : base(actor, GetAttacks())
+        {
+        }
+        public override void OnHit(CombatActor targetActor)
+        {
+            base.OnHit(targetActor);
+        }
+    }
+
     internal class BasicAttack : Ability, IAwaitable
     {
+        public override string Path => UIHelper.Get(29);
+
+        public override string Title => "Attack";
+
+        public override string Tooltip => "Damage with your WEAPON dice!";
+
         public List<Vec2Int> attacks; 
         public BasicAttack(CombatActor actor, List<Vec2Int> attacks) : base(actor)
         {
@@ -47,17 +213,16 @@ namespace TacticsGameTest.Abilities
             }
             return null;
         }
+        public virtual void OnHit(CombatActor targetActor)
+        {
+            Audio.I.PlayAudio("MeleeAttack");
+            targetActor.TakeDamage(1, 0);
 
-        public override string Path => UIHelper.Get(29);
-
-        public override string Title => "Attack";
-
-        public override string Tooltip => "Damage with your WEAPON dice!";
+        }
 
         public override void DoAction(Vec2Int target)
         {
             var targetActor = GetActorIfAttackable(actor.Transform.Position, target);
-            actor.movesLeft--;
             var animationDirection = actor.AnimationDirectionToTarget(actor.Transform.Position, targetActor.Transform.Position);
 
             var beginAttack = new ActionEvent(() =>
@@ -70,8 +235,9 @@ namespace TacticsGameTest.Abilities
 
             var spawnHitEffect = new ActionEvent(() =>
             {
-                Audio.I.PlayAudio("MeleeAttack");
-                targetActor.TakeDamage(1, 1);
+                actor.movesLeft--;
+
+                OnHit(targetActor);
                 var hitEffect = new TileObject();
                 hitEffect.AddToGrid(targetActor.Transform.Grid, targetActor.Transform.Layer);
                 hitEffect.SetPosition(targetActor.Transform.Position, false);
@@ -94,8 +260,8 @@ namespace TacticsGameTest.Abilities
                 }).AddStartAwait(((Animation)hitEffect.Graphic));
                 EventManager.I.Queue(removeEffect);
 
-            }).AddStartAwait(new WaitForSeconds(0.25f)).AddFinishAwait(new WaitForSeconds(0.75f));
-
+            }).AddStartAwait(new WaitForSeconds(0.25f));
+            spawnHitEffect.SetAsQueueBlocker();
             EventManager.I.Queue(beginAttack);
             EventManager.I.Queue(spawnHitEffect);
             lastevent = new ActionEvent(actor.CheckEndTurn).AddStartAwaits([beginAttack, spawnHitEffect]);

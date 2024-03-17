@@ -19,6 +19,7 @@ namespace TacticsGameTest.Units
 {
     internal abstract class CombatActor : BaseUnit
     {
+        public int tempHealth;
         public int team;
         public PathfindingSettings pathfindingSettings = new();
         public string name;
@@ -42,9 +43,33 @@ namespace TacticsGameTest.Units
         public int poison;
         public float spacing = 16f;
         private List<Heart> healthUI = new();
+        public void ApplyPoison()
+        {
+            stats.Hp -= poison;
+            SetHealthUI();
+            if (stats.Hp <= 0)
+            {
+                EventManager.I.QueueImmediate(() => Die());
+            }
+        }
+        public void GainShield(int amnt)
+        {
+            tempHealth += amnt;
+            SetHealthUI();
+        }
         public void TakeDamage(int damage, int poison)
         {
-            stats.Hp -= damage;
+            for (int i = 0; i < damage; i++)
+            {
+                if (tempHealth > 0)
+                {
+                    tempHealth--;
+                }
+                else
+                {
+                    stats.Hp--;
+                }
+            }
             this.poison += poison;
             SetHealthUI();
             if (stats.Hp <= 0)
@@ -57,7 +82,7 @@ namespace TacticsGameTest.Units
         int prevHealth;
         private void SetHealthUI()
         {
-            for (int i = 0; i < stats.MaxHp; i++)
+            for (int i = 0; i < stats.MaxHp + tempHealth; i++)
             {
                 if (!(i < healthUI.Count))
                 {
@@ -67,6 +92,17 @@ namespace TacticsGameTest.Units
                     healthUI.Add(newObject);
                     newObject.TargetPivot = new Vector2(0.25f, -0.25f);
                 }
+            }
+            for (int i = healthUI.Count - 1; i >= 0; i--)
+            {
+                if (i >= stats.MaxHp + tempHealth)
+                {
+                    var heart = healthUI[i];
+                    ActorUI.Objects.Remove(heart);
+                    healthUI.RemoveAt(i);
+
+                }
+
             }
 
             for (int i = 0; i < healthUI.Count; i++)
@@ -80,6 +116,20 @@ namespace TacticsGameTest.Units
                 else if (i < stats.Hp)
                 {
                     healthUI[i].SetHeartAnimation(Heart.HeartMode.poison);
+                }
+                else if (i >= stats.MaxHp)
+                {
+                    healthUI[i].SetHeartAnimation(Heart.HeartMode.armor);
+/*
+                    int diff = i - stats.MaxHp + 2;
+                    if (tempHealth <= diff)
+                    {
+                        healthUI[i].SetHeartAnimation(Heart.HeartMode.armor);
+                    }
+                    else
+                    {
+                        healthUI[i].SetHeartAnimation(Heart.HeartMode.notinitialized);
+                    }*/
                 }
                 else
                 {
@@ -99,7 +149,7 @@ namespace TacticsGameTest.Units
 
         public override void OnEndTurn()
         {
-            TakeDamage(poison, 0);
+            ApplyPoison();
             SetHealthUI();
             Console.WriteLine(name + " End Turn");
         }
@@ -111,6 +161,8 @@ namespace TacticsGameTest.Units
 
         public override void OnStartTurn()
         {
+            tempHealth = 0;
+            SetHealthUI();
             if (Dead)
             {
                 EndTurn();

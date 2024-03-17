@@ -50,9 +50,9 @@ namespace TacticsGameTest.Rooms
             scenario.AddControlGroup(group_player);
             scenario.AddControlGroup(group_enemy);
 
-            playerChar1 = ActorFactory.Player(grid, Units.PlayerCharacterData.PlayerChar1());
-            playerChar2 = ActorFactory.Player(grid, Units.PlayerCharacterData.PlayerChar2());
-            playerChar3 = ActorFactory.Player(grid, Units.PlayerCharacterData.PlayerChar3());
+            playerChar1 = ActorFactory.SpearPlayer(grid);
+            playerChar2 = ActorFactory.TankPlayer(grid);
+            playerChar3 = ActorFactory.RoguePlayer(grid);
 
             group_player.AddActor(playerChar1);
             group_player.AddActor(playerChar2);

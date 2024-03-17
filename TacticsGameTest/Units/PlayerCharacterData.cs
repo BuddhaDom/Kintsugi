@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TacticsGameTest.Abilities;
 
 namespace TacticsGameTest.Units
 {
@@ -11,10 +12,11 @@ namespace TacticsGameTest.Units
     {
         public CharacterStats stats;
         public string SpritePath;
+        public List<Ability> abilities;
 
 
         static PlayerCharacterData _player1;
-        public static PlayerCharacterData PlayerChar1()  // spear guy
+        public static PlayerCharacterData SpearPlayer()  // spear guy
         {
             if (_player1 == null)
             {
@@ -26,7 +28,8 @@ namespace TacticsGameTest.Units
                 stats.Intuition = 2;
                 stats.Swift = 1;
 
-                stats.MaxHp = 24;
+                stats.MaxHp = 5;
+                stats.Hp = 5;
 
                 stats.DamageMeleeAmount = 3;
                 stats.DamageMeleeType = 12;
@@ -35,10 +38,12 @@ namespace TacticsGameTest.Units
                 stats.DamageRangedType = 4;
                 _player1.stats = stats;
             }
+            
+
             return _player1;
         }
         static PlayerCharacterData _player2;
-        public static PlayerCharacterData PlayerChar2() // tank guy
+        public static PlayerCharacterData TankPlayer() // tank guy
         {
             if (_player2 == null)
             {
@@ -50,7 +55,8 @@ namespace TacticsGameTest.Units
                 stats.Intuition = 2;
                 stats.Swift = 1;
 
-                stats.MaxHp = 24;
+                stats.MaxHp = 5;
+                stats.Hp = 5;
 
                 stats.DamageMeleeAmount = 3;
                 stats.DamageMeleeType = 12;
@@ -62,7 +68,7 @@ namespace TacticsGameTest.Units
             return _player2;
         }
         static PlayerCharacterData _player3;
-        public static PlayerCharacterData PlayerChar3() // rogue guy
+        public static PlayerCharacterData RoguePlayer() // rogue guy
         {
             if (_player3 == null)
             {
@@ -74,7 +80,8 @@ namespace TacticsGameTest.Units
                 stats.Intuition = 2;
                 stats.Swift = 1;
 
-                stats.MaxHp = 24;
+                stats.MaxHp = 5;
+                stats.Hp = 5;
 
                 stats.DamageMeleeAmount = 3;
                 stats.DamageMeleeType = 12;

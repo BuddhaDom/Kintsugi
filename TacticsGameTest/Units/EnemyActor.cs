@@ -176,7 +176,6 @@ namespace TacticsGameTest.Units
             EventManager.I.Queue(newEvent);
             EventManager.I.Queue(event2);
 
-            EventManager.I.Queue(EndTurn);
 
 
         }

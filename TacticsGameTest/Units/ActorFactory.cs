@@ -10,16 +10,58 @@ using System.Numerics;
 using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
+using TacticsGameTest.Abilities;
 using TacticsGameTest.Units;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace TacticsGameTest
 {
     static class ActorFactory
     {
 
-        public static PlayerActor Player(Grid grid, PlayerCharacterData data)
+        public static PlayerActor SpearPlayer(Grid grid)
         {
-            var unit = new PlayerActor("playerchar", data);
+            var unit = new PlayerActor("Spear Player", PlayerCharacterData.SpearPlayer());
+            unit.abilities = new();
+            unit.abilities.Add(new Stride(unit));
+            unit.abilities.Add(new SpearStab(unit));
+            unit.AddToGrid(grid, 2);
+            return unit;
+        }
+        public static PlayerActor TankPlayer(Grid grid)
+        {
+
+            var unit = new PlayerActor("Tank Player", PlayerCharacterData.TankPlayer());
+            unit.abilities = new();
+            unit.abilities.Add(new Stride(unit));
+            unit.abilities.Add(new AxeSwing(unit));
+            var basicMeleeRange = new List<Vec2Int>()
+            {
+                new Vec2Int(-1, -1),
+                new Vec2Int(-1, 0),
+                new Vec2Int(-1, 1),
+                new Vec2Int(0, -1),
+                new Vec2Int(0, 1),
+                new Vec2Int(1, -1),
+                new Vec2Int(1, 0),
+                new Vec2Int(1, 1),
+            };
+
+            unit.abilities.Add(new PushAttack(unit, basicMeleeRange));
+            unit.abilities.Add(new Guard(unit));
+
+            unit.AddToGrid(grid, 2);
+            return unit;
+        }
+        public static PlayerActor RoguePlayer(Grid grid)
+        {
+
+            var unit = new PlayerActor("Rogue Player", PlayerCharacterData.RoguePlayer());
+            unit.abilities = new();
+            unit.abilities.Add(new Stride(unit));
+            unit.abilities.Add(new PoisonDagger(unit));
+            unit.abilities.Add(new DaggerThrow(unit));
+
             unit.AddToGrid(grid, 2);
             return unit;
         }

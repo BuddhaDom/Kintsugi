@@ -88,8 +88,6 @@ namespace TacticsGameTest.Units
         public PlayerActor(string name, PlayerCharacterData playerCharacterData) : base(name, playerCharacterData.SpritePath, playerCharacterData.stats)
         {
             team = 0;
-            abilities = new();
-            abilities.Add(new Stride(this));
             var attackPattern = new List<Vec2Int>()
             {
                 new Vec2Int(-1, -1),
@@ -102,8 +100,8 @@ namespace TacticsGameTest.Units
                 new Vec2Int(1, 1),
             };
 
-            abilities.Add(new BasicAttack(this, attackPattern));
-            abilities.Add(new PushAttack(this, attackPattern));
+            //abilities.Add(new BasicAttack(this, attackPattern));
+            //abilities.Add(new PushAttack(this, attackPattern));
         }
 
         private bool justSelected = false;
@@ -153,6 +151,11 @@ namespace TacticsGameTest.Units
             base.OnStartTurn();
         }
 
+        public bool TriedClickingAbilityTarget(Vec2Int target)
+        {
+            return targetPositions.Contains(target);
+        }
+
         public void HandleInput(InputEvent inp, string eventType)
         {
             if (justSelected)
@@ -189,7 +192,7 @@ namespace TacticsGameTest.Units
                     if (inp.Button == SDL.SDL_BUTTON_LEFT)
                     {
                         var gridPos = Transform.Grid.WorldToGridPosition(Bootstrap.GetCameraSystem().ScreenToWorldSpace(new Vector2(inp.X, inp.Y)));
-                        if (targetPositions.Contains(gridPos))
+                        if (TriedClickingAbilityTarget(gridPos))
                         {
                             selectedAbility?.DoAction(gridPos);
                             if (movesLeft <= 0)
