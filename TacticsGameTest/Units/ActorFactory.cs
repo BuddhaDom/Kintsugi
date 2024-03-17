@@ -35,6 +35,8 @@ namespace TacticsGameTest
                 }
             }
             unit.abilities.Add(new BasicBuff(unit, basicBuffRange));
+            unit.abilities.Add(new Pass(unit));
+
             unit.AddToGrid(grid, 5);
             return unit;
         }
@@ -59,6 +61,7 @@ namespace TacticsGameTest
 
             unit.abilities.Add(new PushAttack(unit, basicMeleeRange));
             unit.abilities.Add(new Guard(unit));
+            unit.abilities.Add(new Pass(unit));
 
             unit.AddToGrid(grid, 5);
             return unit;
@@ -71,6 +74,7 @@ namespace TacticsGameTest
             unit.abilities.Add(new Stride(unit));
             unit.abilities.Add(new PoisonDagger(unit));
             unit.abilities.Add(new DaggerThrow(unit));
+            unit.abilities.Add(new Pass(unit));
 
             unit.AddToGrid(grid, 5);
             return unit;

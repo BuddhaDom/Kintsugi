@@ -18,7 +18,7 @@ namespace TacticsGameTest.Abilities
 
         public override string Title => "Buff";
 
-        public override string Tooltip => "Buff someone idk!";
+        public override string Tooltip => "Give temp health = intuition!";
 
         public List<Vec2Int> attacks; 
         public BasicBuff(CombatActor actor, List<Vec2Int> attacks) : base(actor)

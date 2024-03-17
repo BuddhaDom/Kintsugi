@@ -1,5 +1,6 @@
 using System.Numerics;
 using Kintsugi.Core;
+using Kintsugi.EventSystem;
 using Kintsugi.Objects.Graphics;
 using Kintsugi.UI;
 using TacticsGameTest.Abilities;
@@ -64,9 +65,13 @@ internal class AbilityFrame : IHUDObject
 
         public override void OnClick()
         {
-            base.OnClick();
-            ((PlayerActor)Ability.actor).SelectAbility(Index);
-            Audio.I.PlayAudio("UI_Click");
+            if (Ability.actor.InTurn && EventManager.I.IsQueueDone())
+            {
+
+                base.OnClick();
+                ((PlayerActor)Ability.actor).SelectAbility(Index);
+                Audio.I.PlayAudio("UI_Click");
+            }
         }
 
         public override void OnHoverStart()

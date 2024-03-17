@@ -21,13 +21,25 @@ namespace TacticsGameTest
         private PlayerActor selectedActor;
         public void HandleInput(InputEvent inp, string eventType)
         {
-            if (eventType == "MouseMotion" && HUD.Instance.Hovered is null)
+            if (eventType == "MouseMotion" )
             {
-                var gridPos = WorldToGridPosition(Bootstrap.GetCameraSystem().ScreenToWorldSpace(new Vector2(inp.X, inp.Y)));
-                CursorTileObject.Cursor.SetCursor(this, gridPos, 4);
+                if (selectedActor != null && !selectedActor.InTurn)
+                {
+                    selectedActor.Unselect();
+                }
+                if (HUD.Instance.Hovered is null)
+                {
+                    var gridPos = WorldToGridPosition(Bootstrap.GetCameraSystem().ScreenToWorldSpace(new Vector2(inp.X, inp.Y)));
+                    CursorTileObject.Cursor.SetCursor(this, gridPos, 4);
+                }
             }
             if (eventType == "MouseDown" && HUD.Instance.Hovered is null)
             {
+                if (selectedActor != null && !selectedActor.InTurn)
+                {
+                    selectedActor.Unselect();
+                }
+
                 var gridPos = WorldToGridPosition(Bootstrap.GetCameraSystem().ScreenToWorldSpace(new Vector2(inp.X, inp.Y)));
 
                 if (selectedActor != null && selectedActor.TriedClickingAbilityTarget(gridPos))
