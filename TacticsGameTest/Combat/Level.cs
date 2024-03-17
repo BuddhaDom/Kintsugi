@@ -1,7 +1,9 @@
 ﻿using Kintsugi.Core;
 using Kintsugi.Input;
 using System.Drawing;
+using System.Numerics;
 using Kintsugi.EventSystem;
+using Kintsugi.Tiles;
 using TacticsGameTest.Combat;
 using TacticsGameTest.UI;
 using TacticsGameTest.Units;
@@ -51,6 +53,8 @@ namespace TacticsGameTest.Rooms
             group_player.AddActor(tankCharacter);
             group_player.AddActor(rogueCharacter);
 
+            Bootstrap.GetCameraSystem().Size = 4 * 24;
+            Bootstrap.GetCameraSystem().Position = new Vector2(85, 75);
 
             SetUp();
             scenario.BeginScenario();
@@ -93,5 +97,33 @@ namespace TacticsGameTest.Rooms
             Audio.I.music.Stop();
             HUD.Instance.Clear();
         }
+        
+        protected void InitEnemy(Func<Grid, CombatActor> factoryMethod, Vec2Int position)
+        {
+            var character = factoryMethod(grid);
+            character.SetPosition(position, false);
+            group_enemy.AddActor(character);
+        }
+
+        protected void InitEnemy(Func<Grid, CombatActor> factoryMethod, int x, int y)
+            => InitEnemy(factoryMethod, new Vec2Int(x, y));
+
+        protected void InitPlayerCharacters(Vec2Int tankPos, Vec2Int spearPos, Vec2Int roguePos)
+        {
+            tankCharacter.SetPosition(tankPos, false);
+            spearCharacter.SetPosition(spearPos, false);
+            rogueCharacter.SetPosition(roguePos, false);
+        }
+
+        protected void InitPlayerCharacters(int tankPosX,
+            int tankPosY,
+            int spearPosX,
+            int spearPosY,
+            int roguePosX,
+            int roguePosY)
+            => InitPlayerCharacters(
+                new Vec2Int(tankPosX, tankPosY), 
+                new Vec2Int(spearPosX, spearPosY),
+                new Vec2Int(roguePosX, roguePosY));
     }
 }
