@@ -115,7 +115,10 @@ namespace TacticsGameTest.Units
             }
 
             var pathToDesired = longLook.PathTo(ClosestDesired);
-
+            if (pathToDesired == null)
+            {
+                return;
+            }
             for (int i = pathToDesired.PathPositions.Count - 1; i >= 0; i--)
             {
                 var target = pathToDesired.PathPositions[i];
