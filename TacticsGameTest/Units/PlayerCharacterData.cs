@@ -14,12 +14,12 @@ namespace TacticsGameTest.Units
 
 
         static PlayerCharacterData _player1;
-        public static PlayerCharacterData PlayerChar1()
+        public static PlayerCharacterData PlayerChar1()  // spear guy
         {
             if (_player1 == null)
             {
                 _player1 = new PlayerCharacterData();
-                _player1.SpritePath = "FantasyBattlePack\\SwordFighter\\Longhair\\Blue1.png";
+                _player1.SpritePath = "FantasyBattlePack\\SpearFighter\\LongHair\\Blue2.png";
 
                 CharacterStats stats = new CharacterStats();
                 stats.Brawn = 5;
@@ -38,12 +38,12 @@ namespace TacticsGameTest.Units
             return _player1;
         }
         static PlayerCharacterData _player2;
-        public static PlayerCharacterData PlayerChar2()
+        public static PlayerCharacterData PlayerChar2() // tank guy
         {
             if (_player2 == null)
             {
                 _player2 = new PlayerCharacterData();
-                _player2.SpritePath = "FantasyBattlePack\\SwordFighter\\Longhair\\Blue1.png";
+                _player2.SpritePath = "FantasyBattlePack\\AxeKnight\\Blue.png";
 
                 CharacterStats stats = new CharacterStats();
                 stats.Brawn = 5;
@@ -62,12 +62,12 @@ namespace TacticsGameTest.Units
             return _player2;
         }
         static PlayerCharacterData _player3;
-        public static PlayerCharacterData PlayerChar3()
+        public static PlayerCharacterData PlayerChar3() // rogue guy
         {
             if (_player3 == null)
             {
                 _player3 = new PlayerCharacterData();
-                _player3.SpritePath = "FantasyBattlePack\\SwordFighter\\Longhair\\Blue1.png";
+                _player3.SpritePath = "FantasyBattlePack\\Thief\\Blue1.png";
 
                 CharacterStats stats = new CharacterStats();
                 stats.Brawn = 5;

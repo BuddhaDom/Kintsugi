@@ -33,7 +33,7 @@ namespace TacticsGameTest
             OverworldMap = new Map.Map();
             OverworldMap.Load();
 
-            var party = new PartyActor("FantasyBattlePack\\SwordFighter\\Longhair\\Blue1.png");
+            var party = new PartyActor("FantasyBattlePack\\SwordFighter\\LongHair\\Blue1.png");
             party.AddToGrid(OverworldMap.grid, 4);
             party.SetPosition(new Vec2Int(5, 9));
 

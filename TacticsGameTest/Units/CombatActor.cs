@@ -21,7 +21,6 @@ namespace TacticsGameTest.Units
     {
         public int team;
         public PathfindingSettings pathfindingSettings = new();
-        public string spritePath;
         public string name;
         private int maxMoves = 2;
         public int movesLeft;

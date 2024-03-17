@@ -40,7 +40,7 @@ namespace TacticsGameTest
 
             stats.MaxHp = 15;
 
-            var unit = new BasicMeleeEnemy("grunt", "FantasyBattlePack\\SwordFighter\\Longhair\\Red1.png", stats);
+            var unit = new BasicMeleeEnemy("grunt", "FantasyBattlePack\\SwordFighter\\LongHair\\Red1.png", stats);
             unit.AddToGrid(grid, 2);
 
             return unit;
