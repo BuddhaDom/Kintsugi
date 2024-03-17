@@ -11,6 +11,9 @@ using SDL2;
 
 namespace Kintsugi.Audio
 {
+    /// <summary>
+    /// SDL-based sound engine.
+    /// </summary>
     public class SoundSDL : Sound
     {
         internal override void Initialize()

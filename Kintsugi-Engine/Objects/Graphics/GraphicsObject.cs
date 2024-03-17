@@ -2,6 +2,9 @@
 
 namespace Kintsugi.Objects.Graphics
 {
+    /// <summary>
+    /// Abstract class representative of an object with a displayable graphic element.
+    /// </summary>
     public abstract class GraphicsObject
     {
         /// <summary>

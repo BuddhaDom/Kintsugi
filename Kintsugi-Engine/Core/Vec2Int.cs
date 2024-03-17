@@ -2,9 +2,20 @@ using System.Numerics;
 
 namespace Kintsugi.Core;
 
-public struct Vec2Int(int x, int y)
+/// <summary>
+/// Representation of an int-based vector.
+/// </summary>
+/// <param name="x">X-coordinate</param>
+/// <param name="y">Y-coordinate</param>
+public readonly struct Vec2Int(int x, int y)
 {
+    /// <summary>
+    /// X-coordinate
+    /// </summary>
     public int x { get; } = x;
+    /// <summary>
+    /// Y-coorinate
+    /// </summary>
     public int y { get; } = y;
 
     #region Static Properties
@@ -94,9 +105,20 @@ public struct Vec2Int(int x, int y)
     public Vec2Int Min(Vec2Int other)
         => new Vec2Int(Math.Min(other.x, x), Math.Min(other.y, y));
     
+    /// <summary>
+    /// Assesses if the two vectors are equal to one another based on their axis.
+    /// </summary>
+    /// <param name="other">The other vector to assess.</param>
+    /// <returns><c>true</c> if both vectors are equal on each axis.</returns>
     public bool Equals(Vec2Int other)
         => x == other.x && y == other.y;
 
+    /// <summary>
+    /// Assesses if the this vector and an object are equal to one another based on their axis.
+    /// </summary>
+    /// <param name="obj">The object to assess.</param>
+    /// <returns><c>true</c> if <paramref name="obj"/> can be casted to <see cref="Vec2Int"/>
+    /// and both vectors are equal on each axis.</returns>
     public override bool Equals(object? obj)
         => obj is Vec2Int other && Equals(other);
 
