@@ -85,13 +85,13 @@ namespace TacticsGameTest
             stats.Swift = 2;
 
             stats.DamageMeleeAmount = 1;
-            stats.DamageMeleeType = 8;
+            stats.DamageMeleeType = 1;
 
             stats.DamageRangedAmount = 1;
-            stats.DamageRangedType = 4;
+            stats.DamageRangedType = 1;
 
             stats.MaxHp = 5;
-            stats.MaxHp = 5;
+            stats.Hp = 5;
 
             var unit = new BasicMeleeEnemy("grunt", "FantasyBattlePack\\SwordFighter\\LongHair\\Red1.png", stats);
             unit.AddToGrid(grid, 5);
@@ -107,10 +107,10 @@ namespace TacticsGameTest
             stats.Swift = 2;
 
             stats.DamageMeleeAmount = 1;
-            stats.DamageMeleeType = 4;
+            stats.DamageMeleeType = 1;
 
             stats.DamageRangedAmount = 1;
-            stats.DamageRangedType = 6;
+            stats.DamageRangedType = 1;
 
             stats.MaxHp = 5;
             stats.MaxHp = 5;
@@ -132,10 +132,10 @@ namespace TacticsGameTest
             stats.MaxHp = 5;
 
             stats.DamageMeleeAmount = 1;
-            stats.DamageMeleeType = 10;
+            stats.DamageMeleeType = 1;
 
             stats.DamageRangedAmount = 1;
-            stats.DamageRangedType = 8;
+            stats.DamageRangedType = 1;
 
 
             var unit = new BasicMeleeEnemy("ninja", "FantasyBattlePack\\Thief\\Red1.png", stats);
@@ -155,11 +155,11 @@ namespace TacticsGameTest
             stats.MaxHp = 5;
             stats.MaxHp = 5;
 
-            stats.DamageMeleeAmount = 3;
-            stats.DamageMeleeType = 12;
+            stats.DamageMeleeAmount = 1;
+            stats.DamageMeleeType = 1;
 
             stats.DamageRangedAmount = 1;
-            stats.DamageRangedType = 4;
+            stats.DamageRangedType = 1;
 
             var unit = new BasicMeleeEnemy("executioner", "FantasyBattlePack\\AxeFighter\\ShortHair\\Red2.png", stats);
 

@@ -66,7 +66,7 @@ namespace TacticsGameTest.Abilities
                 Vec2Int targetDir = targetActor.Transform.Position - actor.Transform.Position;
 
                 var curAwaitEvent = removeEffect;
-                for (int i = 0; i < 3; i++)
+                for (int i = 0; i < actor.stats.Brawn; i++)
                 {
                     var pushEvent = new PushedEvent(targetActor, targetDir)
                         .AddStartAwaits(curAwaitEvent)
