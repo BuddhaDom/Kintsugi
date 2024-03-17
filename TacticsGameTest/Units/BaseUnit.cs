@@ -2,6 +2,7 @@
 {
     internal class CharacterStats
     {
+        public int MaxMoves = 2;
         public int Hp { get; set; } = 10;
 
         private int maxhp = 10; // Default value might be changed?

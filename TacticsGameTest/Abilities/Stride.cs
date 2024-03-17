@@ -81,11 +81,27 @@ namespace TacticsGameTest.Abilities
             {
                 if (item != PathfindingResult.StartPosition)
                 {
-                    highlights.Add((item, PathfindingResult.GetCost(item) > actor.stats.Swift ? Color.NavajoWhite : Color.Aqua));
+                    highlights.Add((item, CostToColor(PathfindingResult.GetCost(item))));
                 }
             }
 
             return highlights;
+        }
+
+        public Color CostToColor(float cost)
+        {
+            if (cost > actor.stats.Swift * 2)
+            {
+                return Color.AntiqueWhite;
+            }
+            else if (cost > actor.stats.Swift)
+            {
+                return Color.NavajoWhite;
+            }
+            else
+            {
+                return Color.Aqua;
+            }
         }
 
         public override void Hover(Vec2Int target)
