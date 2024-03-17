@@ -5,6 +5,7 @@ using Kintsugi.EventSystem;
 using TacticsGameTest.Combat;
 using TacticsGameTest.UI;
 using TacticsGameTest.Units;
+using PuzzleGame;
 
 namespace TacticsGameTest.Rooms
 {
@@ -46,6 +47,8 @@ namespace TacticsGameTest.Rooms
             playerChar1 = ActorFactory.SpearPlayer(grid);
             playerChar2 = ActorFactory.TankPlayer(grid);
             playerChar3 = ActorFactory.RoguePlayer(grid);
+
+            grid.Layers[2].SwitchColliderType<SpikeCollider>();
 
             group_player.AddActor(playerChar1);
             group_player.AddActor(playerChar2);
