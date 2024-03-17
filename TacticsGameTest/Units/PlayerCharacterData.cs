@@ -27,7 +27,7 @@ namespace TacticsGameTest.Units
 
                 CharacterStats stats = new CharacterStats();
                 stats.Brawn = 5;
-                stats.Intuition = 2;
+                stats.Intuition = 1;
                 stats.Swift = 3;
 
                 stats.MaxHp = 5;
