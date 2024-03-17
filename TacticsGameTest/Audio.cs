@@ -16,6 +16,7 @@ namespace TacticsGameTest
         public EventInstance bgfx = ((SoundFMOD)Bootstrap.GetSound()).LoadEventDescription("event:/DungeonAmbience").CreateInstance();
         public EventInstance music = ((SoundFMOD)Bootstrap.GetSound()).LoadEventDescription("event:/Music").CreateInstance();
         public EventInstance musicExplore = ((SoundFMOD)Bootstrap.GetSound()).LoadEventDescription("event:/MusicMap").CreateInstance();
+        public EventInstance musicBoss = ((SoundFMOD)Bootstrap.GetSound()).LoadEventDescription("event:/MusicBoss").CreateInstance();
 
         public void PlayAudio(String path)
         {
