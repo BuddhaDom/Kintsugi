@@ -275,7 +275,6 @@ namespace Kintsugi.Collision
                 if (CollisionSystem.CollidesColliderWithCollider(collider, gridLayer.Collider, triggerCollisionMode))
                 {
                     colliders.Add(gridLayer.Collider);
-                    Console.WriteLine("Trying to get trigger collider on grid layer");
                 }
             }
             return colliders;
@@ -306,7 +305,6 @@ namespace Kintsugi.Collision
                     if (CollisionSystem.CollidesColliderWithCollider(gridLayer.Collider, tileObject.Collider, triggerCollisionMode))
                     {
                         colliders.Add(gridLayer.Collider);
-                        Console.WriteLine("Trying to get trigger collider on grid layer");
                     }
                 }
             }
