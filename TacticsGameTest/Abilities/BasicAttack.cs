@@ -16,7 +16,7 @@ namespace TacticsGameTest.Abilities
     {
         public override string Path => UIHelper.Get(16);
         public override string Title => "Throwing dagger";
-        public override string Tooltip => "Damage with your WEAPON dice with a range of 3!";
+        public override string Tooltip => "Damage 1D2 with a range of 3!";
 
         private static List<Vec2Int> GetAttacks()
         {
@@ -62,14 +62,14 @@ namespace TacticsGameTest.Abilities
         public override void OnHit(CombatActor targetActor)
         {
             Audio.I.PlayAudio("RangedAttack");
-            targetActor.TakeDamage(1, 0);
+            targetActor.TakeDamage(Dice.Roll(actor.stats.DamageRangedAmount, actor.stats.DamageRangedType), 0);
         }
     }
     internal class PoisonDagger : BasicAttack
     {
         public override string Path => UIHelper.Get(3);
         public override string Title => "Poisonous Stab";
-        public override string Tooltip => "Damage with your WEAPON dice and deal poison damage!";
+        public override string Tooltip => "1D2 damage and 1D2 poison!";
 
         private static List<Vec2Int> GetAttacks()
         {
@@ -91,15 +91,14 @@ namespace TacticsGameTest.Abilities
         }
         public override void OnHit(CombatActor targetActor)
         {
-            base.OnHit(targetActor);
-            targetActor.TakeDamage(0, 1);
+            targetActor.TakeDamage(Dice.Roll(actor.stats.DamageMeleeAmount, actor.stats.DamageMeleeType), Dice.Roll(actor.stats.DamageMeleeAmount, actor.stats.DamageMeleeType));
         }
     }
     internal class SpearStab : BasicAttack
     {
         public override string Path => UIHelper.Get(23);
         public override string Title => "Spear Stab";
-        public override string Tooltip => "Range of two. Hits two enemies in a line!";
+        public override string Tooltip => "Range of two. 1D4 damage!";
 
         private static List<Vec2Int> GetAttacks()
         {
@@ -137,15 +136,16 @@ namespace TacticsGameTest.Abilities
         }
         public override void OnHit(CombatActor targetActor)
         {
-            base.OnHit(targetActor);
+            Audio.I.PlayAudio("MeleeAttack");
+            targetActor.TakeDamage(Dice.Roll(actor.stats.DamageMeleeAmount, actor.stats.DamageMeleeType), 0);
         }
     }
 
     internal class AxeSwing : BasicAttack
     {
         public override string Path => base.Path;
-        public override string Title => base.Title;
-        public override string Tooltip => base.Tooltip;
+        public override string Title => "Axe swing.";
+        public override string Tooltip => "1D2 Damage";
 
         private static List<Vec2Int> GetAttacks()
         {
@@ -167,7 +167,8 @@ namespace TacticsGameTest.Abilities
         }
         public override void OnHit(CombatActor targetActor)
         {
-            base.OnHit(targetActor);
+            Audio.I.PlayAudio("MeleeAttack");
+            targetActor.TakeDamage(Dice.Roll(actor.stats.DamageMeleeAmount, actor.stats.DamageMeleeType), 0);
         }
     }
 
@@ -216,7 +217,7 @@ namespace TacticsGameTest.Abilities
             {
                 Audio.I.PlayAudio("MeleeAttack");
             }
-            targetActor.TakeDamage(1, 0);
+            targetActor.TakeDamage(Dice.Roll(actor.stats.DamageMeleeAmount, actor.stats.DamageMeleeType), 0);
 
         }
 
