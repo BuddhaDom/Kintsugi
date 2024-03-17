@@ -48,7 +48,7 @@ namespace TacticsGameTest.Rooms
             tankCharacter = ActorFactory.TankPlayer(grid);
             rogueCharacter = ActorFactory.RoguePlayer(grid);
 
-            grid.Layers[2].SwitchColliderType<SpikeCollider>();
+            grid.Layers[3].SwitchColliderType<SpikeCollider>();
 
             group_player.AddActor(spearCharacter);
             group_player.AddActor(tankCharacter);

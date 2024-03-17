@@ -117,6 +117,8 @@ namespace TacticsGameTest.Units
             var pathToDesired = longLook.PathTo(ClosestDesired);
             if (pathToDesired == null)
             {
+                movesLeft = 0;
+                EventManager.I.Queue(CheckEndTurn);
                 return;
             }
             for (int i = pathToDesired.PathPositions.Count - 1; i >= 0; i--)

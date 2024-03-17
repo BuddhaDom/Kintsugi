@@ -191,6 +191,13 @@ namespace TacticsGameTest.Units
             if (InTurn) EndTurn();
 
         }
+        public override void MoveTo(Vec2Int to)
+        {
+            if (!Dead)
+            {
+                base.MoveTo(to);
+            }
+        }
 
 
     }
