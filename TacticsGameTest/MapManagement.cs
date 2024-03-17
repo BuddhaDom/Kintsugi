@@ -11,8 +11,8 @@ namespace TacticsGameTest
 
         private Dictionary<Vector2, Level> rooms = new Dictionary<Vector2, Level>()
             {
-                {new Vec2Int(2,8), new Room1() },
-                {new Vec2Int(6,7), new Room2() }
+                {new Vec2Int(2,8), new RoomMine() },
+                {new Vec2Int(6,7), new RoomTower() }
             };
         public static MapManagement I
             {
