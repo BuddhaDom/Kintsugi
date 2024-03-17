@@ -78,7 +78,6 @@ public class CanvasObject : GraphicsObject
     /// </summary>
     public virtual void OnHoverStart()
     {
-        Console.WriteLine(this+" hovered");
     }
     
     /// <summary>
@@ -86,8 +85,6 @@ public class CanvasObject : GraphicsObject
     /// </summary>
     public virtual void OnHoverEnd()
     {
-        Console.WriteLine(this+" unhovered");
-
     }
 
     /// <summary>
@@ -95,7 +92,6 @@ public class CanvasObject : GraphicsObject
     /// </summary>
     public virtual void OnClick()
     {
-        Console.WriteLine(this+" clicked");
     }
 
     public override void SetSpriteSingle(Sprite sprite)
