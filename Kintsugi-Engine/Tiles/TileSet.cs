@@ -1,15 +1,8 @@
 namespace Kintsugi.Tiles;
 
-public struct TileSet
+public struct TileSet(string source, int width, int height)
 {
-    public string Source { get; }
-    public int Width { get; }
-    public int Height { get; }
-
-    public TileSet(string source, int width, int height)
-    {
-        Source = source;
-        Width = width;
-        Height = height;
-    }
+    public string Source { get; } = source;
+    public int Width { get; } = width;
+    public int Height { get; } = height;
 }

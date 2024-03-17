@@ -5,16 +5,18 @@ namespace Kintsugi.Core;
 /// <summary>
 /// Representation of an int-based vector.
 /// </summary>
-public readonly struct Vec2Int
+/// <param name="x">X-coordinate</param>
+/// <param name="y">Y-coordinate</param>
+public readonly struct Vec2Int(int x, int y)
 {
     /// <summary>
     /// X-coordinate
     /// </summary>
-    public int x { get; }
+    public int x { get; } = x;
     /// <summary>
     /// Y-coorinate
     /// </summary>
-    public int y { get; }
+    public int y { get; } = y;
 
     #region Static Properties
 
@@ -24,13 +26,7 @@ public readonly struct Vec2Int
     public static readonly Vec2Int Right = new(1, 0);
     public static readonly Vec2Int One = new(1, 1);
     public static readonly Vec2Int Zero = new(0, 0);
-
-    public Vec2Int(int x, int y)
-    {
-        this.x = x;
-        this.y = y;
-    }
-
+    
     #endregion
 
     #region Algebras and Methods
