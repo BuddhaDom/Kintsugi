@@ -72,6 +72,8 @@ namespace TacticsGameTest.Rooms
             InitEnemy(ActorFactory.Grunt,0,12);
             InitEnemy(ActorFactory.Archer, 9,12);
             
+            InitEnemy(ActorFactory.Necromancer,4,1);
+            
             
             InitPlayerCharacters(5,13,4,14,5,14);
         }
