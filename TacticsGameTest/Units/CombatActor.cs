@@ -66,7 +66,7 @@ namespace TacticsGameTest.Units
             }
             this.poison += poison;
             SetHealthUI();
-            if (stats.Hp <= 0)
+            if (!Dead && stats.Hp <= 0)
             {
                 EventManager.I.QueueImmediate(() => Die());
             }
