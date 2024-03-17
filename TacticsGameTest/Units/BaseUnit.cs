@@ -7,8 +7,7 @@ using System.Threading.Tasks;
 
 namespace TacticsGameTest.Units
 {
-    internal class BaseUnit :
-        AnimatableActor
+    internal class CharacterStats
     {
         public int Hp { get; set; } = 10;
 
@@ -97,17 +96,15 @@ namespace TacticsGameTest.Units
         public int DamageMeleeType
         {
             get { return damagemeleetype; }
-            set {
-                if (value < 1) 
+            set
+            {
+                if (value < 1)
                     throw new ArgumentOutOfRangeException("Only positive values are allowed");
-                damagemeleetype = value; }
+                damagemeleetype = value;
+            }
         }
 
         private int damagerangedtype;
-
-        public BaseUnit(string path) : base(path)
-        {
-        }
 
         public int DamageRangedType
         {
@@ -122,14 +119,25 @@ namespace TacticsGameTest.Units
 
 
 
+    }
+    internal class BaseUnit :
+        AnimatableActor
+    {
+        public BaseUnit(string path) : base(path)
+        {
+        }
+
+        public CharacterStats stats;
+
+
         public override void OnEndRound()
         {
-            
+
         }
 
         public override void OnEndTurn()
         {
-            
+
         }
 
         public override void OnStartRound()
@@ -139,7 +147,7 @@ namespace TacticsGameTest.Units
 
         public override void OnStartTurn()
         {
-            
+
         }
     }
 }

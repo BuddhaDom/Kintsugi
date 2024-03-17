@@ -16,14 +16,14 @@ namespace TacticsGameTest.Units
 {
     internal class EnemyActor : CombatActor
     {
-        public EnemyActor(string name, string spritePath) : base(name, spritePath)
+        public EnemyActor(string name, string spritePath, CharacterStats stats) : base(name, spritePath, stats)
         {
             team = 1;
         }
     }
     internal class BasicMeleeEnemy : EnemyActor
     {
-        public BasicMeleeEnemy(string name, string spritePath) : base(name, spritePath)
+        public BasicMeleeEnemy(string name, string spritePath, CharacterStats stats) : base(name, spritePath, stats)
         {
             var attackPattern = new List<Vec2Int>()
             {
@@ -136,7 +136,7 @@ namespace TacticsGameTest.Units
             for (int i = pathToDesired.PathPositions.Count - 1; i >= 0; i--)
             {
                 var target = pathToDesired.PathPositions[i];
-                if (longLook.GetCost(target) <= Swift)
+                if (longLook.GetCost(target) <= stats.Swift)
                 {
                     Move.Hover(target);
                     Move.DoAction(target);
@@ -149,6 +149,10 @@ namespace TacticsGameTest.Units
 
         public override void OnStartTurn()
         {
+            if (Dead)
+            {
+                return;
+            }
             base.OnStartTurn();
 
 

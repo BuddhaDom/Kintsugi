@@ -26,8 +26,9 @@ namespace TacticsGameTest.Units
         private int maxMoves = 2;
         public int movesLeft;
         public Canvas ActorUI = new();
-        public CombatActor(string name, string spritePath): base(spritePath)
+        public CombatActor(string name, string spritePath, CharacterStats stats): base(spritePath)
         {
+            this.stats = stats;
             this.name = name;
             SetCollider(["unit"], ["water", "wall", "unit"]);
             pathfindingSettings.AddCollideLayers(Collider.CollideLayers);
@@ -44,10 +45,10 @@ namespace TacticsGameTest.Units
         private List<Heart> healthUI = new();
         public void TakeDamage(int damage, int poison)
         {
-            Hp -= damage;
+            stats.Hp -= damage;
             this.poison += poison;
             SetHealthUI();
-            if (Hp <= 0)
+            if (stats.Hp <= 0)
             {
                 EventManager.I.QueueImmediate(() => Die());
             }
@@ -57,7 +58,7 @@ namespace TacticsGameTest.Units
         int prevHealth;
         private void SetHealthUI()
         {
-            for (int i = 0; i < MaxHp; i++)
+            for (int i = 0; i < stats.MaxHp; i++)
             {
                 if (!(i < healthUI.Count))
                 {
@@ -73,11 +74,11 @@ namespace TacticsGameTest.Units
             {
                 healthUI[i].Position =
                     new Vector2((i - (healthUI.Count - 1) / 2f) * spacing, 0);
-                if (i + poison < Hp)
+                if (i + poison < stats.Hp)
                 {
                     healthUI[i].SetHeartAnimation(Heart.HeartMode.normal);
                 }
-                else if (i < Hp)
+                else if (i < stats.Hp)
                 {
                     healthUI[i].SetHeartAnimation(Heart.HeartMode.poison);
                 }
@@ -90,7 +91,7 @@ namespace TacticsGameTest.Units
 
 
 
-            prevHealth = Hp;
+            prevHealth = stats.Hp;
         }
         public override void OnEndRound()
         {

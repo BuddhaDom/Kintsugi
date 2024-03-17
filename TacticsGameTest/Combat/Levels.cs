@@ -24,11 +24,12 @@ namespace TacticsGameTest.Rooms
 
             var character = ActorFactory.Grunt(grid);
             character.SetPosition(new Vec2Int(1, 3), false);
-            var playerchar = ActorFactory.PlayerCharacter(grid);
 
-            group_player.AddActor(playerchar);
             group_enemy.AddActor(character);
 
+            playerChar1.SetPosition(new Vec2Int(0, 0), false);
+            playerChar2.SetPosition(new Vec2Int(2, 0), false);
+            playerChar3.SetPosition(new Vec2Int(4, 0), false);
 
             scenario.BeginScenario();
         }

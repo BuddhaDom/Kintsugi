@@ -85,7 +85,7 @@ namespace TacticsGameTest.Units
         }
         private bool _isSelected;
 
-        public PlayerActor(string name, string spritePath) : base(name, spritePath)
+        public PlayerActor(string name, PlayerCharacterData playerCharacterData) : base(name, playerCharacterData.SpritePath, playerCharacterData.stats)
         {
             team = 0;
             abilities = new();

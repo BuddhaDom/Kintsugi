@@ -17,41 +17,30 @@ namespace TacticsGameTest
     static class ActorFactory
     {
 
-        public static CombatActor PlayerCharacter(Grid grid)
+        public static PlayerActor Player(Grid grid, PlayerCharacterData data)
         {
-            var unit = new PlayerActor("player", "FantasyBattlePack\\SwordFighter\\Longhair\\Blue1.png");
-
-            unit.Brawn = 2;
-            unit.Intuition = 1;
-            unit.Swift = 2;
-
-            unit.DamageMeleeAmount = 1;
-            unit.DamageMeleeType = 8;
-
-            unit.DamageRangedAmount = 1;
-            unit.DamageRangedType = 4;
-
-            unit.MaxHp = 15;
-            unit.Hp = unit.MaxHp;
+            var unit = new PlayerActor("playerchar", data);
             unit.AddToGrid(grid, 2);
-
             return unit;
         }
+
+
         public static CombatActor Grunt(Grid grid)
         {
-            var unit = new BasicMeleeEnemy("grunt", "FantasyBattlePack\\SwordFighter\\Longhair\\Red1.png");
+            var stats = new CharacterStats();
+            stats.Brawn = 2;
+            stats.Intuition = 1;
+            stats.Swift = 2;
 
-            unit.Brawn = 2;
-            unit.Intuition = 1;
-            unit.Swift = 2;
+            stats.DamageMeleeAmount = 1;
+            stats.DamageMeleeType = 8;
 
-            unit.DamageMeleeAmount = 1;
-            unit.DamageMeleeType = 8;
+            stats.DamageRangedAmount = 1;
+            stats.DamageRangedType = 4;
 
-            unit.DamageRangedAmount = 1;
-            unit.DamageRangedType = 4;
+            stats.MaxHp = 15;
 
-            unit.MaxHp = 15;
+            var unit = new BasicMeleeEnemy("grunt", "FantasyBattlePack\\SwordFighter\\Longhair\\Red1.png", stats);
             unit.AddToGrid(grid, 2);
 
             return unit;
@@ -59,18 +48,19 @@ namespace TacticsGameTest
         }
         public static CombatActor Archer(Grid grid)
         {
-            var unit = new BasicMeleeEnemy("archer", "FantasyBattlePack\\Archer\\Red1.png");
-            unit.Brawn = 1;
-            unit.Intuition = 1;
-            unit.Swift = 2;
+            var stats = new CharacterStats();
+            stats.Brawn = 1;
+            stats.Intuition = 1;
+            stats.Swift = 2;
 
-            unit.DamageMeleeAmount = 1;
-            unit.DamageMeleeType = 4;
+            stats.DamageMeleeAmount = 1;
+            stats.DamageMeleeType = 4;
 
-            unit.DamageRangedAmount = 1;
-            unit.DamageRangedType = 6;
+            stats.DamageRangedAmount = 1;
+            stats.DamageRangedType = 6;
 
-            unit.MaxHp = 10;
+            stats.MaxHp = 10;
+            var unit = new BasicMeleeEnemy("archer", "FantasyBattlePack\\Archer\\Red1.png", stats);
             unit.AddToGrid(grid, 2);
 
             return unit;
@@ -79,20 +69,21 @@ namespace TacticsGameTest
 
         public static CombatActor Ninja(Grid grid)
         {
-            var unit = new BasicMeleeEnemy("ninja", "FantasyBattlePack\\Thief\\Red1.png");
-            unit.Brawn = 1;
-            unit.Intuition = 1;
-            unit.Swift = 5;
+            var stats = new CharacterStats();
+            stats.Brawn = 1;
+            stats.Intuition = 1;
+            stats.Swift = 5;
 
-            unit.MaxHp = 16;
+            stats.MaxHp = 16;
 
-            unit.DamageMeleeAmount = 1;
-            unit.DamageMeleeType = 10;
+            stats.DamageMeleeAmount = 1;
+            stats.DamageMeleeType = 10;
 
-            unit.DamageRangedAmount = 1;
-            unit.DamageRangedType = 8;
+            stats.DamageRangedAmount = 1;
+            stats.DamageRangedType = 8;
 
 
+            var unit = new BasicMeleeEnemy("ninja", "FantasyBattlePack\\Thief\\Red1.png", stats);
             unit.AddToGrid(grid, 2);
 
             return unit;
@@ -101,19 +92,20 @@ namespace TacticsGameTest
 
         public static CombatActor Executioner(Grid grid)
         {
-            var unit = new BasicMeleeEnemy("executioner", "FantasyBattlePack\\AxeFighter\\ShortHair\\Red2.png");
-            unit.Brawn = 5;
-            unit.Intuition = 2;
-            unit.Swift = 1;
+            var stats = new CharacterStats();
+            stats.Brawn = 5;
+            stats.Intuition = 2;
+            stats.Swift = 1;
 
-            unit.MaxHp = 24;
+            stats.MaxHp = 24;
 
-            unit.DamageMeleeAmount = 3;
-            unit.DamageMeleeType = 12;
+            stats.DamageMeleeAmount = 3;
+            stats.DamageMeleeType = 12;
 
-            unit.DamageRangedAmount = 1;
-            unit.DamageRangedType = 4;
+            stats.DamageRangedAmount = 1;
+            stats.DamageRangedType = 4;
 
+            var unit = new BasicMeleeEnemy("executioner", "FantasyBattlePack\\AxeFighter\\ShortHair\\Red2.png", stats);
 
             unit.AddToGrid(grid, 2);
 

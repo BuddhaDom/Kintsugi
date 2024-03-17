@@ -94,7 +94,7 @@ namespace TacticsGameTest.Abilities
                 }).AddStartAwait(((Animation)hitEffect.Graphic));
                 EventManager.I.Queue(removeEffect);
 
-            }).AddStartAwait(new WaitForSeconds(0.25f));
+            }).AddStartAwait(new WaitForSeconds(0.25f)).AddFinishAwait(new WaitForSeconds(0.75f));
 
             EventManager.I.Queue(beginAttack);
             EventManager.I.Queue(spawnHitEffect);
