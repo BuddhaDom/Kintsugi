@@ -49,7 +49,7 @@ namespace TacticsGameTest
 
             var party = new PartyActor("FantasyBattlePack\\SwordFighter\\LongHair\\Blue1.png");
             party.AddToGrid(OverworldMap.grid, 4);
-            party.SetPosition(new Vec2Int(5, 9));
+            party.SetPosition(new Vec2Int(0, 6));
 
 
 
@@ -125,6 +125,10 @@ namespace TacticsGameTest
             }
             if (heals.ContainsKey(pos))
             {
+                PlayerCharacterData.TankPlayer().stats.Hp = PlayerCharacterData.TankPlayer().stats.MaxHp;
+                PlayerCharacterData.RoguePlayer().stats.Hp = PlayerCharacterData.RoguePlayer().stats.MaxHp;
+                PlayerCharacterData.SpearPlayer().stats.Hp = PlayerCharacterData.SpearPlayer().stats.MaxHp;
+
                 Audio.I.PlayAudio("ConfirmJingle");
                 heals[pos].RemoveFromGrid();
                 heals.Remove(pos);
@@ -132,8 +136,13 @@ namespace TacticsGameTest
             if (unlockers.ContainsKey(pos))
             {
                 PlayerCharacterData.keys += 1;
+                if(PlayerCharacterData.keys >= 2) {
+                    // Set door sprite to open
+                    rooms[new Vec2Int(5,0)].Item2.SetSpriteSingle(Bootstrap.GetAssetManager().GetAssetPath("door_open.png"));
+                }
                 unlockers[pos].RemoveFromGrid();
                 unlockers.Remove(pos);
+
                 Audio.I.PlayAudio("KeysJingle");
             }
 
