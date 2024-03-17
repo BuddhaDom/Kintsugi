@@ -17,9 +17,9 @@ namespace TacticsGameTest.Rooms
         public PlayerControlGroup group_player;
         public EnemyControlGroup group_enemy;
 
-        public PlayerActor playerChar1;
-        public PlayerActor playerChar2;
-        public PlayerActor playerChar3;
+        public PlayerActor spearCharacter;
+        public PlayerActor tankCharacter;
+        public PlayerActor rogueCharacter;
 
 
         public abstract string GridPath { get; }
@@ -44,18 +44,20 @@ namespace TacticsGameTest.Rooms
             scenario.AddControlGroup(group_player);
             scenario.AddControlGroup(group_enemy);
 
-            playerChar1 = ActorFactory.SpearPlayer(grid);
-            playerChar2 = ActorFactory.TankPlayer(grid);
-            playerChar3 = ActorFactory.RoguePlayer(grid);
+            spearCharacter = ActorFactory.SpearPlayer(grid);
+            tankCharacter = ActorFactory.TankPlayer(grid);
+            rogueCharacter = ActorFactory.RoguePlayer(grid);
 
             grid.Layers[2].SwitchColliderType<SpikeCollider>();
 
-            group_player.AddActor(playerChar1);
-            group_player.AddActor(playerChar2);
-            group_player.AddActor(playerChar3);
+            group_player.AddActor(spearCharacter);
+            group_player.AddActor(tankCharacter);
+            group_player.AddActor(rogueCharacter);
 
 
             SetUp();
+            scenario.BeginScenario();
+            
             foreach (var item in group_player.GetActors())
             {
                 scenario.players.Add((CombatActor)item);

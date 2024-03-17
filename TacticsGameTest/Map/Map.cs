@@ -16,7 +16,7 @@ namespace TacticsGameTest.Map
             var game = Bootstrap.GetRunningGame();
 
 
-            grid = new GridBase(game.GetAssetManager().GetAssetPath(GridPath), gridVisible: true, gridColor: Color.Red);
+            grid = new GridBase(game.GetAssetManager().GetAssetPath(GridPath), gridVisible: false, gridColor: Color.Red);
             grid.Position.X = 0;
             grid.Position.Y = 0;
 
