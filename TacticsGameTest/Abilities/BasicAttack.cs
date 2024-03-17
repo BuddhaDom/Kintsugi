@@ -173,6 +173,7 @@ namespace TacticsGameTest.Abilities
 
     internal class BasicAttack : Ability, IAwaitable
     {
+        public bool RangedSound;
         public override string Path => UIHelper.Get(29);
 
         public override string Title => "Attack";
@@ -207,7 +208,14 @@ namespace TacticsGameTest.Abilities
         }
         public virtual void OnHit(CombatActor targetActor)
         {
-            Audio.I.PlayAudio("MeleeAttack");
+            if (RangedSound)
+            {
+                Audio.I.PlayAudio("RangedAttack");
+            }
+            else
+            {
+                Audio.I.PlayAudio("MeleeAttack");
+            }
             targetActor.TakeDamage(1, 0);
 
         }
