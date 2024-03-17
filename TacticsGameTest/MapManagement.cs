@@ -8,6 +8,12 @@ namespace TacticsGameTest
     internal class MapManagement
     {
         static MapManagement _instance;
+
+        private Dictionary<Vector2, Level> rooms = new Dictionary<Vector2, Level>()
+            {
+                {new Vec2Int(2,8), new Room1() },
+                {new Vec2Int(6,7), new Room2() }
+            };
         public static MapManagement I
             {
             get
@@ -64,9 +70,13 @@ namespace TacticsGameTest
         }
         public Level currentRoom { get; private set; }
             // dont touch
-        public void EnterRoom(Vec2Int pos)
+        public void EnterArea(Vec2Int pos)
         {
-            LoadRoom(new Room2());
+            if (rooms.TryGetValue(pos, out var room))
+            {
+                LoadRoom(room);
+            }
+
         }
         private void LoadRoom(Level level)
         {
