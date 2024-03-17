@@ -14,6 +14,7 @@ namespace TacticsGameTest.Units
         public string SpritePath;
         public List<Ability> abilities;
 
+        public static int keys = 0;
 
         static PlayerCharacterData _player1;
         public static PlayerCharacterData SpearPlayer()  // spear guy
