@@ -62,7 +62,8 @@ namespace TacticsGameTest
             Audio.I.musicExplore.Stop();
 
         }
-        private Level currentRoom;
+        public Level currentRoom { get; private set; }
+            // dont touch
         public void EnterRoom(Vec2Int pos)
         {
             LoadRoom(new Room2());

@@ -54,6 +54,10 @@ namespace TacticsGameTest
         
         private void CameraMovement()
         {
+            if (MapManagement.I.currentRoom == null)
+            {
+                return; // Can't move camera at the map view
+            }
             var movement = Vector2.Zero;
             if (up)
             {
