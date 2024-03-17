@@ -6,6 +6,7 @@ using TacticsGameTest.Combat;
 using TacticsGameTest.UI;
 using TacticsGameTest.Units;
 using PuzzleGame;
+using Kintsugi.Objects;
 
 namespace TacticsGameTest.Rooms
 {
@@ -15,7 +16,7 @@ namespace TacticsGameTest.Rooms
         public CombatScenario scenario;
 
         public PlayerControlGroup group_player;
-        public EnemyControlGroup group_enemy;
+        public List<EnemyControlGroup> enemyGroups = new();
 
         public PlayerActor spearCharacter;
         public PlayerActor tankCharacter;
@@ -23,6 +24,15 @@ namespace TacticsGameTest.Rooms
 
 
         public abstract string GridPath { get; }
+        public void AddEnemy(Actor actor)
+        {
+            var group_enemy = new EnemyControlGroup("ENEMY");
+            group_enemy.AddActor(actor);
+            scenario.AddControlGroup(group_enemy);
+            enemyGroups.Add(group_enemy);
+
+
+        }
         public void Load()
         {
             var game = Bootstrap.GetRunningGame();
@@ -39,10 +49,8 @@ namespace TacticsGameTest.Rooms
             scenario = new CombatScenario();
 
             group_player = new PlayerControlGroup("PLAYER");
-            group_enemy = new EnemyControlGroup("ENEMY");
 
             scenario.AddControlGroup(group_player);
-            scenario.AddControlGroup(group_enemy);
 
             spearCharacter = ActorFactory.SpearPlayer(grid);
             tankCharacter = ActorFactory.TankPlayer(grid);
@@ -63,9 +71,12 @@ namespace TacticsGameTest.Rooms
                 scenario.players.Add((CombatActor)item);
                 AddLevelInputListener((IInputListener)item);
             }
-            foreach (var item in group_enemy.GetActors())
+            foreach (var group in enemyGroups)
             {
-                scenario.enemies.Add((CombatActor)item);
+                foreach (var actor in group.GetActors())
+                {
+                    scenario.enemies.Add((CombatActor)actor);
+                }
             }
         }
         public abstract void SetUp();
