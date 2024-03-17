@@ -66,7 +66,7 @@ namespace TacticsGameTest
             // dont touch
         public void EnterRoom(Vec2Int pos)
         {
-            LoadRoom(new Room1());
+            LoadRoom(new Room2());
         }
         private void LoadRoom(Level level)
         {
