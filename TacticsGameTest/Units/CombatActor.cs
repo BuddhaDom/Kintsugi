@@ -35,6 +35,10 @@ namespace TacticsGameTest.Units
         private List<Heart> healthUI = new();
         public void ApplyPoison()
         {
+            if (Dead)
+            {
+                return;
+            }
             stats.Hp -= poison;
             SetHealthUI();
             if (stats.Hp <= 0)
