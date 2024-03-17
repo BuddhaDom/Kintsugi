@@ -156,7 +156,7 @@ namespace TacticsGameTest
             stats.MaxHp = 5;
 
             stats.DamageMeleeAmount = 2;
-            stats.DamageMeleeType = 8;
+            stats.DamageMeleeType = 6;
 
             stats.DamageRangedAmount = 1;
             stats.DamageRangedType = 1;
