@@ -1,7 +1,6 @@
-﻿using Kintsugi.EventSystem;
-using Kintsugi.EventSystem.Events;
+﻿using Kintsugi.EventSystem.Events;
 
-namespace Engine.EventSystem
+namespace Kintsugi.EventSystem
 {
     /// <summary>
     /// Manager class for events in the engine.

@@ -8,7 +8,9 @@
 
 namespace Kintsugi.Audio
 {
-    // Please see https://www.fmod.com/docs/2.02/api/studio-guide.html#what-is-the-studio-api
+    /// <summary>
+    /// <a href="https://www.fmod.com/docs/2.02/api/studio-guide.html#what-is-the-studio-api">FMOD</a>-based sound engine.
+    /// </summary>
     public class SoundFMOD : Sound
     {
         internal FMOD.System fmodCoreSystem;

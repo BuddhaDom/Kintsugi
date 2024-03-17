@@ -1,15 +1,4 @@
-﻿using Kintsugi.Core;
-using Kintsugi.Objects;
-using Kintsugi.Objects.Graphics;
-using Kintsugi.Objects.Properties;
-using Kintsugi.Tiles;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using System.Reflection.Emit;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Kintsugi.Tiles;
 using TacticsGameTest.Units;
 
 namespace TacticsGameTest

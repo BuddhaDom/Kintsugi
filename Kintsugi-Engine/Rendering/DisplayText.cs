@@ -16,6 +16,9 @@ namespace Kintsugi.Rendering
 {
 
     // We'll be using SDL2 here to provide our underlying graphics system.
+    /// <summary>
+    /// Class representation of displayable text.
+    /// </summary>
     public class TextDetails
     {
         string text;
@@ -66,6 +69,9 @@ namespace Kintsugi.Rendering
         public Vector2 Pivot { get; set; }
     }
 
+    /// <summary>
+    /// Text rendering engine.
+    /// </summary>
     public class DisplayText : DisplayBase
     {
         protected nint _window, _rend;
@@ -86,6 +92,12 @@ namespace Kintsugi.Rendering
 
         }
 
+        /// <summary>
+        /// Load a font from a given path.
+        /// </summary>
+        /// <param name="path">Path to the font.</param>
+        /// <param name="size">Font size.</param>
+        /// <returns>Memory location of the loaded font.</returns>
         public nint LoadFont(string path, int size)
         {
             string key = path + "," + size;
@@ -99,12 +111,18 @@ namespace Kintsugi.Rendering
             return fontLibrary[key];
         }
 
+        /// <summary>
+        /// Actions to perform every update.
+        /// </summary>
         private void Update()
         {
 
 
         }
 
+        /// <summary>
+        /// Method to display via the display engine.
+        /// </summary>
         private void Draw()
         {
 
