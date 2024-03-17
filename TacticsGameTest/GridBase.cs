@@ -30,6 +30,11 @@ namespace TacticsGameTest
             {
                 var gridPos = WorldToGridPosition(Bootstrap.GetCameraSystem().ScreenToWorldSpace(new Vector2(inp.X, inp.Y)));
 
+                if (selectedActor != null && selectedActor.TriedClickingAbilityTarget(gridPos))
+                {
+                    return;
+                }
+
                 var objects = GetObjectsAtPosition(gridPos);
                 if (objects != null)
                 {

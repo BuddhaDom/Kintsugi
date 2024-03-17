@@ -9,7 +9,7 @@ namespace TacticsGameTest.UI
 {
     internal class Heart : CanvasObject
     {
-        public enum HeartMode { normal, gone, poisonbegin, poison, notinitialized }
+        public enum HeartMode { normal, gone, poisonbegin, poison, notinitialized, armor }
         private HeartMode previousMode;
 
         private int columns = 13;
@@ -80,7 +80,11 @@ namespace TacticsGameTest.UI
                             SetAnimationOverride(Enumerable.Range(columns * 16, 6), 0);
                         }
                         break;
+                    case HeartMode.armor:
+                        SetAnimationOverride(Enumerable.Range(columns * 6, 6), 1);
+                        break;
                     case HeartMode.notinitialized:
+                        SetAnimationOverride(Enumerable.Range(4, 1), 1);
                         break;
                 }
                 Graphic.Scale = new Vector2(4, 4);

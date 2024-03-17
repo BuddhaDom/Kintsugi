@@ -9,15 +9,16 @@ namespace TacticsGameTest.Units
 {
     internal abstract class CombatActor : BaseUnit
     {
+        public int tempHealth;
         public int team;
         public PathfindingSettings pathfindingSettings = new();
-        public string spritePath;
         public string name;
         private int maxMoves = 2;
         public int movesLeft;
         public Canvas ActorUI = new();
-        public CombatActor(string name, string spritePath): base(spritePath)
+        public CombatActor(string name, string spritePath, CharacterStats stats): base(spritePath)
         {
+            this.stats = stats;
             this.name = name;
             SetCollider(["unit"], ["water", "wall", "unit"]);
             pathfindingSettings.AddCollideLayers(Collider.CollideLayers);
@@ -32,12 +33,36 @@ namespace TacticsGameTest.Units
         public int poison;
         public float spacing = 16f;
         private List<Heart> healthUI = new();
+        public void ApplyPoison()
+        {
+            stats.Hp -= poison;
+            SetHealthUI();
+            if (stats.Hp <= 0)
+            {
+                EventManager.I.QueueImmediate(() => Die());
+            }
+        }
+        public void GainShield(int amnt)
+        {
+            tempHealth += amnt;
+            SetHealthUI();
+        }
         public void TakeDamage(int damage, int poison)
         {
-            Hp -= damage;
+            for (int i = 0; i < damage; i++)
+            {
+                if (tempHealth > 0)
+                {
+                    tempHealth--;
+                }
+                else
+                {
+                    stats.Hp--;
+                }
+            }
             this.poison += poison;
             SetHealthUI();
-            if (Hp <= 0)
+            if (stats.Hp <= 0)
             {
                 EventManager.I.QueueImmediate(() => Die());
             }
@@ -47,7 +72,7 @@ namespace TacticsGameTest.Units
         int prevHealth;
         private void SetHealthUI()
         {
-            for (int i = 0; i < MaxHp; i++)
+            for (int i = 0; i < stats.MaxHp + tempHealth; i++)
             {
                 if (!(i < healthUI.Count))
                 {
@@ -58,18 +83,43 @@ namespace TacticsGameTest.Units
                     newObject.TargetPivot = new Vector2(0.25f, -0.25f);
                 }
             }
+            for (int i = healthUI.Count - 1; i >= 0; i--)
+            {
+                if (i >= stats.MaxHp + tempHealth)
+                {
+                    var heart = healthUI[i];
+                    ActorUI.Objects.Remove(heart);
+                    healthUI.RemoveAt(i);
+
+                }
+
+            }
 
             for (int i = 0; i < healthUI.Count; i++)
             {
                 healthUI[i].Position =
                     new Vector2((i - (healthUI.Count - 1) / 2f) * spacing, 0);
-                if (i + poison < Hp)
+                if (i + poison < stats.Hp)
                 {
                     healthUI[i].SetHeartAnimation(Heart.HeartMode.normal);
                 }
-                else if (i < Hp)
+                else if (i < stats.Hp)
                 {
                     healthUI[i].SetHeartAnimation(Heart.HeartMode.poison);
+                }
+                else if (i >= stats.MaxHp)
+                {
+                    healthUI[i].SetHeartAnimation(Heart.HeartMode.armor);
+/*
+                    int diff = i - stats.MaxHp + 2;
+                    if (tempHealth <= diff)
+                    {
+                        healthUI[i].SetHeartAnimation(Heart.HeartMode.armor);
+                    }
+                    else
+                    {
+                        healthUI[i].SetHeartAnimation(Heart.HeartMode.notinitialized);
+                    }*/
                 }
                 else
                 {
@@ -80,7 +130,7 @@ namespace TacticsGameTest.Units
 
 
 
-            prevHealth = Hp;
+            prevHealth = stats.Hp;
         }
         public override void OnEndRound()
         {
@@ -89,7 +139,7 @@ namespace TacticsGameTest.Units
 
         public override void OnEndTurn()
         {
-            TakeDamage(poison, 0);
+            ApplyPoison();
             SetHealthUI();
             Console.WriteLine(name + " End Turn");
         }
@@ -101,6 +151,8 @@ namespace TacticsGameTest.Units
 
         public override void OnStartTurn()
         {
+            tempHealth = 0;
+            SetHealthUI();
             if (Dead)
             {
                 EndTurn();

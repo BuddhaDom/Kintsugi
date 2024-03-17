@@ -16,6 +16,11 @@ namespace TacticsGameTest.Rooms
         public PlayerControlGroup group_player;
         public EnemyControlGroup group_enemy;
 
+        public PlayerActor playerChar1;
+        public PlayerActor playerChar2;
+        public PlayerActor playerChar3;
+
+
         public abstract string GridPath { get; }
         public void Load()
         {
@@ -37,6 +42,15 @@ namespace TacticsGameTest.Rooms
 
             scenario.AddControlGroup(group_player);
             scenario.AddControlGroup(group_enemy);
+
+            playerChar1 = ActorFactory.SpearPlayer(grid);
+            playerChar2 = ActorFactory.TankPlayer(grid);
+            playerChar3 = ActorFactory.RoguePlayer(grid);
+
+            group_player.AddActor(playerChar1);
+            group_player.AddActor(playerChar2);
+            group_player.AddActor(playerChar3);
+
 
             SetUp();
             foreach (var item in group_player.GetActors())
