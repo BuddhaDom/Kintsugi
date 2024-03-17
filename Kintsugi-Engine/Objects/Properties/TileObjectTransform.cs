@@ -7,7 +7,7 @@ namespace Kintsugi.Objects.Properties;
 /// <summary>
 /// Transform properties of a tile object.
 /// </summary>
-public class TileObjectTransform(TileObject parent)
+public class TileObjectTransform
 {
     /// <summary>
     /// Position of the tile object in a grid system. 
@@ -25,10 +25,6 @@ public class TileObjectTransform(TileObject parent)
     /// Layer to which the tile object belongs to in its grid, if any.
     /// </summary>
     public int Layer { get; internal set; }
-    /// <summary>
-    /// The object this property modifies.
-    /// </summary>
-    public TileObject Parent { get; } = parent;
     /// <summary>
     /// The object's current world space position.
     /// </summary>

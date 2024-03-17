@@ -7,6 +7,9 @@
 		<Nullable>enable</Nullable>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<OutputType>Library</OutputType>
+		<Company>Kintsugi</Company>
+		<Product>Kintsugi Engine</Product>
+		<AssemblyVersion>0.1</AssemblyVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
