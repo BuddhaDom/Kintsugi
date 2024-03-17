@@ -121,31 +121,31 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Assets\FantasyBattlePack\SpearFighter\LongHair\Blue1.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Assets\FantasyBattlePack\SpearFighter\LongHair\Blue2.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Assets\FantasyBattlePack\SpearFighter\LongHair\Blue3.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Assets\FantasyBattlePack\SpearFighter\LongHair\Green1.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Assets\FantasyBattlePack\SpearFighter\LongHair\Green2.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Assets\FantasyBattlePack\SpearFighter\LongHair\Green3.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Assets\FantasyBattlePack\SpearFighter\LongHair\Red1.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Assets\FantasyBattlePack\SpearFighter\LongHair\Red2.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Assets\FantasyBattlePack\SpearFighter\LongHair\Red3.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Assets\FantasyBattlePack\SpearFighter\ShortHair\Blue1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -174,31 +174,31 @@
     <None Update="Assets\FantasyBattlePack\SpearFighter\ShortHair\Red3.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Assets\FantasyBattlePack\SwordFighter\Longhair\Blue1.png">
+    <None Update="Assets\FantasyBattlePack\SwordFighter\LongHair\Blue1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Assets\FantasyBattlePack\SwordFighter\Longhair\Blue2.png">
+    <None Update="Assets\FantasyBattlePack\SwordFighter\LongHair\Blue2.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Assets\FantasyBattlePack\SwordFighter\Longhair\Blue3.png">
+    <None Update="Assets\FantasyBattlePack\SwordFighter\LongHair\Blue3.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Assets\FantasyBattlePack\SwordFighter\Longhair\Green1.png">
+    <None Update="Assets\FantasyBattlePack\SwordFighter\LongHair\Green1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Assets\FantasyBattlePack\SwordFighter\Longhair\Green2.png">
+    <None Update="Assets\FantasyBattlePack\SwordFighter\LongHair\Green2.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Assets\FantasyBattlePack\SwordFighter\Longhair\Green3.png">
+    <None Update="Assets\FantasyBattlePack\SwordFighter\LongHair\Green3.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Assets\FantasyBattlePack\SwordFighter\Longhair\Red1.png">
+    <None Update="Assets\FantasyBattlePack\SwordFighter\LongHair\Red1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Assets\FantasyBattlePack\SwordFighter\Longhair\Red2.png">
+    <None Update="Assets\FantasyBattlePack\SwordFighter\LongHair\Red2.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Assets\FantasyBattlePack\SwordFighter\Longhair\Red3.png">
+    <None Update="Assets\FantasyBattlePack\SwordFighter\LongHair\Red3.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Assets\FantasyBattlePack\SwordFighter\ShortHair\Blue1.png">

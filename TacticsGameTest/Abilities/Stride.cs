@@ -28,7 +28,7 @@ namespace TacticsGameTest.Abilities
         }
         private bool IsSprint(float cost)
         {
-            return cost > actor.Swift;
+            return cost > actor.stats.Swift;
         }
 
         public bool IsFinished()
@@ -71,7 +71,7 @@ namespace TacticsGameTest.Abilities
             PathfindingResult = PathfindingSystem.Dijkstra(
                 actor.Transform.Grid,
                 actor.Transform.Position,
-                AllowOnlySingleMove ? actor.Swift : actor.Swift * actor.movesLeft,
+                AllowOnlySingleMove ? actor.stats.Swift : actor.stats.Swift * actor.movesLeft,
                 actor.pathfindingSettings);
 
 
@@ -81,7 +81,7 @@ namespace TacticsGameTest.Abilities
             {
                 if (item != PathfindingResult.StartPosition)
                 {
-                    highlights.Add((item, PathfindingResult.GetCost(item) > actor.Swift ? Color.NavajoWhite : Color.Aqua));
+                    highlights.Add((item, PathfindingResult.GetCost(item) > actor.stats.Swift ? Color.NavajoWhite : Color.Aqua));
                 }
             }
 
