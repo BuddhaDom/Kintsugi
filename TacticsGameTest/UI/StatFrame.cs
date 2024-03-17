@@ -1,5 +1,6 @@
 using System.Drawing;
 using System.Numerics;
+using System.Runtime.InteropServices;
 using Kintsugi.Core;
 using Kintsugi.UI;
 
@@ -7,11 +8,15 @@ namespace TacticsGameTest.UI;
 
 public class StatFrame : IHUDObject
 {
+    public Vector2 Position { get; }
+    
     private CanvasObject Name { get; }
     private CanvasObject Number { get; }
     
     public StatFrame(string name, int value, Vector2 position, Vector2 scale)
     {
+        Position = position;
+        
         Number = new CanvasObject
         {
             TextColor = Color.FromArgb(184, 111, 80),
@@ -21,8 +26,6 @@ public class StatFrame : IHUDObject
             Text = value.ToString(),
             Position = position
         };
-        
-        
         
         Number.SetSpriteSingle(Bootstrap.GetAssetManager().GetAssetPath("GUI\\statFrame.png"));
         Number.Graphic!.Scale = scale;

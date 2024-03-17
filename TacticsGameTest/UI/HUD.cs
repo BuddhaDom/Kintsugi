@@ -48,8 +48,18 @@ internal class HUD : Canvas
                 * i)).AddToCanvas(this);
 
         new StatFrame(
-            "TEST", 5,
+            "SWIFT", actor.stats.Swift,
             new Vector2(150, 10),
+            new Vector2(3, 3)
+        ).AddToCanvas(this);
+        new StatFrame(
+            "INTUITION", actor.stats.Intuition, 
+            new Vector2(150, 10+48),
+            new Vector2(3, 3)
+        ).AddToCanvas(this);
+        new StatFrame(
+            "BRAWN", actor.stats.Brawn,
+            new Vector2(150, 10+48*2),
             new Vector2(3, 3)
         ).AddToCanvas(this);
     }
