@@ -1,4 +1,11 @@
-# Points
+# Attributions
+https://kenney.nl/assets/tiny-dungeon
+https://kenney.nl/assets/tiny-battle
+https://www.fmod.com/unity
+
+# Grading Info
+
+## Points
 
 * A feature complete **example game** that makes use of new functionality you have coded into the engine (up to 30 points) - this is the only one that is actually required
 * A **missing subsystem** that has been meaningfully implemented into the engine (up to 10 points)
@@ -9,13 +16,13 @@
 * A moderate bug-fix to the provided code (4 points for the first person to fix it)
 * A major bug-fix to the provided code (6 points for the first person to fix it)
 
-# Grading
+## Grading
 
 * Grade 3 - 40 to 59 points
 * Grade 4 - 60 to 80 points
 * Grade 5 - 81+ points
 
-# For bugfixes
+## For bugfixes
 
 Bug-fixes should be reported via email as soon as they are made, and included as documentation in your final submission, with the following information:
 
