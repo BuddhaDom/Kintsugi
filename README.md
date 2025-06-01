@@ -1,7 +1,12 @@
 # Attributions
-https://kenney.nl/assets/tiny-dungeon
-https://kenney.nl/assets/tiny-battle
-https://www.fmod.com/unity
+
+## Assets
+* https://kenney.nl/assets/tiny-dungeon
+* https://kenney.nl/assets/tiny-battle
+
+## Tools
+* https://www.fmod.com/unity
+* https://www.mapeditor.org/
 
 # Grading Info
 
