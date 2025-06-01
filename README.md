@@ -1,5 +1,3 @@
-# [Documentation](https://kin.gautama.casa/)
-
 # Points
 
 * A feature complete **example game** that makes use of new functionality you have coded into the engine (up to 30 points) - this is the only one that is actually required
